@@ -1,0 +1,19 @@
+template:
+  params:
+    bootswatch: simplex
+    
+development:
+  mode: unreleased 
+
+reference:
+  - title: "Package name"
+    contents:
+      - iviNSCLC
+
+navbar:
+  title: IVI-NSCLC
+  left:
+  - text: "Tutorial"
+    href: articles/tutorial.html
+  - text: "API"
+    href: reference/index.html

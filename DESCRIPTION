@@ -1,0 +1,38 @@
+Package: iviNSCLC
+Type: Package
+Title: The IVI-NSCLC model
+Version: 0.1.0.9000
+Authors@R: c(
+    person("Devin", "Incerti", , "devin.incerti@thevalueinitiative.org", c("aut", "cre")),
+    person("Prodyumna", "Goutam", , "Prodyumna.Goutam@PrecisionHealthEconomics.com", c("aut")),
+    person("Jeroen P.", "Jansen", , "jeroen.jansen@thevalueinitiative.org", role = "aut")
+    )
+Description: An R package for running the IVI-NSCLC model. Simulates the benefits, costs, and risks of 
+    different sequences of treatment for patients with epidermal growth factor receptor (EGFR) positive non-small cell lung cancer (NSCLC) 
+    using a multi-state approach with the individual-level continuous time state transition model 
+    framework from the hesim package. 
+URL: https://github.com/InnovationValueInitiative/IVI-NSCLC
+BugReports: https://github.com/InnovationValueInitiative/IVI-NSCLC/issues
+License: GPL-3
+LazyData: true
+LinkingTo: Rcpp,
+           RcppArmadillo
+Depends:
+    R (>= 3.4.1)
+Imports:
+    data.table,
+    flexsurv,
+    MASS,
+    Rcpp (>= 0.12.16),
+    R6,
+    stats,
+    survival
+Remotes: InnovationValueInitiative/hesim    
+Suggests:
+    covr,
+    ggplot2,
+    knitr,
+    testthat
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+SystemRequirements: C++11

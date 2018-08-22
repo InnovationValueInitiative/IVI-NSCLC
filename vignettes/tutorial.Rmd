@@ -1,0 +1,11 @@
+---
+title: Tutorial
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Individualized cost-effectiveness analysis (iCEA)}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+The tutorial will be written here.
