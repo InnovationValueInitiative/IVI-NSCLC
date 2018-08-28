@@ -16,6 +16,10 @@ test_that("tx_2L", {
   # Osimertinib
   second <- tx_2L("osimertinib")
   expect_equal(second$pos, second$neg)
+  
+  # Errors
+  expect_error(tx_2L("erlotinib2"))
+  
 })
 
 test_that("tx_2LP", {
@@ -25,11 +29,22 @@ test_that("tx_2LP", {
 })
 
 test_that("txseq", {
+  # Try a standard sequence
   txseq <- txseq(first = "erlotinib",
                   second = c("osimertinib", "PBDC"),
                   second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
   expect_true(inherits(txseq, "txseq"))
   expect_error(txseq(first = 1))  
+  
+  # Shouldn't have errors with other correct sequences
+  expect_true(inherits(txseq(first = "erlotinib",
+                             second = c("osimertinib", "PBDC + bevacizumab"),
+                             second_plus = c("PBDC + bevacizumab", "PBDC + nivolumab")),
+                             "txseq"))
+  expect_true(inherits(txseq(first = "osimertinib",
+                             second = c("PBDC + bevacizumab", "erlotinib"),
+                             second_plus = c("PBDC + nivolumab", "PBDC + bevacizumab")),
+                             "txseq"))  
   
   # Incorrect selections
   expect_error(txseq(first = "PBDC",
@@ -40,20 +55,34 @@ test_that("txseq", {
                   second_plus = c("osimertinib", "PBDC + bevacizumab"))) 
     
   # Incorrect types
+  ## First line
   expect_error(txseq(first = c("erlotinib", "gefitinib"),
                   second = c("osimertinib", "PBDC"),
                   second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))
+  
+  ## Second line
   expect_error(txseq(first = c("erlotinib"),
                   second = c("osimertinib"),
                   second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))  
   expect_error(txseq(first = c("erlotinib"),
                   second = 2,
-                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))    
+                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))   
+  expect_error(txseq(first = "erlotinib",
+                  second = c("osimertinib2", "PBDC"),
+                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))  
+  expect_error(txseq(first = "erlotinib",
+                  second = c("osimertinib", "PBDC2"),
+                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))
+  
+  ## Second line plus
   expect_error(txseq(first = c("erlotinib"),
                   second = c("osimertinib", "PBDC"),
                   second_plus = c("PBDC + bevacizumab")))
   expect_error(txseq(first = "erlotinib",
                   second = c("osimertinib", "PBDC"),
                   second_plus = 3)) 
+  expect_error(txseq(first = "erlotinib",
+                  second = c("osimertinib", "PBDC + bevacizumab"),
+                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))
 })
 
