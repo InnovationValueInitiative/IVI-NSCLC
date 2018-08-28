@@ -21,3 +21,10 @@ A list of two elements:
 \description{
 Treatment after second line for EGFR+ NSCLC patients conditional on possible second line treatments.
 }
+\examples{
+first <- tx_1L()[3]
+print(first)
+second_opts <- tx_2L(first)
+print(second_opts)
+tx_2LP(c(second_opts$pos[1], second_opts$neg[1]))
+}

@@ -7,8 +7,11 @@
 tx_1L()
 }
 \value{
-A vector of first line treatments.
+A vector of possible first line treatments.
 }
 \description{
 First line treatments for EGFR+ NSCLC patients.
+}
+\examples{
+tx_1L()
 }

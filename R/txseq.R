@@ -1,8 +1,10 @@
 #' First line treatment options
 #' 
 #' First line treatments for EGFR+ NSCLC patients.
-#' @return A vector of first line treatments.
+#' @return A vector of possible first line treatments.
 #' @export
+#' @examples
+#' tx_1L()
 tx_1L <- function(){
   treatments <- c("erlotinib",
                   "gefitinib",
@@ -14,8 +16,8 @@ tx_1L <- function(){
 
 #' Second line treatment options
 #'
-#' Second line treatment for EGFR+ NSCLC patients conditional on a vector
-#' of treatments (corresponding to different treatment strategies) used for first line.
+#' Possible second line treatment for EGFR+ NSCLC patients conditional on the first
+#' line treatment.
 #' @param first A first line treatment.
 #' @return A list of two elements:
 #' \describe{
@@ -23,6 +25,10 @@ tx_1L <- function(){
 #' \item{neg}{Possible treatments without a T790M mutation.}
 #' }
 #' @export
+#' @examples
+#' first <- tx_1L()[2]
+#' print(first)
+#' tx_2L(first)
 tx_2L <- function(first){
   if (length(first) > 1){
     stop("Length of 'first' must be 1.",
@@ -54,6 +60,12 @@ tx_2L <- function(first){
 #' \item{neg}{Possible treatments without a T790M mutation.}
 #' }
 #' @export
+#' @examples
+#' first <- tx_1L()[3]
+#' print(first)
+#' second_opts <- tx_2L(first)
+#' print(second_opts)
+#' tx_2LP(c(second_opts$pos[1], second_opts$neg[1]))
 tx_2LP <- function(second){
   if (length(second) != 2){
     stop("Length of 'second' must be 2.",

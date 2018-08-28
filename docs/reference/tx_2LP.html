@@ -127,6 +127,29 @@ to treatment without a T790M mutation.</p></td>
 
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>first</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tx_1L.html'>tx_1L</a></span>()[<span class='fl'>3</span>]
+<span class='fu'>print</span>(<span class='no'>first</span>)</div><div class='output co'>#&gt; [1] "afatinib"</div><div class='input'><span class='no'>second_opts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tx_2L.html'>tx_2L</a></span>(<span class='no'>first</span>)
+<span class='fu'>print</span>(<span class='no'>second_opts</span>)</div><div class='output co'>#&gt; $pos
+#&gt; [1] "osimertinib"
+#&gt; 
+#&gt; $neg
+#&gt; [1] "PBDC"               "PBDC + bevacizumab"
+#&gt; </div><div class='input'><span class='fu'>tx_2LP</span>(<span class='fu'>c</span>(<span class='no'>second_opts</span>$<span class='no'>pos</span>[<span class='fl'>1</span>], <span class='no'>second_opts</span>$<span class='no'>neg</span>[<span class='fl'>1</span>]))</div><div class='output co'>#&gt; $pos
+#&gt;  [1] "PBDC"                               "nivolumab"                         
+#&gt;  [3] "pembrolizumab"                      "atezolizumab"                      
+#&gt;  [5] "PBDC + bevacizumab"                 "PBDC + nivolumab"                  
+#&gt;  [7] "PBDC + pembrolizumab"               "PBDC + atezolizumab"               
+#&gt;  [9] "PBDC + bevacizumab + nivolumab"     "PBDC + bevacizumab + pembrolizumab"
+#&gt; [11] "PBDC + bevacizumab + atezolizumab" 
+#&gt; 
+#&gt; $neg
+#&gt;  [1] "nivolumab"                          "pembrolizumab"                     
+#&gt;  [3] "atezolizumab"                       "PBDC + bevacizumab"                
+#&gt;  [5] "PBDC + nivolumab"                   "PBDC + pembrolizumab"              
+#&gt;  [7] "PBDC + atezolizumab"                "PBDC + bevacizumab + nivolumab"    
+#&gt;  [9] "PBDC + bevacizumab + pembrolizumab" "PBDC + bevacizumab + atezolizumab" 
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -134,7 +157,9 @@ to treatment without a T790M mutation.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

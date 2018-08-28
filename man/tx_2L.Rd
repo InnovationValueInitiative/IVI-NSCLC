@@ -17,6 +17,11 @@ A list of two elements:
 }
 }
 \description{
-Second line treatment for EGFR+ NSCLC patients conditional on a vector
-of treatments (corresponding to different treatment strategies) used for first line.
+Possible second line treatment for EGFR+ NSCLC patients conditional on the first
+line treatment.
+}
+\examples{
+first <- tx_1L()[2]
+print(first)
+tx_2L(first)
 }
