@@ -6,9 +6,12 @@ development:
   mode: unreleased 
 
 reference:
-  - title: "Package name"
+  - title: "Treatment sequences"
     contents:
-      - iviNSCLC
+      - tx_1L
+      - tx_2L
+      - tx_2LP
+      - txseq
 
 navbar:
   title: IVI-NSCLC

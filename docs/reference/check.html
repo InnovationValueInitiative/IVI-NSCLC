@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • iviNSCLC</title>
+<title>Input validation for class objects — check • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Input validation for class objects — check" />
+
+<meta property="og:description" content="check is a generic function for validating the inputs of class objects." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -89,60 +92,49 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Input validation for class objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>check.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p><code>check</code> is a generic function for validating the inputs of class objects.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-treatment-sequences" class="hasAnchor"><a href="#section-treatment-sequences" class="anchor"></a>Treatment sequences</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="tx_1L.html">tx_1L()</a></code> </p>
-        </td>
-        <td><p>First line treatment options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tx_2L.html">tx_2L()</a></code> </p>
-        </td>
-        <td><p>Second line treatment options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tx_2LP.html">tx_2LP()</a></code> </p>
-        </td>
-        <td><p>Second line plus treatment options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="txseq.html">txseq()</a></code> </p>
-        </td>
-        <td><p>A treatment sequence</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>check</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>object to check.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Further arguments passed to or from other methods. Currently unused.</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>If validation is successful, returns the object in question; otherwise,
+informs the user that an error has occurred.</p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-treatment-sequences">Treatment sequences</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
+
   </div>
 </div>
 
