@@ -12,6 +12,7 @@ reference:
       - tx_2L
       - tx_2LP
       - txseq
+      - txseq_list
 
 navbar:
   title: IVI-NSCLC

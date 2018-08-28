@@ -86,3 +86,23 @@ test_that("txseq", {
                   second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))
 })
 
+test_that("txseq_list", {
+  txseq1 <- txseq(first = "erlotinib",
+                    second = c("osimertinib", "PBDC"),
+                    second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+  txseq2 <- txseq(first = "gefitinib",
+                    second = c("osimertinib", "PBDC"),
+                    second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+
+  # Working  
+  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+  expect_true(inherits(txseqs, "txseq_list"))
+  expect_equal(names(txseqs), c("seq1", "seq2"))
+  
+  txseqs <- txseq_list(list(seq1 = txseq1, seq2 = txseq2))
+  expect_true(inherits(txseqs, "txseq_list"))
+  expect_equal(names(txseqs), c("seq1", "seq2"))  
+  
+  # Errors
+  expect_error(txseq_list(seq1 = txseq1, seq2 = 2))
+})

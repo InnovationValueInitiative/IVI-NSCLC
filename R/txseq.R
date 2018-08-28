@@ -185,3 +185,43 @@ check.txseq <- function(x){
   return(x)
 }
 
+#' A list of treatment sequences
+#' 
+#' Create a list of objects of class "txseq". 
+#' @param ... Objects to form a list.
+#' @return An object of class "txseq_list", which is a list of objects of class
+#' "txseq". 
+#' @export
+#' @examples
+#' txseq1 <- txseq(first = "erlotinib",
+#'                second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+#' txseq2 <- txseq(first = "gefitinib",
+#'                second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2) 
+#' class(txseqs)        
+#' print(txseqs$seq1)
+txseq_list <- function(...){
+  objects <- new_txseq_list(...)
+  return(check(objects))
+}
+
+new_txseq_list <- function(...){
+  objects <- list(...)
+  if(length(objects) == 1 & inherits(objects[[1]], "list")){
+      objects <- objects[[1]]
+  }
+  class(objects) <- "txseq_list"
+  return(objects)
+}
+
+check.txseq_list <- function(x){
+ for (i in 1:length(x)){
+    if(!inherits(x[[i]], "txseq")){
+      stop("Each element in ... must of of class 'txseq'.",
+           call. = FALSE)
+    }
+  } 
+  return(x)
+}
