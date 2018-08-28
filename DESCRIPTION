@@ -4,7 +4,6 @@ Title: The IVI-NSCLC model
 Version: 0.1.0.9000
 Authors@R: c(
     person("Devin", "Incerti", , "devin.incerti@thevalueinitiative.org", c("aut", "cre")),
-    person("Prodyumna", "Goutam", , "Prodyumna.Goutam@PrecisionHealthEconomics.com", c("aut")),
     person("Jeroen P.", "Jansen", , "jeroen.jansen@thevalueinitiative.org", role = "aut")
     )
 Description: An R package for running the IVI-NSCLC model. Simulates the benefits, costs, and risks of 
