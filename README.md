@@ -10,5 +10,5 @@
 ```r
 # Install the development version from GitHub:
 # install.packages("devtools")
-devtools::install_github("InnovationValueInitiative/iviNSCLC")
+devtools::install_github("InnovationValueInitiative/IVI-NSCLC")
 ```
