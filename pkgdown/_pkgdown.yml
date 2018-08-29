@@ -13,6 +13,10 @@ reference:
       - tx_2LP
       - txseq
       - txseq_list
+  - title: "Model setup"
+    contents:
+      - create_states
+      - create_trans_mats
 
 navbar:
   title: IVI-NSCLC

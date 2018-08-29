@@ -190,7 +190,7 @@ check.txseq <- function(x){
 #' Create a list of objects of class "txseq". 
 #' @param ... Objects to form a list.
 #' @return An object of class "txseq_list", which is a list of objects of class
-#' "txseq". 
+#' \code{\link{txseq}}. 
 #' @export
 #' @examples
 #' txseq1 <- txseq(first = "erlotinib",
@@ -217,9 +217,14 @@ new_txseq_list <- function(...){
 }
 
 check.txseq_list <- function(x){
- for (i in 1:length(x)){
+  len1 <- length(x[[1]])
+  for (i in 1:length(x)){
     if(!inherits(x[[i]], "txseq")){
       stop("Each element in ... must of of class 'txseq'.",
+           call. = FALSE)
+    }
+    if (length(x[[i]]) != len1){
+      stop("Each sequence must be the same length.",
            call. = FALSE)
     }
   } 

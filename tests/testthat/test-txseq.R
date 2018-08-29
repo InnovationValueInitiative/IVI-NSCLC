@@ -106,3 +106,4 @@ test_that("txseq_list", {
   # Errors
   expect_error(txseq_list(seq1 = txseq1, seq2 = 2))
 })
+
