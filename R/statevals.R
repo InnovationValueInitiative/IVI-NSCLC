@@ -2,6 +2,7 @@
 #' 
 #' Create a \code{\link{data.table}} containing information on health states for
 #' use in \code{\link[hesim]{hesim_data}}.
+#' @param object An \code{\link{txseq_list}} object.
 #' @return An object of class "states", which is a \code{\link{data.table}} with 
 #' the following columns:
 #' \describe{
@@ -51,51 +52,3 @@ create_states.txseq_list <- function(object){
   return(tbl)
 }
 
-#' Create a line-specific transition matrix
-#' 
-#' Create a transition matrix in the same format as the \link[mstate]{mstate} 
-#' conditional on the line of treatment.
-#' @return A matrix where rows/columns denote states and entries in the matrix
-#' denote transitions between states.
-#' @examples
-#' txseq1 <- txseq(first = "erlotinib",
-#'                 second = c("osimertinib", "PBDC"),
-#'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-#' txseq2 <- txseq(first = "gefitinib",
-#'                 second = c("osimertinib", "PBDC"),
-#'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
-#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
-#' tmat <- create_trans_mat(txseqs)
-#' class(tmat)
-#' print(tmat)
-#' @export
-create_trans_mat <- function(line = c("1", "2", "2+")){
-  line <- match.arg(line)
-  tmat <- matrix(NA, nrow = 5, ncol = 5) 
-  colnames(tmat) <- rownames(tmat) <- c("S", "P1", "P2", "P2+", "D")
-  if (line == "1"){
-    tmat[1, ] <- c(NA, 1, NA, NA, 2)
-  } else if (line == "2"){
-    tmat[2, ] <- c(NA, NA, 1, NA, 2)
-  } else if (line == "2+"){
-    tmat[3, ] <- c(NA, NA, NA, 1, 2)
-    tmat[4, ] <- c(NA, NA, NA, NA, 3)
-  } else{
-    stop("'line' must be 1, 2, or 2+",
-         call. = FALSE)
-  }
-  return(tmat)
-}
-
-#' Create treatment strategies object
-#' 
-#' Create a list of data tables containing information on treatment strategies where 
-#' each table denotes a different treatment line. Of the same format as the \code{stratgies}
-#' element in \link[hesim]{hesim_data} in the \code{hesim} package. 
-#' @param txseq_list The treatment sequences of interest. Must be objects of class
-#' \code{\link{txseq_list}}. 
-#' @return A list of \code{\link{data.table}}
-#' @export
-create_strategies <- function(txseq_list ){
-  return(2)
-}

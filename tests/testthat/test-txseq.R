@@ -76,23 +76,23 @@ test_that("txseq", {
   
   ## Second line plus
   expect_error(txseq(first = c("erlotinib"),
-                  second = c("osimertinib", "PBDC"),
-                  second_plus = c("PBDC + bevacizumab")))
+                    second = c("osimertinib", "PBDC"),
+                    second_plus = c("PBDC + bevacizumab")))
   expect_error(txseq(first = "erlotinib",
-                  second = c("osimertinib", "PBDC"),
-                  second_plus = 3)) 
+                    second = c("osimertinib", "PBDC"),
+                    second_plus = 3)) 
   expect_error(txseq(first = "erlotinib",
-                  second = c("osimertinib", "PBDC + bevacizumab"),
-                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))
+                    second = c("osimertinib", "PBDC + bevacizumab"),
+                    second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))
 })
 
-test_that("txseq_list", {
+test_that("txseqs", {
   txseq1 <- txseq(first = "erlotinib",
-                    second = c("osimertinib", "PBDC"),
-                    second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+                  second = c("osimertinib", "PBDC"),
+                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
   txseq2 <- txseq(first = "gefitinib",
-                    second = c("osimertinib", "PBDC"),
-                    second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+                  second = c("osimertinib", "PBDC"),
+                  second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
 
   # Working  
   txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)

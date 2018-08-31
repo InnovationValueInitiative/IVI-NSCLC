@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create health states table — create_states • iviNSCLC</title>
+<title>Create treatment strategies object — create_strategies • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,11 @@
 
 
 
-<meta property="og:title" content="Create health states table — create_states" />
+<meta property="og:title" content="Create treatment strategies object — create_strategies" />
 
-<meta property="og:description" content="Create a data.table containing information on health states for
-use in hesim_data." />
+<meta property="og:description" content="Create a data.table containing information on treatment strategies used
+at a particular treatment line. Of the same format as the stratgies
+element in hesim_data in the hesim package." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,58 +96,46 @@ use in hesim_data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create health states table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/statevals.R'><code>R/statevals.R</code></a></small>
-    <div class="hidden name"><code>create_states.Rd</code></div>
+    <h1>Create treatment strategies object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/sim_disease.R'><code>R/sim_disease.R</code></a></small>
+    <div class="hidden name"><code>create_strategies.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a <code>data.table</code> containing information on health states for
-use in <code><a href='http://www.rdocumentation.org/packages/hesim/topics/hesim_data'>hesim_data</a></code>.</p>
+    <p>Create a <code>data.table</code> containing information on treatment strategies used
+at a particular treatment line. Of the same format as the <code>stratgies</code>
+element in <a href='http://www.rdocumentation.org/packages/hesim/topics/hesim_data'>hesim_data</a> in the <code>hesim</code> package.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_states</span>(<span class='no'>object</span>)
-
-<span class='co'># S3 method for txseq_list</span>
-<span class='fu'>create_states</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>create_strategies</span>(<span class='no'>object</span>, <span class='kw'>line</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"1"</span>, <span class='st'>"2"</span>, <span class='st'>"2+"</span>), <span class='kw'>mutation</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"neg"</span>,
+  <span class='st'>"pos"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An <code><a href='txseq_list.html'>txseq_list</a></code> object.</p></td>
+      <td><p>The treatment sequences of interest. Must be objects of class
+<code><a href='txseq_list.html'>txseq_list</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>line</th>
+      <td><p>The line of treatment.</p></td>
+    </tr>
+    <tr>
+      <th>mutation</th>
+      <td><p>If the line of treatmnet is &gt; 1, whether the patient has
+a T790M mutation.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class "states", which is a <code>data.table</code> with 
-the following columns:</p><dl class='dl-horizontal'>
-<dt>state_id</dt><dd><p>The state ID number.</p></dd>
-<dt>state_name</dt><dd><p>The state name,</p></dd>
-<dt>state_name_long</dt><dd><p>A long-form state name.</p></dd>
-</dl>
-
+    <p>A <code>data.table</code>.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>txseq1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"erlotinib"</span>,
-                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
-                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseq2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"gefitinib"</span>,
-                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
-                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
-<span class='no'>states</span> <span class='kw'>&lt;-</span> <span class='fu'>create_states</span>(<span class='no'>txseqs</span>)
-<span class='fu'>class</span>(<span class='no'>states</span>)</div><div class='output co'>#&gt; [1] "states"     "data.table" "data.frame"</div><div class='input'><span class='fu'>print</span>(<span class='no'>states</span>)</div><div class='output co'>#&gt;    state_id state_name    state_name_long
-#&gt; 1:        1          S             Stable
-#&gt; 2:        2         P1  Progression on 1L
-#&gt; 3:        3         P2  Progression on 2L
-#&gt; 4:        4        P2+ Progression on 2L+
-#&gt; 5:        5          D              Death</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -154,9 +143,7 @@ the following columns:</p><dl class='dl-horizontal'>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

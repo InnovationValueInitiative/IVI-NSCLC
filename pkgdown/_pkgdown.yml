@@ -11,12 +11,14 @@ reference:
       - tx_1L
       - tx_2L
       - tx_2LP
-      - txseq
       - txseq_list
-  - title: "Model setup"
+  - title: "Disease progression"
+    contents:
+      - create_trans_mat
+      - create_strategies
+  - title: "Costs and utility"
     contents:
       - create_states
-      - create_trans_mats
 
 navbar:
   title: IVI-NSCLC
