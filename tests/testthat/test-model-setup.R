@@ -16,7 +16,20 @@ test_that("create_states", {
 })
 
 test_that("create_trans_mats", {
-  tmats <- create_trans_mats(txseqs)
-  expect_true(inherits(tmats, "trans_mats"))
-  expect_equal(length(tmats), 3)
+  # Line 1
+  tmat <- create_trans_mat(line = "1")
+  expect_equal(as.numeric(tmat[1, ]),
+               c(NA, 1, NA, NA, 2))
+
+  # Line 2
+  tmat <- create_trans_mat(line = "2") 
+  expect_equal(as.numeric(tmat[2, ]),
+               c(NA, NA, 1, NA, 2))  
+
+  # Line 3  
+  tmat <- create_trans_mat(line = "2+") 
+  expect_equal(as.numeric(tmat[3, ]),
+               c(NA, NA, NA, 1, 2))
+  expect_equal(as.numeric(tmat[4, ]),
+               c(NA, NA, NA, NA, 3))  
 })
