@@ -12,11 +12,14 @@ reference:
       - tx_2L
       - tx_2LP
       - txseq_list
-  - title: "Disease progression"
+  - title: "Parameter estimates"
+    contents:
+      - params_mstate
+  - title: "Simulate disease progression"
     contents:
       - create_trans_mat
       - create_strategies
-  - title: "Costs and utility"
+  - title: "Simulate costs and utilities"
     contents:
       - create_states
 
