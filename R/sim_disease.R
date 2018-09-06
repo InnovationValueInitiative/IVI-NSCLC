@@ -38,12 +38,12 @@ create_trans_mat <- function(line = c("1", "2", "2+")){
 #' Create treatment strategies object
 #'
 #' Create a \code{\link{data.table}} containing information on treatment strategies used
-#' at a particular treatment line. Of the same format as the \code{stratgies}
+#' at a particular treatment line. Of the same format as the \code{strategies}
 #' element in \link[hesim]{hesim_data} in the \code{hesim} package.
 #' @param object The treatment sequences of interest. Must be objects of class
 #' \code{\link{txseq_list}}.
 #' @param line The line of treatment.
-#' @param mutation If the line of treatmnet is > 1, whether the patient has
+#' @param mutation If the line of treatment is > 1, whether the patient has
 #' a T790M mutation.
 #' @return A \code{\link{data.table}}.
 #' @export
@@ -87,7 +87,7 @@ create_strategies <- function(object, line = c("1", "2", "2+"),
 
 #' Simulate disease progression
 #' 
-#' Simulate disease progression for EGFR+ non-small cell lung cancer patients
+#' Simulate disease progression for EGFR+ NSCLC patients
 #' given treatment sequences of interest. 
 #' @param txseqs The treatment sequences of interest. Must be objects of class
 #' \code{\link{txseq_list}}. 
