@@ -9,7 +9,7 @@
 #' }
 "treatments"
 
-#' Multi-state model paramters
+#' Multi-state model parameters
 #'
 #' The parameters of the individual-level continuous time state transition model
 #' estimated using the multi-state network meta-analysis. 
