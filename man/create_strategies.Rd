@@ -13,7 +13,7 @@ create_strategies(object, line = c("1", "2", "2+"), mutation = c("neg",
 
 \item{line}{The line of treatment.}
 
-\item{mutation}{If the line of treatmnet is > 1, whether the patient has
+\item{mutation}{If the line of treatment is > 1, whether the patient has
 a T790M mutation.}
 }
 \value{
@@ -21,6 +21,6 @@ A \code{\link{data.table}}.
 }
 \description{
 Create a \code{\link{data.table}} containing information on treatment strategies used
-at a particular treatment line. Of the same format as the \code{stratgies}
+at a particular treatment line. Of the same format as the \code{strategies}
 element in \link[hesim]{hesim_data} in the \code{hesim} package.
 }

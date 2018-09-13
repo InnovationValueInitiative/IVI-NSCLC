@@ -3,7 +3,7 @@
 \docType{data}
 \name{params_mstate}
 \alias{params_mstate}
-\title{Multi-state model paramters}
+\title{Multi-state model parameters}
 \format{A list containing parameter estimates from Weibull, Gompertz,
 and 2nd order fractional polynomial survival distributions. Within each distribution,
 parameters are contained in a list of lists with the outer list denoting a 

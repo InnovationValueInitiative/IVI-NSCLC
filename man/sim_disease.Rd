@@ -20,6 +20,6 @@ An object of class "indiv_ctstm_disprog". See the description for \code{\link[he
 from the \code{hesim} package.
 }
 \description{
-Simulate disease progression for EGFR+ non-small cell lung cancer patients
+Simulate disease progression for EGFR+ NSCLC patients
 given treatment sequences of interest.
 }

@@ -11,7 +11,8 @@ txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
 
 
 test_that("create_states", {
-  states <- create_states(txseqs)
-  expect_true(inherits(states, "states"))
-  expect_equal(nrow(states), 5)
+  states <- create_states(start_line = "first")
+  expect_equal(nrow(states), 4)
+  states <- create_states(start_line = "second")
+  expect_equal(nrow(states), 3)
 })
