@@ -189,7 +189,11 @@ check.txseq <- function(x){
 #' 
 #' Create a list of objects of class "txseq". 
 #' @param ... Objects to form a list.
-#' @return An object of class "txseq_list", which is a list of objects of class
+#' @param start_line The starting line of treatmnet that is being modeled. When
+#' modeling second line treatment, the first line must be specified
+#' in order to characterize a treatment history.
+#' @return An object of class "txseq_list", which is a list of objects of class. 
+#' \code{start_line} is stored as an attribute.
 #' \code{\link{txseq}}. 
 #' @export
 #' @examples
@@ -202,17 +206,20 @@ check.txseq <- function(x){
 #' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2) 
 #' class(txseqs)        
 #' print(txseqs$seq1)
-txseq_list <- function(...){
-  objects <- new_txseq_list(...)
+#' attributes(txseqs)
+txseq_list <- function(..., start_line = c("first", "second")){
+  start_line <- match.arg(start_line)
+  objects <- new_txseq_list(..., start_line = start_line)
   return(check(objects))
 }
 
-new_txseq_list <- function(...){
+new_txseq_list <- function(..., start_line){
   objects <- list(...)
   if(length(objects) == 1 & inherits(objects[[1]], "list")){
       objects <- objects[[1]]
   }
   class(objects) <- "txseq_list"
+  attr(objects, "start_line") <- start_line
   return(objects)
 }
 

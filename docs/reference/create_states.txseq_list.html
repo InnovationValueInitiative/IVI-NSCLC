@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A list of treatment sequences — txseq_list • iviNSCLC</title>
+<title>Create health states tables — create_states.txseq_list • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="A list of treatment sequences — txseq_list" />
+<meta property="og:title" content="Create health states tables — create_states.txseq_list" />
 
-<meta property="og:description" content="Create a list of objects of class &quot;txseq&quot;." />
+<meta property="og:description" content="Create a list of data tables describing the health states for the model
+structure associated with each modeled treatment sequence." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,70 +95,81 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A list of treatment sequences</h1>
-    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/txseq.R'><code>R/txseq.R</code></a></small>
-    <div class="hidden name"><code>txseq_list.Rd</code></div>
+    <h1>Create health states tables</h1>
+    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/model-setup.R'><code>R/model-setup.R</code></a></small>
+    <div class="hidden name"><code>create_states.txseq_list.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a list of objects of class "txseq".</p>
+    <p>Create a list of data tables describing the health states for the model
+structure associated with each modeled treatment sequence.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>txseq_list</span>(<span class='no'>...</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"first"</span>, <span class='st'>"second"</span>))</pre>
+    <pre class="usage"><span class='co'># S3 method for txseq_list</span>
+<span class='fu'>create_states</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Objects to form a list.</p></td>
-    </tr>
-    <tr>
-      <th>start_line</th>
-      <td><p>The starting line of treatmnet that is being modeled. When
-modeling second line treatment, the first line must be specified
-in order to characterize a treatment history.</p></td>
+      <th>object</th>
+      <td><p>A <code><a href='txseq_list.html'>txseq_list</a></code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class "txseq_list", which is a list of objects of class. 
-<code>start_line</code> is stored as an attribute.
-<code><a href='txseq.html'>txseq</a></code>.</p>
+    
+<dl class='dl-horizontal'>
+<dt>state_id</dt><dd><p>The state ID number.</p></dd>
+<dt>state_name</dt><dd><p>The state name,</p></dd>
+<dt>state_name_long</dt><dd><p>A long-form state name.</p></dd>
+</dl>
+
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>txseq1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"erlotinib"</span>,
-               <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
-               <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseq2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"gefitinib"</span>,
-               <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
-               <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'>txseq_list</span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
-<span class='fu'>class</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; [1] "txseq_list"</div><div class='input'><span class='fu'>print</span>(<span class='no'>txseqs</span>$<span class='no'>seq1</span>)</div><div class='output co'>#&gt; $first
-#&gt; [1] "erlotinib"
+                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
+                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
+<span class='no'>txseq2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"osimertinib"</span>,
+                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC"</span>, <span class='st'>"PBDC"</span>),
+                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
+<span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
+<span class='fu'>create_states</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
+#&gt;    state_id state_name                      state_name_long
+#&gt; 1:        1         S1                       Stable with 1L
+#&gt; 2:        2         P1                  Progression with 1L
+#&gt; 3:        3      S2pos      Stable with 2L (T790M positive)
+#&gt; 4:        4      P2pos Progression with 2L (T790M positive)
+#&gt; 5:        5      S2neg      Stable with 2L (T790M negative)
+#&gt; 6:        6      P2neg Progression with 2L (T790M negative)
+#&gt; 7:        7          D                                Death
 #&gt; 
-#&gt; $second
-#&gt;           pos           neg 
-#&gt; "osimertinib"        "PBDC" 
-#&gt; 
-#&gt; $second_plus
-#&gt;                  pos                  neg 
-#&gt; "PBDC + bevacizumab" "PBDC + bevacizumab" 
+#&gt; $seq2
+#&gt;    state_id state_name     state_name_long
+#&gt; 1:        1         S1      Stable with 1L
+#&gt; 2:        2         P1 Progression with 1L
+#&gt; 3:        3          D               Death
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "txseq"</div><div class='input'><span class='fu'>attributes</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $names
-#&gt; [1] "seq1" "seq2"
+#&gt; [1] "states"</div><div class='input'><span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>)
+<span class='fu'>create_states</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
+#&gt;    state_id state_name     state_name_long
+#&gt; 1:        1         S2      Stable with 2L
+#&gt; 2:        2         P2 Progression with 2L
+#&gt; 3:        3          D               Death
 #&gt; 
-#&gt; $class
-#&gt; [1] "txseq_list"
+#&gt; $seq2
+#&gt;    state_id state_name     state_name_long
+#&gt; 1:        1         S2      Stable with 2L
+#&gt; 2:        2         P2 Progression with 2L
+#&gt; 3:        3          D               Death
 #&gt; 
-#&gt; $start_line
-#&gt; [1] "first"
-#&gt; </div></pre>
+#&gt; attr(,"class")
+#&gt; [1] "states"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

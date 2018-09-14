@@ -1,7 +1,7 @@
 Package: iviNSCLC
 Type: Package
 Title: The IVI-NSCLC model
-Version: 0.1.0.9000
+Version: 0.0.0.9000
 Authors@R: c(
     person("Devin", "Incerti", , "devin.incerti@thevalueinitiative.org", c("aut", "cre")),
     person("Prodyumna", "Goutam", , "Prodyumna.Goutam@PrecisionHealthEconomics.com", c("aut")),

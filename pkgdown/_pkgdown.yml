@@ -12,16 +12,15 @@ reference:
       - tx_2L
       - tx_2LP
       - txseq_list
+  - title: "Model setup"
+    contents:
+      - create_states.txseq_list
+      - create_trans_mats.txseq_list
+      #- create_strategies.txseq_list
+      - create_patients
   - title: "Parameter estimates"
     contents:
       - params_mstate
-  - title: "Simulate disease progression"
-    contents:
-      - create_trans_mat
-      - create_strategies
-  - title: "Simulate costs and utilities"
-    contents:
-      - create_states
 
 navbar:
   title: IVI-NSCLC
