@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • iviNSCLC</title>
+<title>Multi-state NMA parameters — params_mstate_nma • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Multi-state NMA parameters — params_mstate_nma" />
+
+<meta property="og:description" content="The regression coefficients of the continuous time state transition models
+estimated using the multi-state network meta-analysis." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -89,102 +93,40 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Multi-state NMA parameters</h1>
+    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>params_mstate_nma.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>The regression coefficients of the continuous time state transition models
+estimated using the multi-state network meta-analysis.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='no'>params_mstate_nma</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-parameter-estimates" class="hasAnchor"><a href="#section-parameter-estimates" class="anchor"></a>Parameter estimates</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="params_mstate_nma.html">params_mstate_nma</a></code> </p>
-        </td>
-        <td><p>Multi-state NMA parameters</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-treatment-sequences" class="hasAnchor"><a href="#section-treatment-sequences" class="anchor"></a>Treatment sequences</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="tx_1L.html">tx_1L()</a></code> </p>
-        </td>
-        <td><p>First line treatment options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tx_2L.html">tx_2L()</a></code> </p>
-        </td>
-        <td><p>Second line treatment options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tx_2LP.html">tx_2LP()</a></code> </p>
-        </td>
-        <td><p>Second line plus treatment options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="txseq_list.html">txseq_list()</a></code> </p>
-        </td>
-        <td><p>A list of treatment sequences</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-model-setup" class="hasAnchor"><a href="#section-model-setup" class="anchor"></a>Model setup</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="create_states.txseq_list.html">create_states(<i>&lt;txseq_list&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Create health states tables</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_trans_mats.txseq_list.html">create_trans_mats(<i>&lt;txseq_list&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Create transition matrices</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_patients.html">create_patients()</a></code> </p>
-        </td>
-        <td><p>Create patient data table</p></td>
-      </tr>
-    </tbody>
-    </table>
+    <p>A list of <code><a href='http://www.rdocumentation.org/packages/hesim/topics/params_surv'>params_surv</a></code> objects from the <code>hesim</code>
+package. The list contains regression coefficient estimates from the Weibull,
+Gompertz, and 2nd order fractional polynomial survival distributions. The 
+parameter (e.g., scale and shape for the Weibull distribution) of each survival 
+distribution are predicted as a function of treatments, health state transitions, and
+treatment history (for 2L treatments).</p>
+    
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-parameter-estimates">Parameter estimates</a></li>
-      <li><a href="#section-treatment-sequences">Treatment sequences</a></li>
-      <li><a href="#section-model-setup">Model setup</a></li>
-    </ul>
+      
+      <li><a href="#format">Format</a></li>
+          </ul>
+
   </div>
 </div>
 

@@ -9,14 +9,15 @@
 #' }
 "treatments"
 
-#' Multi-state model parameters
+#' Multi-state NMA parameters
 #'
-#' The parameters of the individual-level continuous time state transition model
+#' The regression coefficients of the continuous time state transition models
 #' estimated using the multi-state network meta-analysis. 
 #'
-#' @format A list containing parameter estimates from Weibull, Gompertz,
-#' and 2nd order fractional polynomial survival distributions. Within each distribution,
-#' parameters are contained in a list of lists with the outer list denoting a 
-#' treatment line (1L, 2L, 2L+) and the inner list 
-#' a \code{\link[hesim]{params_surv_list}} object from the \code{hesim} package.
-"params_mstate"
+#' @format A list of \code{\link[hesim]{params_surv}} objects from the \code{hesim}
+#' package. The list contains regression coefficient estimates from the Weibull,
+#' Gompertz, and 2nd order fractional polynomial survival distributions. The 
+#' parameter (e.g., scale and shape for the Weibull distribution) of each survival 
+#' distribution are predicted as a function of treatments, health state transitions, and
+#' treatment history (for 2L treatments).
+"params_mstate_nma"

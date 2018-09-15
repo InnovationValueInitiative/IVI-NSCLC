@@ -6,6 +6,9 @@ development:
   mode: unreleased 
 
 reference:
+  - title: "Parameter estimates"
+    contents:
+      - params_mstate_nma
   - title: "Treatment sequences"
     contents:
       - tx_1L
@@ -18,9 +21,6 @@ reference:
       - create_trans_mats.txseq_list
       #- create_strategies.txseq_list
       - create_patients
-  - title: "Parameter estimates"
-    contents:
-      - params_mstate
 
 navbar:
   title: IVI-NSCLC
