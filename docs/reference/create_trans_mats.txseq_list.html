@@ -62,7 +62,7 @@ health states for the model associated with each modeled treatment sequence." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">iviNSCLC</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9000</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.0.0.9000</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ health states for the model associated with each modeled treatment sequence.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for txseq_list</span>
-<span class='fu'>create_trans_mats</span>(<span class='no'>object</span>)</pre>
+<span class='fu'><a href='create_trans_mats.html'>create_trans_mats</a></span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,15 +133,12 @@ in the same format as in the <a href='http://www.rdocumentation.org/packages/mst
                 <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC"</span>, <span class='st'>"PBDC"</span>),
                 <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
 <span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
-<span class='fu'>create_trans_mats</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
-#&gt;       S1 P1 S2pos P2pos S2neg P2neg  D
-#&gt; S1    NA  1    NA    NA    NA    NA  2
-#&gt; P1    NA NA     3    NA     4    NA NA
-#&gt; S2pos NA NA    NA     5    NA    NA  6
-#&gt; P2pos NA NA    NA    NA    NA    NA  7
-#&gt; S2neg NA NA    NA    NA    NA     8  9
-#&gt; P2neg NA NA    NA    NA    NA    NA 10
-#&gt; D     NA NA    NA    NA    NA    NA NA
+<span class='fu'><a href='create_trans_mats.html'>create_trans_mats</a></span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
+#&gt;        S1 P1-&gt;S2 P2  D
+#&gt; S1     NA      1 NA  2
+#&gt; P1-&gt;S2 NA     NA  3  4
+#&gt; P2     NA     NA NA  5
+#&gt; D      NA     NA NA NA
 #&gt; 
 #&gt; $seq2
 #&gt;    S1 P1  D
@@ -151,7 +148,7 @@ in the same format as in the <a href='http://www.rdocumentation.org/packages/mst
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "trans_mats"</div><div class='input'><span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>)
-<span class='fu'>create_trans_mats</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
+<span class='fu'><a href='create_trans_mats.html'>create_trans_mats</a></span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
 #&gt;    S2 P2  D
 #&gt; S2 NA  1  2
 #&gt; P2 NA NA  3

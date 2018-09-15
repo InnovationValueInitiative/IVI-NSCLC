@@ -62,7 +62,7 @@ structure associated with each modeled treatment sequence." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">iviNSCLC</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9000</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.0.0.9000</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ structure associated with each modeled treatment sequence.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for txseq_list</span>
-<span class='fu'>create_states</span>(<span class='no'>object</span>)</pre>
+<span class='fu'><a href='create_states.html'>create_states</a></span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,15 +138,12 @@ structure associated with each modeled treatment sequence.</p>
                 <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC"</span>, <span class='st'>"PBDC"</span>),
                 <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
 <span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
-<span class='fu'>create_states</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
-#&gt;    state_id state_name                      state_name_long
-#&gt; 1:        1         S1                       Stable with 1L
-#&gt; 2:        2         P1                  Progression with 1L
-#&gt; 3:        3      S2pos      Stable with 2L (T790M positive)
-#&gt; 4:        4      P2pos Progression with 2L (T790M positive)
-#&gt; 5:        5      S2neg      Stable with 2L (T790M negative)
-#&gt; 6:        6      P2neg Progression with 2L (T790M negative)
-#&gt; 7:        7          D                                Death
+<span class='fu'><a href='create_states.html'>create_states</a></span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
+#&gt;    state_id state_name                       state_name_long
+#&gt; 1:        1         S1                        Stable with 1L
+#&gt; 2:        2     P1-&gt;S2 Progression with 1L -&gt; Stable with 2L
+#&gt; 3:        3         P2                   Progression with 2L
+#&gt; 4:        4          D                                 Death
 #&gt; 
 #&gt; $seq2
 #&gt;    state_id state_name     state_name_long
@@ -156,7 +153,7 @@ structure associated with each modeled treatment sequence.</p>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "states"</div><div class='input'><span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>)
-<span class='fu'>create_states</span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
+<span class='fu'><a href='create_states.html'>create_states</a></span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
 #&gt;    state_id state_name     state_name_long
 #&gt; 1:        1         S2      Stable with 2L
 #&gt; 2:        2         P2 Progression with 2L

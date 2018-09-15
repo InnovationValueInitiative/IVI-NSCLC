@@ -4,7 +4,7 @@
 \name{pkg_env}
 \alias{pkg_env}
 \title{Package environment}
-\format{An object of class \code{environment} of length 14.}
+\format{An object of class \code{environment} of length 10.}
 \usage{
 pkg_env
 }

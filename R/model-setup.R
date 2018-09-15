@@ -13,8 +13,8 @@ create_states <- function (object) {
 create_states_txseq <- function(object, start_line){
   if (start_line == "first"){
     if (object$first != "osimertinib"){
-      state_names <- pkg_env$state_names_start1L_7
-      state_names_long <- pkg_env$state_names_long_start1L_7
+      state_names <- pkg_env$state_names_start1L_4
+      state_names_long <- pkg_env$state_names_long_start1L_4
     } else {
       state_names <- pkg_env$state_names_start1L_3
       state_names_long <- pkg_env$state_names_long_start1L_3  
@@ -78,14 +78,11 @@ create_trans_mats <- function (object) {
 create_trans_mat <- function(object, start_line){
   if (start_line == "first"){
     if (object$first != "osimertinib"){  
-      tmat <- rbind(c(NA, 1, NA, NA, NA, NA, 2),
-                    c(NA, NA, 3, NA, 4, NA, NA),
-                    c(NA, NA, NA, 5, NA, NA, 6),
-                    c(NA, NA, NA, NA, NA, NA, 7),
-                    c(NA, NA, NA, NA, NA, 8, 9),
-                    c(NA, NA, NA, NA, NA, NA, 10),
-                    c(NA, NA, NA, NA, NA, NA, NA))    
-      colnames(tmat) <- rownames(tmat) <- pkg_env$state_names_start1L_7        
+      tmat <- rbind(c(NA, 1, NA, 2),
+                    c(NA, NA, 3, 4),
+                    c(NA, NA, NA, 5),
+                    c(NA, NA, NA, NA))
+      colnames(tmat) <- rownames(tmat) <- pkg_env$state_names_start1L_4        
     } else {
       tmat <- rbind(c(NA, 1, 2),
                     c(NA, NA, 3),

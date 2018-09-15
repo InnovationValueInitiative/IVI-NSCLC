@@ -15,18 +15,18 @@ txseqs_v2 <- txseq_list(seq1 = txseq1, seq2 = txseq2_v2)
 
 test_that("create_states", {
   states <- create_states(txseqs_v1)
-  expect_true(all(sapply(states, nrow) == 7))
+  expect_true(all(sapply(states, nrow) == 4))
   states <- create_states(txseqs_v2)
-  expect_equal(nrow(states[[1]]), 7)
+  expect_equal(nrow(states[[1]]), 4)
   expect_equal(nrow(states[[2]]), 3)
 })
 
 test_that("create_trans_mat", {
   tmat <- create_trans_mats(txseqs_v1)
-  expect_true(all(sapply(tmat, nrow) == 7))
+  expect_true(all(sapply(tmat, nrow) == 4))
   expect_true(inherits(tmat[[1]], "matrix"))
   tmat <- create_trans_mats(txseqs_v2)
-  expect_equal(nrow(tmat[[1]]), 7)
+  expect_equal(nrow(tmat[[1]]), 4)
   expect_equal(nrow(tmat[[2]]), 3)
 })
 
