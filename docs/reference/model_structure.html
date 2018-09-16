@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create transition matrices — create_trans_mats.txseq_list • iviNSCLC</title>
+<title>Model structure — model_structure • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Create transition matrices — create_trans_mats.txseq_list" />
+<meta property="og:title" content="Model structure — model_structure" />
 
-<meta property="og:description" content="Create a list of transition matrices describing patient transitions between 
-health states for the model associated with each modeled treatment sequence." />
+<meta property="og:description" content="Define the structure of the oncology model." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,73 +94,63 @@ health states for the model associated with each modeled treatment sequence." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create transition matrices</h1>
+    <h1>Model structure</h1>
     <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/model-setup.R'><code>R/model-setup.R</code></a></small>
-    <div class="hidden name"><code>create_trans_mats.txseq_list.Rd</code></div>
+    <div class="hidden name"><code>model_structure.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a list of transition matrices describing patient transitions between 
-health states for the model associated with each modeled treatment sequence.</p>
+    <p>Define the structure of the oncology model.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for txseq_list</span>
-<span class='fu'><a href='create_trans_mats.html'>create_trans_mats</a></span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>model_structure</span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"four"</span>, <span class='st'>"three"</span>), <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"first"</span>,
+  <span class='st'>"second"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>A <code><a href='txseq_list.html'>txseq_list</a></code> object.</p></td>
+      <th>n_states</th>
+      <td><p>Number of modeled health states.</p></td>
+    </tr>
+    <tr>
+      <th>start_line</th>
+      <td><p>The starting line of treatmnet that is being modeled. When
+modeling second line treatment, the first line must be specified
+in order to characterize a treatment history.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of transition matrices for each treatment sequence, each 
-in the same format as in the <a href='http://www.rdocumentation.org/packages/mstate/topics/mstate-package'>mstate</a> package.</p>
+    <p>A list</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>txseq1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"erlotinib"</span>,
-                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
-                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseq2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"osimertinib"</span>,
-                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC"</span>, <span class='st'>"PBDC"</span>),
-                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
-<span class='fu'><a href='create_trans_mats.html'>create_trans_mats</a></span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
-#&gt;        S1 P1-&gt;S2 P2  D
-#&gt; S1     NA      1 NA  2
-#&gt; P1-&gt;S2 NA     NA  3  4
-#&gt; P2     NA     NA NA  5
-#&gt; D      NA     NA NA NA
+    <pre class="examples"><div class='input'><span class='fu'>model_structure</span>()</div><div class='output co'>#&gt; $n_states
+#&gt; [1] "four"
 #&gt; 
-#&gt; $seq2
-#&gt;    S1 P1  D
-#&gt; S1 NA  1  2
-#&gt; P1 NA NA  3
-#&gt; D  NA NA NA
+#&gt; $start_line
+#&gt; [1] "first"
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "trans_mats"</div><div class='input'><span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>)
-<span class='fu'><a href='create_trans_mats.html'>create_trans_mats</a></span>(<span class='no'>txseqs</span>)</div><div class='output co'>#&gt; $seq1
-#&gt;    S2 P2  D
-#&gt; S2 NA  1  2
-#&gt; P2 NA NA  3
-#&gt; D  NA NA NA
+#&gt; [1] "model_structure"</div><div class='input'><span class='fu'>model_structure</span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"first"</span>)</div><div class='output co'>#&gt; $n_states
+#&gt; [1] "three"
 #&gt; 
-#&gt; $seq2
-#&gt;    S2 P2  D
-#&gt; S2 NA  1  2
-#&gt; P2 NA NA  3
-#&gt; D  NA NA NA
+#&gt; $start_line
+#&gt; [1] "first"
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "trans_mats"</div></pre>
+#&gt; [1] "model_structure"</div><div class='input'><span class='fu'>model_structure</span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>)</div><div class='output co'>#&gt; $n_states
+#&gt; [1] "three"
+#&gt; 
+#&gt; $start_line
+#&gt; [1] "second"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "model_structure"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

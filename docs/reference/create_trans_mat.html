@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create transition matrcies — create_trans_mats • iviNSCLC</title>
+<title>Create transition matrix — create_trans_mat • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Create transition matrcies — create_trans_mats" />
+<meta property="og:title" content="Create transition matrix — create_trans_mat" />
 
-<meta property="og:description" content="Generic function to create transition matrices." />
+<meta property="og:description" content="Create a transition matrix describing patient transitions between 
+health states." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,37 +95,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create transition matrcies</h1>
+    <h1>Create transition matrix</h1>
     <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/model-setup.R'><code>R/model-setup.R</code></a></small>
-    <div class="hidden name"><code>create_trans_mats.Rd</code></div>
+    <div class="hidden name"><code>create_trans_mat.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Generic function to create transition matrices.</p>
+    <p>Create a transition matrix describing patient transitions between 
+health states.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_trans_mats</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>create_trans_mat</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Object used to create transition matrices.</p></td>
+      <td><p>A <code><a href='model_structure.html'>model_structure</a></code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The form of the returned value depends on <code>object</code>.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='create_trans_mats.txseq_list.html'>create_trans_mats.txseq_list</a></code></p></div>
+    <p>A transition matrix of the same format as in the <a href='http://www.rdocumentation.org/packages/mstate/topics/mstate-package'>mstate</a> 
+package.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"four"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"first"</span>)
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct</span>)</div><div class='output co'>#&gt;        S1 P1-&gt;S2 P2  D
+#&gt; S1     NA      1 NA  2
+#&gt; P1-&gt;S2 NA     NA  3  4
+#&gt; P2     NA     NA NA  5
+#&gt; D      NA     NA NA NA</div><div class='input'>
+<span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"first"</span>)
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct</span>)</div><div class='output co'>#&gt;    S1 P1  D
+#&gt; S1 NA  1  2
+#&gt; P1 NA NA  3
+#&gt; D  NA NA NA</div><div class='input'>
+<span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>)
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct</span>)</div><div class='output co'>#&gt;    S2 P2  D
+#&gt; S2 NA  1  2
+#&gt; P2 NA NA  3
+#&gt; D  NA NA NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -132,9 +148,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

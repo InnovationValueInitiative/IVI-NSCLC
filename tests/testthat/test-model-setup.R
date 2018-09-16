@@ -1,33 +1,39 @@
 context("stateval.R unit tests")
 rm(list = ls())
 
-txseq1 <- txseq(first = "erlotinib",
-               second = c("osimertinib", "PBDC"),
-               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseq2_v1 <- txseq(first = "gefitinib",
-               second = c("osimertinib", "PBDC"),
-               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
-txseq2_v2 <- txseq(first = "osimertinib",
-               second = c("PBDC", "PBDC"),
-               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
-txseqs_v1 <- txseq_list(seq1 = txseq1, seq2 = txseq2_v1) 
-txseqs_v2 <- txseq_list(seq1 = txseq1, seq2 = txseq2_v2)
+test_that("model_structure", {
+  struct <- model_structure()
+  expect_true(inherits(struct, "model_structure"))
+  expect_error(model_structure(start_line = "second"))
+})
 
 test_that("create_states", {
-  states <- create_states(txseqs_v1)
-  expect_true(all(sapply(states, nrow) == 4))
-  states <- create_states(txseqs_v2)
-  expect_equal(nrow(states[[1]]), 4)
-  expect_equal(nrow(states[[2]]), 3)
+  states <- create_states(model_structure())
+  expect_equal(nrow(states), 4)
+  
+  states <- create_states(model_structure(n_states = "three"))
+  expect_equal(states$state_name, c("S1", "P1", "D"))
+  
+  states <- create_states(model_structure(n_states = "three", start_line = "second"))
+  expect_equal(states$state_name, c("S2", "P2", "D"))
+  
+  expect_error(create_states(2))
 })
 
 test_that("create_trans_mat", {
-  tmat <- create_trans_mats(txseqs_v1)
-  expect_true(all(sapply(tmat, nrow) == 4))
-  expect_true(inherits(tmat[[1]], "matrix"))
-  tmat <- create_trans_mats(txseqs_v2)
-  expect_equal(nrow(tmat[[1]]), 4)
-  expect_equal(nrow(tmat[[2]]), 3)
+  struct <- model_structure(n_states = "four", start_line = "first")
+  tmat <- create_trans_mat(struct)
+  expect_equal(nrow(tmat), 4)
+  
+  struct <- model_structure(n_states = "three", start_line = "first")
+  tmat <- create_trans_mat(struct)
+  expect_equal(nrow(tmat), 3)
+  
+  struct <- model_structure(n_states = "three", start_line = "second")
+  tmat <- create_trans_mat(struct)
+  expect_equal(nrow(tmat), 3)  
+  
+  expect_error(create_trans_mat("two"))
 })
 
 test_that("create_patients", {
@@ -35,19 +41,3 @@ test_that("create_patients", {
   expect_true(inherits(patients, "data.table"))
   expect_equal(nrow(patients), 3)
 })
-
-# test_that("create_strategies", {
-#   strategies <- create_strategies(txseqs_v1)
-#   expect_equal(strategies$name_first, sapply(txseqs_v1, function (x) x$first), 
-#                check.attributes = FALSE)
-#   expect_equal(strategies$name_second_pos, sapply(txseqs_v1, function (x) x$second["pos"]), 
-#                check.attributes = FALSE)  
-#   
-#   strategies <- create_strategies(txseqs_v2)
-#   expect_equal(strategies$name_second_neg, sapply(txseqs_v1, function (x) x$second["neg"]), 
-#                check.attributes = FALSE)  
-#   expect_equal(strategies$name_second_plus_pos, sapply(txseqs_v1, function (x) x$second_plus["pos"]), 
-#                check.attributes = FALSE)    
-#   expect_equal(strategies$name_second_plus_neg, sapply(txseqs_v1, function (x) x$second_plus["neg"]), 
-#                check.attributes = FALSE)  
-# })

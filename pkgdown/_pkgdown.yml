@@ -17,9 +17,8 @@ reference:
       - txseq_list
   - title: "Model setup"
     contents:
-      - create_states.txseq_list
-      - create_trans_mats.txseq_list
-      #- create_strategies.txseq_list
+      - create_states
+      - create_trans_mat
       - create_patients
 
 navbar:
