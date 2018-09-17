@@ -55,6 +55,7 @@ colnames(shape) <- vars_shape
 
 # Save object
 params_mstate_nma <- list()
-params_mstate_nma$weibull <- list(scale = scale, shape = shape)
+params_mstate_nma$weibull <- params_surv(coef = list(scale = scale, shape = shape),
+                                         dist = "weibullNMA")
 save(params_mstate_nma, file = "../data/params_mstate_nma.rda", compress = "bzip2")
 
