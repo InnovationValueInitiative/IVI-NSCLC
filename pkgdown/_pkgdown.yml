@@ -14,12 +14,17 @@ reference:
       - tx_1L
       - tx_2L
       - tx_2LP
+      - txseq
       - txseq_list
   - title: "Model setup"
     contents:
+      - model_structure
       - create_states
       - create_trans_mat
       - create_patients
+  - title: "State transition model"
+    contents:
+      - create_transmod_data
 
 navbar:
   title: IVI-NSCLC

@@ -2,7 +2,7 @@
 % Please edit documentation in R/txseq.R
 \name{txseq}
 \alias{txseq}
-\title{A treatment sequence}
+\title{A single treatment sequence}
 \usage{
 txseq(first, second, second_plus)
 }
@@ -11,23 +11,33 @@ txseq(first, second, second_plus)
 
 \item{second}{A vector of length 2 where the first element is the second line treatment 
 to be used if a patient develops a T790M mutation after first line treatment and the second element is 
-the second line treatment to be used if the patient did not.}
+the second line treatment to be used if the patient did not. One of the elements may be \code{NA} if the 
+model begins at second line and T790M status is therefore known.}
 
 \item{second_plus}{A vector of length 2 where the first element is the post second line treatment 
 to be used if a patient develops a T790M mutation after first line treatment and the second element is 
-the post second line treatment to be used if the patient did not.}
+the post second line treatment to be used if the patient did not. One of the elements may be \code{NA} if the 
+model begins at second line and T790M status is therefore known.}
 }
 \value{
 An object of class "txseq", which is a list of treatments used at first line (\code{first}),
  second line (\code{second}), and post second line (\code{second_plus}).
 }
 \description{
-Create a treatment sequence for simulation modeling.
+Create a single treatment sequence for simulation modeling.
 }
 \examples{
 txseq <- txseq(first = "erlotinib",
                second = c("osimertinib", "PBDC"),
                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+txseq$first
+txseq$second
+txseq$second_plus 
+
+# T790M+ patient previously treated with erlotinib 
+txseq <- txseq(first = "erlotinib",
+               second = c("osimertinib", NA),
+               second_plus = c("PBDC + bevacizumab", NA))
 txseq$first
 txseq$second
 txseq$second_plus 

@@ -22,6 +22,7 @@ Depends:
 Imports:
     data.table,
     flexsurv,
+    hesim,
     MASS,
     Rcpp (>= 0.12.16),
     R6,

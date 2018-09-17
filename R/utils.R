@@ -10,3 +10,10 @@
 check <- function (object, ...) {
   UseMethod("check")
 }
+
+check_is_class <- function(object, name, class){
+  if (!inherits(object, class)){
+      stop(paste0("'", name, "' must be of class '", class, "'"),
+         call. = FALSE)
+  }  
+}

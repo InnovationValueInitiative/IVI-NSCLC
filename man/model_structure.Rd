@@ -4,24 +4,39 @@
 \alias{model_structure}
 \title{Model structure}
 \usage{
-model_structure(n_states = c("four", "three"), start_line = c("first",
-  "second"))
+model_structure(txseqs, n_states = c("four", "three"), dist = c("weibull"))
 }
 \arguments{
+\item{txseqs}{A \code{\link{txseq_list}} object.}
+
 \item{n_states}{Number of modeled health states.}
 
-\item{start_line}{The starting line of treatmnet that is being modeled. When
-modeling second line treatment, the first line must be specified
-in order to characterize a treatment history.}
+\item{dist}{Parametric distribution used to model health state transitions.}
 }
 \value{
-A list
+A list containing the elements \code{txseqs}, \code{n_states} and
+\code{dist}.
 }
 \description{
 Define the structure of the oncology model.
 }
 \examples{
-model_structure()
-model_structure(n_states = "three", start_line = "first")
-model_structure(n_states = "three", start_line = "second")
+txseq1 <- txseq(first = "erlotinib",
+                second = c("osimertinib", "PBDC"),
+               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+txseq2 <- txseq(first = "gefitinib",
+               second = c("osimertinib", "PBDC"),
+               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+
+# Model with 4 health states
+struct <- model_structure(txseqs)
+names(struct)
+class(struct$txseqs)
+struct$n_states
+struct$dist
+
+# Model with 3 health states
+struct <- model_structure(txseqs, n_states = "three", dist = "weibull")
+struct$n_states
 }

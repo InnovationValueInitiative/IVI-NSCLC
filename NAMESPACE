@@ -3,6 +3,7 @@
 export(create_patients)
 export(create_states)
 export(create_trans_mat)
+export(create_transmod_data)
 export(model_structure)
 export(tx_1L)
 export(tx_2L)

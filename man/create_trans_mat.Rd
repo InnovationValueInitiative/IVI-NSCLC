@@ -18,12 +18,22 @@ Create a transition matrix describing patient transitions between
 health states.
 }
 \examples{
-struct <- model_structure(n_states = "four", start_line = "first")
-create_trans_mat(struct)
+txseq1 <- txseq(first = "erlotinib",
+               second = c("osimertinib", "PBDC"),
+               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+txseq2 <- txseq(first = "gefitinib",
+               second = c("osimertinib", "PBDC"),
+               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2) 
 
-struct <- model_structure(n_states = "three", start_line = "first")
-create_trans_mat(struct)
-
-struct <- model_structure(n_states = "three", start_line = "second")
-create_trans_mat(struct)
+struct1 <- model_structure(txseqs, n_states = "four")
+create_trans_mat(struct1)
+ 
+struct2 <- model_structure(txseqs, n_states = "three")
+create_trans_mat(struct2)
+ 
+txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2, 
+                     start_line = "second", mutation = "positive")
+struct3 <- model_structure(txseqs, n_states = "three")
+create_trans_mat(struct3)
 }

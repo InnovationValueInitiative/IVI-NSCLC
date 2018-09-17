@@ -4,7 +4,8 @@
 \alias{txseq_list}
 \title{A list of treatment sequences}
 \usage{
-txseq_list(..., start_line = c("first", "second"))
+txseq_list(..., start_line = c("first", "second"), mutation = c("unknown",
+  "positive", "negative"))
 }
 \arguments{
 \item{...}{Objects to form a list.}
@@ -12,10 +13,15 @@ txseq_list(..., start_line = c("first", "second"))
 \item{start_line}{The starting line of treatmnet that is being modeled. When
 modeling second line treatment, the first line must be specified
 in order to characterize a treatment history.}
+
+\item{mutation}{T790M mutation status. If the model starts at first line, then
+this must be \code{"unknown"}; otherwise, if the model starts at second line,
+then the mutation status must be specified as either \code{"positive"} or
+\code{"negative"}, since it will be known.}
 }
 \value{
 An object of class "txseq_list", which is a list of objects of class. 
-\code{start_line} is stored as an attribute.
+\code{start_line} and \code{mutation} are stored as attributes.
 \code{\link{txseq}}.
 }
 \description{

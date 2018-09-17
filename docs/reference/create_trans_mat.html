@@ -125,19 +125,29 @@ package.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"four"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"first"</span>)
-<span class='fu'>create_trans_mat</span>(<span class='no'>struct</span>)</div><div class='output co'>#&gt;        S1 P1-&gt;S2 P2  D
+    <pre class="examples"><div class='input'><span class='no'>txseq1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"erlotinib"</span>,
+               <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
+               <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
+<span class='no'>txseq2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"gefitinib"</span>,
+               <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
+               <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
+<span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
+
+<span class='no'>struct1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"four"</span>)
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct1</span>)</div><div class='output co'>#&gt;        S1 P1-&gt;S2 P2  D
 #&gt; S1     NA      1 NA  2
 #&gt; P1-&gt;S2 NA     NA  3  4
 #&gt; P2     NA     NA NA  5
 #&gt; D      NA     NA NA NA</div><div class='input'>
-<span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"first"</span>)
-<span class='fu'>create_trans_mat</span>(<span class='no'>struct</span>)</div><div class='output co'>#&gt;    S1 P1  D
+<span class='no'>struct2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>)
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct2</span>)</div><div class='output co'>#&gt;    S1 P1  D
 #&gt; S1 NA  1  2
 #&gt; P1 NA NA  3
 #&gt; D  NA NA NA</div><div class='input'>
-<span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>)
-<span class='fu'>create_trans_mat</span>(<span class='no'>struct</span>)</div><div class='output co'>#&gt;    S2 P2  D
+<span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>,
+                     <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>, <span class='kw'>mutation</span> <span class='kw'>=</span> <span class='st'>"positive"</span>)
+<span class='no'>struct3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>)
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct3</span>)</div><div class='output co'>#&gt;    S2 P2  D
 #&gt; S2 NA  1  2
 #&gt; P2 NA NA  3
 #&gt; D  NA NA NA</div></pre>

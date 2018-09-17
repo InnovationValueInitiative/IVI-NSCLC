@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A treatment sequence — txseq • iviNSCLC</title>
+<title>A single treatment sequence — txseq • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="A treatment sequence — txseq" />
+<meta property="og:title" content="A single treatment sequence — txseq" />
 
-<meta property="og:description" content="Create a treatment sequence for simulation modeling." />
+<meta property="og:description" content="Create a single treatment sequence for simulation modeling." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,14 +94,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A treatment sequence</h1>
+    <h1>A single treatment sequence</h1>
     <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/txseq.R'><code>R/txseq.R</code></a></small>
     <div class="hidden name"><code>txseq.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a treatment sequence for simulation modeling.</p>
+    <p>Create a single treatment sequence for simulation modeling.</p>
     
     </div>
 
@@ -118,13 +118,15 @@
       <th>second</th>
       <td><p>A vector of length 2 where the first element is the second line treatment 
 to be used if a patient develops a T790M mutation after first line treatment and the second element is 
-the second line treatment to be used if the patient did not.</p></td>
+the second line treatment to be used if the patient did not. One of the elements may be <code>NA</code> if the 
+model begins at second line and T790M status is therefore known.</p></td>
     </tr>
     <tr>
       <th>second_plus</th>
       <td><p>A vector of length 2 where the first element is the post second line treatment 
 to be used if a patient develops a T790M mutation after first line treatment and the second element is 
-the post second line treatment to be used if the patient did not.</p></td>
+the post second line treatment to be used if the patient did not. One of the elements may be <code>NA</code> if the 
+model begins at second line and T790M status is therefore known.</p></td>
     </tr>
     </table>
     
@@ -140,7 +142,14 @@ the post second line treatment to be used if the patient did not.</p></td>
                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
 <span class='no'>txseq</span>$<span class='no'>first</span></div><div class='output co'>#&gt; [1] "erlotinib"</div><div class='input'><span class='no'>txseq</span>$<span class='no'>second</span></div><div class='output co'>#&gt;           pos           neg 
 #&gt; "osimertinib"        "PBDC" </div><div class='input'><span class='no'>txseq</span>$<span class='no'>second_plus</span></div><div class='output co'>#&gt;                  pos                  neg 
-#&gt; "PBDC + bevacizumab" "PBDC + bevacizumab" </div></pre>
+#&gt; "PBDC + bevacizumab" "PBDC + bevacizumab" </div><div class='input'>
+<span class='co'># T790M+ patient previously treated with erlotinib </span>
+<span class='no'>txseq</span> <span class='kw'>&lt;-</span> <span class='fu'>txseq</span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"erlotinib"</span>,
+               <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='fl'>NA</span>),
+               <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='fl'>NA</span>))
+<span class='no'>txseq</span>$<span class='no'>first</span></div><div class='output co'>#&gt; [1] "erlotinib"</div><div class='input'><span class='no'>txseq</span>$<span class='no'>second</span></div><div class='output co'>#&gt;           pos           neg 
+#&gt; "osimertinib"            NA </div><div class='input'><span class='no'>txseq</span>$<span class='no'>second_plus</span></div><div class='output co'>#&gt;                  pos                  neg 
+#&gt; "PBDC + bevacizumab"                   NA </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -1,61 +1,89 @@
 #' Model structure
 #' 
 #' Define the structure of the oncology model.
+#' @param txseqs A \code{\link{txseq_list}} object.
 #' @param n_states Number of modeled health states.
-#' @param start_line The starting line of treatmnet that is being modeled. When
-#' modeling second line treatment, the first line must be specified
-#' in order to characterize a treatment history. 
-#' @return A list
+#' @param dist Parametric distribution used to model health state transitions.
+#' @return A list containing the elements \code{txseqs}, \code{n_states} and
+#' \code{dist}.
 #' @examples
-#' model_structure()
-#' model_structure(n_states = "three", start_line = "first")
-#' model_structure(n_states = "three", start_line = "second")
+#' txseq1 <- txseq(first = "erlotinib",
+#'                 second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+#' txseq2 <- txseq(first = "gefitinib",
+#'                second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+#' 
+#' # Model with 4 health states
+#' struct <- model_structure(txseqs)
+#' names(struct)
+#' class(struct$txseqs)
+#' struct$n_states
+#' struct$dist
+#' 
+#' # Model with 3 health states
+#' struct <- model_structure(txseqs, n_states = "three", dist = "weibull")
+#' struct$n_states
 #' @export
-model_structure <- function(n_states = c("four", "three"), 
-                            start_line = c("first", "second")) {
-  start_line <- match.arg(start_line)
+model_structure <- function(txseqs,
+                            n_states = c("four", "three"),
+                            dist = c("weibull")) {
+  dist <- match.arg(dist)
   n_states <- match.arg(n_states)
-  if (n_states == "four" & start_line == "second"){
-    stop("If start_line == 'second', then n_states must be 'three'.",
+  check_is_class(txseqs, "txseqs", "txseq_list")
+  if (n_states == "four" & attributes(txseqs)$start_line == "second"){
+    stop("If the model starts at second line, then n_states must be 'three'.",
          call. = FALSE)
-  }
-  l <- list(n_states = n_states,
-            start_line = start_line)
+  }  
+  if (n_states == "four" & "osimertinib" %in% sapply(txseqs, function (x) x$first)){
+      msg <- paste0("There is no evidence to parameterize a model with four health states ", 
+                    "when osimertinib is used as a first line treatment. ",
+                    "Use a model with three health states for sequences beginning ",
+                    "with osimertinib instead.")
+      stop(msg, call. = FALSE) 
+  }    
+  l <- list(txseqs = txseqs,
+            n_states = n_states,
+            dist = dist)
   class(l) <- "model_structure"
   return(l)
 }
 
-check_is_model_structure <- function(object){
-  if (!inherits(object, "model_structure")){
-      stop("'object' must be of class 'model_stucture'",
-         call. = FALSE)
-  }  
-}
-
 #' Create health states tables
 #' 
-#' Create a data table describing the health states for the model
-#' structure. 
+#' Create a data table describing the health states for the model.
 #' @param object A \code{\link{model_structure}} object.
 #' @return
+#' A data table with the following columns:
 #' \describe{
 #' \item{state_id}{The state ID number.}
 #' \item{state_name}{The state name,}
 #' \item{state_name_long}{A long-form state name.}
 #' }
 #' @examples
-#' struct <- model_structure(n_states = "four", start_line = "first")
-#' create_states(struct)
+#' txseq1 <- txseq(first = "erlotinib",
+#'                second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+#' txseq2 <- txseq(first = "gefitinib",
+#'                second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2) 
 #' 
-#' struct <- model_structure(n_states = "three", start_line = "first")
-#' create_states(struct)
+#' struct1 <- model_structure(txseqs, n_states = "four")
+#' create_states(struct1)
 #' 
-#' struct <- model_structure(n_states = "three", start_line = "second")
-#' create_states(struct)
+#' struct2 <- model_structure(txseqs, n_states = "three")
+#' create_states(struct2)
+#' 
+#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2, 
+#'                      start_line = "second", mutation = "negative")
+#' struct3 <- model_structure(txseqs, n_states = "three")
+#' create_states(struct3)
 #' @export
 create_states <- function(object){
-  check_is_model_structure(object)
-  start_line <- object$start_line
+  check_is_class(object, "object", "model_structure")
+  start_line <- attributes(object$txseqs)$start_line
   if (start_line == "first"){
     if (object$n_states == "four"){
       state_names <- pkg_env$state_names_start1L_4
@@ -82,18 +110,28 @@ create_states <- function(object){
 #' @return A transition matrix of the same format as in the \link[mstate]{mstate} 
 #' package.
 #' @examples
-#' struct <- model_structure(n_states = "four", start_line = "first")
-#' create_trans_mat(struct)
+#' txseq1 <- txseq(first = "erlotinib",
+#'                second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+#' txseq2 <- txseq(first = "gefitinib",
+#'                second = c("osimertinib", "PBDC"),
+#'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2) 
 #' 
-#' struct <- model_structure(n_states = "three", start_line = "first")
-#' create_trans_mat(struct)
-#' 
-#' struct <- model_structure(n_states = "three", start_line = "second")
-#' create_trans_mat(struct)
+#' struct1 <- model_structure(txseqs, n_states = "four")
+#' create_trans_mat(struct1)
+#'  
+#' struct2 <- model_structure(txseqs, n_states = "three")
+#' create_trans_mat(struct2)
+#'  
+#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2, 
+#'                      start_line = "second", mutation = "positive")
+#' struct3 <- model_structure(txseqs, n_states = "three")
+#' create_trans_mat(struct3)
 #' @export
 create_trans_mat <- function(object){
-  check_is_model_structure(object)
-  if (object$start_line == "first"){
+  check_is_class(object, "object", "model_structure")
+  if (attributes(object$txseqs)$start_line == "first"){
     if (object$n_states == "four"){  
       tmat <- rbind(c(NA, 1, NA, 2),
                     c(NA, NA, 3, 4),
@@ -121,6 +159,7 @@ create_trans_mat <- function(object){
 #' @param n Number of patients to model.
 #' @examples
 #' create_patients(n = 10)
+#' @return A table containing each modeled patient.
 #' @export
 create_patients <- function(n){
   patient_id <- 1:n

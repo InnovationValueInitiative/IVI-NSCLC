@@ -85,7 +85,10 @@ tx_2LP_work <- function(second){
             paste0("PBDC + ", pkg_env$ici),
             paste0("PBDC + ", pkg_env$anti_vegf, " + ", pkg_env$ici)
             )
-  if (second == "osimertinib"){
+  if (is.na(second)){
+    tx <- NA
+  }
+  else if (second == "osimertinib"){
     tx <- all_tx
   } else if (second == "PBDC"){
     tx <- all_tx[all_tx != "PBDC"]
@@ -93,23 +96,26 @@ tx_2LP_work <- function(second){
     tx <- all_tx[!all_tx %in% c("PBDC",  paste0("PBDC + ", pkg_env$anti_vegf))]
   } else if (second %in% c(pkg_env$tki_1gen, pkg_env$tki_2gen)){
     tx <- all_tx
-  } else {
+  } 
+  else {
     stop(paste0(second, " is not a second line treatment"),
          call. = FALSE)
   }
   return(tx)
 }
 
-#' A treatment sequence
+#' A single treatment sequence
 #' 
-#' Create a treatment sequence for simulation modeling. 
+#' Create a single treatment sequence for simulation modeling. 
 #' @param first The treatment to be used at first line. Must be a character of length 1.
 #' @param second A vector of length 2 where the first element is the second line treatment 
 #' to be used if a patient develops a T790M mutation after first line treatment and the second element is 
-#' the second line treatment to be used if the patient did not.
+#' the second line treatment to be used if the patient did not. One of the elements may be \code{NA} if the 
+#' model begins at second line and T790M status is therefore known. 
 #' @param second_plus A vector of length 2 where the first element is the post second line treatment 
 #' to be used if a patient develops a T790M mutation after first line treatment and the second element is 
-#' the post second line treatment to be used if the patient did not.
+#' the post second line treatment to be used if the patient did not. One of the elements may be \code{NA} if the 
+#' model begins at second line and T790M status is therefore known. 
 #' @return An object of class "txseq", which is a list of treatments used at first line (\code{first}),
 #'  second line (\code{second}), and post second line (\code{second_plus}).
 #' @export
@@ -117,6 +123,14 @@ tx_2LP_work <- function(second){
 #' txseq <- txseq(first = "erlotinib",
 #'                second = c("osimertinib", "PBDC"),
 #'                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+#' txseq$first
+#' txseq$second
+#' txseq$second_plus 
+#' 
+#' # T790M+ patient previously treated with erlotinib 
+#' txseq <- txseq(first = "erlotinib",
+#'                second = c("osimertinib", NA),
+#'                second_plus = c("PBDC + bevacizumab", NA))
 #' txseq$first
 #' txseq$second
 #' txseq$second_plus 
@@ -158,29 +172,54 @@ check.txseq <- function(x){
   
   # Check 2nd line
   tx_2L_opts <- tx_2L(x$first)
-  if (!x$second[1] %in% tx_2L_opts$pos){
+  if (!x$second[1] %in% tx_2L_opts$pos & !is.na(x$second[1])){
     stop(paste0(x$second[1], " cannot be selected as a 2nd line treatment ",
                 "for patients with a T790M mutation."),
           call. = FALSE)    
   }
-  if (!x$second[2] %in% tx_2L_opts$neg){
+  if (!x$second[2] %in% tx_2L_opts$neg & !is.na(x$second[2])){
       stop(paste0(x$second[2], " cannot be selected as a 2nd line treatment ",
                   "for patients without a T790M mutation"),
                 call. = FALSE)
   }  
   
   # Check 2nd line plus
-  tx_2LP_opts <- tx_2LP(x$second)  
-  if (!x$second_plus[1] %in% tx_2LP_opts$pos){
-    stop(paste0(x$second_plus[1], " cannot be selected as a post 2nd line treatment ",
+  ## T790M+
+  tx_2LP_opts <- tx_2LP(x$second)
+  if (!x$second_plus[1] %in% tx_2LP_opts$pos & !is.na(x$second_plus[1])){
+    if (is.na(tx_2LP_opts$pos[1])){
+      stop(paste0("A post second line treatment cannot be selected for patients with a T790M mutation ",
+                  "if no prior treatment was selected at second line."),
+           call. = FALSE)
+    } else{
+      stop(paste0(x$second_plus[1], " cannot be selected as a post 2nd line treatment ",
                 "for patients with a T790M mutation."),
-          call. = FALSE)    
+          call. = FALSE)     
+    }
   }
-  if (!x$second_plus[2] %in% tx_2LP_opts$neg){
-    stop(paste0(x$second_plus[2], " cannot be selected as a post 2nd line treatment ",
-                "for patients without a T790M mutation."),
-          call. = FALSE)    
-  }  
+  if (is.na(x$second_plus[1]) & !is.na(x$second[1])){
+    stop(paste0("A post second line treatment must be selected for patients with a T790M mutation ",
+                "if a prior treatment was selected at second line."),
+         call. = FALSE)
+  }
+  
+  ## T790M-
+  if (!x$second_plus[2] %in% tx_2LP_opts$neg & !is.na(x$second_plus[2])){
+    if (is.na(tx_2LP_opts$neg[1])){
+      stop(paste0("A post second line treatment cannot be selected for patients without a T790M mutation ",
+                  "if no prior treatment was selected at second line."),
+           call. = FALSE)
+    } else{
+      stop(paste0(x$second_plus[2], " cannot be selected as a post 2nd line treatment ",
+                  "for patients without a T790M mutation."),
+          call. = FALSE)   
+    }
+  }
+  if (is.na(x$second_plus[2]) & !is.na(x$second[2])){
+    stop(paste0("A post second line treatment must be selected for patients without a T790M mutation ",
+                "if a prior treatment was selected at second line."),
+         call. = FALSE)
+  }    
   
   return(x)
 }
@@ -192,8 +231,12 @@ check.txseq <- function(x){
 #' @param start_line The starting line of treatmnet that is being modeled. When
 #' modeling second line treatment, the first line must be specified
 #' in order to characterize a treatment history.
+#' @param mutation T790M mutation status. If the model starts at first line, then
+#' this must be \code{"unknown"}; otherwise, if the model starts at second line,
+#' then the mutation status must be specified as either \code{"positive"} or
+#' \code{"negative"}, since it will be known.
 #' @return An object of class "txseq_list", which is a list of objects of class. 
-#' \code{start_line} is stored as an attribute.
+#' \code{start_line} and \code{mutation} are stored as attributes.
 #' \code{\link{txseq}}. 
 #' @export
 #' @examples
@@ -207,19 +250,22 @@ check.txseq <- function(x){
 #' class(txseqs)        
 #' print(txseqs$seq1)
 #' attributes(txseqs)
-txseq_list <- function(..., start_line = c("first", "second")){
+txseq_list <- function(..., start_line = c("first", "second"), 
+                       mutation = c("unknown", "positive", "negative")){
+  mutation <- match.arg(mutation)
   start_line <- match.arg(start_line)
-  objects <- new_txseq_list(..., start_line = start_line)
+  objects <- new_txseq_list(..., start_line = start_line, mutation = mutation)
   return(check(objects))
 }
 
-new_txseq_list <- function(..., start_line){
+new_txseq_list <- function(..., start_line, mutation){
   objects <- list(...)
   if(length(objects) == 1 & inherits(objects[[1]], "list")){
       objects <- objects[[1]]
   }
   class(objects) <- "txseq_list"
   attr(objects, "start_line") <- start_line
+  attr(objects, "mutation") <- mutation
   return(objects)
 }
 
@@ -235,5 +281,43 @@ check.txseq_list <- function(x){
            call. = FALSE)
     }
   } 
+  
+  if (attributes(x)$start_line == "first" & attributes(x)$mutation != "unknown"){
+    stop(paste0("Mutation status must be unknown if modeling a treatment sequence ",
+                "starting at first line."),
+         call. = FALSE)
+  }
+  if (attributes(x)$start_line == "second" & attributes(x)$mutation == "unknown"){
+    stop(paste0("Mutation status cannot be unknown if modeling a treatment sequence ",
+                "starting at second line."),
+         call. = FALSE)
+  }  
+  if (attributes(x)$start_line == "first"){
+    if(any(is.na(unlist(x)))){
+      stop(paste0("Treatment sequences cannot contain NA elements when modeling a ", 
+                 "treatment sequence starting at first line."),
+         call. = FALSE)
+    }
+  }
+  
+  if (attributes(x)$start_line == "second"){  
+    name_second <- sapply(x, function(y) y$second)
+    name_second_plus <- sapply(x, function(y) y$second_plus)
+    if (attributes(x)$mutation == "positive"){
+      if (any(is.na(name_second["pos", ])) | any(is.na(name_second_plus["pos", ]))){
+        stop(paste0("T790M+ elements cannot contain NA elements when modeling ", 
+                 "T790M+ patients."),
+            call. = FALSE)
+      }
+    } else {
+      if (any(is.na(name_second["neg", ])) | any(is.na(name_second_plus["neg", ]))){
+        stop(paste0("T790M- elements cannot contain NA elements when modeling ", 
+                 "T790M- patients."),
+            call. = FALSE)
+      }      
+    }
+    
+  }
+  
   return(x)
 }

@@ -9,6 +9,9 @@ create_patients(n)
 \arguments{
 \item{n}{Number of patients to model.}
 }
+\value{
+A table containing each modeled patient.
+}
 \description{
 Create a data table of patients to model.
 }

@@ -10,6 +10,7 @@ create_states(object)
 \item{object}{A \code{\link{model_structure}} object.}
 }
 \value{
+A data table with the following columns:
 \describe{
 \item{state_id}{The state ID number.}
 \item{state_name}{The state name,}
@@ -17,16 +18,25 @@ create_states(object)
 }
 }
 \description{
-Create a data table describing the health states for the model
-structure.
+Create a data table describing the health states for the model.
 }
 \examples{
-struct <- model_structure(n_states = "four", start_line = "first")
-create_states(struct)
+txseq1 <- txseq(first = "erlotinib",
+               second = c("osimertinib", "PBDC"),
+               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+txseq2 <- txseq(first = "gefitinib",
+               second = c("osimertinib", "PBDC"),
+               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2) 
 
-struct <- model_structure(n_states = "three", start_line = "first")
-create_states(struct)
+struct1 <- model_structure(txseqs, n_states = "four")
+create_states(struct1)
 
-struct <- model_structure(n_states = "three", start_line = "second")
-create_states(struct)
+struct2 <- model_structure(txseqs, n_states = "three")
+create_states(struct2)
+
+txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2, 
+                     start_line = "second", mutation = "negative")
+struct3 <- model_structure(txseqs, n_states = "three")
+create_states(struct3)
 }

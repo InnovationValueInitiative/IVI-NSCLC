@@ -36,6 +36,34 @@ test_that("txseq", {
   expect_true(inherits(txseq, "txseq"))
   expect_error(txseq(first = 1))  
   
+  # Using NULL second line treatments
+  txseq <- txseq(first = "erlotinib",
+                  second = c("osimertinib", NA),
+                  second_plus = c("PBDC + bevacizumab", NA)) 
+  expect_true(inherits(txseq, "txseq"))
+  txseq <- txseq(first = "erlotinib",
+                  second = c(NA, "PBDC"),
+                  second_plus = c(NA, "PBDC + bevacizumab"))   
+  expect_true(inherits(txseq, "txseq"))
+  expect_error(txseq(first = "erlotinib",
+               second = c(NA, NA),
+               second_plus = c(NA, NA)))
+  expect_error(txseq(first = "erlotinib",
+                     second = c(NA, "PBDC + bevacizumab"),
+                     second_plus = c(NA, NA)))
+  expect_error(txseq(first = "erlotinib",
+                      second = c(NA, "PBDC"),
+                      second_plus = c("PBDC + bevacizumab", NA)))
+  expect_error(txseq(first = "erlotinib",
+                      second = c("osimertinib", NA),
+                      second_plus = c(NA, "PBDC + bevacizumab")))  
+  expect_error(txseq(first = "erlotinib",
+                    second = c("osimertinib", "PBDC"),
+                    second_plus = c(NA, "PBDC + bevacizumab")))
+  expect_error(txseq(first = "erlotinib",
+                    second = c("osimertinib", "PBDC"),
+                    second_plus = c("PBDC + bevacizumab", NA)))  
+  
   # Shouldn't have errors with other correct sequences
   expect_true(inherits(txseq(first = "erlotinib",
                              second = c("osimertinib", "PBDC + bevacizumab"),
@@ -86,13 +114,19 @@ test_that("txseq", {
                     second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")))
 })
 
-test_that("txseqs", {
+test_that("txseq_list", {
   txseq1 <- txseq(first = "erlotinib",
                   second = c("osimertinib", "PBDC"),
                   second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
   txseq2 <- txseq(first = "gefitinib",
                   second = c("osimertinib", "PBDC"),
                   second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+  txseq3 <- txseq(first = "gefitinib",
+                  second = c("osimertinib", NA),
+                  second_plus = c("PBDC + bevacizumab", NA)) 
+  txseq4 <- txseq(first = "gefitinib",
+                  second = c(NA, "PBDC"),
+                  second_plus = c(NA, "PBDC + bevacizumab"))   
 
   # Working  
   txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
@@ -103,7 +137,24 @@ test_that("txseqs", {
   expect_true(inherits(txseqs, "txseq_list"))
   expect_equal(names(txseqs), c("seq1", "seq2"))  
   
+  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2, 
+                       start_line = "second", mutation = "negative")  
+  expect_true(inherits(txseqs, "txseq_list"))
+  
+  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq3, 
+                       start_line = "second", mutation = "positive")
+  expect_true(inherits(txseqs, "txseq_list"))
+  
   # Errors
   expect_error(txseq_list(seq1 = txseq1, seq2 = 2))
+  expect_error(txseq_list(seq1 = txseq1, seq2 = txseq2, mutation = "positive"))
+  expect_error(txseq_list(seq1 = txseq1, seq2 = txseq2, mutation = "negative"))
+  expect_error(txseq_list(seq1 = txseq1, seq2 = txseq2, start_line = "second", 
+                          mutation = "unknown"))
+  expect_error(txseq_list(seq1 = txseq1, seq2 = txseq3, start_line = "first"))
+  expect_error(txseq_list(seq1 = txseq1, seq2 = txseq3, start_line = "second",
+                          mutation = "negative"))
+  expect_error(txseq_list(seq1 = txseq1, seq2 = txseq4, start_line = "second",
+                          mutation = "positive"))  
 })
 

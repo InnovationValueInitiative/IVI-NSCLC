@@ -105,7 +105,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>txseq_list</span>(<span class='no'>...</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"first"</span>, <span class='st'>"second"</span>))</pre>
+    <pre class="usage"><span class='fu'>txseq_list</span>(<span class='no'>...</span>, <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"first"</span>, <span class='st'>"second"</span>), <span class='kw'>mutation</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"unknown"</span>,
+  <span class='st'>"positive"</span>, <span class='st'>"negative"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -120,12 +121,19 @@
 modeling second line treatment, the first line must be specified
 in order to characterize a treatment history.</p></td>
     </tr>
+    <tr>
+      <th>mutation</th>
+      <td><p>T790M mutation status. If the model starts at first line, then
+this must be <code>"unknown"</code>; otherwise, if the model starts at second line,
+then the mutation status must be specified as either <code>"positive"</code> or
+<code>"negative"</code>, since it will be known.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "txseq_list", which is a list of objects of class. 
-<code>start_line</code> is stored as an attribute.
+<code>start_line</code> and <code>mutation</code> are stored as attributes.
 <code><a href='txseq.html'>txseq</a></code>.</p>
     
 
@@ -157,6 +165,9 @@ in order to characterize a treatment history.</p></td>
 #&gt; 
 #&gt; $start_line
 #&gt; [1] "first"
+#&gt; 
+#&gt; $mutation
+#&gt; [1] "unknown"
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
