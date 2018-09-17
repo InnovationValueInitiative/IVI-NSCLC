@@ -23,7 +23,8 @@ of length 1 (the probability is constant across first line treatments in
 An object of class "expanded_hesim_data" from the 
 \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package, which
 is a data table with one observation for each treatment strategy 
-(i.e., treatment sequence), patient, and transition combination.
+(i.e., treatment sequence), patient, and transition combination. The survival
+distribution is stored as a "dist" attribute.
 }
 \description{
 Create data used to simulate health state transitions with a 

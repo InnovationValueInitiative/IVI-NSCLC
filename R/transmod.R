@@ -175,7 +175,8 @@ transmod_vars <- function(struct, data){
 #' @return An object of class "expanded_hesim_data" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package, which
 #' is a data table with one observation for each treatment strategy 
-#' (i.e., treatment sequence), patient, and transition combination. 
+#' (i.e., treatment sequence), patient, and transition combination. The survival
+#' distribution is stored as a "dist" attribute.  
 #' @examples
 #' ## Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
@@ -218,7 +219,6 @@ create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .4
   data <- transmod_vars(struct, data)
   data[, c("abb_first", "abb_second_pos", "abb_second_neg", 
            "abb_second_plus_pos", "abb_second_plus_neg") := NULL]
+  setattr(data, "dist", struct$dist)
   return(data[, ])
-  
-
 }

@@ -28,6 +28,7 @@ test_that("create_transmod_data: first line,  4 health states", {
   # Create data
   transmod_data <- create_transmod_data(struct, tmat, pats)
   expect_true(inherits(transmod_data, "expanded_hesim_data"))
+  expect_equal(attributes(transmod_data)$dist, "weibull")
   expect_equal(length(unique(transmod_data$transition_id)), 5)
   expect_equal(max(transmod_data$transition_id), 5)  
   
