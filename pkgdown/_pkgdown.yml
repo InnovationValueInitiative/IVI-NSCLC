@@ -9,6 +9,9 @@ reference:
   - title: "Parameter estimates"
     contents:
       - params_mstate_nma
+  - title: "Sample parameters for PSA"  
+    contents:
+      - sample_params
   - title: "Treatment sequences"
     contents:
       - tx_1L
@@ -29,7 +32,7 @@ reference:
 navbar:
   title: IVI-NSCLC
   left:
+  - text: "API"
+    href: reference/index.html  
   - text: "Tutorial"
     href: articles/tutorial.html
-  - text: "API"
-    href: reference/index.html

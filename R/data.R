@@ -14,7 +14,8 @@
 #' The regression coefficients of the continuous time state transition models
 #' estimated using the multi-state network meta-analysis. 
 #'
-#' @format A list of \code{\link[hesim]{params_surv}} objects from the \code{hesim}
+#' @format A list of \code{\link[hesim]{params_surv}} objects from the 
+#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package
 #' package. The list contains regression coefficient estimates from the Weibull,
 #' Gompertz, and 2nd order fractional polynomial survival distributions. The 
 #' parameter (e.g., scale and shape for the Weibull distribution) of each survival 
