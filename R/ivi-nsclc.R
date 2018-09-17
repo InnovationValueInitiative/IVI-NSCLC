@@ -2,7 +2,5 @@
 #' 
 #' @docType package
 #' @name iviNSCLC
-#' @useDynLib iviNSCLC
 #' @import data.table
-#' @importFrom Rcpp evalCpp
 NULL
