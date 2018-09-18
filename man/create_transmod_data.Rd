@@ -41,13 +41,18 @@ txseq2 <- txseq(first = "gefitinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
 txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+
 # Patient population
 pats <- create_patients(n = 2)
+
 ## Model structure
 struct <- model_structure(txseqs, dist = "weibull")
 tmat <- create_trans_mat(struct)
+
 ## Data
 transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
 head(transmod_data)
-
+}
+\seealso{
+\code{\link{create_transmod_params}}
 }

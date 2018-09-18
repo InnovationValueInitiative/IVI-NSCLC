@@ -177,6 +177,7 @@ transmod_vars <- function(struct, data){
 #' is a data table with one observation for each treatment strategy 
 #' (i.e., treatment sequence), patient, and transition combination. The survival
 #' distribution is stored as a "dist" attribute.  
+#' @seealso \code{\link{create_transmod_params}}
 #' @examples
 #' ## Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
@@ -186,18 +187,17 @@ transmod_vars <- function(struct, data){
 #'                 second = c("osimertinib", "PBDC"),
 #'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
 #' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
-
+#'
 #' # Patient population
 #' pats <- create_patients(n = 2)
-
+#'
 #' ## Model structure
 #' struct <- model_structure(txseqs, dist = "weibull")
 #' tmat <- create_trans_mat(struct)
-
+#'
 #' ## Data
 #' transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
 #' head(transmod_data)
-#'
 #' @export
 create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .45){
   strategies <- create_strategies(struct)
@@ -221,4 +221,80 @@ create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .4
            "abb_second_plus_pos", "abb_second_plus_neg") := NULL]
   setattr(data, "dist", struct$dist)
   return(data[, ])
+}
+
+#' Parameters for transition model
+#' 
+#' Extract parameters from a multi-state NMA for use with the data table returned by
+#' \code{\link{create_transmod_data}}, which are used to simulate health state 
+#' transitions with a continuous time state transition model (CTSTM).
+#' @param params A "sampled_params" object returned from \code{\link{sample_params}}.
+#' @param data A data table of class "expanded_hesim_data" returned from 
+#' \code{\link{create_transmod_data}}.
+#' @param check_covs Logical indicating whether to check that all covariates in 
+#' \code{data} are contained in \code{params}.
+#' @param covs If \code{check_covs} is \code{TRUE}, then \code{data_covs}
+#' cannot be \code{NULL} and must specify all of the covariates in \code{data}
+#' that should be contained in \code{params}.
+#' @details The "dist" attribute from \code{data} is used to select a survival
+#' distribution from the \code{mstate_nma} element contained in \code{params}. The 
+#' covariates for the selected survival distribution in \code{mstate_nma} 
+#' that are also contained in \code{data} are extracted.
+#' @return  A \code{\link[hesim]{params_surv}} objects from the 
+#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' @seealso \code{\link{create_transmod_data}}
+#' @examples
+#' # Joint distribution of parameters
+#' params <- sample_params(n = 2)
+#' 
+#' # Treatment sequences
+#' txseq1 <- txseq(first = "erlotinib",
+#'                 second = c("osimertinib", "PBDC"),
+#'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+#' txseq2 <- txseq(first = "gefitinib",
+#'                 second = c("osimertinib", "PBDC"),
+#'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+#'
+#' # Patient population
+#' pats <- create_patients(n = 2)
+#'
+#' # Model structure
+#' struct <- model_structure(txseqs, dist = "weibull")
+#' tmat <- create_trans_mat(struct)
+#'
+#' # Data and parameters for state transition model
+#' transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
+#' transmod_params <- create_transmod_params(params, transmod_data)
+#' print(transmod_params)
+#' @export
+create_transmod_params <- function(params, data, check_covs = FALSE,
+                                   covs = NULL){
+  if(!inherits(params, "sampled_params")){
+    stop("'params' must be an object of class 'sampled_params'.")
+  }
+  if(!inherits(data, "expanded_hesim_data")){
+    stop("'data' must be an object of class 'expanded_hesim_data'.")
+  }
+  if (check_covs){
+    if (is.null(covs)){
+      stop("If 'check_covs' = TRUE, then 'covs' cannot be NULL.")
+    }
+  }
+  dist <- attributes(data)$dist
+  params <- params$mstate_nma[[dist]]
+  n_params <- length(params$coefs)
+  for (i in 1:n_params){
+    if (check_covs){
+      param_name <- names(params$coefs)[i]
+      vars <- colnames(params$coefs[[i]])
+      covs_i <- covs[grep(param_name, covs)]
+      if (!all(covs_i %in% vars)){
+        stop("All variables from 'data' are non contained in 'params'.")
+      }  
+    }
+    col_inds <- which(colnames(params$coefs[[i]]) %in% colnames(data))
+    params$coefs[[i]] <- params$coefs[[i]][, col_inds]
+  }
+  return(params)
 }

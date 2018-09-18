@@ -28,6 +28,7 @@ reference:
   - title: "State transition model"
     contents:
       - create_transmod_data
+      - create_transmod_params
 
 navbar:
   title: IVI-NSCLC

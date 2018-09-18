@@ -72,3 +72,34 @@ test_that("create_transmod_data: first line,  3 health states", {
   expect_all_equal(sub_dt$d_erl_s1d_scale, 0)
   expect_all_equal(sub_dt$d_gef_s1p1_scale, 0)  
 })
+
+test_that("create_transmod_params", {
+  # Model structure, paramters, and data
+  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+  struct <- model_structure(txseqs, n_states = "four", dist = "weibull")
+  tmat <- create_trans_mat(struct)
+  params <- sample_params(n = 2)
+  
+  # Create data and parameters
+  transmod_data <- create_transmod_data(struct, tmat, pats)  
+  transmod_params <- create_transmod_params(params, transmod_data) 
+  
+  # Test
+  expect_true(inherits(transmod_params, "params_surv"))
+  expect_true(all(colnames(transmod_params$coefs$scale) %in% 
+                    colnames(transmod_data)))
+
+  # Errors
+  expect_error(create_transmod_params(2, transmod_data))
+  expect_error(create_transmod_params(params, 2))
+  expect_error(create_transmod_params(params, transmod_data, check_covs = TRUE))
+  
+  ## Required parameters not contained in data
+  params2 <- params
+  coefs <- params2$mstate_nma$weibull$coefs$scale
+  params2$mstate_nma$weibull$coefs$scale <- coefs[, 2:ncol(coefs)]
+  covs <- colnames(transmod_data)[7:ncol(transmod_data)]
+  expect_error(create_transmod_params(params2, transmod_data, check_covs = TRUE,
+                                      covs = covs))
+  
+})

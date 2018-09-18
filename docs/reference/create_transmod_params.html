@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data for transition model — create_transmod_data • iviNSCLC</title>
+<title>Parameters for transition model — create_transmod_params • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,11 @@
 
 
 
-<meta property="og:title" content="Data for transition model — create_transmod_data" />
+<meta property="og:title" content="Parameters for transition model — create_transmod_params" />
 
-<meta property="og:description" content="Create data used to simulate health state transitions with a 
-continuous time state transition model (CTSTM) given the parameters from the
-multi-state NMA (i.e., params_mstate_nma). The included variables are 
-a function of the selected treatment sequences and the modeled patients." />
+<meta property="og:description" content="Extract parameters from a multi-state NMA for use with the data table returned by
+create_transmod_data, which are used to simulate health state 
+transitions with a continuous time state transition model (CTSTM)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,62 +96,68 @@ a function of the selected treatment sequences and the modeled patients." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data for transition model</h1>
+    <h1>Parameters for transition model</h1>
     <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/transmod.R'><code>R/transmod.R</code></a></small>
-    <div class="hidden name"><code>create_transmod_data.Rd</code></div>
+    <div class="hidden name"><code>create_transmod_params.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create data used to simulate health state transitions with a 
-continuous time state transition model (CTSTM) given the parameters from the
-multi-state NMA (i.e., <code><a href='params_mstate_nma.html'>params_mstate_nma</a></code>). The included variables are 
-a function of the selected treatment sequences and the modeled patients.</p>
+    <p>Extract parameters from a multi-state NMA for use with the data table returned by
+<code><a href='create_transmod_data.html'>create_transmod_data</a></code>, which are used to simulate health state 
+transitions with a continuous time state transition model (CTSTM).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_transmod_data</span>(<span class='no'>struct</span>, <span class='no'>trans_mat</span>, <span class='no'>patients</span>, <span class='kw'>mutation_prob</span> <span class='kw'>=</span> <span class='fl'>0.45</span>)</pre>
+    <pre class="usage"><span class='fu'>create_transmod_params</span>(<span class='no'>params</span>, <span class='no'>data</span>, <span class='kw'>check_covs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>covs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>struct</th>
-      <td><p>A <code><a href='model_structure.html'>model_structure</a></code> object.</p></td>
+      <th>params</th>
+      <td><p>A "sampled_params" object returned from <code><a href='sample_params.html'>sample_params</a></code>.</p></td>
     </tr>
     <tr>
-      <th>trans_mat</th>
-      <td><p>A transition matrix as returned by <code><a href='create_trans_mat.html'>create_trans_mat</a></code>.</p></td>
+      <th>data</th>
+      <td><p>A data table of class "expanded_hesim_data" returned from 
+<code><a href='create_transmod_data.html'>create_transmod_data</a></code>.</p></td>
     </tr>
     <tr>
-      <th>patients</th>
-      <td><p>An object of class "patients" returned from
-<code><a href='create_patients.html'>create_patients</a></code>.</p></td>
+      <th>check_covs</th>
+      <td><p>Logical indicating whether to check that all covariates in 
+<code>data</code> are contained in <code>params</code>.</p></td>
     </tr>
     <tr>
-      <th>mutation_prob</th>
-      <td><p>The probability of a T790M mutation. A vector of either
-of length 1 (the probability is constant across first line treatments in 
-<code>txseqs</code>) or of length equal to the number of treatment sequences in
-<code>txseqs</code>.</p></td>
+      <th>covs</th>
+      <td><p>If <code>check_covs</code> is <code>TRUE</code>, then <code>data_covs</code>
+cannot be <code>NULL</code> and must specify all of the covariates in <code>data</code>
+that should be contained in <code>params</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class "expanded_hesim_data" from the 
-<a href='https://innovationvalueinitiative.github.io/hesim/'>hesim</a> package, which
-is a data table with one observation for each treatment strategy 
-(i.e., treatment sequence), patient, and transition combination. The survival
-distribution is stored as a "dist" attribute.</p>
+    <p>A <code><a href='http://www.rdocumentation.org/packages/hesim/topics/params_surv'>params_surv</a></code> objects from the 
+<a href='https://innovationvalueinitiative.github.io/hesim/'>hesim</a> package.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The "dist" attribute from <code>data</code> is used to select a survival
+distribution from the <code>mstate_nma</code> element contained in <code>params</code>. The 
+covariates for the selected survival distribution in <code>mstate_nma</code> 
+that are also contained in <code>data</code> are extracted.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='create_transmod_params.html'>create_transmod_params</a></code></p></div>
+    <div class='dont-index'><p><code><a href='create_transmod_data.html'>create_transmod_data</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Treatment sequences</span>
+    <pre class="examples"><div class='input'><span class='co'># Joint distribution of parameters</span>
+<span class='no'>params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sample_params.html'>sample_params</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='co'># Treatment sequences</span>
 <span class='no'>txseq1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"erlotinib"</span>,
                 <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
                 <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
@@ -164,54 +169,45 @@ distribution is stored as a "dist" attribute.</p>
 <span class='co'># Patient population</span>
 <span class='no'>pats</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_patients.html'>create_patients</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='co'>## Model structure</span>
+<span class='co'># Model structure</span>
 <span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"weibull"</span>)
 <span class='no'>tmat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_trans_mat.html'>create_trans_mat</a></span>(<span class='no'>struct</span>)
 
-<span class='co'>## Data</span>
-<span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'>create_transmod_data</span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>, <span class='kw'>mutation_prob</span> <span class='kw'>=</span> <span class='fl'>.45</span>)
-<span class='fu'>head</span>(<span class='no'>transmod_data</span>)</div><div class='output co'>#&gt;    strategy_id patient_id transition_id mutation tx_abb tx_hist osi_s1p1_scale
-#&gt; 1:           1          1             1        1    erl    &lt;NA&gt;              1
-#&gt; 2:           1          1             2        1    erl    &lt;NA&gt;              0
-#&gt; 3:           1          1             3        1    osi     erl              0
-#&gt; 4:           1          1             4        1    osi     erl              0
-#&gt; 5:           1          1             5        1    osi     erl              0
-#&gt; 6:           1          2             1        0    erl    &lt;NA&gt;              1
-#&gt;    osi_s1d_scale d_erl_s1p1_scale d_erl_s1d_scale d_gef_s1p1_scale
-#&gt; 1:             0                1               0                0
-#&gt; 2:             1                0               1                0
-#&gt; 3:             0                0               0                0
-#&gt; 4:             0                0               0                0
-#&gt; 5:             0                0               0                0
-#&gt; 6:             0                1               0                0
-#&gt;    d_gef_s1d_scale osi_s2p2_scale osi_s2d_scale osi_p2d_scale pbdc_s2p2_scale
-#&gt; 1:               0              0             0             0               0
-#&gt; 2:               0              0             0             0               0
-#&gt; 3:               0              1             0             0               0
-#&gt; 4:               0              0             1             0               0
-#&gt; 5:               0              0             0             1               0
-#&gt; 6:               0              0             0             0               0
-#&gt;    pbdc_s2d_scale pbdc_p2d_scale osi_s1p1_shape osi_s1d_shape d_erl_s1p1_shape
-#&gt; 1:              0              0              1             0                1
-#&gt; 2:              0              0              0             1                0
-#&gt; 3:              0              0              0             0                0
-#&gt; 4:              0              0              0             0                0
-#&gt; 5:              0              0              0             0                0
-#&gt; 6:              0              0              1             0                1
-#&gt;    d_erl_s1d_shape d_gef_s1p1_shape d_gef_s1d_shape osi_s2p2_shape
-#&gt; 1:               0                0               0              0
-#&gt; 2:               1                0               0              0
-#&gt; 3:               0                0               0              1
-#&gt; 4:               0                0               0              0
-#&gt; 5:               0                0               0              0
-#&gt; 6:               0                0               0              0
-#&gt;    osi_s2d_shape osi_p2d_shape pbdc_s2p2_shape pbdc_s2d_shape pbdc_p2d_shape
-#&gt; 1:             0             0               0              0              0
-#&gt; 2:             0             0               0              0              0
-#&gt; 3:             0             0               0              0              0
-#&gt; 4:             1             0               0              0              0
-#&gt; 5:             0             1               0              0              0
-#&gt; 6:             0             0               0              0              0</div></pre>
+<span class='co'># Data and parameters for state transition model</span>
+<span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_transmod_data.html'>create_transmod_data</a></span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>, <span class='kw'>mutation_prob</span> <span class='kw'>=</span> <span class='fl'>.45</span>)
+<span class='no'>transmod_params</span> <span class='kw'>&lt;-</span> <span class='fu'>create_transmod_params</span>(<span class='no'>params</span>, <span class='no'>transmod_data</span>)
+<span class='fu'>print</span>(<span class='no'>transmod_params</span>)</div><div class='output co'>#&gt; $coefs
+#&gt; $coefs$scale
+#&gt;      osi_s1p1_scale osi_s1d_scale osi_s2p2_scale pbdc_s2p2_scale osi_s2d_scale
+#&gt; [1,]      0.6608430     0.5349929       1.333809      -0.5191719   -0.02496359
+#&gt; [2,]      0.2106022     1.3980063       1.302304       0.9958771    1.63016274
+#&gt;      pbdc_s2d_scale osi_p2d_scale pbdc_p2d_scale d_erl_s1p1_scale
+#&gt; [1,]      0.2374274     0.2749992       1.097985       0.02223472
+#&gt; [2,]      0.5856988     1.2874032       2.099895      -0.08762537
+#&gt;      d_gef_s1p1_scale d_erl_s1d_scale d_gef_s1d_scale
+#&gt; [1,]       0.22171976      -0.1156124      -0.1925303
+#&gt; [2,]      -0.01380463       0.1464703      -0.1044621
+#&gt; 
+#&gt; $coefs$shape
+#&gt;      osi_s1p1_shape osi_s1d_shape osi_s2p2_shape pbdc_s2p2_shape osi_s2d_shape
+#&gt; [1,]      0.9878838     3.0125846     0.02157306        2.211227      1.039790
+#&gt; [2,]      1.5744670    -0.2903451     2.96957688        0.977201      1.373762
+#&gt;      pbdc_s2d_shape osi_p2d_shape pbdc_p2d_shape d_erl_s1p1_shape
+#&gt; [1,]       1.366512    -0.4644602       1.828704      -0.05280403
+#&gt; [2,]       1.197132    -2.4708456       2.409842      -0.03581339
+#&gt;      d_gef_s1p1_shape d_erl_s1d_shape d_gef_s1d_shape
+#&gt; [1,]      -0.05117418     -0.13636528     -0.06884081
+#&gt; [2,]       0.09202027     -0.05969474     -0.04915020
+#&gt; 
+#&gt; 
+#&gt; $dist
+#&gt; [1] "weibullNMA"
+#&gt; 
+#&gt; $n_samples
+#&gt; [1] 2
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "params_surv"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -219,6 +215,8 @@ distribution is stored as a "dist" attribute.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
