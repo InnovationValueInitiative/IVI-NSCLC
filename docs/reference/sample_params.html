@@ -69,10 +69,10 @@ probabilistic sensitivity analysis (PSA)." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/tutorial.html">Tutorial</a>
+  <a href="../reference/index.html">API</a>
 </li>
 <li>
-  <a href="../reference/index.html">API</a>
+  <a href="../articles/tutorial.html">Tutorial</a>
 </li>
       </ul>
       
@@ -139,35 +139,35 @@ rows in each <code>coef</code> element is equal to <code>n</code>.</p></dd>
 <span class='fu'>names</span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; [1] "mstate_nma"</div><div class='input'>
 <span class='co'># Multi-state NMA</span>
 <span class='no'>params</span>$<span class='no'>mstate_nma</span>$<span class='no'>weibull</span>$<span class='no'>coefs</span>$<span class='no'>shape</span></div><div class='output co'>#&gt;      osi_s1p1_shape osi_s1d_shape osi_p1d_shape osi_s2p2_shape pbdc_s2p2_shape
-#&gt; [1,]      0.9878838     3.0125846     0.9438242     0.02157306        2.211227
-#&gt; [2,]      1.5744670    -0.2903451     2.3826415     2.96957688        0.977201
+#&gt; [1,]      0.2144393     0.8312884      1.378093     0.08360727      -0.7072081
+#&gt; [2,]      1.3830202     0.2256768     -2.038570    -1.18088236       1.1533245
 #&gt;      osi_s2d_shape pbdc_s2d_shape osi_p2d_shape pbdc_p2d_shape d_erl_s1p1_shape
-#&gt; [1,]      1.039790       1.366512    -0.4644602       1.828704      -0.05280403
-#&gt; [2,]      1.373762       1.197132    -2.4708456       2.409842      -0.03581339
+#&gt; [1,]     0.4761633       1.207093     -1.092998       1.275491       0.06605832
+#&gt; [2,]    -0.6254911       1.669549      1.763126       2.514795      -0.10613347
 #&gt;      d_gef_s1p1_shape d_afa_s1p1_shape d_dac_s1p1_shape d_erl_s1d_shape
-#&gt; [1,]      -0.05117418      -0.07887960      -0.06085395     -0.13636528
-#&gt; [2,]       0.09202027       0.09006009      -0.12086765     -0.05969474
+#&gt; [1,]      -0.07301225      -0.23635251       0.11426602      0.02534214
+#&gt; [2,]      -0.02748377      -0.05647148       0.06237375      0.25451736
 #&gt;      d_gef_s1d_shape d_afa_s1d_shape d_dac_s1d_shape d_erl_p1d_shape
-#&gt; [1,]     -0.06884081      -0.1269187     -0.09014325      0.04128342
-#&gt; [2,]     -0.04915020       0.1712486      0.16226955      0.16094859
+#&gt; [1,]     -0.05378574     -0.04179779        0.041887      -0.1066887
+#&gt; [2,]     -0.19719023     -0.05537505       -0.214220      -0.2297192
 #&gt;      d_gef_p1d_shape d_afa_p1d_shape d_dac_p1d_shape d_bev_s2p2_shape
-#&gt; [1,]      -0.2434193     -0.08101871    -0.003653794       0.05079327
-#&gt; [2,]       0.1548038     -0.12905734    -0.058895599      -0.11811305
+#&gt; [1,]      -0.1340769     -0.04057471     0.113551764       0.07741805
+#&gt; [2,]       0.3401152      0.15783271    -0.001641351       0.11573567
 #&gt;      d_pbdc_bev_s2p2_shape d_erl_s2p2_shape d_gef_s2p2_shape d_afa_s2p2_shape
-#&gt; [1,]            0.17294046      -0.16734310       0.06969866      -0.04098802
-#&gt; [2,]           -0.05339682       0.06241384       0.01873162       0.22311779
+#&gt; [1,]             0.1265985       0.09302601        0.1432585        0.3017123
+#&gt; [2,]            -0.1774899       0.09931315        0.1632356       -0.2248138
 #&gt;      d_dac_s2p2_shape d_bev_s2d_shape d_pbdc_bev_s2d_shape d_erl_s2d_shape
-#&gt; [1,]       -0.2105596      -0.1677768            0.1903635      -0.3365152
-#&gt; [2,]       -0.2292437       0.1578390           -0.0797747      -0.3021977
+#&gt; [1,]      -0.19229882     -0.19171508           -0.2458048     -0.06971819
+#&gt; [2,]      -0.03614562      0.01928407            0.1163636     -0.13729794
 #&gt;      d_gef_s2d_shape d_afa_s2d_shape d_dac_s2d_shape d_bev_p2d_shape
-#&gt; [1,]     0.002935077     -0.02492581      -0.3242136       0.2352541
-#&gt; [2,]    -0.038658105     -0.19264739      -0.2084033      -0.2361561
+#&gt; [1,]     -0.05061834      -0.1425638      -0.1002112     -0.38684132
+#&gt; [2,]      0.03711062       0.2181432       0.2315258     -0.06762784
 #&gt;      d_pbdc_bev_p2d_shape d_erl_p2d_shape d_gef_p2d_shape d_afa_p2d_shape
-#&gt; [1,]          -0.05182098      0.01224905       0.1501016      -0.1452805
-#&gt; [2,]          -0.17623775     -0.10201078       0.1327201      -0.2216938
+#&gt; [1,]          -0.33339637     -0.22122720     -0.03348921       0.2772291
+#&gt; [2,]           0.09517852     -0.08635971     -0.06537331       0.0975116
 #&gt;      d_dac_p2d_shape
-#&gt; [1,]      0.02387482
-#&gt; [2,]     -0.23560772</div><div class='input'><span class='no'>params</span>$<span class='no'>mstate_nma</span>$<span class='no'>weibull</span>$<span class='no'>dist</span></div><div class='output co'>#&gt; [1] "weibullNMA"</div></pre>
+#&gt; [1,]      -0.3314919
+#&gt; [2,]       0.2705962</div><div class='input'><span class='no'>params</span>$<span class='no'>mstate_nma</span>$<span class='no'>weibull</span>$<span class='no'>dist</span></div><div class='output co'>#&gt; [1] "weibullNMA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
