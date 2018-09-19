@@ -109,6 +109,6 @@ econmod$sim_stateprobs(t = seq(0, 10))
 head(econmod$stateprobs_)
 ```
 
-## A three-state model for second line treatmnet
+## A three-state model for second line treatment
 
 # Decision analysis
