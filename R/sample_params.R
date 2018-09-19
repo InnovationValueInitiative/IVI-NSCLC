@@ -35,7 +35,7 @@ sample_params_mstate_nma <- function(n, object){
                   "'params_mstate_nma' must be the same across probability distributions.")
     stop(msg, call. = FALSE)
   }
-  if (n < n_samples){
+  if (n <= n_samples){
     sampled_rows <- sample.int(n_samples, n, replace = FALSE) 
   } else{
     warning("'n' is larger than the values of 'n_samples' in 'params_mstate_nma'.")

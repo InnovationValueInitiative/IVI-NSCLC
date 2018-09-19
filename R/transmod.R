@@ -202,7 +202,7 @@ transmod_vars <- function(struct, data){
 create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .45){
   strategies <- create_strategies(struct)
   hesim_data <- hesim::hesim_data(strategies = strategies,
-                           patients = patients)
+                                  patients = patients)
   data <- hesim::expand(hesim_data, by = c("strategies", "patients"))
   
   # Add mutations
@@ -214,7 +214,8 @@ create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .4
   data <- data[rep(seq_len(nrow(data)), each = n_transitions)]
   data[, "transition_id" := 1:n_transitions]
   setcolorder(data, c("strategy_id", "patient_id", "transition_id"))
-  
+  setattr(data, "id_vars", c("strategy_id", "patient_id", "transition_id"))
+
   # Add treatment effect variables
   data <- transmod_vars(struct, data)
   data[, c("abb_first", "abb_second_pos", "abb_second_neg", 

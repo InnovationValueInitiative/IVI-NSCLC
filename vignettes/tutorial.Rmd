@@ -16,13 +16,13 @@ The IVI-NSCLC model simulates disease progression for different sequential treat
 <br>
 ```{r, out.width = "800px", echo = FALSE}
 knitr::include_graphics("treatment-strategies.png")
-```
+``` 
 <br>
 <br>
 
 The model structure depends on whether the model starts at 1L or 2L treatment. If the model begins at 1L, then either a four-state CTSTM or a three-state CTSTM can be used. We prefer the four-state CTSTM because it explicitly models 2L treatments; however, there is no 2L evidence following some 1L treatments (i.e., osimertinib), so a three-state model must be used in these cases. 
 
-In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states $r$ and $s$ and are denoted by $h_{rs}$. 
+In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states $r$ and $s$ and are denoted by $h^{rs}(u)$. 
 
 <br>
 ```{r, out.width = "800px", echo = FALSE}
@@ -44,15 +44,16 @@ If the model begins at second line, then a three-state model nearly identical to
 
 The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis is used to propagate uncertainty in the model input parameters throughout the model.
 
-Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages.
+Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/) for plotting. Note that the `iviNSCLC` loads the [data.table](https://github.com/Rdatatable/data.table/wiki) package, which we will use to manipulate data and simulation output.
 
 ```{r}
 library("iviNSCLC")
 library("hesim")
+library("ggplot2")
 ```
 
 # Parameter estimates
-A number of different statistical models are used to parameterize the economic. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and multiple cost categories. The parameter estimates, which load with the `iviNSCLC` package, are as follows (NOTE THAT CURRENTLY ONLY `params_mstate_nma` IS IN THE PACKAGES, BUT THE OTHER OBJECTS WILL BE ADDED SHORTLY):
+A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the `iviNSCLC` package, are as follows (NOTE THAT CURRENTLY ONLY `params_mstate_nma` IS IN THE PACKAGES, BUT THE OTHER OBJECTS WILL BE ADDED SHORTLY):
 
 * `params_mstate_nma`: The posterior distribution for the parameters of the Bayesian multi-state NMA.
 * `params_ae_nma`: The posterior distribution for the parameters of the Bayesian NMA of adverse events (coming soon).
@@ -63,15 +64,28 @@ A number of different statistical models are used to parameterize the economic. 
 * `params_ae_costs`: The costs associated with each of the adverse events from the NMA. 
 * `params_prod_costs`: Productivity losses by health state (S1, P1, and P2).
 
-Samples from the joint probability distribution of all parameters can be drawn using the `sample_params` function. When draws from the posterior distribution of the parameters is already provided (e.g., `params_mstate_nma`, `params_ae_nma`), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., `params_utility`), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].
+Samples from the joint probability distribution of all parameters can be drawn using the `sample_params()` function. When draws from the posterior distribution are already provided (e.g., `params_mstate_nma`, `params_ae_nma`), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., `params_utility`), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].
 
 ```{r}
-params <- sample_params(n = 2)
+params <- sample_params(n = 100)
 ```
 
 # Economic model
-## A four-state model for first line treatmnet
+We provide two example analyses: a four-state model for 1L treatment and a three-state model for 2L treatment. Importantly, different modeling approaches should be used for each scenario. Since a "clock-forward" multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and "clock-reset" models. In the clock-reset approach, time $u$ in $h^{rs}(u)$ resets after each transition whereas in the clock-forward approach time $u$ refers to time since the start of the model (see the tutorial [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712) for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used. 
+
+An individual-level simulation is required to simulate the mixture of clock-forward and clock-reset models, but a cohort model can be used (and is computationally faster) to simulate a clock-forward model. The individual and cohort-level models are simulated in R using the `IndivCtstm` and `CohortCtstm` [`CohortCtstm` IS NOT YET AVAILABLE] classes from the [hesim](https://innovationvalueinitiative.github.io/hesim/) package, respectively.
+
+## A four-state model for first line treatment
+### Patient population
+The first step in the analysis is to define the target population. In the individual-level model, a sufficient number of patients must be simulated so that expected (i.e., mean) outcomes are stable across simulations. In this example, we simulate 1,000 patients.
+
+```{r}
+pats <- create_patients(n = 1000)
+```
+
 ### Treatment sequences
+Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a "txseq_list" object using `txseq_list()`. 
+
 ```{r}
 txseq1 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
@@ -79,36 +93,102 @@ txseq1 <- txseq(first = "erlotinib",
 txseq2 <- txseq(first = "gefitinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
-```
-
-### Patient population
-```{r}
-pats <- create_patients(n = 2)
+txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2, start_line = "first",
+                     mutation = "unknown")
 ```
 
 ### Model structure
+In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
+
 ```{r}
 struct <- model_structure(txseqs, dist = "weibull")
+
+# Health states
+states <- create_states(struct)
+print(states)
+
+# Transition matrix
 tmat <- create_trans_mat(struct)
+print(tmat)
 ```
 
 ### Constructing the model
+We construct the economic model by combining the separate models for the health state transitions, utility, and costs.
+
+#### Health state transition model
+Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with `create_transmod_data()` and stored below in a data table named `transmod_data`. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in `transmod_data` are extracted using `transmod_params()`. 
+
+Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the `IndivCtstmTrans` class in `hesim`.  
+
 ```{r}
+# Input data
 transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
+## Print first 5 rows and and 10 covariates from data
+print(transmod_data[1:5, 1:10]) 
+
+# Parameters
 transmod_params <- create_transmod_params(params, transmod_data)
+## Print first 5 samples from the probability distribution and 4 covariates (which
+## match those in 'transmod_data')
+transmod_params$coefs$scale[1:5, 1:4]
+
+# Health state transition model
 transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat)
+class(transmod)
 ```
 
-### Simulation
+#### Utility model
+Coming soon.
+
+#### Cost models
+Coming soon.
+
+#### Combining the models
+Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the `IndivCtstm` class from `hesim`, and instantiate an iCTSTM.   
 
 ```{r}
 econmod <- hesim::IndivCtstm$new(trans_model = transmod)
-econmod$sim_disease(max_t = 100, max_age = 100)
-econmod$sim_stateprobs(t = seq(0, 10))
-head(econmod$stateprobs_)
 ```
 
+### Simulation
+#### Disease progression
+The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with `$sim_disease()` and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time. 
+
+```{r}
+econmod$sim_disease(max_t = 20)
+econmod$sim_stateprobs(t = seq(0, 20 , 1/12)) # Probability by month
+```
+
+We plot mean state probabilities (averaged across the joint probability distribution of the parameters). 
+
+```{r}
+# Plot of state probabilities
+plot_data <- econmod$stateprobs_[, .(prob_mean = mean(prob),
+                                     prob_lower = quantile(prob, .025),
+                                     prob_upper = quantile(prob, .975)),
+                                 by = c("strategy_id", "state_id", "t")]
+plot_data[, state_name := factor(state_id, levels = 1:nrow(states), 
+                                 labels = states$state_name)]
+plot_data[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
+                                 labels = paste0("Sequence ", 1:length(txseqs)))]
+ggplot(plot_data[t < 5], aes(x = t, y = prob_mean, col = strategy_name)) +
+  geom_line() + facet_wrap(~state_name) + 
+  xlab("Years") + ylab("Proportion in health state") +
+  scale_color_discrete(name = "") +
+  theme_minimal()
+```
+
+We might also want to examine specific quantiles of the state probability curves. Code coming soon...
+
+
+#### QALYs
+Coming soon.
+
+#### Costs
+Coming soon.
+
 ## A three-state model for second line treatment
+Coming soon.
 
 # Decision analysis
+Coming soon.

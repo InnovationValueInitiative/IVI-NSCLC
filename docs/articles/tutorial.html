@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-09-18</h4>
+            <h4 class="date">2018-09-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -78,20 +78,21 @@
 <p>The IVI-NSCLC model simulates disease progression for different sequential treatment strategies using a continuous time state transition model (CTSTM). Treatment sequences that can be modeled are shown in the figure below. Tyrosine kinase inhibitors (TKIs) can be used at first line. Possible second line treatments (2L) and treatments beyond second line (2L+) depend on whether a patient acquired a T790M mutation.</p>
 <p><br><br><img src="treatment-strategies.png" width="800px"><br><br></p>
 <p>The model structure depends on whether the model starts at 1L or 2L treatment. If the model begins at 1L, then either a four-state CTSTM or a three-state CTSTM can be used. We prefer the four-state CTSTM because it explicitly models 2L treatments; however, there is no 2L evidence following some 1L treatments (i.e., osimertinib), so a three-state model must be used in these cases.</p>
-<p>In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span> and are denoted by <span class="math inline">\(h_{rs}\)</span>.</p>
+<p>In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span> and are denoted by <span class="math inline">\(h^{rs}(u)\)</span>.</p>
 <p><br><img src="modstruct4_1L.png" width="800px"><br><br></p>
 <p>In the three-state model, all hazard rates are based on 1L clinical trial evidence. Patients begin in stable disease (S1) and they can transition to the progression state (P1) or death (D).</p>
 <p><br><img src="modstruct3_1L.png" width="800px"><br><br></p>
 <p>If the model begins at second line, then a three-state model nearly identical to the figure above must be used. In the 2L case, patients begin in stable disease (S2) and transition to progression (P2) or death (D).</p>
 <p>The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis is used to propagate uncertainty in the model input parameters throughout the model.</p>
-<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages.</p>
+<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages. We will also use <a href="https://ggplot2.tidyverse.org/">ggplot2</a> for plotting. Note that the <code>iviNSCLC</code> loads the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> package, which we will use to manipulate data and simulation output.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"iviNSCLC"</span>)
-<span class="kw">library</span>(<span class="st">"hesim"</span>)</code></pre></div>
+<span class="kw">library</span>(<span class="st">"hesim"</span>)
+<span class="kw">library</span>(<span class="st">"ggplot2"</span>)</code></pre></div>
 </div>
 <div id="parameter-estimates" class="section level1">
 <h1 class="hasAnchor">
 <a href="#parameter-estimates" class="anchor"></a>Parameter estimates</h1>
-<p>A number of different statistical models are used to parameterize the economic. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and multiple cost categories. The parameter estimates, which load with the <code>iviNSCLC</code> package, are as follows (NOTE THAT CURRENTLY ONLY <code>params_mstate_nma</code> IS IN THE PACKAGES, BUT THE OTHER OBJECTS WILL BE ADDED SHORTLY):</p>
+<p>A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the <code>iviNSCLC</code> package, are as follows (NOTE THAT CURRENTLY ONLY <code>params_mstate_nma</code> IS IN THE PACKAGES, BUT THE OTHER OBJECTS WILL BE ADDED SHORTLY):</p>
 <ul>
 <li>
 <code>params_mstate_nma</code>: The posterior distribution for the parameters of the Bayesian multi-state NMA.</li>
@@ -110,68 +111,166 @@
 <li>
 <code>params_prod_costs</code>: Productivity losses by health state (S1, P1, and P2).</li>
 </ul>
-<p>Samples from the joint probability distribution of all parameters can be drawn using the <code>sample_params</code> function. When draws from the posterior distribution of the parameters is already provided (e.g., <code>params_mstate_nma</code>, <code>params_ae_nma</code>), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., <code>params_utility</code>), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sample_params.html">sample_params</a></span>(<span class="dt">n =</span> <span class="dv">2</span>)</code></pre></div>
+<p>Samples from the joint probability distribution of all parameters can be drawn using the <code><a href="../reference/sample_params.html">sample_params()</a></code> function. When draws from the posterior distribution are already provided (e.g., <code>params_mstate_nma</code>, <code>params_ae_nma</code>), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., <code>params_utility</code>), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sample_params.html">sample_params</a></span>(<span class="dt">n =</span> <span class="dv">100</span>)</code></pre></div>
 </div>
 <div id="economic-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#economic-model" class="anchor"></a>Economic model</h1>
-<div id="a-four-state-model-for-first-line-treatmnet" class="section level2">
+<p>We provide two example analyses: a four-state model for 1L treatment and a three-state model for 2L treatment. Importantly, different modeling approaches should be used for each scenario. Since a “clock-forward” multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and “clock-reset” models. In the clock-reset approach, time <span class="math inline">\(u\)</span> in <span class="math inline">\(h^{rs}(u)\)</span> resets after each transition whereas in the clock-forward approach time <span class="math inline">\(u\)</span> refers to time since the start of the model (see the tutorial <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712">here</a> for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used.</p>
+<p>An individual-level simulation is required to simulate the mixture of clock-forward and clock-reset models, but a cohort model can be used (and is computationally faster) to simulate a clock-forward model. The individual and cohort-level models are simulated in R using the <code>IndivCtstm</code> and <code>CohortCtstm</code> [<code>CohortCtstm</code> IS NOT YET AVAILABLE] classes from the <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> package, respectively.</p>
+<div id="a-four-state-model-for-first-line-treatment" class="section level2">
 <h2 class="hasAnchor">
-<a href="#a-four-state-model-for-first-line-treatmnet" class="anchor"></a>A four-state model for first line treatmnet</h2>
+<a href="#a-four-state-model-for-first-line-treatment" class="anchor"></a>A four-state model for first line treatment</h2>
+<div id="patient-population" class="section level3">
+<h3 class="hasAnchor">
+<a href="#patient-population" class="anchor"></a>Patient population</h3>
+<p>The first step in the analysis is to define the target population. In the individual-level model, a sufficient number of patients must be simulated so that expected (i.e., mean) outcomes are stable across simulations. In this example, we simulate 1,000 patients.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_patients.html">create_patients</a></span>(<span class="dt">n =</span> <span class="dv">1000</span>)</code></pre></div>
+</div>
 <div id="treatment-sequences" class="section level3">
 <h3 class="hasAnchor">
 <a href="#treatment-sequences" class="anchor"></a>Treatment sequences</h3>
+<p>Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a “txseq_list” object using <code><a href="../reference/txseq_list.html">txseq_list()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txseq1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"erlotinib"</span>,
                 <span class="dt">second =</span> <span class="kw">c</span>(<span class="st">"osimertinib"</span>, <span class="st">"PBDC"</span>),
                 <span class="dt">second_plus =</span> <span class="kw">c</span>(<span class="st">"PBDC + bevacizumab"</span>, <span class="st">"PBDC + bevacizumab"</span>))
 txseq2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"gefitinib"</span>,
                 <span class="dt">second =</span> <span class="kw">c</span>(<span class="st">"osimertinib"</span>, <span class="st">"PBDC"</span>),
                 <span class="dt">second_plus =</span> <span class="kw">c</span>(<span class="st">"PBDC + bevacizumab"</span>, <span class="st">"PBDC + bevacizumab"</span>))
-txseqs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq_list.html">txseq_list</a></span>(<span class="dt">seq1 =</span> txseq1, <span class="dt">seq2 =</span> txseq2)</code></pre></div>
-</div>
-<div id="patient-population" class="section level3">
-<h3 class="hasAnchor">
-<a href="#patient-population" class="anchor"></a>Patient population</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_patients.html">create_patients</a></span>(<span class="dt">n =</span> <span class="dv">2</span>)</code></pre></div>
+txseqs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq_list.html">txseq_list</a></span>(<span class="dt">seq1 =</span> txseq1, <span class="dt">seq2 =</span> txseq2, <span class="dt">start_line =</span> <span class="st">"first"</span>,
+                     <span class="dt">mutation =</span> <span class="st">"unknown"</span>)</code></pre></div>
 </div>
 <div id="model-structure" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model-structure" class="anchor"></a>Model structure</h3>
+<p>In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with <code><a href="../reference/model_structure.html">model_structure()</a></code>. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the <code>dist</code> argument. A description of the relevant health states can be generated using <code><a href="../reference/create_states.html">create_states()</a></code> and possible health state transitions are stored in a transition matrix generated using <code><a href="../reference/create_trans_mat.html">create_trans_mat()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">struct &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>)
-tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct)</code></pre></div>
+
+<span class="co"># Health states</span>
+states &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct)
+<span class="kw">print</span>(states)</code></pre></div>
+<pre><code>##    state_id state_name                       state_name_long
+## 1:        1         S1                        Stable with 1L
+## 2:        2     P1-&gt;S2 Progression with 1L -&gt; Stable with 2L
+## 3:        3         P2                   Progression with 2L
+## 4:        4          D                                 Death</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transition matrix</span>
+tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct)
+<span class="kw">print</span>(tmat)</code></pre></div>
+<pre><code>##        S1 P1-&gt;S2 P2  D
+## S1     NA      1 NA  2
+## P1-&gt;S2 NA     NA  3  4
+## P2     NA     NA NA  5
+## D      NA     NA NA NA</code></pre>
 </div>
 <div id="constructing-the-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#constructing-the-model" class="anchor"></a>Constructing the model</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats, <span class="dt">mutation_prob =</span> .<span class="dv">45</span>)
+<p>We construct the economic model by combining the separate models for the health state transitions, utility, and costs.</p>
+<div id="health-state-transition-model" class="section level4">
+<h4 class="hasAnchor">
+<a href="#health-state-transition-model" class="anchor"></a>Health state transition model</h4>
+<p>Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with <code><a href="../reference/create_transmod_data.html">create_transmod_data()</a></code> and stored below in a data table named <code>transmod_data</code>. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in <code>transmod_data</code> are extracted using <code>transmod_params()</code>.</p>
+<p>Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the <code>IndivCtstmTrans</code> class in <code>hesim</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Input data</span>
+transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats, <span class="dt">mutation_prob =</span> .<span class="dv">45</span>)
+## Print first 5 rows and and 10 covariates from data
+<span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
+<pre><code>##    strategy_id patient_id transition_id mutation tx_abb tx_hist
+## 1:           1          1             1        1    erl    &lt;NA&gt;
+## 2:           1          1             2        1    erl    &lt;NA&gt;
+## 3:           1          1             3        1    osi     erl
+## 4:           1          1             4        1    osi     erl
+## 5:           1          1             5        1    osi     erl
+##    osi_s1p1_scale osi_s1d_scale d_erl_s1p1_scale d_erl_s1d_scale
+## 1:              1             0                1               0
+## 2:              0             1                0               1
+## 3:              0             0                0               0
+## 4:              0             0                0               0
+## 5:              0             0                0               0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Parameters</span>
 transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_params.html">create_transmod_params</a></span>(params, transmod_data)
-transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/create_IndivCtstmTrans">create_IndivCtstmTrans</a></span>(transmod_params, transmod_data, tmat)</code></pre></div>
+## Print first 5 samples from the probability distribution and 4 covariates (which
+## match those in 'transmod_data')
+transmod_params<span class="op">$</span>coefs<span class="op">$</span>scale[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
+<pre><code>##      osi_s1p1_scale osi_s1d_scale osi_s2p2_scale pbdc_s2p2_scale
+## [1,]      3.5972984     1.2809614    -0.07322391      -0.3215846
+## [2,]      0.8483019     0.4822264     0.59303413       0.4580258
+## [3,]      1.3290736     1.7912296     0.06169887       1.5308077
+## [4,]      2.3837640     0.7227670     1.30886125       0.6769836
+## [5,]     -0.4197894     0.3469453     0.14996461      -1.2406119</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
+transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/create_IndivCtstmTrans">create_IndivCtstmTrans</a></span>(transmod_params, transmod_data, tmat)
+<span class="kw">class</span>(transmod)</code></pre></div>
+<pre><code>## [1] "IndivCtstmTrans" "CtstmTrans"      "R6"</code></pre>
+</div>
+<div id="utility-model" class="section level4">
+<h4 class="hasAnchor">
+<a href="#utility-model" class="anchor"></a>Utility model</h4>
+<p>Coming soon.</p>
+</div>
+<div id="cost-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#cost-models" class="anchor"></a>Cost models</h4>
+<p>Coming soon.</p>
+</div>
+<div id="combining-the-models" class="section level4">
+<h4 class="hasAnchor">
+<a href="#combining-the-models" class="anchor"></a>Combining the models</h4>
+<p>Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the <code>IndivCtstm</code> class from <code>hesim</code>, and instantiate an iCTSTM.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod &lt;-<span class="st"> </span>hesim<span class="op">::</span>IndivCtstm<span class="op">$</span><span class="kw">new</span>(<span class="dt">trans_model =</span> transmod)</code></pre></div>
+</div>
 </div>
 <div id="simulation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#simulation" class="anchor"></a>Simulation</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod &lt;-<span class="st"> </span>hesim<span class="op">::</span>IndivCtstm<span class="op">$</span><span class="kw">new</span>(<span class="dt">trans_model =</span> transmod)
-econmod<span class="op">$</span><span class="kw">sim_disease</span>(<span class="dt">max_t =</span> <span class="dv">100</span>, <span class="dt">max_age =</span> <span class="dv">100</span>)
-econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>))
-<span class="kw">head</span>(econmod<span class="op">$</span>stateprobs_)</code></pre></div>
-<pre><code>##    sample strategy_id state_id t prob
-## 1:      1           1        1 0  2.0
-## 2:      1           1        1 1  0.5
-## 3:      1           1        1 2  0.0
-## 4:      1           1        1 3  0.0
-## 5:      1           1        1 4  0.0
-## 6:      1           1        1 5  0.0</code></pre>
+<div id="disease-progression" class="section level4">
+<h4 class="hasAnchor">
+<a href="#disease-progression" class="anchor"></a>Disease progression</h4>
+<p>The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with <code>$sim_disease()</code> and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod<span class="op">$</span><span class="kw">sim_disease</span>(<span class="dt">max_t =</span> <span class="dv">20</span>)
+econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span> , <span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)) <span class="co"># Probability by month</span></code></pre></div>
+<p>We plot mean state probabilities (averaged across the joint probability distribution of the parameters).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of state probabilities</span>
+plot_data &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[, .(<span class="dt">prob_mean =</span> <span class="kw">mean</span>(prob),
+                                     <span class="dt">prob_lower =</span> <span class="kw">quantile</span>(prob, .<span class="dv">025</span>),
+                                     <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
+                                 by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>, <span class="st">"t"</span>)]
+plot_data[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states), 
+                                 <span class="dt">labels =</span> states<span class="op">$</span>state_name)]
+plot_data[, strategy_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(strategy_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs), 
+                                 <span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">"Sequence "</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs)))]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Proportion in health state"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p>We might also want to examine specific quantiles of the state probability curves. Code coming soon…</p>
+</div>
+<div id="qalys" class="section level4">
+<h4 class="hasAnchor">
+<a href="#qalys" class="anchor"></a>QALYs</h4>
+<p>Coming soon.</p>
+</div>
+<div id="costs" class="section level4">
+<h4 class="hasAnchor">
+<a href="#costs" class="anchor"></a>Costs</h4>
+<p>Coming soon.</p>
+</div>
 </div>
 </div>
 <div id="a-three-state-model-for-second-line-treatment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-three-state-model-for-second-line-treatment" class="anchor"></a>A three-state model for second line treatment</h2>
+<p>Coming soon.</p>
 </div>
 </div>
 <div id="decision-analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#decision-analysis" class="anchor"></a>Decision analysis</h1>
+<p>Coming soon.</p>
 </div>
   </div>
 
@@ -184,7 +283,7 @@ econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span cla
       <li><a href="#parameter-estimates">Parameter estimates</a></li>
       <li>
 <a href="#economic-model">Economic model</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#a-four-state-model-for-first-line-treatmnet">A four-state model for first line treatmnet</a></li>
+<li><a href="#a-four-state-model-for-first-line-treatment">A four-state model for first line treatment</a></li>
       <li><a href="#a-three-state-model-for-second-line-treatment">A three-state model for second line treatment</a></li>
       </ul>
 </li>
