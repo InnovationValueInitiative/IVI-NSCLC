@@ -195,11 +195,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>scale[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      osi_s1p1_scale osi_s1d_scale osi_s2p2_scale pbdc_s2p2_scale
-## [1,]      3.5972984     1.2809614    -0.07322391      -0.3215846
-## [2,]      0.8483019     0.4822264     0.59303413       0.4580258
-## [3,]      1.3290736     1.7912296     0.06169887       1.5308077
-## [4,]      2.3837640     0.7227670     1.30886125       0.6769836
-## [5,]     -0.4197894     0.3469453     0.14996461      -1.2406119</code></pre>
+## [1,]    -0.41873899     0.8343509      0.1416916       1.7047495
+## [2,]    -0.07777555     1.5186355      1.8797555      -0.1099338
+## [3,]     2.48485684     2.2906456      1.7393430       1.3573724
+## [4,]    -0.06693445     1.7258585      3.4885565       2.0153605
+## [5,]     2.91706620     1.8535018      0.7115502       4.0109103</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/create_IndivCtstmTrans">create_IndivCtstmTrans</a></span>(transmod_params, transmod_data, tmat)
 <span class="kw">class</span>(transmod)</code></pre></div>
