@@ -1,0 +1,37 @@
+rm(list = ls())
+library("data.table")
+library("iviNSCLC")
+
+# Utility by health state
+## Nafees 2008 et al.
+nafees_util_prog_2L_mean <- .6532 - 0.1798
+nafees_util_prog_2L_se <- sqrt(0.02223^2 + 0.02169^2)
+
+## Create data table
+utility_states_name <- iviNSCLC:::pkg_env$state_names_start1L_4[1:3]
+utility_states_mean <- c(.78, .6532, nafees_util_prog_2L_mean)
+utility_states_se <- c(.01, .02223, nafees_util_prog_2L_se)
+utility_states_ref <- c(NA, "nafees2008health", "nafees2008health")
+utility_states <- data.table(state_name = utility_states_name,
+                             mean = utility_states_mean,
+                             se = utility_states_se,
+                             ref = utility_states_ref)
+
+# Utility loss from adverse events
+diutility_ae_name <- c("Diarrhea", "Dry skin", "Eye problems", "GI perforation",
+                      "Heart failure", "rash")
+diutility_ae_abb <- c("diarrhea", "dry_skin", "eye_prob", "gi_perf", "hf", "rash")
+disutility_ae_mean <- c(.0468, 0, 0, 0, 0, -.03248)
+disutility_ae_se <- c(.01553, 0, 0, 0, 0, .01171)
+disutility_ae_ref <- c("nafees2008health", NA, NA, NA, NA, "nafees2008health")
+diutility_ae <- data.table(ae_name = diutility_ae_name,
+                           ae_abb = diutility_ae_abb,
+                           ae_mean = disutility_ae_mean,
+                           ae_se = disutility_ae_se,
+                           ae_ref = disutility_ae_ref)
+
+
+# Save
+params_utility <- list(state_utility = utility_states,
+                       ae_disutility = diutility_ae)
+save(params_utility, file = "../data/params_utility.rda", compress = "bzip2")

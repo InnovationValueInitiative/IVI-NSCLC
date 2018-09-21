@@ -5,3 +5,4 @@
 rm(list = ls())
 unlink("../data/*") # deletes all files in data directory
 source("params_mstate_nma.R")
+source("params_utility.R")
