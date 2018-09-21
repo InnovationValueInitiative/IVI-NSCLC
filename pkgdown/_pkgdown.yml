@@ -9,6 +9,7 @@ reference:
   - title: "Parameter estimates"
     contents:
       - params_mstate_nma
+      - params_utility
   - title: "Sample parameters for PSA"  
     contents:
       - sample_params
