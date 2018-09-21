@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-09-19</h4>
+            <h4 class="date">2018-09-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -195,11 +195,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>scale[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      osi_s1p1_scale osi_s1d_scale osi_s2p2_scale pbdc_s2p2_scale
-## [1,]    -0.41873899     0.8343509      0.1416916       1.7047495
-## [2,]    -0.07777555     1.5186355      1.8797555      -0.1099338
-## [3,]     2.48485684     2.2906456      1.7393430       1.3573724
-## [4,]    -0.06693445     1.7258585      3.4885565       2.0153605
-## [5,]     2.91706620     1.8535018      0.7115502       4.0109103</code></pre>
+## [1,]      0.2538743    -0.1140686     -0.2158715       2.4759371
+## [2,]     -0.1497398     1.8551240      2.0758010      -1.3504679
+## [3,]      1.8831957     0.4837332      1.8531591      -0.5648202
+## [4,]      1.6654387     1.3369908     -0.9478725      -0.3769577
+## [5,]      0.5339140     2.1661511      1.3552026       0.6294154</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/create_IndivCtstmTrans">create_IndivCtstmTrans</a></span>(transmod_params, transmod_data, tmat)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -243,11 +243,11 @@ plot_data[, strategy_name <span class="op">:</span><span class="er">=</span><spa
                                  <span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">"Sequence "</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs)))]
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Proportion in health state"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
 <p><img src="tutorial_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<p>We might also want to examine specific quantiles of the state probability curves. Code coming soon…</p>
+<p>We can also compute mean life-years by health state.</p>
 </div>
 <div id="qalys" class="section level4">
 <h4 class="hasAnchor">

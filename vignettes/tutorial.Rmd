@@ -173,12 +173,12 @@ plot_data[, strategy_name := factor(strategy_id, levels = 1:length(txseqs),
                                  labels = paste0("Sequence ", 1:length(txseqs)))]
 ggplot(plot_data[t < 5], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~state_name) + 
-  xlab("Years") + ylab("Proportion in health state") +
+  xlab("Years") + ylab("Probability in health state") +
   scale_color_discrete(name = "") +
   theme_minimal()
 ```
 
-We might also want to examine specific quantiles of the state probability curves. Code coming soon...
+We can also compute mean life-years by health state.
 
 
 #### QALYs
