@@ -107,7 +107,8 @@ probabilistic sensitivity analysis (PSA).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sample_params</span>(<span class='no'>n</span>, <span class='kw'>params_mstate_nma</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_mstate_nma'>params_mstate_nma</a></span>)</pre>
+    <pre class="usage"><span class='fu'>sample_params</span>(<span class='no'>n</span>, <span class='kw'>params_mstate_nma</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_mstate_nma'>params_mstate_nma</a></span>,
+  <span class='kw'>params_utility</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_utility'>params_utility</a></span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -122,52 +123,59 @@ probabilistic sensitivity analysis (PSA).</p>
 where each element in the list denotes a survival distribution. Should have
 the same variable names as <code><a href='params_mstate_nma.html'>params_mstate_nma</a></code>.</p></td>
     </tr>
+    <tr>
+      <th>params_utility</th>
+      <td><p>Parameter estimates for health state utilities and
+adverse event disutilities in the same format as <code><a href='params_utility.html'>params_utility</a></code>.</p><dl class='dl-horizontal'>
+<dt>mstate_nma</dt><dd><p>A <code>params_surv</code> object where the number of 
+rows in each <code>coef</code> element is equal to <code>n</code>.</p></dd>
+<dt>utility</dt><dd><p>A 3-dimensional array of matrices where each matrix represents
+the utility values for a different treatment. The rows of each matrix are
+random draws from a beta distribution and columns are health states.</p></dd>
+</dl></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "sampled_params", which is a list with the
-following components.</p><dl class='dl-horizontal'>
-<dt>mstate_nma</dt><dd><p>A <code>params_surv</code> object where the number of 
-rows in each <code>coef</code> element is equal to <code>n</code>.</p></dd>
-</dl>
-
+following components.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>params</span> <span class='kw'>&lt;-</span> <span class='fu'>sample_params</span>(<span class='fl'>2</span>)
-<span class='fu'>names</span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; [1] "mstate_nma"</div><div class='input'>
+<span class='fu'>names</span>(<span class='no'>params</span>)</div><div class='output co'>#&gt; [1] "mstate_nma" "utility"   </div><div class='input'>
 <span class='co'># Multi-state NMA</span>
-<span class='no'>params</span>$<span class='no'>mstate_nma</span>$<span class='no'>weibull</span>$<span class='no'>coefs</span>$<span class='no'>shape</span></div><div class='output co'>#&gt;      osi_s1p1_shape osi_s1d_shape osi_p1d_shape osi_s2p2_shape pbdc_s2p2_shape
-#&gt; [1,]      0.2144393     0.8312884      1.378093     0.08360727      -0.7072081
-#&gt; [2,]      1.3830202     0.2256768     -2.038570    -1.18088236       1.1533245
-#&gt;      osi_s2d_shape pbdc_s2d_shape osi_p2d_shape pbdc_p2d_shape d_erl_s1p1_shape
-#&gt; [1,]     0.4761633       1.207093     -1.092998       1.275491       0.06605832
-#&gt; [2,]    -0.6254911       1.669549      1.763126       2.514795      -0.10613347
-#&gt;      d_gef_s1p1_shape d_afa_s1p1_shape d_dac_s1p1_shape d_erl_s1d_shape
-#&gt; [1,]      -0.07301225      -0.23635251       0.11426602      0.02534214
-#&gt; [2,]      -0.02748377      -0.05647148       0.06237375      0.25451736
-#&gt;      d_gef_s1d_shape d_afa_s1d_shape d_dac_s1d_shape d_erl_p1d_shape
-#&gt; [1,]     -0.05378574     -0.04179779        0.041887      -0.1066887
-#&gt; [2,]     -0.19719023     -0.05537505       -0.214220      -0.2297192
-#&gt;      d_gef_p1d_shape d_afa_p1d_shape d_dac_p1d_shape d_bev_s2p2_shape
-#&gt; [1,]      -0.1340769     -0.04057471     0.113551764       0.07741805
-#&gt; [2,]       0.3401152      0.15783271    -0.001641351       0.11573567
-#&gt;      d_pbdc_bev_s2p2_shape d_erl_s2p2_shape d_gef_s2p2_shape d_afa_s2p2_shape
-#&gt; [1,]             0.1265985       0.09302601        0.1432585        0.3017123
-#&gt; [2,]            -0.1774899       0.09931315        0.1632356       -0.2248138
-#&gt;      d_dac_s2p2_shape d_bev_s2d_shape d_pbdc_bev_s2d_shape d_erl_s2d_shape
-#&gt; [1,]      -0.19229882     -0.19171508           -0.2458048     -0.06971819
-#&gt; [2,]      -0.03614562      0.01928407            0.1163636     -0.13729794
-#&gt;      d_gef_s2d_shape d_afa_s2d_shape d_dac_s2d_shape d_bev_p2d_shape
-#&gt; [1,]     -0.05061834      -0.1425638      -0.1002112     -0.38684132
-#&gt; [2,]      0.03711062       0.2181432       0.2315258     -0.06762784
-#&gt;      d_pbdc_bev_p2d_shape d_erl_p2d_shape d_gef_p2d_shape d_afa_p2d_shape
-#&gt; [1,]          -0.33339637     -0.22122720     -0.03348921       0.2772291
-#&gt; [2,]           0.09517852     -0.08635971     -0.06537331       0.0975116
-#&gt;      d_dac_p2d_shape
-#&gt; [1,]      -0.3314919
-#&gt; [2,]       0.2705962</div><div class='input'><span class='no'>params</span>$<span class='no'>mstate_nma</span>$<span class='no'>weibull</span>$<span class='no'>dist</span></div><div class='output co'>#&gt; [1] "weibullNMA"</div></pre>
+<span class='no'>params</span>$<span class='no'>mstate_nma</span>$<span class='no'>weibull</span>$<span class='no'>coefs</span>$<span class='no'>shape</span></div><div class='output co'>#&gt;      osi_s1p1_scale d_erl_s1p1_scale d_gef_s1p1_scale d_afa_s1p1_scale
+#&gt; [1,]              0                0                0                0
+#&gt; [2,]              0                0                0                0
+#&gt;      d_dac_s1p1_scale osi_s1d_scale d_erl_s1d_scale d_gef_s1d_scale
+#&gt; [1,]                0             0               0               0
+#&gt; [2,]                0             0               0               0
+#&gt;      d_afa_s1d_scale d_dac_s1d_scale osi_p1d_scale d_erl_p1d_scale
+#&gt; [1,]               0               0             0               0
+#&gt; [2,]               0               0             0               0
+#&gt;      d_gef_p1d_scale d_afa_p1d_scale d_dac_p1d_scale osi_s2p2_scale
+#&gt; [1,]               0               0               0              0
+#&gt; [2,]               0               0               0              0
+#&gt;      pbdc_s2p2_scale d_bev_s2p2_scale d_pbdc_bev_s2p2_scale d_erl_s2p2_scale
+#&gt; [1,]               0                0                     0                0
+#&gt; [2,]               0                0                     0                0
+#&gt;      d_gef_s2p2_scale d_afa_s2p2_scale d_dac_s2p2_scale osi_s2d_scale
+#&gt; [1,]                0                0                0             0
+#&gt; [2,]                0                0                0             0
+#&gt;      pbdc_s2d_scale d_bev_s2d_scale d_pbdc_bev_s2d_scale d_erl_s2d_scale
+#&gt; [1,]              0               0                    0               0
+#&gt; [2,]              0               0                    0               0
+#&gt;      d_gef_s2d_scale d_afa_s2d_scale d_dac_s2d_scale osi_p2d_scale
+#&gt; [1,]               0               0               0             0
+#&gt; [2,]               0               0               0             0
+#&gt;      pbdc_p2d_scale d_bev_p2d_scale d_pbdc_bev_p2d_scale d_erl_p2d_scale
+#&gt; [1,]              0               0                    0               0
+#&gt; [2,]              0               0                    0               0
+#&gt;      d_gef_p2d_scale d_afa_p2d_scale d_dac_p2d_scale
+#&gt; [1,]               0               0               0
+#&gt; [2,]               0               0               0</div><div class='input'><span class='no'>params</span>$<span class='no'>mstate_nma</span>$<span class='no'>weibull</span>$<span class='no'>dist</span></div><div class='output co'>#&gt; [1] "weibull"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

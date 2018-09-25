@@ -178,30 +178,30 @@ that are also contained in <code>data</code> are extracted.</p>
 <span class='no'>transmod_params</span> <span class='kw'>&lt;-</span> <span class='fu'>create_transmod_params</span>(<span class='no'>params</span>, <span class='no'>transmod_data</span>)
 <span class='fu'>print</span>(<span class='no'>transmod_params</span>)</div><div class='output co'>#&gt; $coefs
 #&gt; $coefs$scale
-#&gt;      osi_s1p1_scale osi_s1d_scale osi_s2p2_scale pbdc_s2p2_scale osi_s2d_scale
-#&gt; [1,]      0.6608430     0.5349929       1.333809      -0.5191719   -0.02496359
-#&gt; [2,]      0.2106022     1.3980063       1.302304       0.9958771    1.63016274
-#&gt;      pbdc_s2d_scale osi_p2d_scale pbdc_p2d_scale d_erl_s1p1_scale
-#&gt; [1,]      0.2374274     0.2749992       1.097985       0.02223472
-#&gt; [2,]      0.5856988     1.2874032       2.099895      -0.08762537
-#&gt;      d_gef_s1p1_scale d_erl_s1d_scale d_gef_s1d_scale
-#&gt; [1,]       0.22171976      -0.1156124      -0.1925303
-#&gt; [2,]      -0.01380463       0.1464703      -0.1044621
+#&gt;      osi_s1p1_scale d_erl_s1p1_scale d_gef_s1p1_scale osi_s1d_scale
+#&gt; [1,]              2               -1             -0.5             0
+#&gt; [2,]              2               -1             -0.5             0
+#&gt;      d_erl_s1d_scale d_gef_s1d_scale osi_s2p2_scale pbdc_s2p2_scale
+#&gt; [1,]              -1            -0.5              0               0
+#&gt; [2,]              -1            -0.5              0               0
+#&gt;      osi_s2d_scale pbdc_s2d_scale osi_p2d_scale pbdc_p2d_scale
+#&gt; [1,]          -0.5           -0.5             0              0
+#&gt; [2,]          -0.5           -0.5             0              0
 #&gt; 
 #&gt; $coefs$shape
-#&gt;      osi_s1p1_shape osi_s1d_shape osi_s2p2_shape pbdc_s2p2_shape osi_s2d_shape
-#&gt; [1,]      0.9878838     3.0125846     0.02157306        2.211227      1.039790
-#&gt; [2,]      1.5744670    -0.2903451     2.96957688        0.977201      1.373762
-#&gt;      pbdc_s2d_shape osi_p2d_shape pbdc_p2d_shape d_erl_s1p1_shape
-#&gt; [1,]       1.366512    -0.4644602       1.828704      -0.05280403
-#&gt; [2,]       1.197132    -2.4708456       2.409842      -0.03581339
-#&gt;      d_gef_s1p1_shape d_erl_s1d_shape d_gef_s1d_shape
-#&gt; [1,]      -0.05117418     -0.13636528     -0.06884081
-#&gt; [2,]       0.09202027     -0.05969474     -0.04915020
+#&gt;      osi_s1p1_scale d_erl_s1p1_scale d_gef_s1p1_scale osi_s1d_scale
+#&gt; [1,]              0                0                0             0
+#&gt; [2,]              0                0                0             0
+#&gt;      d_erl_s1d_scale d_gef_s1d_scale osi_s2p2_scale pbdc_s2p2_scale
+#&gt; [1,]               0               0              0               0
+#&gt; [2,]               0               0              0               0
+#&gt;      osi_s2d_scale pbdc_s2d_scale osi_p2d_scale pbdc_p2d_scale
+#&gt; [1,]             0              0             0              0
+#&gt; [2,]             0              0             0              0
 #&gt; 
 #&gt; 
 #&gt; $dist
-#&gt; [1] "weibullNMA"
+#&gt; [1] "weibull"
 #&gt; 
 #&gt; $n_samples
 #&gt; [1] 2

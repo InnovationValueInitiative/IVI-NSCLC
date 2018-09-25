@@ -18,10 +18,14 @@ An object of class "StateVals" from the
 \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 }
 \description{
-Create a model for health state utility given
+Create a model for health state utility given values of utility by
+ health state, treatment, and time sampled from a probability distribution.
 }
 \examples{
-## Treatment sequences
+# Parameters
+params <- sample_params(n = 2)
+
+# Treatment sequences
 txseq1 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))

@@ -26,10 +26,12 @@ reference:
       - create_states
       - create_trans_mat
       - create_patients
-  - title: "State transition model"
+  - title: "Statistical models"
     contents:
       - create_transmod_data
       - create_transmod_params
+      - create_utilmod
+    
 
 navbar:
   title: IVI-NSCLC

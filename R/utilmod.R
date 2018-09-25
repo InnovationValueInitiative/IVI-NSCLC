@@ -1,13 +1,17 @@
 #' Create utility model
 #' 
-#' Create a model for health state utility given
+#' Create a model for health state utility given values of utility by
+#'  health state, treatment, and time sampled from a probability distribution. 
 #' @param params A "sampled_params" object returned from \code{\link{sample_params}}.
 #' @param struct A \code{\link{model_structure}} object.
 #' @param patients A data table returned from \code{\link{create_patients}}.
 #' @return An object of class "StateVals" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 #' @examples
-#' ## Treatment sequences
+#' # Parameters
+#' params <- sample_params(n = 2)
+#' 
+#' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
 #'                 second = c("osimertinib", "PBDC"),
 #'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
@@ -44,7 +48,7 @@ create_utilmod <- function(params, struct, patients){
                                          patient_id = patients$patient_id)
   
   # Create "StateVals" object
-  utilmod <- create_StateVals(utility_means)
+  utilmod <- hesim::create_StateVals(utility_means)
   
   return(utilmod)
 }
