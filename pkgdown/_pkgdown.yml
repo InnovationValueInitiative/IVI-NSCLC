@@ -10,6 +10,7 @@ reference:
     contents:
       - params_mstate_nma
       - params_utility
+      - params_costs_op
   - title: "Sample parameters for PSA"  
     contents:
       - sample_params

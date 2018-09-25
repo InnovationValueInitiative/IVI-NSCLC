@@ -52,3 +52,18 @@
 #' \item{ae_ref}{BibTeX reference for estimate.}
 #' }
 "params_utility"
+
+#' Outpatient cost parameters
+#'
+#' Outpatient cost estimates by health state.
+#'
+#' @format A data table with the following columns:
+#' \describe{
+#' \item{state_name}{Name of the health state.}
+#' \item{mean}{Mean outpatient costs.}
+#' \item{se}{Standard error of outpatient costs.}
+#' \item{ref}{BibTeX reference for estimate.}
+#' }
+#' @examples 
+#' print(params_costs_op)
+"params_costs_op"

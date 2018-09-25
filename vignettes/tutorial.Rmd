@@ -53,16 +53,16 @@ library("ggplot2")
 ```
 
 # Parameter estimates
-A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the `iviNSCLC` package, are as follows (NOTE THAT CURRENTLY ONLY `params_mstate_nma` IS IN THE PACKAGES, BUT THE OTHER OBJECTS WILL BE ADDED SHORTLY):
+A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the `iviNSCLC` package, are as follows:
 
 * `params_mstate_nma`: The posterior distribution for the parameters of the Bayesian multi-state NMA.
 * `params_ae_nma`: The posterior distribution for the parameters of the Bayesian NMA of adverse events (coming soon).
 * `params_utility`: The probability distribution of the health state utility associated with each health state (S1, P1, and P2).
-* `params_txcosts`: The drug acquisition and administration costs for each treatment. 
-* `params_inpt_costs`: Inpatient medical costs by health state (S1, P1, and P2).
-* `params_op_costs`: Outpatient medical costs by health state (S1, P1, and P2).
-* `params_ae_costs`: The costs associated with each of the adverse events from the NMA. 
-* `params_prod_costs`: Productivity losses by health state (S1, P1, and P2).
+* `params_costs_tx`: The drug acquisition and administration costs for each treatment. 
+* `params_costs_inpt`: Inpatient medical costs by health state (S1, P1, and P2).
+* `params_costs_op`: Outpatient medical costs by health state (S1, P1, and P2).
+* `params_costs_ae`: The costs associated with each of the adverse events from the NMA. 
+* `params_prod`: Productivity losses by health state (S1, P1, and P2).
 
 Samples from the joint probability distribution of all parameters can be drawn using the `sample_params()` function. When draws from the posterior distribution are already provided (e.g., `params_mstate_nma`, `params_ae_nma`), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., `params_utility`), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].
 

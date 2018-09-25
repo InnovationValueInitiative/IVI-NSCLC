@@ -92,7 +92,7 @@
 <div id="parameter-estimates" class="section level1">
 <h1 class="hasAnchor">
 <a href="#parameter-estimates" class="anchor"></a>Parameter estimates</h1>
-<p>A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the <code>iviNSCLC</code> package, are as follows (NOTE THAT CURRENTLY ONLY <code>params_mstate_nma</code> IS IN THE PACKAGES, BUT THE OTHER OBJECTS WILL BE ADDED SHORTLY):</p>
+<p>A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the <code>iviNSCLC</code> package, are as follows:</p>
 <ul>
 <li>
 <code>params_mstate_nma</code>: The posterior distribution for the parameters of the Bayesian multi-state NMA.</li>
@@ -101,15 +101,15 @@
 <li>
 <code>params_utility</code>: The probability distribution of the health state utility associated with each health state (S1, P1, and P2).</li>
 <li>
-<code>params_txcosts</code>: The drug acquisition and administration costs for each treatment.</li>
+<code>params_costs_tx</code>: The drug acquisition and administration costs for each treatment.</li>
 <li>
-<code>params_inpt_costs</code>: Inpatient medical costs by health state (S1, P1, and P2).</li>
+<code>params_costs_inpt</code>: Inpatient medical costs by health state (S1, P1, and P2).</li>
 <li>
-<code>params_op_costs</code>: Outpatient medical costs by health state (S1, P1, and P2).</li>
+<code>params_costs_op</code>: Outpatient medical costs by health state (S1, P1, and P2).</li>
 <li>
-<code>params_ae_costs</code>: The costs associated with each of the adverse events from the NMA.</li>
+<code>params_costs_ae</code>: The costs associated with each of the adverse events from the NMA.</li>
 <li>
-<code>params_prod_costs</code>: Productivity losses by health state (S1, P1, and P2).</li>
+<code>params_prod</code>: Productivity losses by health state (S1, P1, and P2).</li>
 </ul>
 <p>Samples from the joint probability distribution of all parameters can be drawn using the <code><a href="../reference/sample_params.html">sample_params()</a></code> function. When draws from the posterior distribution are already provided (e.g., <code>params_mstate_nma</code>, <code>params_ae_nma</code>), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., <code>params_utility</code>), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sample_params.html">sample_params</a></span>(<span class="dt">n =</span> <span class="dv">100</span>)</code></pre></div>
