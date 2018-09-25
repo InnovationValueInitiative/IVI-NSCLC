@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-09-21</h4>
+            <h4 class="date">2018-09-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -152,17 +152,17 @@ states &lt;-<span class="st"> </span><span class="kw"><a href="../reference/crea
 <span class="kw">print</span>(states)</code></pre></div>
 <pre><code>##    state_id state_name                       state_name_long
 ## 1:        1         S1                        Stable with 1L
-## 2:        2     P1-&gt;S2 Progression with 1L -&gt; Stable with 2L
+## 2:        2      P1/S2 Progression with 1L -&gt; Stable with 2L
 ## 3:        3         P2                   Progression with 2L
 ## 4:        4          D                                 Death</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transition matrix</span>
 tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct)
 <span class="kw">print</span>(tmat)</code></pre></div>
-<pre><code>##        S1 P1-&gt;S2 P2  D
-## S1     NA      1 NA  2
-## P1-&gt;S2 NA     NA  3  4
-## P2     NA     NA NA  5
-## D      NA     NA NA NA</code></pre>
+<pre><code>##       S1 P1/S2 P2  D
+## S1    NA     1 NA  2
+## P1/S2 NA    NA  3  4
+## P2    NA    NA NA  5
+## D     NA    NA NA NA</code></pre>
 </div>
 <div id="constructing-the-model" class="section level3">
 <h3 class="hasAnchor">
@@ -194,12 +194,12 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## Print first 5 samples from the probability distribution and 4 covariates (which
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>scale[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
-<pre><code>##      osi_s1p1_scale osi_s1d_scale osi_s2p2_scale pbdc_s2p2_scale
-## [1,]      0.2538743    -0.1140686     -0.2158715       2.4759371
-## [2,]     -0.1497398     1.8551240      2.0758010      -1.3504679
-## [3,]      1.8831957     0.4837332      1.8531591      -0.5648202
-## [4,]      1.6654387     1.3369908     -0.9478725      -0.3769577
-## [5,]      0.5339140     2.1661511      1.3552026       0.6294154</code></pre>
+<pre><code>##      osi_s1p1_scale d_erl_s1p1_scale d_gef_s1p1_scale osi_s1d_scale
+## [1,]              2               -1             -0.5             0
+## [2,]              2               -1             -0.5             0
+## [3,]              2               -1             -0.5             0
+## [4,]              2               -1             -0.5             0
+## [5,]              2               -1             -0.5             0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/create_IndivCtstmTrans">create_IndivCtstmTrans</a></span>(transmod_params, transmod_data, tmat)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -208,7 +208,8 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <div id="utility-model" class="section level4">
 <h4 class="hasAnchor">
 <a href="#utility-model" class="anchor"></a>Utility model</h4>
-<p>Coming soon.</p>
+<p>We construct a “mean” model for utility. Adverse events—which vary across treatments—are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(params, struct, pats)</code></pre></div>
 </div>
 <div id="cost-models" class="section level4">
 <h4 class="hasAnchor">
@@ -219,7 +220,8 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <h4 class="hasAnchor">
 <a href="#combining-the-models" class="anchor"></a>Combining the models</h4>
 <p>Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the <code>IndivCtstm</code> class from <code>hesim</code>, and instantiate an iCTSTM.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod &lt;-<span class="st"> </span>hesim<span class="op">::</span>IndivCtstm<span class="op">$</span><span class="kw">new</span>(<span class="dt">trans_model =</span> transmod)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod &lt;-<span class="st"> </span>hesim<span class="op">::</span>IndivCtstm<span class="op">$</span><span class="kw">new</span>(<span class="dt">trans_model =</span> transmod,
+                                 <span class="dt">utility_model =</span> utilmod)</code></pre></div>
 </div>
 </div>
 <div id="simulation" class="section level3">
@@ -230,29 +232,75 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <a href="#disease-progression" class="anchor"></a>Disease progression</h4>
 <p>The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with <code>$sim_disease()</code> and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod<span class="op">$</span><span class="kw">sim_disease</span>(<span class="dt">max_t =</span> <span class="dv">20</span>)
-econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span> , <span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)) <span class="co"># Probability by month</span></code></pre></div>
+econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span> , <span class="dv">1</span><span class="op">/</span><span class="dv">26</span>)) <span class="co"># Biweekly probabilities</span></code></pre></div>
 <p>We plot mean state probabilities (averaged across the joint probability distribution of the parameters).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of state probabilities</span>
-plot_data &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[, .(<span class="dt">prob_mean =</span> <span class="kw">mean</span>(prob),
+stprobs &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[, .(<span class="dt">prob_mean =</span> <span class="kw">mean</span>(prob),
                                      <span class="dt">prob_lower =</span> <span class="kw">quantile</span>(prob, .<span class="dv">025</span>),
                                      <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
                                  by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>, <span class="st">"t"</span>)]
-plot_data[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states), 
+stprobs[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states), 
                                  <span class="dt">labels =</span> states<span class="op">$</span>state_name)]
-plot_data[, strategy_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(strategy_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs), 
+stprobs[, strategy_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(strategy_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs), 
                                  <span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">"Sequence "</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs)))]
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(stprobs[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<p>We can also compute mean life-years by health state.</p>
+<p><img src="tutorial_files/figure-html/stateprobs-1.png" width="700"></p>
+<p>Since <a href="https://en.wikipedia.org/wiki/Progression-free_survival">progression-free survival</a> and <a href="https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival">overall survival</a> are the mostly commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">curves &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>state_id <span class="op">==</span><span class="st"> </span><span class="dv">4</span>]
+curves[, prob <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(state_id <span class="op">==</span><span class="st"> </span><span class="dv">4</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob, prob)] <span class="co"># OS is 1 - pr(death)</span>
+curves[, lab <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"PFS"</span>, <span class="st">"OS"</span>))]
+curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</span> <span class="kw">mean</span>(prob),
+                            <span class="dt">prob_lower =</span> <span class="kw">quantile</span>(prob, .<span class="dv">025</span>),
+                            <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
+                          by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>, <span class="st">"t"</span>)]
+curves[, strategy_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(strategy_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs), 
+                                 <span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">"Sequence "</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs)))]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>lab) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="700"></p>
+<p>We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">median_rows &lt;-<span class="st"> </span>curves[, .I[<span class="kw">which</span>(prob_mean <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.5</span>)[<span class="dv">1</span>]], 
+                      by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>)]<span class="op">$</span>V1
+median_dt &lt;-<span class="st"> </span>curves[median_rows, ]
+median_dt[, strategy_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(strategy_name, 
+                                    <span class="dt">levels =</span> <span class="kw">rev</span>(<span class="kw">unique</span>(strategy_name)))]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(median_dt, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> t)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Median years"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<p><img src="tutorial_files/figure-html/pfs_os_quantiles-1.png" width="700"></p>
 </div>
 <div id="qalys" class="section level4">
 <h4 class="hasAnchor">
 <a href="#qalys" class="anchor"></a>QALYs</h4>
-<p>Coming soon.</p>
+<p>Mean QALYs and life-years can be simulated by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
+econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="dt">dr =</span> <span class="kw">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>))
+
+<span class="co"># Plot</span>
+lys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[dr <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, .(<span class="dt">mean_lys =</span> <span class="kw">mean</span>(lys)),
+                            by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>)]
+lys[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states), 
+                                 <span class="dt">labels =</span> states<span class="op">$</span>state_name)]
+lys[, strategy_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(strategy_id, <span class="dt">levels =</span> <span class="kw">rev</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs)), 
+                                 <span class="dt">labels =</span> <span class="kw">rev</span>(<span class="kw">paste0</span>(<span class="st">"Sequence "</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs))))]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(lys, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_lys, <span class="dt">fill =</span> state_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<p><img src="tutorial_files/figure-html/mean_lys-1.png" width="700"></p>
 </div>
 <div id="costs" class="section level4">
 <h4 class="hasAnchor">

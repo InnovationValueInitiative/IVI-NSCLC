@@ -11,8 +11,7 @@ create_transmod_data(struct, trans_mat, patients, mutation_prob = 0.45)
 
 \item{trans_mat}{A transition matrix as returned by \code{\link{create_trans_mat}}.}
 
-\item{patients}{An object of class "patients" returned from
-\code{\link{create_patients}}.}
+\item{patients}{A data table returned from \code{\link{create_patients}}.}
 
 \item{mutation_prob}{The probability of a T790M mutation. A vector of either
 of length 1 (the probability is constant across first line treatments in 

@@ -8,9 +8,14 @@
 #' the same variable names as \code{\link{params_mstate_nma}}.
 #' @return An object of class "sampled_params", which is a list with the
 #' following components. 
+#' @param params_utility Parameter estimates for health state utilities and
+#' adverse event disutilities in the same format as \code{\link{params_utility}}.
 #' \describe{
 #' \item{mstate_nma}{A \code{\link{params_surv}} object where the number of 
 #' rows in each \code{coef} element is equal to \code{n}.}
+#' \item{utility}{A 3-dimensional array of matrices where each matrix represents
+#' the utility values for a different treatment. The rows of each matrix are
+#' random draws from a beta distribution and columns are health states.}
 #' }
 #' @examples
 #' params <- sample_params(2)
@@ -20,9 +25,11 @@
 #' params$mstate_nma$weibull$coefs$shape
 #' params$mstate_nma$weibull$dist
 #' @export
-sample_params <- function(n, params_mstate_nma = iviNSCLC::params_mstate_nma){
+sample_params <- function(n, params_mstate_nma = iviNSCLC::params_mstate_nma,
+                          params_utility = iviNSCLC::params_utility){
   params <- list()
   params$mstate_nma <- sample_params_mstate_nma(n, params_mstate_nma)
+  params$utility <- sample_params_utility(n, params_utility)
   
   class(params) <- "sampled_params"
   return(params)
@@ -49,4 +56,15 @@ sample_params_mstate_nma <- function(n, object){
     }
   }  
   return(object)
+}
+
+sample_params_utility <- function(n, object){
+  state_utility_params <- hesim::mom_beta(mean = object$state_utility$mean,
+                                          sd = object$state_utility$se)
+  state_utility_dist <- matrix(stats::rbeta(n * nrow(object$state_utility), 
+                                            shape1 = state_utility_params$shape1,
+                                            shape2 = state_utility_params$shape2),
+                               nrow = n, byrow = TRUE)
+  colnames(state_utility_dist) <- object$state_utility$state_name
+  return(state_utility_dist)  
 }

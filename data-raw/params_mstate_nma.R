@@ -6,56 +6,69 @@ library("hesim")
 # For now, we will simulate efficacy data with a Weibull distribution
 n_samples <- 100
 
-# Treatment variables
 ## First line
 vars_1L <- c("osi", "d_erl", "d_gef", "d_afa", "d_dac")
-vars_1L <- c(paste0(vars_1L, "_s1p1"),
-             paste0(vars_1L, "_s1d"),
-             paste0(vars_1L, "_p1d"))
+
+coefs_1L <- function(trans = c("s1p1", "s1d", "p1d"),
+                     est_mean = c(0, -1, -.5, -.3, -.1),
+                     est_se = c(0, 0, 0, 0, 0)) {
+  Sigma <- matrix(0, 
+                   nrow = length(est_mean),
+                   ncol = length(est_mean))
+  diag(Sigma) <- est_se
+  coefs <- MASS::mvrnorm(n_samples, mu = est_mean, Sigma = Sigma)
+  colnames(coefs) <- paste0(vars_1L, "_", trans, "_scale")
+  return(coefs)
+}
+
+### Scale
+coefs_1L_s1p1_scale <- coefs_1L(trans = "s1p1", 
+                                est_mean = c(2, -1, -.5, -.3, -.1))
+coefs_1L_s1d_scale <- coefs_1L(trans = "s1d")
+coefs_1L_p1d_scale <- coefs_1L(trans = "p1d")
+
+### Shape
+zeros <- rep(0, length(vars_1L))
+coefs_1L_s1p1_shape <- coefs_1L(trans = "s1p1", est_mean = zeros)
+coefs_1L_s1d_shape <- coefs_1L(trans = "s1d", est_mean = zeros)
+coefs_1L_p1d_shape <- coefs_1L(trans = "p1d", est_mean = zeros)
 
 ## Second line
 vars_2L <- c("osi", "pbdc", "d_bev", "d_pbdc_bev", "d_erl", "d_gef", "d_afa", "d_dac")
-vars_2L <- c(paste0(vars_2L, "_s2p2"),
-             paste0(vars_2L, "_s2d"),
-             paste0(vars_2L, "_p2d")) 
 
-## Combine and reorder
-vars <- c(vars_1L, vars_2L)
-d_inds <- which(startsWith(vars, "d"))
-mu_inds <- which(!startsWith(vars, "d"))
-vars <- vars[c(mu_inds, d_inds)]
-vars_scale <- paste0(vars, "_scale")
-vars_shape <- paste0(vars, "_shape")
-vars <- c(vars_scale, vars_shape)
+coefs_2L <- function(trans = c("s2p2", "s2d", "p2d"),
+                     est_mean = c(0, 0, -1, -.5, -.3, -.1, .1, .3),
+                     est_se = c(0, 0, 0, 0, 0, 0, 0, 0)) {
+  Sigma <- matrix(0, 
+                   nrow = length(est_mean),
+                   ncol = length(est_mean))
+  diag(Sigma) <- est_se
+  coefs <- MASS::mvrnorm(n_samples, mu = est_mean, Sigma = Sigma)
+  colnames(coefs) <- paste0(vars_2L, "_", trans, "_scale")
+  return(coefs)
+}
 
-# Weibull parameters
-## Scale
-scale_mean_mu <- rep(1, length(mu_inds)) 
-scale_mean_d <- runif(length(d_inds), -.03, 0)
-scale_mean <- c(scale_mean_mu, scale_mean_d)
-scale_se <- matrix(0, 
-                   nrow = length(scale_mean),
-                   ncol = length(scale_mean))
-diag(scale_se) <- c(rep(1, length(mu_inds)),
-                    rep(.02, length(d_inds)))
-scale <- MASS::mvrnorm(n_samples, mu = scale_mean, Sigma = scale_se)
-colnames(scale) <- vars_scale
+### Scale
+coefs_2L_s2p2_scale <- coefs_2L(trans = "s2p2")
+coefs_2L_s2d_scale <- coefs_2L(trans = "s2d",
+                               est_mean = c(-.5, -.5, -1, -.5, -.3, -.1, .1, .3))
+coefs_2L_p2d_scale <- coefs_2L(trans = "p2d")
 
-## Shape
-shape_mean_mu <- rep(1, length(mu_inds)) 
-shape_mean_d <- runif(length(d_inds), -.03, 0)
-shape_mean <- c(shape_mean_mu, shape_mean_d)
-shape_se <- matrix(0, 
-                   nrow = length(shape_mean),
-                   ncol = length(shape_mean))
-diag(shape_se) <- c(rep(1, length(mu_inds)),
-                    rep(.02, length(d_inds)))
-shape <- MASS::mvrnorm(n_samples, mu = shape_mean, Sigma = shape_se)
-colnames(shape) <- vars_shape
+### Shape
+zeros <- rep(0, length(vars_2L))
+coefs_2L_s2p2_shape <- coefs_2L(trans = "s2p2", est_mean = zeros)
+coefs_2L_s2d_shape <- coefs_2L(trans = "s2d", est_mean = zeros)
+coefs_2L_p2d_shape <- coefs_2L(trans = "p2d", est_mean = zeros)
 
 # Save object
+coefs_scale <- cbind(coefs_1L_s1p1_scale, coefs_1L_s1d_scale, coefs_1L_p1d_scale,
+                     coefs_2L_s2p2_scale, coefs_2L_s2d_scale, coefs_2L_p2d_scale)
+coefs_shape <- cbind(coefs_1L_s1p1_shape, coefs_1L_s1d_shape, coefs_1L_p1d_shape,
+                     coefs_2L_s2p2_shape, coefs_2L_s2d_shape, coefs_2L_p2d_shape)
+
 params_mstate_nma <- list()
-params_mstate_nma$weibull <- params_surv(coef = list(scale = scale, shape = shape),
-                                         dist = "weibullNMA")
+params_mstate_nma$weibull <- params_surv(coef = list(scale = coefs_scale, 
+                                                     shape = coefs_shape),
+                                         dist = "weibull")
 save(params_mstate_nma, file = "../data/params_mstate_nma.rda", compress = "bzip2")
 

@@ -16,5 +16,8 @@ test_that("sample_params, n == 1", {
   
   # mstate_nma
   expect_true(is.matrix(params$mstate_nma$weibull$coefs$shape))
+  
+  # Utility estimates
+  
 })
 

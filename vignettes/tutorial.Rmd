@@ -138,7 +138,11 @@ class(transmod)
 ```
 
 #### Utility model
-Coming soon.
+We construct a "mean" model for utility. Adverse events---which vary across treatments---are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.
+
+```{r}
+utilmod <- create_utilmod(params, struct, pats)
+```
 
 #### Cost models
 Coming soon.
@@ -147,7 +151,8 @@ Coming soon.
 Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the `IndivCtstm` class from `hesim`, and instantiate an iCTSTM.   
 
 ```{r}
-econmod <- hesim::IndivCtstm$new(trans_model = transmod)
+econmod <- hesim::IndivCtstm$new(trans_model = transmod,
+                                 utility_model = utilmod)
 ```
 
 ### Simulation
@@ -156,33 +161,86 @@ The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin b
 
 ```{r}
 econmod$sim_disease(max_t = 20)
-econmod$sim_stateprobs(t = seq(0, 20 , 1/12)) # Probability by month
+econmod$sim_stateprobs(t = seq(0, 20 , 1/26)) # Biweekly probabilities
 ```
 
 We plot mean state probabilities (averaged across the joint probability distribution of the parameters). 
 
-```{r}
+```{r stateprobs}
 # Plot of state probabilities
-plot_data <- econmod$stateprobs_[, .(prob_mean = mean(prob),
+stprobs <- econmod$stateprobs_[, .(prob_mean = mean(prob),
                                      prob_lower = quantile(prob, .025),
                                      prob_upper = quantile(prob, .975)),
                                  by = c("strategy_id", "state_id", "t")]
-plot_data[, state_name := factor(state_id, levels = 1:nrow(states), 
+stprobs[, state_name := factor(state_id, levels = 1:nrow(states), 
                                  labels = states$state_name)]
-plot_data[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
+stprobs[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
                                  labels = paste0("Sequence ", 1:length(txseqs)))]
-ggplot(plot_data[t < 5], aes(x = t, y = prob_mean, col = strategy_name)) +
+ggplot(stprobs[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~state_name) + 
   xlab("Years") + ylab("Probability in health state") +
   scale_color_discrete(name = "") +
   theme_minimal()
 ```
 
-We can also compute mean life-years by health state.
+Since [progression-free survival](https://en.wikipedia.org/wiki/Progression-free_survival) and [overall survival](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival) are the mostly commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.
+
+```{r pfs_os_curves}
+curves <- econmod$stateprobs_[state_id == 1 | state_id == 4]
+curves[, prob := ifelse(state_id == 4, 1 - prob, prob)] # OS is 1 - pr(death)
+curves[, lab := factor(state_id, levels = c(1, 4), labels = c("PFS", "OS"))]
+curves <- curves[, .(prob_mean = mean(prob),
+                            prob_lower = quantile(prob, .025),
+                            prob_upper = quantile(prob, .975)),
+                          by = c("strategy_id", "lab", "t")]
+curves[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
+                                 labels = paste0("Sequence ", 1:length(txseqs)))]
+ggplot(curves[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
+  geom_line() + facet_wrap(~lab) + 
+  xlab("Years") + ylab("Survival probability") +
+  scale_color_discrete(name = "") +
+  theme_minimal()
+```
+
+We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS. 
+
+```{r pfs_os_quantiles, fig.height = 3}
+median_rows <- curves[, .I[which(prob_mean <= 0.5)[1]], 
+                      by = c("strategy_id", "lab")]$V1
+median_dt <- curves[median_rows, ]
+median_dt[, strategy_name := factor(strategy_name, 
+                                    levels = rev(unique(strategy_name)))]
+ggplot(median_dt, aes(x = strategy_name, y = t)) + 
+  facet_wrap(~lab, nrow = 2) +
+  geom_bar(stat = "identity", fill = "#d9230f") +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Median years") + 
+  coord_flip() +
+  theme_minimal()
+```
 
 
 #### QALYs
-Coming soon.
+Mean QALYs and life-years can be simulated by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.
+
+```{r mean_lys, fig.height = 1.5}
+# Simulate
+econmod$sim_qalys(dr = c(0, .03))
+
+# Plot
+lys <- econmod$qalys_[dr == 0, .(mean_lys = mean(lys)),
+                            by = c("strategy_id", "state_id")]
+lys[, state_name := factor(state_id, levels = 1:nrow(states), 
+                                 labels = states$state_name)]
+lys[, strategy_name := factor(strategy_id, levels = rev(1:length(txseqs)), 
+                                 labels = rev(paste0("Sequence ", 1:length(txseqs))))]
+ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Mean life-years") + 
+  coord_flip() +
+  theme_minimal()
+```
 
 #### Costs
 Coming soon.

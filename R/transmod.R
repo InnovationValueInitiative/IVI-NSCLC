@@ -166,8 +166,7 @@ transmod_vars <- function(struct, data){
 #' a function of the selected treatment sequences and the modeled patients.
 #' @param struct A \code{\link{model_structure}} object.
 #' @param trans_mat A transition matrix as returned by \code{\link{create_trans_mat}}.
-#' @param patients An object of class "patients" returned from
-#' \code{\link{create_patients}}.
+#' @param patients A data table returned from \code{\link{create_patients}}.
 #' @param mutation_prob The probability of a T790M mutation. A vector of either
 #' of length 1 (the probability is constant across first line treatments in 
 #' \code{txseqs}) or of length equal to the number of treatment sequences in

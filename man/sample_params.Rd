@@ -4,7 +4,8 @@
 \alias{sample_params}
 \title{Sample parameters for PSA}
 \usage{
-sample_params(n, params_mstate_nma = iviNSCLC::params_mstate_nma)
+sample_params(n, params_mstate_nma = iviNSCLC::params_mstate_nma,
+  params_utility = iviNSCLC::params_utility)
 }
 \arguments{
 \item{n}{The number of random observations of the parameters to draw.}
@@ -12,14 +13,20 @@ sample_params(n, params_mstate_nma = iviNSCLC::params_mstate_nma)
 \item{params_mstate_nma}{A list of \code{\link{params_surv}} objects, 
 where each element in the list denotes a survival distribution. Should have
 the same variable names as \code{\link{params_mstate_nma}}.}
-}
-\value{
-An object of class "sampled_params", which is a list with the
-following components. 
+
+\item{params_utility}{Parameter estimates for health state utilities and
+adverse event disutilities in the same format as \code{\link{params_utility}}.
 \describe{
 \item{mstate_nma}{A \code{\link{params_surv}} object where the number of 
 rows in each \code{coef} element is equal to \code{n}.}
+\item{utility}{A 3-dimensional array of matrices where each matrix represents
+the utility values for a different treatment. The rows of each matrix are
+random draws from a beta distribution and columns are health states.}
+}}
 }
+\value{
+An object of class "sampled_params", which is a list with the
+following components.
 }
 \description{
 Sample parameters from their joint probability distribution for a 

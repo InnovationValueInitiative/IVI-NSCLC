@@ -12,7 +12,7 @@ pkg_env$ici <- c("nivolumab", "pembrolizumab", "atezolizumab")
 # State names
 ## Start at first line
 ### 1st/2nd generation TKIs with 7 states
-pkg_env$state_names_start1L_4 <- c("S1", "P1->S2", "P2", "D")
+pkg_env$state_names_start1L_4 <- c("S1", "P1/S2", "P2", "D")
 pkg_env$state_names_long_start1L_4 <- c("Stable with 1L",
                                         "Progression with 1L -> Stable with 2L",
                                         "Progression with 2L",
