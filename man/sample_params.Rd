@@ -5,7 +5,9 @@
 \title{Sample parameters for PSA}
 \usage{
 sample_params(n, params_mstate_nma = iviNSCLC::params_mstate_nma,
-  params_utility = iviNSCLC::params_utility)
+  params_utility = iviNSCLC::params_utility,
+  params_costs_op = iviNSCLC::params_costs_op,
+  params_costs_inpt = iviNSCLC::params_costs_inpt)
 }
 \arguments{
 \item{n}{The number of random observations of the parameters to draw.}
@@ -15,13 +17,23 @@ where each element in the list denotes a survival distribution. Should have
 the same variable names as \code{\link{params_mstate_nma}}.}
 
 \item{params_utility}{Parameter estimates for health state utilities and
-adverse event disutilities in the same format as \code{\link{params_utility}}.
+adverse event disutilities in the same format as \code{\link{params_utility}}.}
+
+\item{params_costs_op}{Parameter estimates for outpatient medical costs
+in the same format as \code{\link{params_costs_op}}.}
+
+\item{params_costs_inpt}{Parameter estimates for inpatient medical costs
+in the same format as \code{\link{params_costs_inpt}}.
 \describe{
 \item{mstate_nma}{A \code{\link{params_surv}} object where the number of 
 rows in each \code{coef} element is equal to \code{n}.}
 \item{utility}{A 3-dimensional array of matrices where each matrix represents
 the utility values for a different treatment. The rows of each matrix are
 random draws from a beta distribution and columns are health states.}
+\item{costs_op}{A matrix where rows are random draw from a gamma 
+distribution and columns are health states.}
+\item{costs_inpt}{A matrix where rows are random draw from a gamma 
+distribution and columns are health states.}
 }}
 }
 \value{

@@ -10,12 +10,20 @@
 #' following components. 
 #' @param params_utility Parameter estimates for health state utilities and
 #' adverse event disutilities in the same format as \code{\link{params_utility}}.
+#' @param params_costs_op Parameter estimates for outpatient medical costs
+#' in the same format as \code{\link{params_costs_op}}.
+#' @param params_costs_inpt Parameter estimates for inpatient medical costs
+#' in the same format as \code{\link{params_costs_inpt}}.
 #' \describe{
 #' \item{mstate_nma}{A \code{\link{params_surv}} object where the number of 
 #' rows in each \code{coef} element is equal to \code{n}.}
 #' \item{utility}{A 3-dimensional array of matrices where each matrix represents
 #' the utility values for a different treatment. The rows of each matrix are
 #' random draws from a beta distribution and columns are health states.}
+#' \item{costs_op}{A matrix where rows are random draw from a gamma 
+#' distribution and columns are health states.}
+#' \item{costs_inpt}{A matrix where rows are random draw from a gamma 
+#' distribution and columns are health states.}
 #' }
 #' @examples
 #' params <- sample_params(2)
@@ -26,10 +34,14 @@
 #' params$mstate_nma$weibull$dist
 #' @export
 sample_params <- function(n, params_mstate_nma = iviNSCLC::params_mstate_nma,
-                          params_utility = iviNSCLC::params_utility){
+                          params_utility = iviNSCLC::params_utility,
+                          params_costs_op = iviNSCLC::params_costs_op,
+                          params_costs_inpt = iviNSCLC::params_costs_inpt){
   params <- list()
   params$mstate_nma <- sample_params_mstate_nma(n, params_mstate_nma)
   params$utility <- sample_params_utility(n, params_utility)
+  params$costs_op <- sample_params_costs_by_state(n, params_costs_op)
+  params$costs_inpt <- sample_params_costs_by_state(n, params_costs_inpt)
   
   class(params) <- "sampled_params"
   return(params)
@@ -59,12 +71,23 @@ sample_params_mstate_nma <- function(n, object){
 }
 
 sample_params_utility <- function(n, object){
-  state_utility_params <- hesim::mom_beta(mean = object$state_utility$mean,
-                                          sd = object$state_utility$se)
-  state_utility_dist <- matrix(stats::rbeta(n * nrow(object$state_utility), 
-                                            shape1 = state_utility_params$shape1,
-                                            shape2 = state_utility_params$shape2),
+  beta_params <- hesim::mom_beta(mean = object$state_utility$mean,
+                                  sd = object$state_utility$se)
+  beta_sample <- matrix(stats::rbeta(n * nrow(object$state_utility), 
+                                            shape1 = beta_params$shape1,
+                                            shape2 = beta_params$shape2),
                                nrow = n, byrow = TRUE)
-  colnames(state_utility_dist) <- object$state_utility$state_name
-  return(state_utility_dist)  
+  colnames(beta_sample) <- object$state_utility$state_name
+  return(beta_sample)  
+}
+
+sample_params_costs_by_state <- function(n, object){
+  gamma_params <- hesim::mom_gamma(mean = object$mean, 
+                             sd = object$se)
+  gamma_sample <- matrix(stats::rgamma(n * nrow(object), 
+                                      shape = gamma_params$shape,
+                                      scale = gamma_params$scale),
+                        nrow = n, byrow = TRUE)
+  colnames(gamma_sample) <- object$state_name
+  return(gamma_sample)
 }

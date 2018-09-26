@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-09-24</h4>
+            <h4 class="date">2018-09-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -83,11 +83,13 @@
 <p>In the three-state model, all hazard rates are based on 1L clinical trial evidence. Patients begin in stable disease (S1) and they can transition to the progression state (P1) or death (D).</p>
 <p><br><img src="modstruct3_1L.png" width="800px"><br><br></p>
 <p>If the model begins at second line, then a three-state model nearly identical to the figure above must be used. In the 2L case, patients begin in stable disease (S2) and transition to progression (P2) or death (D).</p>
-<p>The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis is used to propagate uncertainty in the model input parameters throughout the model.</p>
-<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages. We will also use <a href="https://ggplot2.tidyverse.org/">ggplot2</a> for plotting. Note that the <code>iviNSCLC</code> loads the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> package, which we will use to manipulate data and simulation output.</p>
+<p>The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis (PSA) is used to propagate uncertainty in the model input parameters throughout the model.</p>
+<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages. We will also use <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and <a href="https://scales.r-lib.org/">scales</a> for plotting. Note that the <code>iviNSCLC</code> loads the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> package, which we will use to manipulate data and simulation output.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"iviNSCLC"</span>)
 <span class="kw">library</span>(<span class="st">"hesim"</span>)
-<span class="kw">library</span>(<span class="st">"ggplot2"</span>)</code></pre></div>
+<span class="kw">library</span>(<span class="st">"ggplot2"</span>)
+<span class="kw">library</span>(<span class="st">"scales"</span>)
+ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme_get">theme_set</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>())</code></pre></div>
 </div>
 <div id="parameter-estimates" class="section level1">
 <h1 class="hasAnchor">
@@ -111,7 +113,7 @@
 <li>
 <code>params_prod</code>: Productivity losses by health state (S1, P1, and P2).</li>
 </ul>
-<p>Samples from the joint probability distribution of all parameters can be drawn using the <code><a href="../reference/sample_params.html">sample_params()</a></code> function. When draws from the posterior distribution are already provided (e.g., <code>params_mstate_nma</code>, <code>params_ae_nma</code>), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., <code>params_utility</code>), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].</p>
+<p>Samples from the joint probability distribution of all parameters for the PSA can be drawn using the <code><a href="../reference/sample_params.html">sample_params()</a></code> function. When draws from the posterior distribution are already provided (e.g., <code>params_mstate_nma</code>, <code>params_ae_nma</code>), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., <code>params_utility</code>), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sample_params.html">sample_params</a></span>(<span class="dt">n =</span> <span class="dv">100</span>)</code></pre></div>
 </div>
 <div id="economic-model" class="section level1">
@@ -214,14 +216,16 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <div id="cost-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#cost-models" class="anchor"></a>Cost models</h4>
-<p>Coming soon.</p>
+<p>We construct models for each of the cost categories.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(params, struct, pats)</code></pre></div>
 </div>
 <div id="combining-the-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#combining-the-models" class="anchor"></a>Combining the models</h4>
 <p>Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the <code>IndivCtstm</code> class from <code>hesim</code>, and instantiate an iCTSTM.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod &lt;-<span class="st"> </span>hesim<span class="op">::</span>IndivCtstm<span class="op">$</span><span class="kw">new</span>(<span class="dt">trans_model =</span> transmod,
-                                 <span class="dt">utility_model =</span> utilmod)</code></pre></div>
+                                 <span class="dt">utility_model =</span> utilmod,
+                                 <span class="dt">cost_models =</span> costmods)</code></pre></div>
 </div>
 </div>
 <div id="simulation" class="section level3">
@@ -246,8 +250,7 @@ stprobs[, strategy_name <span class="op">:</span><span class="er">=</span><span 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(stprobs[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/stateprobs-1.png" width="700"></p>
 <p>Since <a href="https://en.wikipedia.org/wiki/Progression-free_survival">progression-free survival</a> and <a href="https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival">overall survival</a> are the mostly commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">curves &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>state_id <span class="op">==</span><span class="st"> </span><span class="dv">4</span>]
@@ -262,8 +265,7 @@ curves[, strategy_name <span class="op">:</span><span class="er">=</span><span c
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>lab) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="700"></p>
 <p>We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">median_rows &lt;-<span class="st"> </span>curves[, .I[<span class="kw">which</span>(prob_mean <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.5</span>)[<span class="dv">1</span>]], 
@@ -276,14 +278,13 @@ median_dt[, strategy_name <span class="op">:</span><span class="er">=</span><spa
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Median years"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_quantiles-1.png" width="700"></p>
 </div>
 <div id="qalys" class="section level4">
 <h4 class="hasAnchor">
 <a href="#qalys" class="anchor"></a>QALYs</h4>
-<p>Mean QALYs and life-years can be simulated by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.</p>
+<p>Mean QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="dt">dr =</span> <span class="kw">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>))
 
@@ -298,14 +299,43 @@ lys[, strategy_name <span class="op">:</span><span class="er">=</span><span clas
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/mean_lys-1.png" width="700"></p>
 </div>
 <div id="costs" class="section level4">
 <h4 class="hasAnchor">
 <a href="#costs" class="anchor"></a>Costs</h4>
-<p>Coming soon.</p>
+<p>We simulate mean costs for each randomly sammpled parameter set by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e, compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot costs and 95 percent credible intervals across treatment strategies.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
+econmod<span class="op">$</span><span class="kw">sim_costs</span>(<span class="dt">dr =</span> .<span class="dv">03</span>)
+ce_sim &lt;-<span class="st"> </span>econmod<span class="op">$</span><span class="kw">summarize</span>()
+
+<span class="co"># Plot</span>
+costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[ , .(<span class="dt">costs_mean =</span> <span class="kw">mean</span>(costs),
+                           <span class="dt">costs_lower =</span> <span class="kw">quantile</span>(costs, .<span class="dv">025</span>),
+                           <span class="dt">costs_upper =</span> <span class="kw">quantile</span>(costs, .<span class="dv">975</span>)),
+                        by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"category"</span>)]
+costs[, strategy_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(strategy_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs), 
+                                 <span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">"Sequence "</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs)))]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(costs[category <span class="op">==</span><span class="st"> "total"</span>], 
+       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> costs_lower, 
+                    <span class="dt">ymax =</span> costs_upper), <span class="dt">width=</span>.<span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
+<p><img src="tutorial_files/figure-html/mean_costs-1.png" width="384"></p>
+<p>We can also decompose costs by category.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costs[, category_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(category, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"op"</span>, <span class="st">"inpt"</span>, <span class="st">"total"</span>),
+                                <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Outptient"</span>, <span class="st">"Inpatient"</span>, <span class="st">"Total"</span>))]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(costs[category <span class="op">!=</span><span class="st"> "total"</span>], 
+       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean, <span class="dt">fill =</span> category_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
+<p><img src="tutorial_files/figure-html/mean_costs_cat-1.png" width="384"></p>
 </div>
 </div>
 </div>

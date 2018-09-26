@@ -30,6 +30,7 @@ Suggests:
     covr,
     ggplot2,
     knitr,
+    scales,
     testthat
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
