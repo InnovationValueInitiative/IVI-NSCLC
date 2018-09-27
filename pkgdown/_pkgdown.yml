@@ -33,7 +33,6 @@ reference:
       - create_transmod_params
       - create_utilmod
     
-
 navbar:
   title: IVI-NSCLC
   left:

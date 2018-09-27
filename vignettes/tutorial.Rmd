@@ -44,11 +44,12 @@ If the model begins at second line, then a three-state model nearly identical to
 
 The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis (PSA) is used to propagate uncertainty in the model input parameters throughout the model.
 
-Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/) and [scales](https://scales.r-lib.org/) for plotting. Note that the `iviNSCLC` loads the [data.table](https://github.com/Rdatatable/data.table/wiki) package, which we will use to manipulate data and simulation output.
+Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/) and [scales](https://scales.r-lib.org/) for plotting and the [data.table](https://github.com/Rdatatable/data.table/wiki) package to manipulate data and simulation output.
 
 ```{r}
 library("iviNSCLC")
 library("hesim")
+library("data.table")
 library("ggplot2")
 library("scales")
 ggplot2::theme_set(theme_minimal())
@@ -248,13 +249,13 @@ ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) +
 #### Costs
 We simulate mean costs for each randomly sammpled parameter set by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e,  compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals. 
 
-```{r mean_costs, fig.width = 4}
+```{r costs, fig.width = 4}
 # Simulate
 econmod$sim_costs(dr = .03)
 ce_sim <- econmod$summarize()
 
 # Plot
-costs <- ce_sim$costs[ , .(costs_mean = mean(costs),
+costs <- ce_sim$costs[dr == .03 , .(costs_mean = mean(costs),
                            costs_lower = quantile(costs, .025),
                            costs_upper = quantile(costs, .975)),
                         by = c("strategy_id", "category")]
@@ -272,7 +273,7 @@ ggplot(costs[category == "total"],
 
 We can also decompose costs by category. 
 
-```{r mean_costs_cat, fig.width = 4}
+```{r costs_cat, fig.width = 4}
 costs[, category_name := factor(category, levels = c("op", "inpt", "total"),
                                 labels = c("Outptient", "Inpatient", "Total"))]
 ggplot(costs[category != "total"], 
@@ -282,6 +283,32 @@ ggplot(costs[category != "total"],
   xlab("") + ylab("Costs") + 
   scale_y_continuous(label = dollar_format()) 
 ```
+
+We might also want to examine incremental costs relative to a reference treatment (say treatment sequence 1). 
+
+```{r incr_costs, fig.width = 4}
+# Incremental costs with Strategy 1 as the reference treatment
+incr_costs <- ce_sim$costs[, costs_ref := costs[1], 
+                           by = c("category", "dr", "sample")]
+incr_costs[, icosts := costs - costs_ref]
+incr_costs <- incr_costs[, .(icosts_mean = mean(icosts),
+                             icosts_lower = quantile(icosts, .025),
+                             icosts_upper = quantile(icosts, .975)),
+               by = c("category", "dr", "strategy_id")]
+incr_costs[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
+                                 labels = paste0("Sequence ", 1:length(txseqs)))]
+ggplot(incr_costs[dr == .03 & category == "total" & 
+                    strategy_id != 1], 
+       aes(x = strategy_name, y = icosts_mean)) + 
+  geom_bar(stat = "identity", fill = "#d9230f") +
+  geom_errorbar(aes(ymin = icosts_lower, 
+                    ymax = icosts_upper), width=.2) +
+  scale_fill_discrete(name = "") +
+  scale_x_discrete(drop = FALSE) +
+  xlab("") + ylab("Costs") + 
+  scale_y_continuous(label = dollar_format())
+```
+
 
 ## A three-state model for second line treatment
 Coming soon.
