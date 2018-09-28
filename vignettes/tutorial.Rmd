@@ -96,8 +96,24 @@ txseq1 <- txseq(first = "erlotinib",
 txseq2 <- txseq(first = "gefitinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2, start_line = "first",
+txseqs <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = "first",
                      mutation = "unknown")
+```
+
+Its also useful to write a short convenience function for creating informative names for treatment strategies (i.e., treatment sequences), which can be used for plotting.
+```{r}
+# Convenience function to add factor names to data table
+# for plotting
+strategy_factor <- function(x, rev = FALSE){ 
+  strategy_names <- names(txseqs)
+  if (rev == FALSE){
+    x[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
+                               labels = strategy_names)]
+  } else{
+    x[, strategy_name := factor(strategy_id, levels = rev(1:length(txseqs)), 
+                                 labels = rev(strategy_names))]
+  }
+}
 ```
 
 ### Model structure
@@ -113,6 +129,15 @@ print(states)
 # Transition matrix
 tmat <- create_trans_mat(struct)
 print(tmat)
+```
+
+As with treatment strategies, its useful to write a convenience function for generating informative names for health states for plotting.
+
+```{r}
+state_factor <- function(x){
+  x[, state_name := factor(state_id, levels = 1:nrow(states), 
+                           labels = states$state_name)]
+}
 ```
 
 ### Constructing the model
@@ -180,17 +205,15 @@ stprobs <- econmod$stateprobs_[, .(prob_mean = mean(prob),
                                      prob_lower = quantile(prob, .025),
                                      prob_upper = quantile(prob, .975)),
                                  by = c("strategy_id", "state_id", "t")]
-stprobs[, state_name := factor(state_id, levels = 1:nrow(states), 
-                                 labels = states$state_name)]
-stprobs[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
-                                 labels = paste0("Sequence ", 1:length(txseqs)))]
+state_factor(stprobs)
+strategy_factor(stprobs)
 ggplot(stprobs[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~state_name) + 
   xlab("Years") + ylab("Probability in health state") +
   scale_color_discrete(name = "") 
 ```
 
-Since [progression-free survival](https://en.wikipedia.org/wiki/Progression-free_survival) and [overall survival](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival) are the mostly commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.
+Since [progression-free survival](https://en.wikipedia.org/wiki/Progression-free_survival) and [overall survival](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival) are the most commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.
 
 ```{r pfs_os_curves}
 curves <- econmod$stateprobs_[state_id == 1 | state_id == 4]
@@ -200,8 +223,7 @@ curves <- curves[, .(prob_mean = mean(prob),
                             prob_lower = quantile(prob, .025),
                             prob_upper = quantile(prob, .975)),
                           by = c("strategy_id", "lab", "t")]
-curves[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
-                                 labels = paste0("Sequence ", 1:length(txseqs)))]
+strategy_factor(curves)
 ggplot(curves[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~lab) + 
   xlab("Years") + ylab("Survival probability") +
@@ -214,8 +236,7 @@ We can also summarize quantiles of the PFS and OS curves. Here, we plot the medi
 median_rows <- curves[, .I[which(prob_mean <= 0.5)[1]], 
                       by = c("strategy_id", "lab")]$V1
 median_dt <- curves[median_rows, ]
-median_dt[, strategy_name := factor(strategy_name, 
-                                    levels = rev(unique(strategy_name)))]
+strategy_factor(median_dt, rev = TRUE)
 ggplot(median_dt, aes(x = strategy_name, y = t)) + 
   facet_wrap(~lab, nrow = 2) +
   geom_bar(stat = "identity", fill = "#d9230f") +
@@ -235,10 +256,8 @@ econmod$sim_qalys(dr = c(0, .03))
 # Plot
 lys <- econmod$qalys_[dr == 0, .(mean_lys = mean(lys)),
                             by = c("strategy_id", "state_id")]
-lys[, state_name := factor(state_id, levels = 1:nrow(states), 
-                                 labels = states$state_name)]
-lys[, strategy_name := factor(strategy_id, levels = rev(1:length(txseqs)), 
-                                 labels = rev(paste0("Sequence ", 1:length(txseqs))))]
+state_factor(lys)
+strategy_factor(lys)
 ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) + 
   geom_bar(stat = "identity") +
   scale_fill_discrete(name = "") +
@@ -247,7 +266,7 @@ ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) +
 ```
 
 #### Costs
-We simulate mean costs for each randomly sammpled parameter set by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e,  compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals. 
+Mean costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e,  compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals. 
 
 ```{r costs, fig.width = 4}
 # Simulate
@@ -259,8 +278,7 @@ costs <- ce_sim$costs[dr == .03 , .(costs_mean = mean(costs),
                            costs_lower = quantile(costs, .025),
                            costs_upper = quantile(costs, .975)),
                         by = c("strategy_id", "category")]
-costs[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
-                                 labels = paste0("Sequence ", 1:length(txseqs)))]
+strategy_factor(costs)
 ggplot(costs[category == "total"], 
        aes(x = strategy_name, y = costs_mean)) + 
   geom_bar(stat = "identity", fill = "#d9230f") +
@@ -284,19 +302,18 @@ ggplot(costs[category != "total"],
   scale_y_continuous(label = dollar_format()) 
 ```
 
-We might also want to examine incremental costs relative to a reference treatment (say treatment sequence 1). 
+We might also want to examine incremental costs relative to a comparator (say treatment sequence 1). 
 
 ```{r incr_costs, fig.width = 4}
 # Incremental costs with Strategy 1 as the reference treatment
-incr_costs <- ce_sim$costs[, costs_ref := costs[1], 
+incr_costs <- ce_sim$costs[, costs_comparator := costs[1], 
                            by = c("category", "dr", "sample")]
-incr_costs[, icosts := costs - costs_ref]
+incr_costs[, icosts := costs - costs_comparator]
 incr_costs <- incr_costs[, .(icosts_mean = mean(icosts),
                              icosts_lower = quantile(icosts, .025),
                              icosts_upper = quantile(icosts, .975)),
                by = c("category", "dr", "strategy_id")]
-incr_costs[, strategy_name := factor(strategy_id, levels = 1:length(txseqs), 
-                                 labels = paste0("Sequence ", 1:length(txseqs)))]
+strategy_factor(incr_costs)
 ggplot(incr_costs[dr == .03 & category == "total" & 
                     strategy_id != 1], 
        aes(x = strategy_name, y = icosts_mean)) + 
@@ -305,7 +322,7 @@ ggplot(incr_costs[dr == .03 & category == "total" &
                     ymax = icosts_upper), width=.2) +
   scale_fill_discrete(name = "") +
   scale_x_discrete(drop = FALSE) +
-  xlab("") + ylab("Costs") + 
+  xlab("") + ylab("Incremental costs") + 
   scale_y_continuous(label = dollar_format())
 ```
 
@@ -314,4 +331,46 @@ ggplot(incr_costs[dr == .03 & category == "total" &
 Coming soon.
 
 # Decision analysis
-Coming soon.
+Cost-effectiveness analysis can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator.  
+
+```{r icea}
+icea <- hesim::icea(ce_sim, dr = .03)
+icea_pw <- hesim::icea_pw(ce_sim, comparator = 1, dr = .03)
+```
+
+To assess the impact of uncertainty in model parameters on costs and QALYs, it is common to plot a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 at a willingness to pay of $100,000. 
+
+```{r ceplane}
+ylim <- max(icea_pw$delta[, ic]) * 1.1
+xlim <- max(icea_pw$delta[, ie]) * 1.1
+strategy_factor(icea_pw$delta)
+ggplot(icea_pw$delta, aes(x = ie, y = ic, col = strategy_name)) + 
+  geom_jitter(size = .5)  + 
+  xlab("Incremental QALYs") + ylab("Incremental costs") +
+  scale_y_continuous(label = dollar, limits = c(-ylim, ylim)) +
+  scale_x_continuous(limits = c(-xlim, xlim)) +
+ scale_colour_discrete(name = "") +
+  geom_abline(slope = 100000, linetype = "dashed") +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0)
+```
+
+We can also plot cost-effectiveness acceptability curves (CEACs), which shows the probability that each treatment sequence is cost-effective, again relative to treatment sequence 1. 
+
+```{r ceac}
+strategy_factor(icea_pw$ceac)
+ggplot(icea_pw$ceac, aes(x = k, y = prob, col = strategy_name)) +
+  geom_line() + xlab("Willingness to pay") +
+  ylab("Probability most cost-effective") +
+  scale_x_continuous(label = scales::dollar) +
+  scale_colour_discrete(name = "")
+```
+
+Finally, we can plot the expected value of perfect information (EVPI), which is a measure of the maximum amount that a decision maker would be willing to pay to reduce all uncertainty in all parameters. 
+
+```{r evpi}
+ggplot(icea$evpi, aes(x = k, y = evpi)) +
+  geom_line() + xlab("Willingness to pay") +
+  ylab("Expected value of perfect information") +
+  scale_x_continuous(label = scales::dollar) +
+  scale_y_continuous(label = scales::dollar)
+```

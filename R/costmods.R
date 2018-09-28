@@ -35,7 +35,7 @@ create_costmods <- function(params, struct, patients){
   costmods$op <- create_costmods_default(params, struct, patients,
                                           "costs_op")
   costmods$inpt <- create_costmods_default(params, struct, patients,
-                                          "costs_op")
+                                          "costs_inpt")
   return(costmods)
 }
 

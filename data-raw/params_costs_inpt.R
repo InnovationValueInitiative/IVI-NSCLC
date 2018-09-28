@@ -4,8 +4,8 @@ library("iviNSCLC")
 
 # Outpatient costs by health state
 state_name <- iviNSCLC:::pkg_env$state_names_start1L_4[1:3]
-mean <- c(3000, 2000, 2200)
-se <- c(300, 400, 420)
+mean <- c(30000, 20000, 22000)
+se <- c(3000, 4000, 4200)
 ref <- c(NA, NA, NA)
 
 # Save
