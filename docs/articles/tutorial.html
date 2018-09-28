@@ -285,7 +285,8 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="700"></p>
 <p>We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">median_rows &lt;-<span class="st"> </span>curves[, .I[<span class="kw">which</span>(prob_mean <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.5</span>)[<span class="dv">1</span>]], 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span>.<span class="dv">5</span> <span class="co"># quantile of interest</span>
+median_rows &lt;-<span class="st"> </span>curves[, .I[<span class="kw">which</span>(prob_mean <span class="op">&lt;=</span><span class="st">  </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>k)[<span class="dv">1</span>]], 
                       by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>)]<span class="op">$</span>V1
 median_dt &lt;-<span class="st"> </span>curves[median_rows, ]
 <span class="kw">strategy_factor</span>(median_dt, <span class="dt">rev =</span> <span class="ot">TRUE</span>)

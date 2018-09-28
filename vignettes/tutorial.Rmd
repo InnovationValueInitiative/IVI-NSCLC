@@ -233,7 +233,8 @@ ggplot(curves[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
 We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS. 
 
 ```{r pfs_os_quantiles, fig.height = 3}
-median_rows <- curves[, .I[which(prob_mean <= 0.5)[1]], 
+k <- .5 # quantile of interest
+median_rows <- curves[, .I[which(prob_mean <=  1 - k)[1]], 
                       by = c("strategy_id", "lab")]$V1
 median_dt <- curves[median_rows, ]
 strategy_factor(median_dt, rev = TRUE)
