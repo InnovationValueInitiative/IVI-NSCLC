@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-09-28</h4>
+            <h4 class="date">2018-10-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -84,13 +84,13 @@
 <p><br><img src="modstruct3_1L.png" width="800px"><br><br></p>
 <p>If the model begins at second line, then a three-state model nearly identical to the figure above must be used. In the 2L case, patients begin in stable disease (S2) and transition to progression (P2) or death (D).</p>
 <p>The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis (PSA) is used to propagate uncertainty in the model input parameters throughout the model.</p>
-<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages. We will also use <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and <a href="https://scales.r-lib.org/">scales</a> for plotting and the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> package to manipulate data and simulation output.</p>
+<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages. We will also use <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and <a href="https://scales.r-lib.org/">scales</a> for plotting, <a href="https://rmarkdown.rstudio.com/lesson-7.html">knitr</a> to create tables, and the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> package to manipulate data and simulation output.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"iviNSCLC"</span>)
 <span class="kw">library</span>(<span class="st">"hesim"</span>)
-<span class="kw">library</span>(<span class="st">"data.table"</span>)</code></pre></div>
-<pre><code>## Warning: package 'data.table' was built under R version 3.4.4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"ggplot2"</span>)
+<span class="kw">library</span>(<span class="st">"data.table"</span>)
+<span class="kw">library</span>(<span class="st">"ggplot2"</span>)
 <span class="kw">library</span>(<span class="st">"scales"</span>)
+<span class="kw">library</span>(<span class="st">"knitr"</span>)
 ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme_get">theme_set</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>())</code></pre></div>
 </div>
 <div id="parameter-estimates" class="section level1">
@@ -309,7 +309,7 @@ econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="d
 lys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[dr <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, .(<span class="dt">mean_lys =</span> <span class="kw">mean</span>(lys)),
                             by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>)]
 <span class="kw">state_factor</span>(lys)
-<span class="kw">strategy_factor</span>(lys)
+<span class="kw">strategy_factor</span>(lys, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(lys, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_lys, <span class="dt">fill =</span> state_name)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
@@ -383,10 +383,53 @@ incr_costs &lt;-<span class="st"> </span>incr_costs[, .(<span class="dt">icosts_
 <div id="decision-analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#decision-analysis" class="anchor"></a>Decision analysis</h1>
-<p>Cost-effectiveness analysis can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator.</p>
+<p>Cost-effectiveness analysis can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of $100,000.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icea &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea</a></span>(ce_sim, <span class="dt">dr =</span> .<span class="dv">03</span>)
 icea_pw &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw</a></span>(ce_sim, <span class="dt">comparator =</span> <span class="dv">1</span>, <span class="dt">dr =</span> .<span class="dv">03</span>)</code></pre></div>
-<p>To assess the impact of uncertainty in model parameters on costs and QALYs, it is common to plot a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 at a willingness to pay of $100,000.</p>
+<p>We report <a href="https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio">incremental cost-effective ratios (ICERs)</a>—a commonly used measure for summarizing the cost-effectiveness of interventions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icer &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icer_tbl">icer_tbl</a></span>(icea_pw,
+                        <span class="dt">k =</span> <span class="dv">100000</span>, <span class="co"># WTP per QALY </span>
+                        <span class="dt">cri =</span> <span class="ot">TRUE</span>,
+                        <span class="dt">rownames =</span> <span class="kw">c</span>(<span class="st">"Incremental QALYs"</span>, <span class="st">"Incremental costs ($)"</span>, 
+                                     <span class="st">"Incremental NMB ($)"</span>, <span class="st">"ICER ($ per QALY)"</span>, 
+                                     <span class="st">"Conclusion"</span>),
+                        <span class="dt">colnames =</span> <span class="kw">names</span>(txseqs))
+knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(icer)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="left">Sequence 1</th>
+<th align="left">Sequence 2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Incremental QALYs</td>
+<td align="left">-</td>
+<td align="left">0.06 (0.01, 0.10)</td>
+</tr>
+<tr class="even">
+<td>Incremental costs ($)</td>
+<td align="left">-</td>
+<td align="left">2,349 (679, 4,234)</td>
+</tr>
+<tr class="odd">
+<td>Incremental NMB ($)</td>
+<td align="left">-</td>
+<td align="left">3,406 (893, 5,856)</td>
+</tr>
+<tr class="even">
+<td>ICER ($ per QALY)</td>
+<td align="left">-</td>
+<td align="left">40,823</td>
+</tr>
+<tr class="odd">
+<td>Conclusion</td>
+<td align="left">-</td>
+<td align="left">Cost-effective</td>
+</tr>
+</tbody>
+</table>
+<p>We can also visualize the degree of uncertainty in our simulated cost and QALY values with a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 given our willingness to pay threshold of $100,000.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ylim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span class="op">$</span>delta[, ic]) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
 xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span class="op">$</span>delta[, ie]) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
 <span class="kw">strategy_factor</span>(icea_pw<span class="op">$</span>delta)
@@ -399,11 +442,11 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span clas
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">100000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceplane-1.png" width="700"></p>
-<p>We can also plot cost-effectiveness acceptability curves (CEACs), which shows the probability that each treatment sequence is cost-effective, again relative to treatment sequence 1.</p>
+<p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. More precisely, the CEAC plots the proportion of simulations from the PSA that a treatment sequence is cost-effective relative to the comparator (y-axis) against different willingness to pay thresholds (x-axis).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strategy_factor</span>(icea_pw<span class="op">$</span>ceac)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(icea_pw<span class="op">$</span>ceac, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> prob, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability most cost-effective"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability cost-effective"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceac-1.png" width="700"></p>
