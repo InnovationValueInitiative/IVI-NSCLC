@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-01</h4>
+            <h4 class="date">2018-10-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -285,14 +285,16 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="700"></p>
 <p>We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span>.<span class="dv">5</span> <span class="co"># quantile of interest</span>
-median_rows &lt;-<span class="st"> </span>curves[, .I[<span class="kw">which</span>(prob_mean <span class="op">&lt;=</span><span class="st">  </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>k)[<span class="dv">1</span>]], 
-                      by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>)]<span class="op">$</span>V1
-median_dt &lt;-<span class="st"> </span>curves[median_rows, ]
-<span class="kw">strategy_factor</span>(median_dt, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(median_dt, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> t)) <span class="op">+</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quantiles &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/surv_quantile">surv_quantile</a></span>(curves, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, .<span class="dv">975</span>),
+                                  <span class="dt">t =</span> <span class="st">"t"</span>,
+                                  <span class="dt">surv_cols =</span> <span class="kw">c</span>(<span class="st">"prob_mean"</span>, <span class="st">"prob_lower"</span>, <span class="st">"prob_upper"</span>),
+                                  <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>))
+<span class="kw">strategy_factor</span>(quantiles, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(quantiles[prob <span class="op">==</span><span class="st"> </span>.<span class="dv">5</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> quantile_prob_mean)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> quantile_prob_lower,
+                    <span class="dt">ymax =</span> quantile_prob_upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Median years"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
@@ -410,17 +412,17 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">2,349 (679, 4,234)</td>
+<td align="left">2,288 (526, 4,103)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">3,406 (893, 5,856)</td>
+<td align="left">3,403 (755, 6,060)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">40,823</td>
+<td align="left">40,200</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>

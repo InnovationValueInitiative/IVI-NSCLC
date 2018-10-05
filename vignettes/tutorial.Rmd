@@ -234,14 +234,16 @@ ggplot(curves[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
 We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS. 
 
 ```{r pfs_os_quantiles, fig.height = 3}
-k <- .5 # quantile of interest
-median_rows <- curves[, .I[which(prob_mean <=  1 - k)[1]], 
-                      by = c("strategy_id", "lab")]$V1
-median_dt <- curves[median_rows, ]
-strategy_factor(median_dt, rev = TRUE)
-ggplot(median_dt, aes(x = strategy_name, y = t)) + 
+quantiles <- hesim::surv_quantile(curves, probs = c(.025, .25, .5, .75, .975),
+                                  t = "t",
+                                  surv_cols = c("prob_mean", "prob_lower", "prob_upper"),
+                                  by = c("strategy_id", "lab"))
+strategy_factor(quantiles, rev = TRUE)
+ggplot(quantiles[prob == .5], aes(x = strategy_name, y = quantile_prob_mean)) + 
   facet_wrap(~lab, nrow = 2) +
   geom_bar(stat = "identity", fill = "#d9230f") +
+  geom_errorbar(aes(ymin = quantile_prob_lower,
+                    ymax = quantile_prob_upper), width = .2) +
   scale_fill_discrete(name = "") +
   xlab("") + ylab("Median years") + 
   coord_flip() 
