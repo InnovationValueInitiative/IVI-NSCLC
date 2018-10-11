@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create utility model — create_utilmod • iviNSCLC</title>
+<title>Create cost models — create_costmods • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,11 @@
 
 
 
-<meta property="og:title" content="Create utility model — create_utilmod" />
+<meta property="og:title" content="Create cost models — create_costmods" />
 
-<meta property="og:description" content="Create a model for health state utility given values of utility by
- health state, treatment, and time sampled from a probability distribution." />
+<meta property="og:description" content="Create a cost model for four cost categories: (i) treatment costs (i.e., drug
+acquisition and administration costs), (ii) inpatient medical costs, 
+(iii) outpatient medical costs, and (iv) costs due to adverse events." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,20 +96,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create utility model</h1>
-    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/utilmod.R'><code>R/utilmod.R</code></a></small>
-    <div class="hidden name"><code>create_utilmod.Rd</code></div>
+    <h1>Create cost models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/costmods.R'><code>R/costmods.R</code></a></small>
+    <div class="hidden name"><code>create_costmods.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a model for health state utility given values of utility by
- health state, treatment, and time sampled from a probability distribution.</p>
+    <p>Create a cost model for four cost categories: (i) treatment costs (i.e., drug
+acquisition and administration costs), (ii) inpatient medical costs, 
+(iii) outpatient medical costs, and (iv) costs due to adverse events.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_utilmod</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>struct</span>, <span class='no'>patients</span>,
-  <span class='kw'>params_utility</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_utility'>params_utility</a></span>)</pre>
+    <pre class="usage"><span class='fu'>create_costmods</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>struct</span>, <span class='no'>patients</span>,
+  <span class='kw'>params_costs_op</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_costs_op'>params_costs_op</a></span>,
+  <span class='kw'>params_costs_inpt</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_costs_inpt'>params_costs_inpt</a></span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -126,9 +129,14 @@
       <td><p>A data table returned from <code><a href='create_patients.html'>create_patients</a></code>.</p></td>
     </tr>
     <tr>
-      <th>params_utility</th>
-      <td><p>Parameter estimates for health state utilities and
-adverse event disutilities in the same format as <code><a href='params_utility.html'>params_utility</a></code>.</p></td>
+      <th>params_costs_op</th>
+      <td><p>Parameter estimates for outpatient medical costs
+in the same format as <code><a href='params_costs_op.html'>params_costs_op</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>params_costs_inpt</th>
+      <td><p>Parameter estimates for inpatient medical costs
+in the same format as <code><a href='params_costs_inpt.html'>params_costs_inpt</a></code>.</p></td>
     </tr>
     </table>
     
@@ -154,8 +162,8 @@ adverse event disutilities in the same format as <code><a href='params_utility.h
 <span class='co'>## Model structure</span>
 <span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"weibull"</span>)
 
-<span class='co'>## Utility model</span>
-<span class='no'>utilmod</span> <span class='kw'>&lt;-</span> <span class='fu'>create_utilmod</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>, <span class='kw'>patients</span> <span class='kw'>=</span> <span class='no'>pats</span>)</div></pre>
+<span class='co'>## Cost models</span>
+<span class='no'>costmods</span> <span class='kw'>&lt;-</span> <span class='fu'>create_costmods</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>, <span class='kw'>patients</span> <span class='kw'>=</span> <span class='no'>pats</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
