@@ -4,13 +4,19 @@
 \alias{create_transmod_params}
 \title{Parameters for transition model}
 \usage{
-create_transmod_params(params, data, check_covs = FALSE, covs = NULL)
+create_transmod_params(n = 100, data,
+  params_mstate_nma = iviNSCLC::params_mstate_nma, check_covs = FALSE,
+  covs = NULL)
 }
 \arguments{
-\item{params}{A "sampled_params" object returned from \code{\link{sample_params}}.}
+\item{n}{The number of random observations of the parameters to draw.}
 
 \item{data}{A data table of class "expanded_hesim_data" returned from 
 \code{\link{create_transmod_data}}.}
+
+\item{params_mstate_nma}{A list of \code{\link{params_surv}} objects, 
+where each element in the list denotes a survival distribution. Should have
+the same variable names as \code{\link{params_mstate_nma}}.}
 
 \item{check_covs}{Logical indicating whether to check that all covariates in 
 \code{data} are contained in \code{params}.}
@@ -36,8 +42,6 @@ that are also contained in \code{data} are extracted.
 }
 \examples{
 # Joint distribution of parameters
-params <- sample_params(n = 2)
-
 # Treatment sequences
 txseq1 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
@@ -56,7 +60,7 @@ tmat <- create_trans_mat(struct)
 
 # Data and parameters for state transition model
 transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
-transmod_params <- create_transmod_params(params, transmod_data)
+transmod_params <- create_transmod_params(n = 2, transmod_data)
 print(transmod_params)
 }
 \seealso{

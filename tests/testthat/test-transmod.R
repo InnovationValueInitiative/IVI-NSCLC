@@ -78,11 +78,10 @@ test_that("create_transmod_params", {
   txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
   struct <- model_structure(txseqs, n_states = "four", dist = "weibull")
   tmat <- create_trans_mat(struct)
-  params <- sample_params(n = 2)
-  
+
   # Create data and parameters
   transmod_data <- create_transmod_data(struct, tmat, pats)  
-  transmod_params <- create_transmod_params(params, transmod_data) 
+  transmod_params <- create_transmod_params(n = 2, data = transmod_data) 
   
   # Test
   expect_true(inherits(transmod_params, "params_surv"))
@@ -90,16 +89,17 @@ test_that("create_transmod_params", {
                     colnames(transmod_data)))
 
   # Errors
-  expect_error(create_transmod_params(2, transmod_data))
-  expect_error(create_transmod_params(params, 2))
-  expect_error(create_transmod_params(params, transmod_data, check_covs = TRUE))
+  expect_error(create_transmod_params(n = 2, data = transmod_data, params = 2))
+  expect_error(create_transmod_params(n = 2, data = 2))
+  expect_error(create_transmod_params(n = 2, data = transmod_data, check_covs = TRUE))
   
   ## Required parameters not contained in data
-  params2 <- params
-  coefs <- params2$mstate_nma$weibull$coefs$scale
-  params2$mstate_nma$weibull$coefs$scale <- coefs[, 2:ncol(coefs)]
+  coefs <- params_mstate_nma$weibull$coefs$scale
+  params_tmp <- params_mstate_nma
+  params_tmp$weibull$coefs$scale <- coefs[, 2:ncol(coefs)]
   covs <- colnames(transmod_data)[7:ncol(transmod_data)]
-  expect_error(create_transmod_params(params2, transmod_data, check_covs = TRUE,
-                                      covs = covs))
+  expect_error(create_transmod_params(n = 2, data = transmod_data, 
+                                      params = params_tmp,
+                                      check_covs = TRUE, covs = covs))
   
 })

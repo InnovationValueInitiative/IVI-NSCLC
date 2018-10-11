@@ -68,12 +68,6 @@ A number of different statistical models are used to parameterize the economic m
 * `params_costs_ae`: The costs associated with each of the adverse events from the NMA. 
 * `params_prod`: Productivity losses by health state (S1, P1, and P2).
 
-Samples from the joint probability distribution of all parameters for the PSA can be drawn using the `sample_params()` function. When draws from the posterior distribution are already provided (e.g., `params_mstate_nma`, `params_ae_nma`), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., `params_utility`), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].
-
-```{r}
-params <- sample_params(n = 100)
-```
-
 # Economic model
 We provide two example analyses: a four-state model for 1L treatment and a three-state model for 2L treatment. Importantly, different modeling approaches should be used for each scenario. Since a "clock-forward" multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and "clock-reset" models. In the clock-reset approach, time $u$ in $h^{rs}(u)$ resets after each transition whereas in the clock-forward approach time $u$ refers to time since the start of the model (see the tutorial [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712) for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used. 
 
@@ -144,6 +138,10 @@ state_factor <- function(x){
 ### Constructing the model
 We construct the economic model by combining the separate models for the health state transitions, utility, and costs.
 
+```{r}
+n_samples <- 100
+```
+
 #### Health state transition model
 Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with `create_transmod_data()` and stored below in a data table named `transmod_data`. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in `transmod_data` are extracted using `transmod_params()`. 
 
@@ -156,7 +154,7 @@ transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
 print(transmod_data[1:5, 1:10]) 
 
 # Parameters
-transmod_params <- create_transmod_params(params, transmod_data)
+transmod_params <- create_transmod_params(n = n_samples, data = transmod_data)
 ## Print first 5 samples from the probability distribution and 4 covariates (which
 ## match those in 'transmod_data')
 transmod_params$coefs$scale[1:5, 1:4]
@@ -170,14 +168,14 @@ class(transmod)
 We construct a "mean" model for utility. Adverse events---which vary across treatments---are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.
 
 ```{r}
-utilmod <- create_utilmod(params, struct, pats)
+utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats)
 ```
 
 #### Cost models
 We construct models for each of the cost categories.
 
 ```{r}
-costmods <- create_costmods(params, struct, pats)
+costmods <- create_costmods(n = n_samples, struct = struct, patients = pats)
 ```
 
 #### Combining the models
@@ -310,6 +308,19 @@ We might also want to examine incremental costs relative to a comparator (say tr
 
 ```{r incr_costs, fig.width = 4}
 # Incremental costs with Strategy 1 as the reference treatment
+incr_costs <- vector(mode = "list", length = length(txseqs))
+for (i in 1:length(txseqs)){
+  incr_costs[[i]] <- ce_sim$costs[, costs_comparator := costs[i], 
+                           by = c("category", "dr", "sample")]
+  incr_costs[[i]][, icosts := costs - costs_comparator]
+  incr_costs[[i]] <- incr_costs[[i]][, .(icosts_mean = mean(icosts),
+                                   icosts_lower = quantile(icosts, .025),
+                                   icosts_upper = quantile(icosts, .975)),
+                               by = c("category", "dr", "strategy_id")]
+  strategy_factor(incr_costs[[i]])
+}
+
+
 incr_costs <- ce_sim$costs[, costs_comparator := costs[1], 
                            by = c("category", "dr", "sample")]
 incr_costs[, icosts := costs - costs_comparator]

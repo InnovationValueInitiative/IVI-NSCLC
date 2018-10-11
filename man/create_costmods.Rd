@@ -4,14 +4,22 @@
 \alias{create_costmods}
 \title{Create cost models}
 \usage{
-create_costmods(params, struct, patients)
+create_costmods(n = 100, struct, patients,
+  params_costs_op = iviNSCLC::params_costs_op,
+  params_costs_inpt = iviNSCLC::params_costs_inpt)
 }
 \arguments{
-\item{params}{A "sampled_params" object returned from \code{\link{sample_params}}.}
+\item{n}{The number of random observations of the parameters to draw.}
 
 \item{struct}{A \code{\link{model_structure}} object.}
 
 \item{patients}{A data table returned from \code{\link{create_patients}}.}
+
+\item{params_costs_op}{Parameter estimates for outpatient medical costs
+in the same format as \code{\link{params_costs_op}}.}
+
+\item{params_costs_inpt}{Parameter estimates for inpatient medical costs
+in the same format as \code{\link{params_costs_inpt}}.}
 }
 \value{
 An object of class "StateVals" from the 
@@ -23,9 +31,6 @@ acquisition and administration costs), (ii) inpatient medical costs,
 (iii) outpatient medical costs, and (iv) costs due to adverse events.
 }
 \examples{
-# Parameters
-params <- sample_params(n = 2)
-
 # Treatment sequences
 txseq1 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
@@ -42,5 +47,5 @@ pats <- create_patients(n = 2)
 struct <- model_structure(txseqs, dist = "weibull")
 
 ## Cost models
-costmods <- create_costmods(params, struct, pats)
+costmods <- create_costmods(n = 2, struct = struct, patients = pats)
 }

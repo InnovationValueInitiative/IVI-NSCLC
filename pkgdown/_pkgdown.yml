@@ -11,9 +11,6 @@ reference:
       - params_mstate_nma
       - params_utility
       - params_costs_op
-  - title: "Sample parameters for PSA"  
-    contents:
-      - sample_params
   - title: "Treatment sequences"
     contents:
       - tx_1L
@@ -27,7 +24,7 @@ reference:
       - create_states
       - create_trans_mat
       - create_patients
-  - title: "Statistical models"
+  - title: "Economic model"
     contents:
       - create_transmod_data
       - create_transmod_params

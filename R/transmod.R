@@ -223,14 +223,33 @@ create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .4
   return(data[, ])
 }
 
+sample_params_mstate_nma <- function(n, object){
+  n_samples <- object$n_samples
+  if (n <= n_samples){
+    sampled_rows <- sample.int(n_samples, n, replace = FALSE) 
+  } else{
+    warning("'n' is larger than the values of 'n_samples' in 'params_mstate_nma'.")
+    sampled_rows <- sample.int(n_samples, n, replace = TRUE) 
+  }  
+  n_params <- length(object$coefs)
+  object$n_samples <- n
+  for (j in 1:n_params){
+    object$coefs[[j]] <- object$coefs[[j]][sampled_rows, , drop = FALSE]
+  }
+  return(object)
+}
+
 #' Parameters for transition model
 #' 
 #' Extract parameters from a multi-state NMA for use with the data table returned by
 #' \code{\link{create_transmod_data}}, which are used to simulate health state 
 #' transitions with a continuous time state transition model (CTSTM).
-#' @param params A "sampled_params" object returned from \code{\link{sample_params}}.
+#' @param n The number of random observations of the parameters to draw.
 #' @param data A data table of class "expanded_hesim_data" returned from 
 #' \code{\link{create_transmod_data}}.
+#' @param params_mstate_nma A list of \code{\link{params_surv}} objects, 
+#' where each element in the list denotes a survival distribution. Should have
+#' the same variable names as \code{\link{params_mstate_nma}}.
 #' @param check_covs Logical indicating whether to check that all covariates in 
 #' \code{data} are contained in \code{params}.
 #' @param covs If \code{check_covs} is \code{TRUE}, then \code{data_covs}
@@ -245,8 +264,6 @@ create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .4
 #' @seealso \code{\link{create_transmod_data}}
 #' @examples
 #' # Joint distribution of parameters
-#' params <- sample_params(n = 2)
-#' 
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
 #'                 second = c("osimertinib", "PBDC"),
@@ -265,14 +282,14 @@ create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .4
 #'
 #' # Data and parameters for state transition model
 #' transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
-#' transmod_params <- create_transmod_params(params, transmod_data)
+#' transmod_params <- create_transmod_params(n = 2, transmod_data)
 #' print(transmod_params)
 #' @export
-create_transmod_params <- function(params, data, check_covs = FALSE,
+create_transmod_params <- function(n = 100,
+                                   data,
+                                   params_mstate_nma = iviNSCLC::params_mstate_nma,
+                                   check_covs = FALSE,
                                    covs = NULL){
-  if(!inherits(params, "sampled_params")){
-    stop("'params' must be an object of class 'sampled_params'.")
-  }
   if(!inherits(data, "expanded_hesim_data")){
     stop("'data' must be an object of class 'expanded_hesim_data'.")
   }
@@ -282,7 +299,13 @@ create_transmod_params <- function(params, data, check_covs = FALSE,
     }
   }
   dist <- attributes(data)$dist
-  params <- params$mstate_nma[[dist]]
+  for (i in 1:length(params_mstate_nma)){
+    if(!inherits(params_mstate_nma[[i]], "params_surv")){
+      stop("Each element of 'params_mstate_nma' must be an object of class 'params_surv'.")
+    }
+  }
+  params <- params_mstate_nma[[dist]]
+  params <- sample_params_mstate_nma(n, params)
   n_params <- length(params$coefs)
   for (i in 1:n_params){
     if (check_covs){

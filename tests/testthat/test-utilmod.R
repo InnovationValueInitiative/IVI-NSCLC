@@ -18,8 +18,7 @@ test_that("create_utilmod first line,  4 health states", {
   # Model structure
   txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
   struct <- model_structure(txseqs, dist = "weibull")
-  params <- sample_params(n = 2)
-  utilmod <- create_utilmod(params, struct, pats)
+  utilmod <- create_utilmod(n = 2, struct = struct, patients = pats)
   expect_true(inherits(utilmod, "StateVals"))
 })
 
@@ -28,8 +27,7 @@ test_that("create_utilmod first line,  3 health states", {
   txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
   struct <- model_structure(txseqs, dist = "weibull",
                             n_states = "three")
-  params <- sample_params(n = 2)
-  utilmod <- create_utilmod(params, struct, pats)
+  utilmod <- create_utilmod(n = 2, struct = struct, patients = pats)
   expect_true(inherits(utilmod, "StateVals"))
 })
 

@@ -17,4 +17,3 @@ check_is_class <- function(object, name, class){
          call. = FALSE)
   }  
 }
-

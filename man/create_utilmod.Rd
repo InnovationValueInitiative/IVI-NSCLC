@@ -4,14 +4,18 @@
 \alias{create_utilmod}
 \title{Create utility model}
 \usage{
-create_utilmod(params, struct, patients)
+create_utilmod(n = 100, struct, patients,
+  params_utility = iviNSCLC::params_utility)
 }
 \arguments{
-\item{params}{A "sampled_params" object returned from \code{\link{sample_params}}.}
+\item{n}{The number of random observations of the parameters to draw.}
 
 \item{struct}{A \code{\link{model_structure}} object.}
 
 \item{patients}{A data table returned from \code{\link{create_patients}}.}
+
+\item{params_utility}{Parameter estimates for health state utilities and
+adverse event disutilities in the same format as \code{\link{params_utility}}.}
 }
 \value{
 An object of class "StateVals" from the 
@@ -22,9 +26,6 @@ Create a model for health state utility given values of utility by
  health state, treatment, and time sampled from a probability distribution.
 }
 \examples{
-# Parameters
-params <- sample_params(n = 2)
-
 # Treatment sequences
 txseq1 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
@@ -41,5 +42,5 @@ pats <- create_patients(n = 2)
 struct <- model_structure(txseqs, dist = "weibull")
 
 ## Utility model
-utilmod <- create_utilmod(params, struct, pats)
+utilmod <- create_utilmod(n = 2, struct = struct, patients = pats)
 }

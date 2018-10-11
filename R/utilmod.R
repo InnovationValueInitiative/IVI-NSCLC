@@ -2,15 +2,14 @@
 #' 
 #' Create a model for health state utility given values of utility by
 #'  health state, treatment, and time sampled from a probability distribution. 
-#' @param params A "sampled_params" object returned from \code{\link{sample_params}}.
+#' @param n The number of random observations of the parameters to draw.
 #' @param struct A \code{\link{model_structure}} object.
 #' @param patients A data table returned from \code{\link{create_patients}}.
 #' @return An object of class "StateVals" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' @param params_utility Parameter estimates for health state utilities and
+#' adverse event disutilities in the same format as \code{\link{params_utility}}.
 #' @examples
-#' # Parameters
-#' params <- sample_params(n = 2)
-#' 
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
 #'                 second = c("osimertinib", "PBDC"),
@@ -27,28 +26,19 @@
 #' struct <- model_structure(txseqs, dist = "weibull")
 #'
 #' ## Utility model
-#' utilmod <- create_utilmod(params, struct, pats)
+#' utilmod <- create_utilmod(n = 2, struct = struct, patients = pats)
 #' @export
-create_utilmod <- function(params, struct, patients){
-  # Select health states based on model structure
-  if (struct$n_states == "four"){
-    utility <- params$utility
-  } else if (struct$n_states == "three"){
-    if (attributes(struct$txseqs)$start_line == "first"){
-      utility <- params$utility[, 1:2]
-    } else {
-      utility <- params$utility[, 2:3]
-    }
-  }
+create_utilmod <- function(n = 100, struct, patients,
+                            params_utility = iviNSCLC::params_utility){
+  strategies <- data.table(strategy_id = 1:length(struct$txseqs))
+  hesim_dat <- hesim::hesim_data(strategies = strategies,
+                                 patients = patients)
   
-  # Create "stateval_means" object
-  n_strategies <- length(struct$txseqs)
-  utility_means <- hesim::stateval_means(values = utility,
-                                         strategy_id = 1:n_strategies,
-                                         patient_id = patients$patient_id)
+  states <- create_states(struct)[get("state_name") != "D"]
+  utility_tbl <- merge(states, params_utility$state_utility, by = "state_name")
+  utility_tbl <- hesim::stateval_tbl(utility_tbl, dist = "beta", hesim_data = hesim_dat)
   
-  # Create "StateVals" object
-  utilmod <- hesim::create_StateVals(utility_means)
-  
+  utilmod <- hesim::create_StateVals(utility_tbl, n = n)
+
   return(utilmod)
 }

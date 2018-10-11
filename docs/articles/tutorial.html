@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-05</h4>
+            <h4 class="date">2018-10-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -115,8 +115,6 @@ ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumenta
 <li>
 <code>params_prod</code>: Productivity losses by health state (S1, P1, and P2).</li>
 </ul>
-<p>Samples from the joint probability distribution of all parameters for the PSA can be drawn using the <code><a href="../reference/sample_params.html">sample_params()</a></code> function. When draws from the posterior distribution are already provided (e.g., <code>params_mstate_nma</code>, <code>params_ae_nma</code>), this function samples from the already existing posterior distribution. When a posterior distribution does not exist (e.g., <code>params_utility</code>), draws are taken from a probability distribution that approximates a relevant Bayesian posterior distribution. [TABLE TO BE ADDED SHOWING THE PROBABILITY DISTRIBUTIONS FOR EACH SET OF PARAMETERS].</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sample_params.html">sample_params</a></span>(<span class="dt">n =</span> <span class="dv">100</span>)</code></pre></div>
 </div>
 <div id="economic-model" class="section level1">
 <h1 class="hasAnchor">
@@ -190,6 +188,7 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 <h3 class="hasAnchor">
 <a href="#constructing-the-model" class="anchor"></a>Constructing the model</h3>
 <p>We construct the economic model by combining the separate models for the health state transitions, utility, and costs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_samples &lt;-<span class="st"> </span><span class="dv">100</span></code></pre></div>
 <div id="health-state-transition-model" class="section level4">
 <h4 class="hasAnchor">
 <a href="#health-state-transition-model" class="anchor"></a>Health state transition model</h4>
@@ -212,7 +211,7 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## 4:              0             0                0               0
 ## 5:              0             0                0               0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Parameters</span>
-transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_params.html">create_transmod_params</a></span>(params, transmod_data)
+transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_params.html">create_transmod_params</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">data =</span> transmod_data)
 ## Print first 5 samples from the probability distribution and 4 covariates (which
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>scale[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
@@ -231,13 +230,13 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <h4 class="hasAnchor">
 <a href="#utility-model" class="anchor"></a>Utility model</h4>
 <p>We construct a “mean” model for utility. Adverse events—which vary across treatments—are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(params, struct, pats)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
 </div>
 <div id="cost-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#cost-models" class="anchor"></a>Cost models</h4>
 <p>We construct models for each of the cost categories.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(params, struct, pats)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
 </div>
 <div id="combining-the-models" class="section level4">
 <h4 class="hasAnchor">
@@ -354,6 +353,19 @@ costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[dr <spa
 <p><img src="tutorial_files/figure-html/costs_cat-1.png" width="384"></p>
 <p>We might also want to examine incremental costs relative to a comparator (say treatment sequence 1).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Incremental costs with Strategy 1 as the reference treatment</span>
+incr_costs &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="dt">mode =</span> <span class="st">"list"</span>, <span class="dt">length =</span> <span class="kw">length</span>(txseqs))
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs)){
+  incr_costs[[i]] &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[, costs_comparator <span class="op">:</span><span class="er">=</span><span class="st"> </span>costs[i], 
+                           by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"category"</span>, <span class="st">"dr"</span>, <span class="st">"sample"</span>)]
+  incr_costs[[i]][, icosts <span class="op">:</span><span class="er">=</span><span class="st"> </span>costs <span class="op">-</span><span class="st"> </span>costs_comparator]
+  incr_costs[[i]] &lt;-<span class="st"> </span>incr_costs[[i]][, .(<span class="dt">icosts_mean =</span> <span class="kw">mean</span>(icosts),
+                                   <span class="dt">icosts_lower =</span> <span class="kw">quantile</span>(icosts, .<span class="dv">025</span>),
+                                   <span class="dt">icosts_upper =</span> <span class="kw">quantile</span>(icosts, .<span class="dv">975</span>)),
+                               by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"category"</span>, <span class="st">"dr"</span>, <span class="st">"strategy_id"</span>)]
+  <span class="kw">strategy_factor</span>(incr_costs[[i]])
+}
+
+
 incr_costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[, costs_comparator <span class="op">:</span><span class="er">=</span><span class="st"> </span>costs[<span class="dv">1</span>], 
                            by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"category"</span>, <span class="st">"dr"</span>, <span class="st">"sample"</span>)]
 incr_costs[, icosts <span class="op">:</span><span class="er">=</span><span class="st"> </span>costs <span class="op">-</span><span class="st"> </span>costs_comparator]
@@ -407,22 +419,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.01, 0.10)</td>
+<td align="left">0.06 (0.02, 0.10)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">2,288 (526, 4,103)</td>
+<td align="left">2,406 (773, 3,978)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">3,403 (755, 6,060)</td>
+<td align="left">3,421 (686, 5,694)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">40,200</td>
+<td align="left">41,294</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
