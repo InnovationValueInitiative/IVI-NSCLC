@@ -2,7 +2,7 @@
 title: Tutorial
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-toc_depth: 2
+toc_depth: 1
 vignette: >
   %\VignetteIndexEntry{Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
@@ -70,11 +70,11 @@ A number of different statistical models are used to parameterize the economic m
 * `params_prod`: Productivity losses by health state (S1, P1, and P2).
 
 # Economic model
-We provide two example analyses: a four-state model for 1L treatment and a three-state model for 2L treatment. Importantly, different modeling approaches should be used for each scenario. Since a "clock-forward" multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and "clock-reset" models. In the clock-reset approach, time $u$ in $h^{rs}(u)$ resets after each transition whereas in the clock-forward approach time $u$ refers to time since the start of the model (see the tutorial [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712) for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used. 
+We provide an example a four-state model for 1L treatment, while also showing how a three-state model could be specified. Importantly, different modeling approaches should be used for the three-state and four-state approaches. Since a "clock-forward" multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and "clock-reset" models. In the clock-reset approach, time $u$ in $h^{rs}(u)$ resets after each transition whereas in the clock-forward approach time $u$ refers to time since the start of the model (see the tutorial [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712) for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used. 
 
 An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the `IndivCtstm` class from the [hesim](https://innovationvalueinitiative.github.io/hesim/) package.
 
-## A four-state model for first line treatment
+## Set up
 ### Patient population
 The first step in the analysis is to define the target population. In the individual-level model, a sufficient number of patients must be simulated so that expected (i.e., mean) outcomes are stable across simulations. In this example, we simulate 1,000 patients.
 
@@ -163,14 +163,14 @@ state_factor <- function(x){
 }
 ```
 
-### Constructing the model
+## Constructing the model
 We construct the economic model by combining the separate models for the health state transitions, utility, and costs.
 
 ```{r}
 n_samples <- 100
 ```
 
-#### Health state transition model
+### Health state transition model
 Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with `create_transmod_data()` and stored below in a data table named `transmod_data`. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in `transmod_data` are extracted using `transmod_params()`. 
 
 Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the `IndivCtstmTrans` class in `hesim`.  
@@ -192,21 +192,21 @@ transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat)
 class(transmod)
 ```
 
-#### Utility model
+### Utility model
 We construct a "mean" model for utility. Adverse events---which vary across treatments---are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.
 
 ```{r}
 utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats)
 ```
 
-#### Cost models
+### Cost models
 We construct models for each of the cost categories.
 
 ```{r}
 costmods <- create_costmods(n = n_samples, struct = struct, patients = pats)
 ```
 
-#### Combining the models
+### Combining the models
 Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the `IndivCtstm` class from `hesim`, and instantiate an iCTSTM.   
 
 ```{r}
@@ -215,8 +215,8 @@ econmod <- hesim::IndivCtstm$new(trans_model = transmod,
                                  cost_models = costmods)
 ```
 
-### Simulation
-#### Disease progression
+## Simulation
+### Disease progression
 The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with `$sim_disease()` and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time. 
 
 ```{r}
@@ -276,7 +276,7 @@ ggplot(quantiles[prob == .5], aes(x = strategy_name, y = quantile_prob_mean)) +
 ```
 
 
-#### QALYs
+### QALYs
 Mean QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.
 
 ```{r mean_lys, fig.height = 1.5}
@@ -295,7 +295,7 @@ ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) +
   coord_flip() 
 ```
 
-#### Costs
+### Costs
 Mean costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e,  compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals. 
 
 ```{r costs, fig.width = 4}

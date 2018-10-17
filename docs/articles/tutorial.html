@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-16</h4>
+            <h4 class="date">2018-10-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -120,11 +120,11 @@ ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumenta
 <div id="economic-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#economic-model" class="anchor"></a>Economic model</h1>
-<p>We provide two example analyses: a four-state model for 1L treatment and a three-state model for 2L treatment. Importantly, different modeling approaches should be used for each scenario. Since a “clock-forward” multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and “clock-reset” models. In the clock-reset approach, time <span class="math inline">\(u\)</span> in <span class="math inline">\(h^{rs}(u)\)</span> resets after each transition whereas in the clock-forward approach time <span class="math inline">\(u\)</span> refers to time since the start of the model (see the tutorial <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712">here</a> for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used.</p>
+<p>We provide an example a four-state model for 1L treatment, while also showing how a three-state model could be specified. Importantly, different modeling approaches should be used for the three-state and four-state approaches. Since a “clock-forward” multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and “clock-reset” models. In the clock-reset approach, time <span class="math inline">\(u\)</span> in <span class="math inline">\(h^{rs}(u)\)</span> resets after each transition whereas in the clock-forward approach time <span class="math inline">\(u\)</span> refers to time since the start of the model (see the tutorial <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712">here</a> for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used.</p>
 <p>An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the <code>IndivCtstm</code> class from the <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> package.</p>
-<div id="a-four-state-model-for-first-line-treatment" class="section level2">
+<div id="set-up" class="section level2">
 <h2 class="hasAnchor">
-<a href="#a-four-state-model-for-first-line-treatment" class="anchor"></a>A four-state model for first line treatment</h2>
+<a href="#set-up" class="anchor"></a>Set up</h2>
 <div id="patient-population" class="section level3">
 <h3 class="hasAnchor">
 <a href="#patient-population" class="anchor"></a>Patient population</h3>
@@ -217,14 +217,15 @@ struct_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference
                            <span class="dt">labels =</span> states<span class="op">$</span>state_name)]
 }</code></pre></div>
 </div>
-<div id="constructing-the-model" class="section level3">
-<h3 class="hasAnchor">
-<a href="#constructing-the-model" class="anchor"></a>Constructing the model</h3>
+</div>
+<div id="constructing-the-model" class="section level2">
+<h2 class="hasAnchor">
+<a href="#constructing-the-model" class="anchor"></a>Constructing the model</h2>
 <p>We construct the economic model by combining the separate models for the health state transitions, utility, and costs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_samples &lt;-<span class="st"> </span><span class="dv">100</span></code></pre></div>
-<div id="health-state-transition-model" class="section level4">
-<h4 class="hasAnchor">
-<a href="#health-state-transition-model" class="anchor"></a>Health state transition model</h4>
+<div id="health-state-transition-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#health-state-transition-model" class="anchor"></a>Health state transition model</h3>
 <p>Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with <code><a href="../reference/create_transmod_data.html">create_transmod_data()</a></code> and stored below in a data table named <code>transmod_data</code>. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in <code>transmod_data</code> are extracted using <code>transmod_params()</code>.</p>
 <p>Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the <code>IndivCtstmTrans</code> class in <code>hesim</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Input data</span>
@@ -259,33 +260,33 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <span class="kw">class</span>(transmod)</code></pre></div>
 <pre><code>## [1] "IndivCtstmTrans" "CtstmTrans"      "R6"</code></pre>
 </div>
-<div id="utility-model" class="section level4">
-<h4 class="hasAnchor">
-<a href="#utility-model" class="anchor"></a>Utility model</h4>
+<div id="utility-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#utility-model" class="anchor"></a>Utility model</h3>
 <p>We construct a “mean” model for utility. Adverse events—which vary across treatments—are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
 </div>
-<div id="cost-models" class="section level4">
-<h4 class="hasAnchor">
-<a href="#cost-models" class="anchor"></a>Cost models</h4>
+<div id="cost-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#cost-models" class="anchor"></a>Cost models</h3>
 <p>We construct models for each of the cost categories.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
 </div>
-<div id="combining-the-models" class="section level4">
-<h4 class="hasAnchor">
-<a href="#combining-the-models" class="anchor"></a>Combining the models</h4>
+<div id="combining-the-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#combining-the-models" class="anchor"></a>Combining the models</h3>
 <p>Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the <code>IndivCtstm</code> class from <code>hesim</code>, and instantiate an iCTSTM.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod &lt;-<span class="st"> </span>hesim<span class="op">::</span>IndivCtstm<span class="op">$</span><span class="kw">new</span>(<span class="dt">trans_model =</span> transmod,
                                  <span class="dt">utility_model =</span> utilmod,
                                  <span class="dt">cost_models =</span> costmods)</code></pre></div>
 </div>
 </div>
-<div id="simulation" class="section level3">
+<div id="simulation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#simulation" class="anchor"></a>Simulation</h2>
+<div id="disease-progression" class="section level3">
 <h3 class="hasAnchor">
-<a href="#simulation" class="anchor"></a>Simulation</h3>
-<div id="disease-progression" class="section level4">
-<h4 class="hasAnchor">
-<a href="#disease-progression" class="anchor"></a>Disease progression</h4>
+<a href="#disease-progression" class="anchor"></a>Disease progression</h3>
 <p>The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with <code>$sim_disease()</code> and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod<span class="op">$</span><span class="kw">sim_disease</span>(<span class="dt">max_t =</span> <span class="dv">20</span>)
 econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span> , <span class="dv">1</span><span class="op">/</span><span class="dv">26</span>)) <span class="co"># Biweekly probabilities</span></code></pre></div>
@@ -332,9 +333,9 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_quantiles-1.png" width="700"></p>
 </div>
-<div id="qalys" class="section level4">
-<h4 class="hasAnchor">
-<a href="#qalys" class="anchor"></a>QALYs</h4>
+<div id="qalys" class="section level3">
+<h3 class="hasAnchor">
+<a href="#qalys" class="anchor"></a>QALYs</h3>
 <p>Mean QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="dt">dr =</span> <span class="kw">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>))
@@ -351,9 +352,9 @@ lys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[dr <spa
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/mean_lys-1.png" width="700"></p>
 </div>
-<div id="costs" class="section level4">
-<h4 class="hasAnchor">
-<a href="#costs" class="anchor"></a>Costs</h4>
+<div id="costs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#costs" class="anchor"></a>Costs</h3>
 <p>Mean costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e, compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_costs</span>(<span class="dt">dr =</span> .<span class="dv">03</span>)
@@ -421,7 +422,6 @@ incr_costs &lt;-<span class="st"> </span>incr_costs[, .(<span class="dt">icosts_
 </div>
 </div>
 </div>
-</div>
 <div id="decision-analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#decision-analysis" class="anchor"></a>Decision analysis</h1>
@@ -451,22 +451,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.02, 0.10)</td>
+<td align="left">0.06 (0.01, 0.10)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">2,274 (595, 4,005)</td>
+<td align="left">2,217 (389, 4,030)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">3,363 (986, 6,389)</td>
+<td align="left">3,337 (543, 5,990)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">40,348</td>
+<td align="left">39,921</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -537,7 +537,7 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.43 (0.41, 0.46)</td>
+<td align="left">0.44 (0.41, 0.46)</td>
 <td align="left">0.51 (0.48, 0.53)</td>
 </tr>
 <tr class="even">
@@ -547,13 +547,13 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.06 (0.05, 0.09)</td>
-<td align="left">0.06 (0.05, 0.08)</td>
+<td align="left">0.07 (0.05, 0.09)</td>
+<td align="left">0.07 (0.05, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">17,192 (14,281, 20,411)</td>
-<td align="left">19,466 (16,401, 22,736)</td>
+<td align="left">17,175 (14,668, 19,963)</td>
+<td align="left">19,393 (16,615, 22,878)</td>
 </tr>
 </tbody>
 </table>
@@ -585,23 +585,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">24.89 (8.94, 44.84)</td>
-<td align="left">81.45 (63.93, 97.54)</td>
+<td align="left">19.08 (0.66, 41.39)</td>
+<td align="left">76.57 (56.94, 97.35)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">46.16 (2.41, 81.51)</td>
-<td align="left">45.22 (12.90, 88.39)</td>
+<td align="left">47.37 (11.72, 87.42)</td>
+<td align="left">46.05 (9.70, 87.78)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">44.20 (6.32, 86.63)</td>
-<td align="left">43.70 (13.20, 82.02)</td>
+<td align="left">42.84 (8.44, 83.21)</td>
+<td align="left">44.84 (12.41, 87.89)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">63.28 (30.14, 93.24)</td>
-<td align="left">39.86 (6.20, 71.41)</td>
+<td align="left">63.08 (35.24, 88.11)</td>
+<td align="left">40.94 (6.14, 68.67)</td>
 </tr>
 </tbody>
 </table>
@@ -675,7 +675,9 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
       <li><a href="#parameter-estimates">Parameter estimates</a></li>
       <li>
 <a href="#economic-model">Economic model</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#a-four-state-model-for-first-line-treatment">A four-state model for first line treatment</a></li>
+<li><a href="#set-up">Set up</a></li>
+      <li><a href="#constructing-the-model">Constructing the model</a></li>
+      <li><a href="#simulation">Simulation</a></li>
       </ul>
 </li>
       <li>
