@@ -29,6 +29,7 @@ Remotes: InnovationValueInitiative/hesim
 Suggests:
     covr,
     ggplot2,
+    gridExtra,
     knitr,
     scales,
     testthat

@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-11</h4>
+            <h4 class="date">2018-10-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -75,7 +75,7 @@
 <div id="overview" class="section level1">
 <h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1>
-<p>The IVI-NSCLC model simulates disease progression for different sequential treatment strategies using a continuous time state transition model (CTSTM). Treatment sequences that can be modeled are shown in the figure below. Tyrosine kinase inhibitors (TKIs) can be used at first line. Possible second line treatments (2L) and treatments beyond second line (2L+) depend on whether a patient acquired a T790M mutation.</p>
+<p>The IVI-NSCLC model simulates disease progression for different sequential treatment strategies using a continuous time state transition model (CTSTM) for patients with epidermal growth factor receptor (EGFR) positive NSCLC. Treatment sequences that can be modeled are shown in the figure below. Tyrosine kinase inhibitors (TKIs) can be used at first line. Possible second line treatments (2L) and treatments beyond second line (2L+) depend on whether a patient acquired a T790M mutation.</p>
 <p><br><br><img src="treatment-strategies.png" width="800px"><br><br></p>
 <p>The model structure depends on whether the model starts at 1L or 2L treatment. If the model begins at 1L, then either a four-state CTSTM or a three-state CTSTM can be used. We prefer the four-state CTSTM because it explicitly models 2L treatments; however, there is no 2L evidence following some 1L treatments (i.e., osimertinib), so a three-state model must be used in these cases.</p>
 <p>In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span> and are denoted by <span class="math inline">\(h^{rs}(u)\)</span>.</p>
@@ -84,11 +84,12 @@
 <p><br><img src="modstruct3_1L.png" width="800px"><br><br></p>
 <p>If the model begins at second line, then a three-state model nearly identical to the figure above must be used. In the 2L case, patients begin in stable disease (S2) and transition to progression (P2) or death (D).</p>
 <p>The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis (PSA) is used to propagate uncertainty in the model input parameters throughout the model.</p>
-<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages. We will also use <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and <a href="https://scales.r-lib.org/">scales</a> for plotting, <a href="https://rmarkdown.rstudio.com/lesson-7.html">knitr</a> to create tables, and the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> package to manipulate data and simulation output.</p>
+<p>Two R packages are needed to simulate the model: the <code>iviNSCLC</code> and <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> packages. We will also use <a href="https://ggplot2.tidyverse.org/">ggplot2</a>, <a href="https://cran.r-project.org/web/packages/gridExtra/index.html">gridExtra</a>, and <a href="https://scales.r-lib.org/">scales</a> for plotting, <a href="https://rmarkdown.rstudio.com/lesson-7.html">knitr</a> to create tables, and <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> to manipulate data and simulation output.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"iviNSCLC"</span>)
 <span class="kw">library</span>(<span class="st">"hesim"</span>)
 <span class="kw">library</span>(<span class="st">"data.table"</span>)
 <span class="kw">library</span>(<span class="st">"ggplot2"</span>)
+<span class="kw">library</span>(<span class="st">"gridExtra"</span>)
 <span class="kw">library</span>(<span class="st">"scales"</span>)
 <span class="kw">library</span>(<span class="st">"knitr"</span>)
 ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme_get">theme_set</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>())</code></pre></div>
@@ -120,7 +121,7 @@ ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumenta
 <h1 class="hasAnchor">
 <a href="#economic-model" class="anchor"></a>Economic model</h1>
 <p>We provide two example analyses: a four-state model for 1L treatment and a three-state model for 2L treatment. Importantly, different modeling approaches should be used for each scenario. Since a “clock-forward” multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and “clock-reset” models. In the clock-reset approach, time <span class="math inline">\(u\)</span> in <span class="math inline">\(h^{rs}(u)\)</span> resets after each transition whereas in the clock-forward approach time <span class="math inline">\(u\)</span> refers to time since the start of the model (see the tutorial <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712">here</a> for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used.</p>
-<p>An individual-level simulation is required to simulate the mixture of clock-forward and clock-reset models, but a cohort model can be used (and is computationally faster) to simulate a clock-forward model. The individual and cohort-level models are simulated in R using the <code>IndivCtstm</code> and <code>CohortCtstm</code> [<code>CohortCtstm</code> IS NOT YET AVAILABLE] classes from the <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> package, respectively.</p>
+<p>An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the <code>IndivCtstm</code> class from the <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> package.</p>
 <div id="a-four-state-model-for-first-line-treatment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-four-state-model-for-first-line-treatment" class="anchor"></a>A four-state model for first line treatment</h2>
@@ -133,7 +134,7 @@ ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumenta
 <div id="treatment-sequences" class="section level3">
 <h3 class="hasAnchor">
 <a href="#treatment-sequences" class="anchor"></a>Treatment sequences</h3>
-<p>Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a “txseq_list” object using <code><a href="../reference/txseq_list.html">txseq_list()</a></code>.</p>
+<p>Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a “txseq_list” object using <code><a href="../reference/txseq_list.html">txseq_list()</a></code>. We specifiy that the model begins at first line treatment with the argument <code>start_line = "first"</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txseq1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"erlotinib"</span>,
                 <span class="dt">second =</span> <span class="kw">c</span>(<span class="st">"osimertinib"</span>, <span class="st">"PBDC"</span>),
                 <span class="dt">second_plus =</span> <span class="kw">c</span>(<span class="st">"PBDC + bevacizumab"</span>, <span class="st">"PBDC + bevacizumab"</span>))
@@ -142,7 +143,7 @@ txseq2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txse
                 <span class="dt">second_plus =</span> <span class="kw">c</span>(<span class="st">"PBDC + bevacizumab"</span>, <span class="st">"PBDC + bevacizumab"</span>))
 txseqs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq_list.html">txseq_list</a></span>(<span class="st">"Sequence 1"</span> =<span class="st"> </span>txseq1, <span class="st">"Sequence 2"</span> =<span class="st"> </span>txseq2, <span class="dt">start_line =</span> <span class="st">"first"</span>,
                      <span class="dt">mutation =</span> <span class="st">"unknown"</span>)</code></pre></div>
-<p>Its also useful to write a short convenience function for creating informative names for treatment strategies (i.e., treatment sequences), which can be used for plotting.</p>
+<p>It is also useful to write a short convenience function for creating informative names for treatment strategies (i.e., treatment sequences), which can be used for plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convenience function to add factor names to data table</span>
 <span class="co"># for plotting</span>
 strategy_factor &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">rev =</span> <span class="ot">FALSE</span>){ 
@@ -155,6 +156,11 @@ strategy_factor &lt;-<span class="st"> </span><span class="cf">function</span>(x
                                  <span class="dt">labels =</span> <span class="kw">rev</span>(strategy_names))]
   }
 }</code></pre></div>
+<p>Note that treatment sequences can also begin at second line, conditional on T790M mutation status.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txseqs_2L_pos &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq_list.html">txseq_list</a></span>(<span class="st">"Sequence 1"</span> =<span class="st"> </span>txseq1, <span class="st">"Sequence 2"</span> =<span class="st"> </span>txseq2, <span class="dt">start_line =</span> <span class="st">"second"</span>,
+                              <span class="dt">mutation =</span> <span class="st">"positive"</span>)
+txseqs_2L_neg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq_list.html">txseq_list</a></span>(<span class="st">"Sequence 1"</span> =<span class="st"> </span>txseq1, <span class="st">"Sequence 2"</span> =<span class="st"> </span>txseq2, <span class="dt">start_line =</span> <span class="st">"second"</span>,
+                              <span class="dt">mutation =</span> <span class="st">"negative"</span>)</code></pre></div>
 </div>
 <div id="model-structure" class="section level3">
 <h3 class="hasAnchor">
@@ -178,6 +184,33 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 ## P1/S2 NA    NA  3  4
 ## P2    NA    NA NA  5
 ## D     NA    NA NA NA</code></pre>
+<p>We could have also specified a three-state model, starting at either first or second line.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 1st line model</span>
+struct_3_1L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>,
+                            <span class="dt">n_states =</span> <span class="st">"three"</span>)
+<span class="kw">print</span>(<span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct_3_1L))</code></pre></div>
+<pre><code>##    state_id state_name     state_name_long
+## 1:        1         S1      Stable with 1L
+## 2:        2         P1 Progression with 1L
+## 3:        3          D               Death</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct_3_1L))</code></pre></div>
+<pre><code>##    S1 P1  D
+## S1 NA  1  2
+## P1 NA NA  3
+## D  NA NA NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2nd line model (T790M positive)</span>
+struct_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs_2L_pos, <span class="dt">dist =</span> <span class="st">"weibull"</span>,
+                              <span class="dt">n_states =</span> <span class="st">"three"</span>)
+<span class="kw">print</span>(<span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct_3_2L))</code></pre></div>
+<pre><code>##    state_id state_name     state_name_long
+## 1:        1         S2      Stable with 2L
+## 2:        2         P2 Progression with 2L
+## 3:        3          D               Death</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct_3_2L))</code></pre></div>
+<pre><code>##    S2 P2  D
+## S2 NA  1  2
+## P2 NA NA  3
+## D  NA NA NA</code></pre>
 <p>As with treatment strategies, its useful to write a convenience function for generating informative names for health states for plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state_factor &lt;-<span class="st"> </span><span class="cf">function</span>(x){
   x[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states), 
@@ -388,16 +421,15 @@ incr_costs &lt;-<span class="st"> </span>incr_costs[, .(<span class="dt">icosts_
 </div>
 </div>
 </div>
-<div id="a-three-state-model-for-second-line-treatment" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-three-state-model-for-second-line-treatment" class="anchor"></a>A three-state model for second line treatment</h2>
-<p>Coming soon.</p>
-</div>
 </div>
 <div id="decision-analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#decision-analysis" class="anchor"></a>Decision analysis</h1>
-<p>Cost-effectiveness analysis can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of $100,000.</p>
+<p>Decision analysis can be performed using either a cost-effectiveness analysis (CEA) or a multi criteria decision analysis (MCDA) framework.</p>
+<div id="cost-effectiveness-analysis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#cost-effectiveness-analysis" class="anchor"></a>Cost-effectiveness analysis</h2>
+<p>CEA can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of $100,000.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icea &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea</a></span>(ce_sim, <span class="dt">dr =</span> .<span class="dv">03</span>)
 icea_pw &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw</a></span>(ce_sim, <span class="dt">comparator =</span> <span class="dv">1</span>, <span class="dt">dr =</span> .<span class="dv">03</span>)</code></pre></div>
 <p>We report <a href="https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio">incremental cost-effective ratios (ICERs)</a>—a commonly used measure for summarizing the cost-effectiveness of interventions.</p>
@@ -424,17 +456,17 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">2,358 (808, 4,235)</td>
+<td align="left">2,274 (595, 4,005)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">3,557 (1,045, 6,182)</td>
+<td align="left">3,363 (986, 6,389)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">39,858</td>
+<td align="left">40,348</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -472,6 +504,166 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span clas
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar)</code></pre></div>
 <p><img src="tutorial_files/figure-html/evpi-1.png" width="700"></p>
 </div>
+<div id="multi-criteria-decision-analysis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#multi-criteria-decision-analysis" class="anchor"></a>Multi criteria decision analysis</h2>
+<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on four criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, and health care sector costs. High values are better for life-years and lower values are better for costs.</p>
+<p>Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a “performance matrix”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc_costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[<span class="op">!</span>category <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"prod"</span>, <span class="st">"total"</span>), 
+                           .(<span class="dt">costs =</span> <span class="kw">sum</span>(costs)),
+                             by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"sample"</span>, <span class="st">"strategy_id"</span>)]
+outcomes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/data.table">data.table</a></span>(<span class="dt">sample =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span>n_samples, <span class="dt">each =</span> <span class="kw">length</span>(txseqs)),
+                       <span class="dt">strategy_id =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs), <span class="dt">times =</span> n_samples),
+                       <span class="dt">lys_s1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
+                       <span class="dt">lys_p1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
+                       <span class="dt">lys_p2 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
+                       <span class="dt">hc_costs =</span> hc_costs<span class="op">$</span>costs)
+criteria_vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"lys_s1"</span>, <span class="st">"lys_p1"</span>, <span class="st">"lys_p2"</span>, <span class="st">"hc_costs"</span>)
+criteria_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"Life-years stable disease"</span>, <span class="st">"Life-years progressed 1L"</span>, 
+                    <span class="st">"Life-years progressed 2L"</span>, <span class="st">"Health care sector costs"</span>)
+optimal &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"high"</span>, <span class="st">"high"</span>, <span class="st">"high"</span>, <span class="st">"low"</span>)
+performance_mat_orig &lt;-<span class="st"> </span><span class="kw"><a href="../reference/performance_matrix.html">performance_matrix</a></span>(outcomes, 
+                                           <span class="dt">strategy =</span> <span class="st">"strategy_id"</span>, 
+                                           <span class="dt">criteria =</span> criteria_vars,
+                                           <span class="dt">rownames =</span> criteria_names, 
+                                           <span class="dt">colnames =</span> <span class="kw">names</span>(txseqs))
+knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(performance_mat_orig)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="left">Sequence 1</th>
+<th align="left">Sequence 2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Life-years stable disease</td>
+<td align="left">0.43 (0.41, 0.46)</td>
+<td align="left">0.51 (0.48, 0.53)</td>
+</tr>
+<tr class="even">
+<td>Life-years progressed 1L</td>
+<td align="left">0.09 (0.07, 0.11)</td>
+<td align="left">0.09 (0.07, 0.11)</td>
+</tr>
+<tr class="odd">
+<td>Life-years progressed 2L</td>
+<td align="left">0.06 (0.05, 0.09)</td>
+<td align="left">0.06 (0.05, 0.08)</td>
+</tr>
+<tr class="even">
+<td>Health care sector costs</td>
+<td align="left">17,192 (14,281, 20,411)</td>
+<td align="left">19,466 (16,401, 22,736)</td>
+</tr>
+</tbody>
+</table>
+<p>Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a “total value” score is computed as weighted average of each criteria on this common scale. We’ll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lpvf_plot_data.html">lpvf_plot_data</a></span>(outcomes<span class="op">$</span>hc_costs, <span class="dt">optimal =</span> <span class="st">"low"</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Health care sector costs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Score"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
+<p><img src="tutorial_files/figure-html/lpvf-1.png" width="700"></p>
+<p>We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we’ll use example weights for the analysis. We conduct the MCDA with function <code><a href="../reference/mcda.html">mcda()</a></code>, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a “total value” score and the probability that each treatment strategy has a given rank.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights &lt;-<span class="st"> </span><span class="kw">c</span>(.<span class="dv">2</span>, .<span class="dv">2</span>, .<span class="dv">2</span>, .<span class="dv">4</span>)
+mcda &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcda.html">mcda</a></span>(outcomes, <span class="dt">sample =</span> <span class="st">"sample"</span>, <span class="dt">strategy =</span> <span class="st">"strategy_id"</span>,
+             <span class="dt">criteria =</span> criteria_vars,
+             <span class="dt">weights =</span> weights,
+             <span class="dt">optimal =</span> optimal)</code></pre></div>
+<p>We can reexamine the performance matrix with criteria now translated to a common scale.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">performance_mat_common &lt;-<span class="st"> </span><span class="kw"><a href="../reference/performance_matrix.html">performance_matrix</a></span>(mcda<span class="op">$</span>scores, 
+                                             <span class="dt">strategy =</span> <span class="st">"strategy_id"</span>, 
+                                             <span class="dt">criteria =</span> criteria_vars,
+                                             <span class="dt">rownames =</span> criteria_names, 
+                                             <span class="dt">colnames =</span> <span class="kw">names</span>(txseqs))
+knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(performance_mat_common)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="left">Sequence 1</th>
+<th align="left">Sequence 2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Life-years stable disease</td>
+<td align="left">24.89 (8.94, 44.84)</td>
+<td align="left">81.45 (63.93, 97.54)</td>
+</tr>
+<tr class="even">
+<td>Life-years progressed 1L</td>
+<td align="left">46.16 (2.41, 81.51)</td>
+<td align="left">45.22 (12.90, 88.39)</td>
+</tr>
+<tr class="odd">
+<td>Life-years progressed 2L</td>
+<td align="left">44.20 (6.32, 86.63)</td>
+<td align="left">43.70 (13.20, 82.02)</td>
+</tr>
+<tr class="even">
+<td>Health care sector costs</td>
+<td align="left">63.28 (30.14, 93.24)</td>
+<td align="left">39.86 (6.20, 71.41)</td>
+</tr>
+</tbody>
+</table>
+<p>We can also plot the “total value” scores along with 95 percent credible intervals computed using the PSA output.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Total value</span>
+total_value &lt;-<span class="st"> </span>mcda<span class="op">$</span>total_value[, .(<span class="dt">mean =</span> <span class="kw">mean</span>(score),
+                                    <span class="dt">lower =</span> <span class="kw">quantile</span>(score, .<span class="dv">025</span>),
+                                    <span class="dt">upper =</span> <span class="kw">quantile</span>(score, .<span class="dv">975</span>)),
+                                by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>)]
+<span class="kw">strategy_factor</span>(total_value)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(total_value, 
+       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> lower, 
+                    <span class="dt">ymax =</span> upper), <span class="dt">width=</span>.<span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
+<p><img src="tutorial_files/figure-html/mcda-total-value-1.png" width="384"></p>
+<p>It can sometimes be useful to decompose these scores by criteria, to help which criteria are most important in driving the results. The contribution of each criteria is the product of the weight and its score on the common scale.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Weighted scores</span>
+weighted_scores &lt;-<span class="st"> </span>mcda<span class="op">$</span>weighted_scores[, .(<span class="dt">mean =</span> <span class="kw">mean</span>(weighted_score)),
+                                        by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"criteria"</span>)]
+weighted_scores[, criteria <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(criteria, 
+                                     <span class="dt">levels =</span> criteria_vars,
+                                <span class="dt">labels =</span> criteria_names)]
+<span class="kw">strategy_factor</span>(weighted_scores)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(weighted_scores, 
+       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean, <span class="dt">fill =</span> criteria)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
+<p><img src="tutorial_files/figure-html/mcda-total-value-decompose-1.png" width="480"></p>
+<p>The treatment strategies can be ranked by their “total value” score, which varies across samples of the PSA. We count the number of times each treatment strategy has a given rank and use this to compute the probability that a treatment strategy has a given ranking. We visualize these results in two equivalent ways: first, with treatment strategies on the x-axis and ranking as a group variable, and second, with rankings on the x-axis and treatment strategy as a group variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prank &lt;-<span class="st"> </span>mcda<span class="op">$</span>prob_rank
+<span class="kw">strategy_factor</span>(prank)
+prank_levels &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/duplicated">unique</a></span>(prank<span class="op">$</span>rank))
+prank[, f1_rank <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(rank)]
+prank[, f2_rank <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(rank,
+                          <span class="dt">levels =</span> prank_levels,
+                          <span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">"Rank = "</span>, prank_levels))]
+
+<span class="co"># Rank on x-axis</span>
+p1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(prank, 
+       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> f1_rank, <span class="dt">y =</span> prob, <span class="dt">fill =</span> strategy_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Rank"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)
+
+<span class="co"># Treatment sequence on x-axis</span>
+p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(prank, 
+       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> prob, <span class="dt">fill =</span> f2_rank)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)
+
+<span class="co"># Combine</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="tutorial_files/figure-html/mcda-prob-rank-1.png" width="700"></p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -484,10 +676,14 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span clas
       <li>
 <a href="#economic-model">Economic model</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#a-four-state-model-for-first-line-treatment">A four-state model for first line treatment</a></li>
-      <li><a href="#a-three-state-model-for-second-line-treatment">A three-state model for second line treatment</a></li>
       </ul>
 </li>
-      <li><a href="#decision-analysis">Decision analysis</a></li>
+      <li>
+<a href="#decision-analysis">Decision analysis</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#cost-effectiveness-analysis">Cost-effectiveness analysis</a></li>
+      <li><a href="#multi-criteria-decision-analysis">Multi criteria decision analysis</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

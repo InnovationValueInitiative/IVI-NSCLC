@@ -10,7 +10,7 @@ vignette: >
 ---
 
 # Overview
-The IVI-NSCLC model simulates disease progression for different sequential treatment strategies using a continuous time state transition model (CTSTM). Treatment sequences that can be modeled are shown in the figure below. Tyrosine kinase inhibitors (TKIs) can be used at first line. Possible second line treatments (2L) and treatments beyond second line (2L+) depend on whether a patient acquired a T790M mutation.
+The IVI-NSCLC model simulates disease progression for different sequential treatment strategies using a continuous time state transition model (CTSTM) for patients with epidermal growth factor receptor (EGFR) positive NSCLC. Treatment sequences that can be modeled are shown in the figure below. Tyrosine kinase inhibitors (TKIs) can be used at first line. Possible second line treatments (2L) and treatments beyond second line (2L+) depend on whether a patient acquired a T790M mutation.
 
 <br>
 <br>
@@ -44,13 +44,14 @@ If the model begins at second line, then a three-state model nearly identical to
 
 The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis (PSA) is used to propagate uncertainty in the model input parameters throughout the model.
 
-Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/) and [scales](https://scales.r-lib.org/) for plotting, [knitr](https://rmarkdown.rstudio.com/lesson-7.html) to create tables, and the [data.table](https://github.com/Rdatatable/data.table/wiki) package to manipulate data and simulation output.
+Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/), [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html), and [scales](https://scales.r-lib.org/) for plotting, [knitr](https://rmarkdown.rstudio.com/lesson-7.html) to create tables, and [data.table](https://github.com/Rdatatable/data.table/wiki) to manipulate data and simulation output.
 
 ```{r, message=FALSE, warning=FALSE}
 library("iviNSCLC")
 library("hesim")
 library("data.table")
 library("ggplot2")
+library("gridExtra")
 library("scales")
 library("knitr")
 ggplot2::theme_set(theme_minimal())
@@ -71,7 +72,7 @@ A number of different statistical models are used to parameterize the economic m
 # Economic model
 We provide two example analyses: a four-state model for 1L treatment and a three-state model for 2L treatment. Importantly, different modeling approaches should be used for each scenario. Since a "clock-forward" multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and "clock-reset" models. In the clock-reset approach, time $u$ in $h^{rs}(u)$ resets after each transition whereas in the clock-forward approach time $u$ refers to time since the start of the model (see the tutorial [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712) for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used. 
 
-An individual-level simulation is required to simulate the mixture of clock-forward and clock-reset models, but a cohort model can be used (and is computationally faster) to simulate a clock-forward model. The individual and cohort-level models are simulated in R using the `IndivCtstm` and `CohortCtstm` [`CohortCtstm` IS NOT YET AVAILABLE] classes from the [hesim](https://innovationvalueinitiative.github.io/hesim/) package, respectively.
+An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the `IndivCtstm` class from the [hesim](https://innovationvalueinitiative.github.io/hesim/) package.
 
 ## A four-state model for first line treatment
 ### Patient population
@@ -82,7 +83,7 @@ pats <- create_patients(n = 1000)
 ```
 
 ### Treatment sequences
-Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a "txseq_list" object using `txseq_list()`. 
+Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a "txseq_list" object using `txseq_list()`. We specifiy that the model begins at first line treatment with the argument `start_line = "first"`. 
 
 ```{r}
 txseq1 <- txseq(first = "erlotinib",
@@ -95,7 +96,8 @@ txseqs <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = 
                      mutation = "unknown")
 ```
 
-Its also useful to write a short convenience function for creating informative names for treatment strategies (i.e., treatment sequences), which can be used for plotting.
+It is also useful to write a short convenience function for creating informative names for treatment strategies (i.e., treatment sequences), which can be used for plotting.
+
 ```{r}
 # Convenience function to add factor names to data table
 # for plotting
@@ -111,6 +113,15 @@ strategy_factor <- function(x, rev = FALSE){
 }
 ```
 
+Note that treatment sequences can also begin at second line, conditional on T790M mutation status.
+
+```{r}
+txseqs_2L_pos <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = "second",
+                              mutation = "positive")
+txseqs_2L_neg <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = "second",
+                              mutation = "negative")
+```
+
 ### Model structure
 In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
 
@@ -124,6 +135,23 @@ print(states)
 # Transition matrix
 tmat <- create_trans_mat(struct)
 print(tmat)
+```
+
+We could have also specified a three-state model, starting at either first or second line.
+
+```{r}
+# 1st line model
+struct_3_1L <- model_structure(txseqs, dist = "weibull",
+                            n_states = "three")
+print(create_states(struct_3_1L))
+print(create_trans_mat(struct_3_1L))
+
+# 2nd line model (T790M positive)
+struct_3_2L <- model_structure(txseqs_2L_pos, dist = "weibull",
+                              n_states = "three")
+print(create_states(struct_3_2L))
+print(create_trans_mat(struct_3_2L))
+
 ```
 
 As with treatment strategies, its useful to write a convenience function for generating informative names for health states for plotting.
@@ -342,11 +370,11 @@ ggplot(incr_costs[dr == .03 & category == "total" &
 ```
 
 
-## A three-state model for second line treatment
-Coming soon.
-
 # Decision analysis
-Cost-effectiveness analysis can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$100,000.  
+Decision analysis can be performed using either a cost-effectiveness analysis (CEA) or a multi criteria decision analysis (MCDA) framework.
+
+## Cost-effectiveness analysis
+CEA can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$100,000.  
 
 ```{r icea}
 icea <- hesim::icea(ce_sim, dr = .03)
@@ -401,4 +429,128 @@ ggplot(icea$evpi, aes(x = k, y = evpi)) +
   ylab("Expected value of perfect information") +
   scale_x_continuous(label = scales::dollar) +
   scale_y_continuous(label = scales::dollar)
+```
+
+## Multi criteria decision analysis
+We perform the MCDA using the approach described by the [2016 ISPOR Task Force](https://www.ncbi.nlm.nih.gov/pubmed/26797229). Here, we assess the treatment strategies on four criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, and health care sector costs. High values are better for life-years and lower values are better for costs. 
+
+Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a "performance matrix".
+
+```{r performance-matrix1}
+hc_costs <- ce_sim$costs[!category %in% c("prod", "total"), 
+                           .(costs = sum(costs)),
+                             by = c("sample", "strategy_id")]
+outcomes <- data.table(sample = rep(1:n_samples, each = length(txseqs)),
+                       strategy_id = rep(1:length(txseqs), times = n_samples),
+                       lys_s1 = econmod$qalys_[state_id == 1 & dr == 0.03, lys],
+                       lys_p1 = econmod$qalys_[state_id == 2 & dr == 0.03, lys],
+                       lys_p2 = econmod$qalys_[state_id == 3 & dr == 0.03, lys],
+                       hc_costs = hc_costs$costs)
+criteria_vars <- c("lys_s1", "lys_p1", "lys_p2", "hc_costs")
+criteria_names <- c("Life-years stable disease", "Life-years progressed 1L", 
+                    "Life-years progressed 2L", "Health care sector costs")
+optimal <- c("high", "high", "high", "low")
+performance_mat_orig <- performance_matrix(outcomes, 
+                                           strategy = "strategy_id", 
+                                           criteria = criteria_vars,
+                                           rownames = criteria_names, 
+                                           colnames = names(txseqs))
+knitr::kable(performance_mat_orig)
+```
+
+Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a "total value" score is computed as weighted average of each criteria on this common scale. We'll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.
+
+```{r lpvf}
+plot_data <- lpvf_plot_data(outcomes$hc_costs, optimal = "low")
+ggplot(plot_data, aes(x = x, y = y)) + geom_line() +
+  xlab("Health care sector costs") + ylab("Score") + 
+  scale_x_continuous(label = dollar_format()) 
+```
+
+We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we'll use example weights for the analysis. We conduct the MCDA with function `mcda()`, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a "total value" score and the probability that each treatment strategy has a given rank.
+
+```{r mcda}
+weights <- c(.2, .2, .2, .4)
+mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",
+             criteria = criteria_vars,
+             weights = weights,
+             optimal = optimal)
+```
+
+We can reexamine the performance matrix with criteria now translated to a common scale.
+
+```{r performance-matrix}
+performance_mat_common <- performance_matrix(mcda$scores, 
+                                             strategy = "strategy_id", 
+                                             criteria = criteria_vars,
+                                             rownames = criteria_names, 
+                                             colnames = names(txseqs))
+knitr::kable(performance_mat_common)
+```
+
+We can also plot the "total value" scores along with 95 percent credible intervals computed using the PSA output. 
+
+```{r mcda-total-value, fig.width = 4}
+# Total value
+total_value <- mcda$total_value[, .(mean = mean(score),
+                                    lower = quantile(score, .025),
+                                    upper = quantile(score, .975)),
+                                by = c("strategy_id")]
+strategy_factor(total_value)
+ggplot(total_value, 
+       aes(x = strategy_name, y = mean)) + 
+  geom_bar(stat = "identity", fill = "#d9230f") +
+  geom_errorbar(aes(ymin = lower, 
+                    ymax = upper), width=.2) +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Total value") 
+```
+
+It can sometimes be useful to decompose these scores by criteria, to help which criteria are most important in driving the results. The contribution of each criteria is the product of the weight and its score on the common scale. 
+
+```{r mcda-total-value-decompose, fig.width = 5}
+# Weighted scores
+weighted_scores <- mcda$weighted_scores[, .(mean = mean(weighted_score)),
+                                        by = c("strategy_id", "criteria")]
+weighted_scores[, criteria := factor(criteria, 
+                                     levels = criteria_vars,
+                                labels = criteria_names)]
+strategy_factor(weighted_scores)
+ggplot(weighted_scores, 
+       aes(x = strategy_name, y = mean, fill = criteria)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Total value") 
+```
+
+The treatment strategies can be ranked by their "total value" score, which varies across samples of the PSA. We count the number of times each treatment strategy has a given rank and use this to compute the probability that a treatment strategy has a given ranking. We visualize these results in two equivalent ways: first, with treatment strategies on the x-axis and ranking as a group variable, and second, with rankings on the x-axis and treatment strategy as a group variable.
+
+```{r mcda-prob-rank}
+prank <- mcda$prob_rank
+strategy_factor(prank)
+prank_levels <- sort(unique(prank$rank))
+prank[, f1_rank := factor(rank)]
+prank[, f2_rank := factor(rank,
+                          levels = prank_levels,
+                          labels = paste0("Rank = ", prank_levels))]
+
+# Rank on x-axis
+p1 <- ggplot(prank, 
+       aes(x = f1_rank, y = prob, fill = strategy_name)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_discrete(name = "") +
+  xlab("Rank") + ylab("Probability") +
+  theme(legend.position = "bottom")
+
+# Treatment sequence on x-axis
+p2 <- ggplot(prank, 
+       aes(x = strategy_name, y = prob, fill = f2_rank)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Probability") +
+  theme(legend.position = "bottom")
+
+# Combine
+grid.arrange(p1, p2, ncol = 2)
+
 ```

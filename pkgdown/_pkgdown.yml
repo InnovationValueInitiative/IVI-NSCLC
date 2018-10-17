@@ -11,6 +11,9 @@ reference:
       - params_mstate_nma
       - params_utility
       - params_costs_op
+  - title: "Patient population"
+    contents:
+      - create_patients
   - title: "Treatment sequences"
     contents:
       - tx_1L
@@ -18,18 +21,22 @@ reference:
       - tx_2LP
       - txseq
       - txseq_list
-  - title: "Model setup"
+  - title: "Model structure"
     contents:
       - model_structure
       - create_states
       - create_trans_mat
-      - create_patients
   - title: "Economic model"
     contents:
       - create_transmod_data
       - create_transmod_params
       - create_utilmod
       - create_costmods
+  - title: "Multi criteria decision analysis"
+    contents:
+      - performance_matrix
+      - lpvf_plot_data
+      - mcda
     
 navbar:
   title: IVI-NSCLC
