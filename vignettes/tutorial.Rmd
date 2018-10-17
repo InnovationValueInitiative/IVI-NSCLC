@@ -1,8 +1,13 @@
 ---
 title: Tutorial
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-toc_depth: 1
+output: 
+  bookdown::html_document2:
+    toc: yes
+    toc_depth: 2
+    number_sections: TRUE
+pkgdown:
+  as_is: true
 vignette: >
   %\VignetteIndexEntry{Tutorial}
   %\VignetteEngine{knitr::rmarkdown}

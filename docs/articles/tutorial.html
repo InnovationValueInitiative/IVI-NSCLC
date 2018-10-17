@@ -74,7 +74,7 @@
     
 <div id="overview" class="section level1">
 <h1 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h1>
+<a href="#overview" class="anchor"></a><span class="header-section-number">1</span> Overview</h1>
 <p>The IVI-NSCLC model simulates disease progression for different sequential treatment strategies using a continuous time state transition model (CTSTM) for patients with epidermal growth factor receptor (EGFR) positive NSCLC. Treatment sequences that can be modeled are shown in the figure below. Tyrosine kinase inhibitors (TKIs) can be used at first line. Possible second line treatments (2L) and treatments beyond second line (2L+) depend on whether a patient acquired a T790M mutation.</p>
 <p><br><br><img src="treatment-strategies.png" width="800px"><br><br></p>
 <p>The model structure depends on whether the model starts at 1L or 2L treatment. If the model begins at 1L, then either a four-state CTSTM or a three-state CTSTM can be used. We prefer the four-state CTSTM because it explicitly models 2L treatments; however, there is no 2L evidence following some 1L treatments (i.e., osimertinib), so a three-state model must be used in these cases.</p>
@@ -96,7 +96,7 @@ ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumenta
 </div>
 <div id="parameter-estimates" class="section level1">
 <h1 class="hasAnchor">
-<a href="#parameter-estimates" class="anchor"></a>Parameter estimates</h1>
+<a href="#parameter-estimates" class="anchor"></a><span class="header-section-number">2</span> Parameter estimates</h1>
 <p>A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the <code>iviNSCLC</code> package, are as follows:</p>
 <ul>
 <li>
@@ -119,21 +119,21 @@ ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumenta
 </div>
 <div id="economic-model" class="section level1">
 <h1 class="hasAnchor">
-<a href="#economic-model" class="anchor"></a>Economic model</h1>
+<a href="#economic-model" class="anchor"></a><span class="header-section-number">3</span> Economic model</h1>
 <p>We provide an example a four-state model for 1L treatment, while also showing how a three-state model could be specified. Importantly, different modeling approaches should be used for the three-state and four-state approaches. Since a “clock-forward” multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and “clock-reset” models. In the clock-reset approach, time <span class="math inline">\(u\)</span> in <span class="math inline">\(h^{rs}(u)\)</span> resets after each transition whereas in the clock-forward approach time <span class="math inline">\(u\)</span> refers to time since the start of the model (see the tutorial <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712">here</a> for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used.</p>
 <p>An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the <code>IndivCtstm</code> class from the <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> package.</p>
 <div id="set-up" class="section level2">
 <h2 class="hasAnchor">
-<a href="#set-up" class="anchor"></a>Set up</h2>
+<a href="#set-up" class="anchor"></a><span class="header-section-number">3.1</span> Set up</h2>
 <div id="patient-population" class="section level3">
 <h3 class="hasAnchor">
-<a href="#patient-population" class="anchor"></a>Patient population</h3>
+<a href="#patient-population" class="anchor"></a><span class="header-section-number">3.1.1</span> Patient population</h3>
 <p>The first step in the analysis is to define the target population. In the individual-level model, a sufficient number of patients must be simulated so that expected (i.e., mean) outcomes are stable across simulations. In this example, we simulate 1,000 patients.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_patients.html">create_patients</a></span>(<span class="dt">n =</span> <span class="dv">1000</span>)</code></pre></div>
 </div>
 <div id="treatment-sequences" class="section level3">
 <h3 class="hasAnchor">
-<a href="#treatment-sequences" class="anchor"></a>Treatment sequences</h3>
+<a href="#treatment-sequences" class="anchor"></a><span class="header-section-number">3.1.2</span> Treatment sequences</h3>
 <p>Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a “txseq_list” object using <code><a href="../reference/txseq_list.html">txseq_list()</a></code>. We specifiy that the model begins at first line treatment with the argument <code>start_line = "first"</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txseq1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"erlotinib"</span>,
                 <span class="dt">second =</span> <span class="kw">c</span>(<span class="st">"osimertinib"</span>, <span class="st">"PBDC"</span>),
@@ -164,7 +164,7 @@ txseqs_2L_neg &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 </div>
 <div id="model-structure" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model-structure" class="anchor"></a>Model structure</h3>
+<a href="#model-structure" class="anchor"></a><span class="header-section-number">3.1.3</span> Model structure</h3>
 <p>In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with <code><a href="../reference/model_structure.html">model_structure()</a></code>. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the <code>dist</code> argument. A description of the relevant health states can be generated using <code><a href="../reference/create_states.html">create_states()</a></code> and possible health state transitions are stored in a transition matrix generated using <code><a href="../reference/create_trans_mat.html">create_trans_mat()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">struct &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>)
 
@@ -220,12 +220,12 @@ struct_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 </div>
 <div id="constructing-the-model" class="section level2">
 <h2 class="hasAnchor">
-<a href="#constructing-the-model" class="anchor"></a>Constructing the model</h2>
+<a href="#constructing-the-model" class="anchor"></a><span class="header-section-number">3.2</span> Constructing the model</h2>
 <p>We construct the economic model by combining the separate models for the health state transitions, utility, and costs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_samples &lt;-<span class="st"> </span><span class="dv">100</span></code></pre></div>
 <div id="health-state-transition-model" class="section level3">
 <h3 class="hasAnchor">
-<a href="#health-state-transition-model" class="anchor"></a>Health state transition model</h3>
+<a href="#health-state-transition-model" class="anchor"></a><span class="header-section-number">3.2.1</span> Health state transition model</h3>
 <p>Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with <code><a href="../reference/create_transmod_data.html">create_transmod_data()</a></code> and stored below in a data table named <code>transmod_data</code>. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in <code>transmod_data</code> are extracted using <code>transmod_params()</code>.</p>
 <p>Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the <code>IndivCtstmTrans</code> class in <code>hesim</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Input data</span>
@@ -262,19 +262,19 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 </div>
 <div id="utility-model" class="section level3">
 <h3 class="hasAnchor">
-<a href="#utility-model" class="anchor"></a>Utility model</h3>
+<a href="#utility-model" class="anchor"></a><span class="header-section-number">3.2.2</span> Utility model</h3>
 <p>We construct a “mean” model for utility. Adverse events—which vary across treatments—are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
 </div>
 <div id="cost-models" class="section level3">
 <h3 class="hasAnchor">
-<a href="#cost-models" class="anchor"></a>Cost models</h3>
+<a href="#cost-models" class="anchor"></a><span class="header-section-number">3.2.3</span> Cost models</h3>
 <p>We construct models for each of the cost categories.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
 </div>
 <div id="combining-the-models" class="section level3">
 <h3 class="hasAnchor">
-<a href="#combining-the-models" class="anchor"></a>Combining the models</h3>
+<a href="#combining-the-models" class="anchor"></a><span class="header-section-number">3.2.4</span> Combining the models</h3>
 <p>Now that the transition, utility, and cost models have been constructed, they can be combined to construct the complete economic model. We use the <code>IndivCtstm</code> class from <code>hesim</code>, and instantiate an iCTSTM.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod &lt;-<span class="st"> </span>hesim<span class="op">::</span>IndivCtstm<span class="op">$</span><span class="kw">new</span>(<span class="dt">trans_model =</span> transmod,
                                  <span class="dt">utility_model =</span> utilmod,
@@ -283,10 +283,10 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 </div>
 <div id="simulation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#simulation" class="anchor"></a>Simulation</h2>
+<a href="#simulation" class="anchor"></a><span class="header-section-number">3.3</span> Simulation</h2>
 <div id="disease-progression" class="section level3">
 <h3 class="hasAnchor">
-<a href="#disease-progression" class="anchor"></a>Disease progression</h3>
+<a href="#disease-progression" class="anchor"></a><span class="header-section-number">3.3.1</span> Disease progression</h3>
 <p>The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with <code>$sim_disease()</code> and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod<span class="op">$</span><span class="kw">sim_disease</span>(<span class="dt">max_t =</span> <span class="dv">20</span>)
 econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span> , <span class="dv">1</span><span class="op">/</span><span class="dv">26</span>)) <span class="co"># Biweekly probabilities</span></code></pre></div>
@@ -302,7 +302,7 @@ stprobs &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
-<p><img src="tutorial_files/figure-html/stateprobs-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/stateprobs-1.png" width="672"></p>
 <p>Since <a href="https://en.wikipedia.org/wiki/Progression-free_survival">progression-free survival</a> and <a href="https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival">overall survival</a> are the most commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">curves &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>state_id <span class="op">==</span><span class="st"> </span><span class="dv">4</span>]
 curves[, prob <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(state_id <span class="op">==</span><span class="st"> </span><span class="dv">4</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob, prob)] <span class="co"># OS is 1 - pr(death)</span>
@@ -316,7 +316,7 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>lab) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
-<p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="672"></p>
 <p>We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quantiles &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/surv_quantile">surv_quantile</a></span>(curves, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, .<span class="dv">975</span>),
                                   <span class="dt">t =</span> <span class="st">"t"</span>,
@@ -331,11 +331,11 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Median years"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
-<p><img src="tutorial_files/figure-html/pfs_os_quantiles-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/pfs_os_quantiles-1.png" width="672"></p>
 </div>
 <div id="qalys" class="section level3">
 <h3 class="hasAnchor">
-<a href="#qalys" class="anchor"></a>QALYs</h3>
+<a href="#qalys" class="anchor"></a><span class="header-section-number">3.3.2</span> QALYs</h3>
 <p>Mean QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="dt">dr =</span> <span class="kw">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>))
@@ -350,11 +350,11 @@ lys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[dr <spa
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
-<p><img src="tutorial_files/figure-html/mean_lys-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/mean_lys-1.png" width="672"></p>
 </div>
 <div id="costs" class="section level3">
 <h3 class="hasAnchor">
-<a href="#costs" class="anchor"></a>Costs</h3>
+<a href="#costs" class="anchor"></a><span class="header-section-number">3.3.3</span> Costs</h3>
 <p>Mean costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e, compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_costs</span>(<span class="dt">dr =</span> .<span class="dv">03</span>)
@@ -424,11 +424,11 @@ incr_costs &lt;-<span class="st"> </span>incr_costs[, .(<span class="dt">icosts_
 </div>
 <div id="decision-analysis" class="section level1">
 <h1 class="hasAnchor">
-<a href="#decision-analysis" class="anchor"></a>Decision analysis</h1>
+<a href="#decision-analysis" class="anchor"></a><span class="header-section-number">4</span> Decision analysis</h1>
 <p>Decision analysis can be performed using either a cost-effectiveness analysis (CEA) or a multi criteria decision analysis (MCDA) framework.</p>
 <div id="cost-effectiveness-analysis" class="section level2">
 <h2 class="hasAnchor">
-<a href="#cost-effectiveness-analysis" class="anchor"></a>Cost-effectiveness analysis</h2>
+<a href="#cost-effectiveness-analysis" class="anchor"></a><span class="header-section-number">4.1</span> Cost-effectiveness analysis</h2>
 <p>CEA can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of $100,000.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icea &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea</a></span>(ce_sim, <span class="dt">dr =</span> .<span class="dv">03</span>)
 icea_pw &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw</a></span>(ce_sim, <span class="dt">comparator =</span> <span class="dv">1</span>, <span class="dt">dr =</span> .<span class="dv">03</span>)</code></pre></div>
@@ -451,22 +451,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.01, 0.10)</td>
+<td align="left">0.06 (0.02, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">2,217 (389, 4,030)</td>
+<td align="left">2,213 (583, 3,618)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">3,337 (543, 5,990)</td>
+<td align="left">3,406 (1,398, 5,889)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">39,921</td>
+<td align="left">39,390</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -487,7 +487,7 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span clas
 <span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">100000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
-<p><img src="tutorial_files/figure-html/ceplane-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/ceplane-1.png" width="672"></p>
 <p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. More precisely, the CEAC plots the proportion of simulations from the PSA that a treatment sequence is cost-effective relative to the comparator (y-axis) against different willingness to pay thresholds (x-axis).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strategy_factor</span>(icea_pw<span class="op">$</span>ceac)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(icea_pw<span class="op">$</span>ceac, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> prob, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
@@ -495,18 +495,18 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span clas
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability cost-effective"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>)</code></pre></div>
-<p><img src="tutorial_files/figure-html/ceac-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/ceac-1.png" width="672"></p>
 <p>Finally, we can plot the expected value of perfect information (EVPI), which is a measure of the maximum amount that a decision maker would be willing to pay to reduce all uncertainty in all parameters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(icea<span class="op">$</span>evpi, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> evpi)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Expected value of perfect information"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar)</code></pre></div>
-<p><img src="tutorial_files/figure-html/evpi-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/evpi-1.png" width="672"></p>
 </div>
 <div id="multi-criteria-decision-analysis" class="section level2">
 <h2 class="hasAnchor">
-<a href="#multi-criteria-decision-analysis" class="anchor"></a>Multi criteria decision analysis</h2>
+<a href="#multi-criteria-decision-analysis" class="anchor"></a><span class="header-section-number">4.2</span> Multi criteria decision analysis</h2>
 <p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on four criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, and health care sector costs. High values are better for life-years and lower values are better for costs.</p>
 <p>Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a “performance matrix”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc_costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[<span class="op">!</span>category <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"prod"</span>, <span class="st">"total"</span>), 
@@ -538,11 +538,11 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Life-years stable disease</td>
 <td align="left">0.44 (0.41, 0.46)</td>
-<td align="left">0.51 (0.48, 0.53)</td>
+<td align="left">0.51 (0.48, 0.54)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.09 (0.07, 0.11)</td>
+<td align="left">0.09 (0.08, 0.11)</td>
 <td align="left">0.09 (0.07, 0.11)</td>
 </tr>
 <tr class="odd">
@@ -552,8 +552,8 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">17,175 (14,668, 19,963)</td>
-<td align="left">19,393 (16,615, 22,878)</td>
+<td align="left">17,148 (14,314, 19,962)</td>
+<td align="left">19,362 (16,243, 22,672)</td>
 </tr>
 </tbody>
 </table>
@@ -562,7 +562,7 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Health care sector costs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Score"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
-<p><img src="tutorial_files/figure-html/lpvf-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/lpvf-1.png" width="672"></p>
 <p>We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we’ll use example weights for the analysis. We conduct the MCDA with function <code><a href="../reference/mcda.html">mcda()</a></code>, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a “total value” score and the probability that each treatment strategy has a given rank.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights &lt;-<span class="st"> </span><span class="kw">c</span>(.<span class="dv">2</span>, .<span class="dv">2</span>, .<span class="dv">2</span>, .<span class="dv">4</span>)
 mcda &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcda.html">mcda</a></span>(outcomes, <span class="dt">sample =</span> <span class="st">"sample"</span>, <span class="dt">strategy =</span> <span class="st">"strategy_id"</span>,
@@ -585,23 +585,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">19.08 (0.66, 41.39)</td>
-<td align="left">76.57 (56.94, 97.35)</td>
+<td align="left">28.27 (7.34, 45.38)</td>
+<td align="left">79.49 (61.09, 97.37)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">47.37 (11.72, 87.42)</td>
-<td align="left">46.05 (9.70, 87.78)</td>
+<td align="left">38.68 (7.84, 73.86)</td>
+<td align="left">38.48 (2.00, 80.10)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">42.84 (8.44, 83.21)</td>
-<td align="left">44.84 (12.41, 87.89)</td>
+<td align="left">49.05 (19.36, 86.74)</td>
+<td align="left">47.21 (11.60, 87.04)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">63.08 (35.24, 88.11)</td>
-<td align="left">40.94 (6.14, 68.67)</td>
+<td align="left">63.03 (33.70, 92.57)</td>
+<td align="left">39.96 (5.46, 72.47)</td>
 </tr>
 </tbody>
 </table>
@@ -661,7 +661,7 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 
 <span class="co"># Combine</span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="tutorial_files/figure-html/mcda-prob-rank-1.png" width="700"></p>
+<p><img src="tutorial_files/figure-html/mcda-prob-rank-1.png" width="672"></p>
 </div>
 </div>
   </div>
@@ -671,19 +671,19 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#overview">Overview</a></li>
-      <li><a href="#parameter-estimates">Parameter estimates</a></li>
+<li><a href="#overview"><span class="toc-section-number">1</span> Overview</a></li>
+      <li><a href="#parameter-estimates"><span class="toc-section-number">2</span> Parameter estimates</a></li>
       <li>
-<a href="#economic-model">Economic model</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#set-up">Set up</a></li>
-      <li><a href="#constructing-the-model">Constructing the model</a></li>
-      <li><a href="#simulation">Simulation</a></li>
+<a href="#economic-model"><span class="toc-section-number">3</span> Economic model</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#set-up"><span class="toc-section-number">3.1</span> Set up</a></li>
+      <li><a href="#constructing-the-model"><span class="toc-section-number">3.2</span> Constructing the model</a></li>
+      <li><a href="#simulation"><span class="toc-section-number">3.3</span> Simulation</a></li>
       </ul>
 </li>
       <li>
-<a href="#decision-analysis">Decision analysis</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#cost-effectiveness-analysis">Cost-effectiveness analysis</a></li>
-      <li><a href="#multi-criteria-decision-analysis">Multi criteria decision analysis</a></li>
+<a href="#decision-analysis"><span class="toc-section-number">4</span> Decision analysis</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#cost-effectiveness-analysis"><span class="toc-section-number">4.1</span> Cost-effectiveness analysis</a></li>
+      <li><a href="#multi-criteria-decision-analysis"><span class="toc-section-number">4.2</span> Multi criteria decision analysis</a></li>
       </ul>
 </li>
       </ul>
