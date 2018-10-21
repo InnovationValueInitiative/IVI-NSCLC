@@ -157,11 +157,28 @@ create_trans_mat <- function(object){
 #' 
 #' Create a data table of patients to model.
 #' @param n Number of patients to model.
+#' @param mutation_prob The probability of a T790M mutation. The default value
+#' is based on Table 3 from the article by Ma et al. cited below.
 #' @examples
 #' create_patients(n = 10)
-#' @return A table containing each modeled patient.
+#' @references 
+#' Ma C, Wei S, Song Y. T790M and acquired resistance of EGFR TKI: a literature 
+#' review of clinical reports. Journal of thoracic disease. 2011 Mar;3(1):10.
+#' @return An object of class "patients", which is a \code{data.table} 
+#' containing each modeled patient. Columns are:
+#' \describe{
+#' \item{patient_id}{An integer from 1 to \code{n} denoting a unique patient.}
+#' \item{mutation}{1 if a patient has a T790M mutation and 0 otherwise.}
+#' }
+#' 
 #' @export
-create_patients <- function(n){
+create_patients <- function(n, mutation_prob = .52){
   patient_id <- 1:n
-  return(data.table(patient_id = patient_id))
+  n_mutations <- round(mutation_prob * n)
+  mutation <- c(rep(0, n - n_mutations),
+                rep(1, n_mutations))
+  object <- data.table(patient_id = patient_id,
+                    mutation = mutation)
+  setattr(object, "class", c("patients", "data.table", "data.frame"))
+  return(object)
 }

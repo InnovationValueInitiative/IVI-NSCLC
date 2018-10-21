@@ -1,4 +1,4 @@
 rm(list = ls())
 library("data.table")
 treatments <- fread("treatments.csv")
-devtools::use_data(treatments, internal = TRUE)
+save(treatments, file = "../data/treatments.rda", compress = "bzip2")

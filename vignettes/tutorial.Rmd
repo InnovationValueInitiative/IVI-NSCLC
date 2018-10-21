@@ -182,7 +182,7 @@ Recall from the discussion above that an individual-level model is required to s
 
 ```{r}
 # Input data
-transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
+transmod_data <- create_transmod_data(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 print(transmod_data[1:5, 1:10]) 
 
@@ -327,8 +327,9 @@ ggplot(costs[category == "total"],
 We can also decompose costs by category. 
 
 ```{r costs_cat, fig.width = 4}
-costs[, category_name := factor(category, levels = c("op", "inpt", "total"),
-                                labels = c("Outptient", "Inpatient", "Total"))]
+costs[, category_name := factor(category, levels = c("tx_ac", "tx_admin", "op", "inpt", "total"),
+                                labels = c("Drug acquisition", "Drug administration",
+                                           "Outptient", "Inpatient", "Total"))]
 ggplot(costs[category != "total"], 
        aes(x = strategy_name, y = costs_mean, fill = category_name)) + 
   geom_bar(stat = "identity") +
@@ -557,5 +558,4 @@ p2 <- ggplot(prank,
 
 # Combine
 grid.arrange(p1, p2, ncol = 2)
-
 ```

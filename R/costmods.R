@@ -8,6 +8,9 @@
 #' @param patients A data table returned from \code{\link{create_patients}}.
 #' @return An object of class "StateVals" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' @param params_costs_tx Parameter estimates for treatment costs (i.e.,
+#' acquisition and administration costs) in the same format as 
+#' \code{\link{params_costs_tx}}.
 #' @param params_costs_op Parameter estimates for outpatient medical costs
 #' in the same format as \code{\link{params_costs_op}}.
 #' @param params_costs_inpt Parameter estimates for inpatient medical costs
@@ -30,19 +33,25 @@
 #'
 #' ## Cost models
 #' costmods <- create_costmods(n = 2, struct = struct, patients = pats)
+#' @return A list of objects of class "StateVals" from the 
+#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 #' @export
 create_costmods <- function(n = 100, struct, patients,
+                            params_costs_tx = iviNSCLC::params_costs_tx,
                             params_costs_op = iviNSCLC::params_costs_op,
                             params_costs_inpt = iviNSCLC::params_costs_inpt){
   costmods <- list()
-  costmods$op <- create_costmods_default(n, struct, patients,
+  costmods_tx <- create_costmod_tx(n, struct, patients, params_costs_tx)
+  costmods$tx_ac <- costmods_tx$tx_ac
+  costmods$tx_admin <- costmods_tx$tx_admin
+  costmods$op <- create_costmod_default(n, struct, patients,
                                         params_costs_op)
-  costmods$inpt <- create_costmods_default(n, struct, patients,
+  costmods$inpt <- create_costmod_default(n, struct, patients,
                                           params_costs_inpt)
   return(costmods)
 }
 
-create_costmods_default <- function(n = 100, 
+create_costmod_default <- function(n = 100, 
                                     struct, patients, 
                                     params){
   
@@ -57,4 +66,213 @@ create_costmods_default <- function(n = 100,
   mod <- hesim::create_StateVals(tbl, n = n)
   
   return(mod)  
+}
+
+#' Annualized treatment costs
+#' 
+#' Compute annualized drug acquisition and administration costs.
+#' @param x An object in the same format as \code{\link{params_costs_tx}}.
+#' @examples 
+#' annualized_tx_costs(iviNSCLC::params_costs_tx)
+#' @return An object of class "annualized_tx_costs", which is a
+#'  \code{data.table} of annualized treatment costs. Contains the columns:
+#' \describe{
+#' \item{agent}{See description from  the \code{dosage} element from \code{\link{params_costs_tx}}.}
+#' \item{treatment}{See description from the \code{dosage} element from \code{\link{params_costs_tx}}.}
+#' \item{dosage}{See description from the \code{dosage} element from \code{\link{params_costs_tx}}.}
+#' \item{dose}{See description from the \code{dosage} element from \code{\link{params_costs_tx}}.}
+#' \item{unit}{See description from the \code{dosage} element from \code{\link{params_costs_tx}}.}
+#' \item{units_per_day}{See description from the \code{dosage} element from \code{\link{params_costs_tx}}.}
+#' \item{duration_days}{See description from the \code{dosage} element from \code{\link{params_costs_tx}}.}
+#' \item{discount_lower}{See description from the \code{discount} element from \code{\link{params_costs_tx}}.}
+#' \item{discount_upper}{See description from the \code{discount} element from \code{\link{params_costs_tx}}.}
+#' \item{acquisition_costs}{Annualized drug acquisition costs.}
+#' \item{administration_costs}{Annualized drug administration costs.}
+#' }
+#' 
+#' @seealso \code{\link{params_costs_tx}}
+#' @export
+annualized_tx_costs <- function(x = iviNSCLC::params_costs_tx){
+  # Acquisition costs
+  ## First unit
+  tbl <- merge(x$dosage, 
+                    x$acquisition_costs[, c("agent_name", "strength", 
+                                            "acquisition_cost")], 
+                    by.x = c("agent_name", "strength1"),
+                    by.y = c("agent_name", "strength"))
+  setnames(tbl,"acquisition_cost", "acquisition_cost1")
+  
+  ## Second unit
+  tbl <- merge(tbl, 
+               x$acquisition_costs[, c("agent_name", "strength",
+                                       "acquisition_cost")], 
+               by.x = c("agent_name", "strength2"),
+               by.y = c("agent_name", "strength"),
+               all.x = TRUE)
+  setnames(tbl,"acquisition_cost", "acquisition_cost2")
+  
+  ## Combine first and second units
+  tbl[, ("acquisition_cost2") := ifelse(is.na(get("acquisition_cost2")), 
+                                        0, 
+                                        get("acquisition_cost2"))]
+  tbl[, ("acquisition_unit_cost") := get("quantity1") * get("acquisition_cost1") +
+                                     get("quantity2") * get("acquisition_cost2")]  
+  
+  # Administration costs
+  tbl <- merge(tbl, 
+               x$administration_costs[, c("agent_name", "administration_cost")], 
+               by = "agent_name",
+               all.x = TRUE)
+  setnames(tbl, "administration_cost", "administration_unit_cost")
+  
+  # Annualized costs
+  tbl[, ("acquisition_costs") := get("units_per_day") * get("acquisition_unit_cost") * 365.25]
+  tbl[, ("administration_costs") := get("units_per_day") * get("administration_unit_cost") * 365.25]
+  
+  # Set NULL
+  tbl[, c("strength1", "strength2", "quantity1", "quantity2", 
+          "acquisition_cost1", "acquisition_cost2", "acquisition_unit_cost",
+          "administration_unit_cost", "source") := NULL]
+  setorderv(tbl, c( "agent_name"))
+  setcolorder(tbl, c("agent_name"))
+  setattr(tbl, "class", c("annualized_tx_costs", "data.table", "data.frame"))
+  return (tbl[,])
+}
+  
+create_costmod_tx <- function(n = 100, 
+                               struct, patients,
+                               params){
+  
+  # 1. Treatments by strategy, health state, and mutation status
+  n_txseqs <- length(struct$txseqs)
+  txseq_dt <- vector(mode = "list", length = n_txseqs)
+  for (i in 1:n_txseqs){
+    txseq_i <- unlist(struct$txseqs[[i]])
+    txseq_dt[[i]] <- data.table(strategy_id = i,
+                                tx_name = c(txseq_i[1], txseq_i),
+                                line = rep(c("first", "second", "second_plus"), 
+                                           each = 2),
+                                mutation = rep(c(0, 1), 3),
+                                grp_id = rep(c(1, 2), 3)) 
+  }
+  txseq_dt <- rbindlist(txseq_dt)
+  if (attr(struct$txseqs, "start_line") == "second"){
+    txseq_dt <- txseq_dt[get("line") != "first"]
+  }
+  txseq_dt[, ("state_id") := .GRP, by = "line"]
+
+  # 2. Compute annualized costs
+  annualized_costs <- annualized_tx_costs(params)
+  annualized_costs <- annualized_costs[, c("agent_name", "duration_days", 
+                                           "acquisition_costs",
+                                           "administration_costs"), 
+                                       with = FALSE]
+  
+  ## Subset to relevant treatments
+  tx_names <- unique(txseq_dt$tx_name)
+  lookup <- melt(params$lookup[get("tx_name") %in% tx_names],
+                 id.vars = c("tx_name"),
+                 value.name = "agent_name")
+  lookup <- lookup[!is.na(get("agent_name")), c("tx_name", "agent_name")]
+  annualized_costs <- merge(lookup,
+                            annualized_costs,
+                            by = "agent_name")
+  
+  ## Compute distribution of annualized costs. Relevant for acquisition costs
+  ## due to uncertainty in discount rates.
+  annualized_costs <- merge(annualized_costs, params$discounts,
+                            by = "agent_name")
+  discount_dist <- stats::runif(n * nrow(annualized_costs),
+                                annualized_costs$discount_lower,
+                                annualized_costs$discount_upper)
+  annualized_costs_dist <- data.table(sample = rep(1:n, each = nrow(annualized_costs)),
+                                      agent_name = annualized_costs$agent_name,
+                                      tx_name = annualized_costs$tx_name,
+                                      duration_days = annualized_costs$duration_days,
+                                      discount = discount_dist,
+                                      acquisition_costs = annualized_costs$acquisition_costs,
+                                      administration_costs = annualized_costs$administration_costs)  
+  annualized_costs_dist[, ("acquisition_costs") := (1 - get("discount")) * get("acquisition_costs")]
+  
+  ## Aggregate across agents to treatment level
+  annualized_costs_dist <- annualized_costs_dist[, list(acquisition_costs = sum(get("acquisition_costs")),
+                                                        administration_costs = sum(get("administration_costs"))),
+                                                  by = c("sample", "tx_name", "duration_days")]
+  setorderv(annualized_costs_dist, c("sample", "tx_name", "duration_days"), order = c(1, 1, -1))
+  annualized_costs_dist[, ("cum_acquisition_costs") := cumsum(get("acquisition_costs")),
+                        by = c("sample", "tx_name")]
+  annualized_costs_dist[, ("cum_administration_costs") := cumsum(get("administration_costs")),
+                        by = c("sample", "tx_name")]  
+  annualized_costs_dist[, c("acquisition_costs", "administration_costs") := NULL]
+  setnames(annualized_costs_dist, 
+           c("cum_acquisition_costs", "cum_administration_costs"),
+           c("acquisition_costs", "administration_costs"))
+  setorderv(annualized_costs_dist, c("sample", "tx_name", "duration_days"))  
+  
+  ## Create time intervals and rectangularize dataset
+  ### Time Intervals
+  annualized_costs_dist[, ("time_interval") := 1:.N, by = c("sample", "tx_name")]
+  annualized_costs_dist[, ("time_start") := ifelse(get("time_interval") == 1, 0, shift(get("duration_days"))),
+                        by = "sample"]
+  max_time <- annualized_costs_dist[, list(max_time = max(get("duration_days"))),
+                                    by = "tx_name"]
+  annualized_costs_dist[, c("time_interval", "duration_days") := NULL] 
+  
+  ### Rectangularize by time interval
+  annualized_costs_dist_rect <- expand.grid(sample = unique(annualized_costs_dist$sample),
+                                           tx_name = unique(annualized_costs_dist$tx_name),
+                                           time_start = unique(annualized_costs_dist$time_start)) 
+  annualized_costs_dist_rect <- data.table(annualized_costs_dist_rect)
+  annualized_costs_dist_rect <- merge(annualized_costs_dist_rect, 
+                                      annualized_costs_dist[, c("sample", "tx_name", "time_start", 
+                                                              "acquisition_costs", "administration_costs"), with = FALSE],
+                                    by = c("sample", "tx_name", "time_start"),
+                                    all.x = TRUE)
+  annualized_costs_dist_rect <- merge(annualized_costs_dist_rect, 
+                                     max_time,
+                                    by = c("tx_name"),
+                                    all.x = TRUE)  
+  annualized_costs_dist_rect[, ("lag_acquisition_costs") := shift(get("acquisition_costs")),
+                             by = c("sample","tx_name")]
+  annualized_costs_dist_rect[, ("lag_administration_costs") := shift(get("administration_costs")),
+                             by = c("sample","tx_name")]  
+  annualized_costs_dist_rect[, ("acquisition_costs") := ifelse(is.na(get("acquisition_costs")),
+                                                               ifelse(get("time_start") < get("max_time"), get("lag_acquisition_costs"), 0),
+                                                               get("acquisition_costs"))]
+  annualized_costs_dist_rect[, ("administration_costs") := ifelse(is.na(get("administration_costs")),
+                                                                  ifelse(get("time_start") < get("max_time"), get("lag_administration_costs"), 0),
+                                                                  get("administration_costs"))]
+  annualized_costs_dist_rect[, c("lag_acquisition_costs", "lag_administration_costs") := NULL] 
+  
+  # 3. Add annualized costs to treatment table
+  txseq_dt <- merge(txseq_dt, annualized_costs_dist_rect,
+                    by = "tx_name",
+                    all.x = TRUE,
+                    allow.cartesian = TRUE)
+
+  # 4. Create StateVals models
+  patients2 <- copy(patients)
+  patients2[, ("grp_id") := ifelse(get("mutation") == 0, 1, 2)]
+  hesim_dat <- hesim::hesim_data(strategies = data.table(strategy_id = 1:length(struct$txseqs)),
+                                patients = patients2)
+  
+  
+  mods <- vector(mode = "list", length = 2)
+  names(mods) <- c("tx_ac", "tx_admin")
+  
+  ## Acquisition costs
+  setnames(txseq_dt, "acquisition_costs", "value")
+  stateval_tbl <- hesim::stateval_tbl(txseq_dt, dist = "custom",
+                                      hesim_data = hesim_dat)
+  mods[[1]] <- hesim::create_StateVals(stateval_tbl, n = n)
+  setnames(txseq_dt, "value", "acquisition_costs")
+  
+  ## Administration costs
+  setnames(txseq_dt, "administration_costs", "value")
+  stateval_tbl <- hesim::stateval_tbl(txseq_dt, dist = "custom",
+                                      hesim_data = hesim_dat)
+  mods[[2]] <- hesim::create_StateVals(stateval_tbl, n = n)  
+  
+  # Return
+  return(mods)
 }

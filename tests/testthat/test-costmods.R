@@ -18,7 +18,7 @@ test_that("create_costmods first line, 4 health states", {
   # Model structure
   txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
   struct <- model_structure(txseqs, dist = "weibull")
-  costmods <- create_costmods(n = 2, struct = struct, patients = pats)
+  costmods <- create_costmods(n = 5, struct = struct, patients = pats)
   expect_true(inherits(costmods, "list"))
   expect_true(all(sapply(costmods, function(x) inherits(x, "StateVals"))))
 })

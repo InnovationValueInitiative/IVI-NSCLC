@@ -19,7 +19,7 @@ create_strategies <- function(struct, txseqs){
                     "with osimertinib instead.")
       stop(msg, call. = FALSE)   
     }
-    abb <- treatments$abb[match(txseqs_i, treatments$name)]
+    abb <- iviNSCLC::treatments$tx_abb[match(txseqs_i, iviNSCLC::treatments$tx_name)]
     names(abb) <- names(txseqs_i)
     container[i, "abb_first"] <- abb["first"]
     container[i, "abb_second_pos"] <- abb["second.pos"]
@@ -29,18 +29,6 @@ create_strategies <- function(struct, txseqs){
   }  
   strategies <- data.table(strategy_id, container)
   return(strategies)
-}
-
-mutation_data <- function(txseqs, mutation_prob, patients){
-  n_patients <- nrow(patients)
-  n_strategies <- length(txseqs)
-  if(length(mutation_prob) == 1){
-    mutation_prob <- rep(mutation_prob, n_strategies)
-  }
-  n_mutations <- round(mutation_prob * n_patients)
-  mutations <- sapply(n_mutations, function (x) c(rep(1, x), 
-                                     rep(0, n_patients - x)))
-  return(c(mutations))
 }
 
 dist_params <- function(dist = "weibull"){
@@ -167,10 +155,6 @@ transmod_vars <- function(struct, data){
 #' @param struct A \code{\link{model_structure}} object.
 #' @param trans_mat A transition matrix as returned by \code{\link{create_trans_mat}}.
 #' @param patients A data table returned from \code{\link{create_patients}}.
-#' @param mutation_prob The probability of a T790M mutation. A vector of either
-#' of length 1 (the probability is constant across first line treatments in 
-#' \code{txseqs}) or of length equal to the number of treatment sequences in
-#' \code{txseqs}. 
 #' @return An object of class "expanded_hesim_data" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package, which
 #' is a data table with one observation for each treatment strategy 
@@ -195,18 +179,14 @@ transmod_vars <- function(struct, data){
 #' tmat <- create_trans_mat(struct)
 #'
 #' ## Data
-#' transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
+#' transmod_data <- create_transmod_data(struct, tmat, pats)
 #' head(transmod_data)
 #' @export
-create_transmod_data <- function(struct, trans_mat, patients, mutation_prob = .45){
+create_transmod_data <- function(struct, trans_mat, patients){
   strategies <- create_strategies(struct)
   hesim_data <- hesim::hesim_data(strategies = strategies,
                                   patients = patients)
   data <- hesim::expand(hesim_data, by = c("strategies", "patients"))
-  
-  # Add mutations
-  mutation <- mutation_data(struct$txseqs, mutation_prob, patients)
-  data[, "mutation" := mutation]
   
   # Expand for each transition
   n_transitions <- max(trans_mat, na.rm = TRUE)
@@ -281,7 +261,7 @@ sample_params_mstate_nma <- function(n, object){
 #' tmat <- create_trans_mat(struct)
 #'
 #' # Data and parameters for state transition model
-#' transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
+#' transmod_data <- create_transmod_data(struct, tmat, pats)
 #' transmod_params <- create_transmod_params(n = 2, transmod_data)
 #' print(transmod_params)
 #' @export

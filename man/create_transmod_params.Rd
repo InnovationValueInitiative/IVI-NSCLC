@@ -59,7 +59,7 @@ struct <- model_structure(txseqs, dist = "weibull")
 tmat <- create_trans_mat(struct)
 
 # Data and parameters for state transition model
-transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
+transmod_data <- create_transmod_data(struct, tmat, pats)
 transmod_params <- create_transmod_params(n = 2, transmod_data)
 print(transmod_params)
 }

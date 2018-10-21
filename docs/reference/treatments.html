@@ -109,19 +109,44 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data.table object with 1 row for each treatment and w columns:</p><dl class='dl-horizontal'>
-  <dt>name</dt><dd><p>Name of treatment.</p></dd>
-  <dt>abb</dt><dd><p>Abbreviation for the treatment.</p></dd>
+    <p>A data.table object with 1 row for each available treatment and with
+columns:</p><dl class='dl-horizontal'>
+  <dt>tx_name</dt><dd><p>Name of treatment.</p></dd>
+  <dt>tx_abb</dt><dd><p>Abbreviation for the treatment.</p></dd>
+  <dt>route</dt><dd><p>Route of administration.</p></dd>
+  <dt>approval_data</dt><dd><p>Date that treatment was approved in the US by the Federal Drug Administration (FDA)</p></dd>
+  <dt>years_since_approval</dt><dd><p>Years (from last update of the model) since the treatment was approved.</p></dd>
 </dl>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>treatments</span>)</div><div class='output co'>#&gt;                                tx_name       tx_abb route approval_date
+#&gt;  1:                          erlotinib          erl  oral            NA
+#&gt;  2:                          gefitinib          gef  oral            NA
+#&gt;  3:                           afatinib          afa  oral            NA
+#&gt;  4:                        dacomitinib          dac  oral            NA
+#&gt;  5:                        osimertinib          osi  oral            NA
+#&gt;  6:                               PBDC         pbdc    IV            NA
+#&gt;  7:                        bevacizumab          bev    IV            NA
+#&gt;  8:                          nivolumab          niv    IV            NA
+#&gt;  9:                      pembrolizumab          pem    IV            NA
+#&gt; 10:                       atezolizumab          ate    IV            NA
+#&gt; 11:                 PBDC + bevacizumab     pbdc_bev    IV            NA
+#&gt; 12:                   PBDC + nivolumab     pbdc_niv    IV            NA
+#&gt; 13:               PBDC + pembrolizumab     pbdc_pem    IV            NA
+#&gt; 14:                PBDC + atezolizumab     pbdc_ate    IV            NA
+#&gt; 15:     PBDC + bevacizumab + nivolumab pbdc_bev_niv    IV            NA
+#&gt; 16: PBDC + bevacizumab + pembrolizumab pbdc_bev_pem    IV            NA
+#&gt; 17:  PBDC + bevacizumab + atezolizumab pbdc_bev_ate    IV            NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

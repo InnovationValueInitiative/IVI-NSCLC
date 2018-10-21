@@ -107,7 +107,7 @@ particular criteria given model outcomes.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>lpvf_plot_data</span>(<span class='no'>x</span>, <span class='kw'>optimal</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"low"</span>, <span class='st'>"high"</span>))</pre>
+    <pre class="usage"><span class='fu'>lpvf_plot_data</span>(<span class='no'>x</span>, <span class='kw'>optimal</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"low"</span>, <span class='st'>"high"</span>), <span class='kw'>length_out</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -121,6 +121,11 @@ particular criteria given model outcomes.</p>
       <td><p>If <code>"low"</code>, then lower values of the outcome are better, and,
 if <code>"high"</code>, then higher values of the outcome are better.</p></td>
     </tr>
+    <tr>
+      <th>length_out</th>
+      <td><p>Number of points between minimum and maximum values of 
+<code>x</code>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -130,9 +135,24 @@ a line plot.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>mcda</p></div>
+    <div class='dont-index'><p><code><a href='mcda.html'>mcda</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>outcome</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fl'>10</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>11</span>)
+<span class='no'>plot_data</span> <span class='kw'>&lt;-</span> <span class='fu'>lpvf_plot_data</span>(<span class='no'>outcome</span>, <span class='kw'>optimal</span> <span class='kw'>=</span> <span class='st'>"high"</span>)
+<span class='fu'>print</span>(<span class='no'>plot_data</span>)</div><div class='output co'>#&gt;               x           y
+#&gt;    1:  77.42356   0.0000000
+#&gt;    2:  77.44782   0.1001001
+#&gt;    3:  77.47208   0.2002002
+#&gt;    4:  77.49633   0.3003003
+#&gt;    5:  77.52059   0.4004004
+#&gt;   ---                      
+#&gt;  996: 101.56120  99.5995996
+#&gt;  997: 101.58545  99.6996997
+#&gt;  998: 101.60971  99.7997998
+#&gt;  999: 101.63397  99.8998999
+#&gt; 1000: 101.65823 100.0000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -142,7 +162,9 @@ a line plot.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

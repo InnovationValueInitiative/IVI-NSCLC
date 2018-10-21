@@ -5,6 +5,7 @@
 \title{Create cost models}
 \usage{
 create_costmods(n = 100, struct, patients,
+  params_costs_tx = iviNSCLC::params_costs_tx,
   params_costs_op = iviNSCLC::params_costs_op,
   params_costs_inpt = iviNSCLC::params_costs_inpt)
 }
@@ -15,6 +16,10 @@ create_costmods(n = 100, struct, patients,
 
 \item{patients}{A data table returned from \code{\link{create_patients}}.}
 
+\item{params_costs_tx}{Parameter estimates for treatment costs (i.e.,
+acquisition and administration costs) in the same format as 
+\code{\link{params_costs_tx}}.}
+
 \item{params_costs_op}{Parameter estimates for outpatient medical costs
 in the same format as \code{\link{params_costs_op}}.}
 
@@ -23,6 +28,9 @@ in the same format as \code{\link{params_costs_inpt}}.}
 }
 \value{
 An object of class "StateVals" from the 
+\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+
+A list of objects of class "StateVals" from the 
 \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 }
 \description{

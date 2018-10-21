@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-17</h4>
+            <h4 class="date">2018-10-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -229,15 +229,15 @@ struct_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 <p>Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with <code><a href="../reference/create_transmod_data.html">create_transmod_data()</a></code> and stored below in a data table named <code>transmod_data</code>. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in <code>transmod_data</code> are extracted using <code>transmod_params()</code>.</p>
 <p>Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the <code>IndivCtstmTrans</code> class in <code>hesim</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Input data</span>
-transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats, <span class="dt">mutation_prob =</span> .<span class="dv">45</span>)
+transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id mutation tx_abb tx_hist
-## 1:           1          1             1        1    erl    &lt;NA&gt;
-## 2:           1          1             2        1    erl    &lt;NA&gt;
-## 3:           1          1             3        1    osi     erl
-## 4:           1          1             4        1    osi     erl
-## 5:           1          1             5        1    osi     erl
+## 1:           1          1             1        0    erl    &lt;NA&gt;
+## 2:           1          1             2        0    erl    &lt;NA&gt;
+## 3:           1          1             3        0   pbdc     erl
+## 4:           1          1             4        0   pbdc     erl
+## 5:           1          1             5        0   pbdc     erl
 ##    osi_s1p1_scale osi_s1d_scale d_erl_s1p1_scale d_erl_s1d_scale
 ## 1:              1             0                1               0
 ## 2:              0             1                0               1
@@ -376,8 +376,9 @@ costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[dr <spa
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/costs-1.png" width="384"></p>
 <p>We can also decompose costs by category.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costs[, category_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(category, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"op"</span>, <span class="st">"inpt"</span>, <span class="st">"total"</span>),
-                                <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Outptient"</span>, <span class="st">"Inpatient"</span>, <span class="st">"Total"</span>))]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costs[, category_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(category, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"tx_ac"</span>, <span class="st">"tx_admin"</span>, <span class="st">"op"</span>, <span class="st">"inpt"</span>, <span class="st">"total"</span>),
+                                <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Drug acquisition"</span>, <span class="st">"Drug administration"</span>,
+                                           <span class="st">"Outptient"</span>, <span class="st">"Inpatient"</span>, <span class="st">"Total"</span>))]
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(costs[category <span class="op">!=</span><span class="st"> "total"</span>], 
        <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean, <span class="dt">fill =</span> category_name)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
@@ -451,27 +452,27 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.02, 0.09)</td>
+<td align="left">0.06 (0.01, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">2,213 (583, 3,618)</td>
+<td align="left">9,954 (498, 24,511)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">3,406 (1,398, 5,889)</td>
+<td align="left">-4,389 (-15,576, 1,574)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">39,390</td>
+<td align="left">178,869</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
 <td align="left">-</td>
-<td align="left">Cost-effective</td>
+<td align="left">Not cost-effective</td>
 </tr>
 </tbody>
 </table>
@@ -537,23 +538,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.44 (0.41, 0.46)</td>
-<td align="left">0.51 (0.48, 0.54)</td>
+<td align="left">0.43 (0.41, 0.46)</td>
+<td align="left">0.51 (0.49, 0.53)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.09 (0.08, 0.11)</td>
+<td align="left">0.09 (0.07, 0.11)</td>
 <td align="left">0.09 (0.07, 0.11)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
 <td align="left">0.07 (0.05, 0.09)</td>
-<td align="left">0.07 (0.05, 0.09)</td>
+<td align="left">0.06 (0.04, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">17,148 (14,314, 19,962)</td>
-<td align="left">19,362 (16,243, 22,672)</td>
+<td align="left">79,618 (43,872, 112,454)</td>
+<td align="left">89,571 (48,229, 127,779)</td>
 </tr>
 </tbody>
 </table>
@@ -585,23 +586,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">28.27 (7.34, 45.38)</td>
-<td align="left">79.49 (61.09, 97.37)</td>
+<td align="left">23.93 (3.78, 45.93)</td>
+<td align="left">79.22 (63.20, 95.37)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">38.68 (7.84, 73.86)</td>
-<td align="left">38.48 (2.00, 80.10)</td>
+<td align="left">52.09 (12.06, 88.68)</td>
+<td align="left">48.72 (11.18, 85.58)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">49.05 (19.36, 86.74)</td>
-<td align="left">47.21 (11.60, 87.04)</td>
+<td align="left">55.90 (24.12, 99.10)</td>
+<td align="left">51.66 (11.93, 90.81)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">63.03 (33.70, 92.57)</td>
-<td align="left">39.96 (5.46, 72.47)</td>
+<td align="left">56.82 (19.48, 97.46)</td>
+<td align="left">45.50 (2.06, 92.50)</td>
 </tr>
 </tbody>
 </table>

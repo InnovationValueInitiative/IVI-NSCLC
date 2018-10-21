@@ -4,15 +4,22 @@
 \name{treatments}
 \alias{treatments}
 \title{Treatments}
-\format{A data.table object with 1 row for each treatment and w columns:
+\format{A data.table object with 1 row for each available treatment and with
+columns:
 \describe{
-  \item{name}{Name of treatment.}
-  \item{abb}{Abbreviation for the treatment.}
+  \item{tx_name}{Name of treatment.}
+  \item{tx_abb}{Abbreviation for the treatment.}
+  \item{route}{Route of administration.}
+  \item{approval_data}{Date that treatment was approved in the US by the Federal Drug Administration (FDA)}
+  \item{years_since_approval}{Years (from last update of the model) since the treatment was approved.}
 }}
 \usage{
 treatments
 }
 \description{
 Dataset of treatments for EGFR positive NSCLC.
+}
+\examples{
+print(treatments)
 }
 \keyword{datasets}

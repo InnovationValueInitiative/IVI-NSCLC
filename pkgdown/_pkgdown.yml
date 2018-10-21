@@ -11,11 +11,14 @@ reference:
       - params_mstate_nma
       - params_utility
       - params_costs_op
+      - params_costs_tx
+      - annualized_tx_costs
   - title: "Patient population"
     contents:
       - create_patients
   - title: "Treatment sequences"
     contents:
+      - treatments
       - tx_1L
       - tx_2L
       - tx_2LP

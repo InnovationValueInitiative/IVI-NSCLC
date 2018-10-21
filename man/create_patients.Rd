@@ -4,17 +4,29 @@
 \alias{create_patients}
 \title{Create patient data table}
 \usage{
-create_patients(n)
+create_patients(n, mutation_prob = 0.52)
 }
 \arguments{
 \item{n}{Number of patients to model.}
+
+\item{mutation_prob}{The probability of a T790M mutation. The default value
+is based on Table 3 from the article by Ma et al. cited below.}
 }
 \value{
-A table containing each modeled patient.
+An object of class "patients", which is a \code{data.table} 
+containing each modeled patient. Columns are:
+\describe{
+\item{patient_id}{An integer from 1 to \code{n} denoting a unique patient.}
+\item{mutation}{1 if a patient has a T790M mutation and 0 otherwise.}
+}
 }
 \description{
 Create a data table of patients to model.
 }
 \examples{
 create_patients(n = 10)
+}
+\references{
+Ma C, Wei S, Song Y. T790M and acquired resistance of EGFR TKI: a literature 
+review of clinical reports. Journal of thoracic disease. 2011 Mar;3(1):10.
 }

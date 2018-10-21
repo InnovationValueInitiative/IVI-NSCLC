@@ -180,7 +180,7 @@ that are also contained in <code>data</code> are extracted.</p>
 <span class='no'>tmat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_trans_mat.html'>create_trans_mat</a></span>(<span class='no'>struct</span>)
 
 <span class='co'># Data and parameters for state transition model</span>
-<span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_transmod_data.html'>create_transmod_data</a></span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>, <span class='kw'>mutation_prob</span> <span class='kw'>=</span> <span class='fl'>.45</span>)
+<span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_transmod_data.html'>create_transmod_data</a></span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>)
 <span class='no'>transmod_params</span> <span class='kw'>&lt;-</span> <span class='fu'>create_transmod_params</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>transmod_data</span>)
 <span class='fu'>print</span>(<span class='no'>transmod_params</span>)</div><div class='output co'>#&gt; $coefs
 #&gt; $coefs$scale

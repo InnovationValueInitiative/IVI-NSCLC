@@ -4,7 +4,7 @@
 \alias{create_transmod_data}
 \title{Data for transition model}
 \usage{
-create_transmod_data(struct, trans_mat, patients, mutation_prob = 0.45)
+create_transmod_data(struct, trans_mat, patients)
 }
 \arguments{
 \item{struct}{A \code{\link{model_structure}} object.}
@@ -12,11 +12,6 @@ create_transmod_data(struct, trans_mat, patients, mutation_prob = 0.45)
 \item{trans_mat}{A transition matrix as returned by \code{\link{create_trans_mat}}.}
 
 \item{patients}{A data table returned from \code{\link{create_patients}}.}
-
-\item{mutation_prob}{The probability of a T790M mutation. A vector of either
-of length 1 (the probability is constant across first line treatments in 
-\code{txseqs}) or of length equal to the number of treatment sequences in
-\code{txseqs}.}
 }
 \value{
 An object of class "expanded_hesim_data" from the 
@@ -49,7 +44,7 @@ struct <- model_structure(txseqs, dist = "weibull")
 tmat <- create_trans_mat(struct)
 
 ## Data
-transmod_data <- create_transmod_data(struct, tmat, pats, mutation_prob = .45)
+transmod_data <- create_transmod_data(struct, tmat, pats)
 head(transmod_data)
 }
 \seealso{
