@@ -464,7 +464,7 @@ performance_mat_orig <- performance_matrix(outcomes,
 knitr::kable(performance_mat_orig)
 ```
 
-Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a "total value" score is computed as weighted average of each criteria on this common scale. We'll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.
+Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a "total value" is computed as weighted average of each criteria on this common scale. We'll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.
 
 ```{r lpvf}
 plot_data <- lpvf_plot_data(outcomes$hc_costs, optimal = "low")
@@ -473,7 +473,7 @@ ggplot(plot_data, aes(x = x, y = y)) + geom_line() +
   scale_x_continuous(label = dollar_format()) 
 ```
 
-We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we'll use example weights for the analysis. We conduct the MCDA with function `mcda()`, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a "total value" score and the probability that each treatment strategy has a given rank.
+We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we'll use example weights for the analysis. We conduct the MCDA with function `mcda()`, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a "total value" and the probability that each treatment strategy has a given rank.
 
 ```{r mcda}
 weights <- c(.2, .2, .2, .4)
@@ -529,7 +529,7 @@ ggplot(weighted_scores,
   xlab("") + ylab("Total value") 
 ```
 
-The treatment strategies can be ranked by their "total value" score, which varies across samples of the PSA. We count the number of times each treatment strategy has a given rank and use this to compute the probability that a treatment strategy has a given ranking. We visualize these results in two equivalent ways: first, with treatment strategies on the x-axis and ranking as a group variable, and second, with rankings on the x-axis and treatment strategy as a group variable.
+The treatment strategies can be ranked by their "total value", which varies across samples of the PSA. We count the number of times each treatment strategy has a given rank and use this to compute the probability that a treatment strategy has a given ranking. We visualize these results in two equivalent ways: first, with treatment strategies on the x-axis and ranking as a group variable, and second, with rankings on the x-axis and treatment strategy as a group variable.
 
 ```{r mcda-prob-rank}
 prank <- mcda$prob_rank

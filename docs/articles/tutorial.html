@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-21</h4>
+            <h4 class="date">2018-10-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -452,22 +452,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.01, 0.09)</td>
+<td align="left">0.06 (0.01, 0.10)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">9,954 (498, 24,511)</td>
+<td align="left">10,017 (1,697, 23,423)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-4,389 (-15,576, 1,574)</td>
+<td align="left">-4,333 (-13,768, 1,087)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">178,869</td>
+<td align="left">176,237</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -538,33 +538,33 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.43 (0.41, 0.46)</td>
-<td align="left">0.51 (0.49, 0.53)</td>
+<td align="left">0.44 (0.41, 0.46)</td>
+<td align="left">0.51 (0.49, 0.54)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.09 (0.07, 0.11)</td>
+<td align="left">0.09 (0.08, 0.11)</td>
 <td align="left">0.09 (0.07, 0.11)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
 <td align="left">0.07 (0.05, 0.09)</td>
-<td align="left">0.06 (0.04, 0.09)</td>
+<td align="left">0.06 (0.05, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">79,618 (43,872, 112,454)</td>
-<td align="left">89,571 (48,229, 127,779)</td>
+<td align="left">79,614 (42,319, 114,902)</td>
+<td align="left">89,632 (47,429, 125,556)</td>
 </tr>
 </tbody>
 </table>
-<p>Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a “total value” score is computed as weighted average of each criteria on this common scale. We’ll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.</p>
+<p>Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a “total value” is computed as weighted average of each criteria on this common scale. We’ll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lpvf_plot_data.html">lpvf_plot_data</a></span>(outcomes<span class="op">$</span>hc_costs, <span class="dt">optimal =</span> <span class="st">"low"</span>)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Health care sector costs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Score"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/lpvf-1.png" width="672"></p>
-<p>We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we’ll use example weights for the analysis. We conduct the MCDA with function <code><a href="../reference/mcda.html">mcda()</a></code>, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a “total value” score and the probability that each treatment strategy has a given rank.</p>
+<p>We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we’ll use example weights for the analysis. We conduct the MCDA with function <code><a href="../reference/mcda.html">mcda()</a></code>, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a “total value” and the probability that each treatment strategy has a given rank.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights &lt;-<span class="st"> </span><span class="kw">c</span>(.<span class="dv">2</span>, .<span class="dv">2</span>, .<span class="dv">2</span>, .<span class="dv">4</span>)
 mcda &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcda.html">mcda</a></span>(outcomes, <span class="dt">sample =</span> <span class="st">"sample"</span>, <span class="dt">strategy =</span> <span class="st">"strategy_id"</span>,
              <span class="dt">criteria =</span> criteria_vars,
@@ -586,23 +586,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">23.93 (3.78, 45.93)</td>
-<td align="left">79.22 (63.20, 95.37)</td>
+<td align="left">23.73 (4.80, 44.75)</td>
+<td align="left">77.02 (60.86, 95.83)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">52.09 (12.06, 88.68)</td>
-<td align="left">48.72 (11.18, 85.58)</td>
+<td align="left">48.48 (17.34, 82.15)</td>
+<td align="left">47.84 (10.25, 83.83)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">55.90 (24.12, 99.10)</td>
-<td align="left">51.66 (11.93, 90.81)</td>
+<td align="left">41.87 (11.20, 79.90)</td>
+<td align="left">41.18 (14.15, 73.04)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">56.82 (19.48, 97.46)</td>
-<td align="left">45.50 (2.06, 92.50)</td>
+<td align="left">55.53 (14.43, 98.96)</td>
+<td align="left">43.86 (2.02, 93.01)</td>
 </tr>
 </tbody>
 </table>
@@ -635,7 +635,7 @@ weighted_scores[, criteria <span class="op">:</span><span class="er">=</span><sp
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/mcda-total-value-decompose-1.png" width="480"></p>
-<p>The treatment strategies can be ranked by their “total value” score, which varies across samples of the PSA. We count the number of times each treatment strategy has a given rank and use this to compute the probability that a treatment strategy has a given ranking. We visualize these results in two equivalent ways: first, with treatment strategies on the x-axis and ranking as a group variable, and second, with rankings on the x-axis and treatment strategy as a group variable.</p>
+<p>The treatment strategies can be ranked by their “total value”, which varies across samples of the PSA. We count the number of times each treatment strategy has a given rank and use this to compute the probability that a treatment strategy has a given ranking. We visualize these results in two equivalent ways: first, with treatment strategies on the x-axis and ranking as a group variable, and second, with rankings on the x-axis and treatment strategy as a group variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prank &lt;-<span class="st"> </span>mcda<span class="op">$</span>prob_rank
 <span class="kw">strategy_factor</span>(prank)
 prank_levels &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/duplicated">unique</a></span>(prank<span class="op">$</span>rank))
