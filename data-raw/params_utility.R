@@ -18,12 +18,17 @@ utility_states <- data.table(state_name = utility_states_name,
                              ref = utility_states_ref)
 
 # Utility loss from adverse events
-disutility_ae_name <- c("Diarrhea", "Dry skin", "Eye problems", "GI perforation",
-                      "Heart failure", "rash")
-disutility_ae_abb <- c("diarrhea", "dry_skin", "eye_prob", "gi_perf", "hf", "rash")
-disutility_ae_mean <- c(.0468, 0, 0, 0, 0, -.03248)
-disutility_ae_se <- c(.01553, 0, 0, 0, 0, .01171)
-disutility_ae_ref <- c("nafees2008health", NA, NA, NA, NA, "nafees2008health")
+disutility_ae_name <- c("Diarrhea", "Dry skin",
+                        "Elevated alanine transaminase",
+                        "Elevated aspartate transaminase",
+                        "Eye problems", "Paronychia",
+                      "Pneumonitis", "Pruritus", "Rash", "Stomatitis")
+disutility_ae_abb <- c("diarrhea", "dry_skin", "alt", "ast", "eye_prob",
+                       "paronychia", "pneumonitis",
+                       "pruritus", "rash", "stomatitis")
+disutility_ae_mean <- c(.0468, 0, 0, 0, 0, 0, 0, 0, -.03248, 0)
+disutility_ae_se <- c(.01553, 0, 0, 0, 0, 0, 0, 0, .01171, 0)
+disutility_ae_ref <- c("nafees2008health", NA, NA, NA, NA, NA, NA, NA, "nafees2008health", NA)
 disutility_ae <- data.table(ae_name = disutility_ae_name,
                             ae_abb = disutility_ae_abb,
                             ae_mean = disutility_ae_mean,

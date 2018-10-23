@@ -38,4 +38,7 @@ The \code{as_disutility} element is a data table with the following columns:
 }
 }
 
+\examples{
+print(params_utility)
+}
 \keyword{datasets}

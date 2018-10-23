@@ -57,6 +57,8 @@
 #' \item{ae_se}{Standard error of disutility.}
 #' \item{ae_ref}{BibTeX reference for estimate.}
 #' }
+#' @examples 
+#' print(params_utility)
 "params_utility"
 
 #' Treatment cost parameters
