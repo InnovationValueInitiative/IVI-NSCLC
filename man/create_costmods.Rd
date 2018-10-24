@@ -7,7 +7,8 @@
 create_costmods(n = 100, struct, patients,
   params_costs_tx = iviNSCLC::params_costs_tx,
   params_costs_op = iviNSCLC::params_costs_op,
-  params_costs_inpt = iviNSCLC::params_costs_inpt)
+  params_costs_inpt = iviNSCLC::params_costs_inpt,
+  params_costs_ae = iviNSCLC::params_costs_ae)
 }
 \arguments{
 \item{n}{The number of random observations of the parameters to draw.}
@@ -25,11 +26,11 @@ in the same format as \code{\link{params_costs_op}}.}
 
 \item{params_costs_inpt}{Parameter estimates for inpatient medical costs
 in the same format as \code{\link{params_costs_inpt}}.}
+
+\item{params_costs_ae}{Parameter estimates for adverse event costs
+in the same format as \code{\link{params_costs_ae}}.}
 }
 \value{
-An object of class "StateVals" from the 
-\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
-
 A list of objects of class "StateVals" from the 
 \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 }

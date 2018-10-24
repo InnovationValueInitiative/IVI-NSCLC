@@ -17,8 +17,8 @@
 
 #' Multi-state NMA parameters
 #'
-#' The regression coefficients of the continuous time state transition models
-#' estimated using the multi-state network meta-analysis. 
+#' Posterior distributions of the regression coefficients of the continuous 
+#' time state transition model estimated using the multi-state network meta-analysis. 
 #'
 #' @format A list of \code{\link[hesim]{params_surv}} objects from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package
@@ -28,6 +28,19 @@
 #' distribution are predicted as a function of treatments, health state transitions, and
 #' treatment history (for 2L treatments).
 "params_mstate_nma"
+
+#' Adverse event NMA parameters
+#'
+#' The posterior distribution of the probability of an adverse event by
+#' treatment. Based on separate models by adverse event with a binomial 
+#' likelihood and a logit link.
+#'
+#' @format A list where each element is a matrix for a distinct adverse event.
+#' Each column is a distinct treatment and each row is a random draw from
+#' the posterior distribution. Each matrix contains a "lookup" attribute with 
+#' the abbreviations used in the columns for adverse events.
+#' @examples 
+"params_ae_nma"
 
 #' Utility parameters
 #'
@@ -141,7 +154,7 @@
 
 #' Outpatient cost parameters
 #'
-#' Outpatient cost estimates by health state.
+#' Mean outpatient costs by health state.
 #'
 #' @format A data table with the following columns:
 #' \describe{
@@ -156,7 +169,7 @@
 
 #' Inpatient cost parameters
 #'
-#' Inpatient cost estimates by health state.
+#' Mean inpatient costs by health state.
 #'
 #' @format A data table with the following columns:
 #' \describe{
@@ -168,3 +181,23 @@
 #' @examples 
 #' print(params_costs_inpt)
 "params_costs_inpt"
+
+#' Adverse event cost parameters
+#'
+#' Mean costs by adverse event.
+#'
+#' @format A data table with the following columns:
+#' \describe{
+#' \item{ae_name}{Name of the adverse event.}
+#' \item{ae_abb}{Abbreviation for the adverse event.}
+#' \item{mean}{Mean costs.}
+#' \item{lower}{2.5\% quantile for mean costs. Currently assumed to be +20\%
+#' of mean costs given lack of data for estimating standard errors.}
+#' \item{upper}{97.5\% quantile for mean costs. Currently assumed to be -20\%
+#' of mean costs given lack of data for estimating standard errors.}
+#' \item{se}{Standard error of costs.}
+#' \item{ref}{Reference for mean costs.}
+#' }
+#' @examples 
+#' print(params_costs_ae)
+"params_costs_ae"

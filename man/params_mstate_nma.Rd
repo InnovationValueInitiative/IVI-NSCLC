@@ -15,7 +15,7 @@ treatment history (for 2L treatments).}
 params_mstate_nma
 }
 \description{
-The regression coefficients of the continuous time state transition models
-estimated using the multi-state network meta-analysis.
+Posterior distributions of the regression coefficients of the continuous 
+time state transition model estimated using the multi-state network meta-analysis.
 }
 \keyword{datasets}

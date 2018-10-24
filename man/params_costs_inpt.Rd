@@ -15,7 +15,7 @@
 params_costs_inpt
 }
 \description{
-Inpatient cost estimates by health state.
+Mean inpatient costs by health state.
 }
 \examples{
 print(params_costs_inpt)

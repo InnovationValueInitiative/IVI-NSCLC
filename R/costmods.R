@@ -6,8 +6,6 @@
 #' @param n The number of random observations of the parameters to draw.
 #' @param struct A \code{\link{model_structure}} object.
 #' @param patients A data table returned from \code{\link{create_patients}}.
-#' @return An object of class "StateVals" from the 
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 #' @param params_costs_tx Parameter estimates for treatment costs (i.e.,
 #' acquisition and administration costs) in the same format as 
 #' \code{\link{params_costs_tx}}.
@@ -15,6 +13,8 @@
 #' in the same format as \code{\link{params_costs_op}}.
 #' @param params_costs_inpt Parameter estimates for inpatient medical costs
 #' in the same format as \code{\link{params_costs_inpt}}.
+#' @param params_costs_ae Parameter estimates for adverse event costs
+#' in the same format as \code{\link{params_costs_ae}}.
 #' @examples
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
@@ -39,7 +39,8 @@
 create_costmods <- function(n = 100, struct, patients,
                             params_costs_tx = iviNSCLC::params_costs_tx,
                             params_costs_op = iviNSCLC::params_costs_op,
-                            params_costs_inpt = iviNSCLC::params_costs_inpt){
+                            params_costs_inpt = iviNSCLC::params_costs_inpt,
+                            params_costs_ae = iviNSCLC::params_costs_ae){
   costmods <- list()
   costmods_tx <- create_costmod_tx(n, struct, patients, params_costs_tx)
   costmods$tx_ac <- costmods_tx$tx_ac
