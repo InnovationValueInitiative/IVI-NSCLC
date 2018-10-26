@@ -156,7 +156,15 @@ struct_3_2L <- model_structure(txseqs_2L_pos, dist = "weibull",
                               n_states = "three")
 print(create_states(struct_3_2L))
 print(create_trans_mat(struct_3_2L))
+```
 
+Recall that the transition matrix depends on the model structure.
+
+```{r}
+tmat_3_1L <- create_trans_mat(struct_3_1L)
+tmat_3_2L <- create_trans_mat(struct_3_2L)
+print(tmat_3_1L)
+print(tmat_3_2L)
 ```
 
 As with treatment strategies, its useful to write a convenience function for generating informative names for health states for plotting.

@@ -48,6 +48,10 @@ test_that("create_transmod_data: first line,  4 health states", {
   
   sub_dt <- transmod_data[transition_id == 3 & tx_abb == "osi"]  
   expect_all_equal(sub_dt$osi_s2p2_scale, 1)
+  
+  # Errors
+  struct2 <- model_structure(txseqs, dist = "weibull", n_states = "three")
+  expect_error(create_transmod_data(struct2, tmat, pats))
 })
 
 test_that("create_transmod_data: first line,  3 health states", {

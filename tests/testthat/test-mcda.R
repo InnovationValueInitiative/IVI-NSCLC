@@ -42,6 +42,6 @@ test_that("mcda", {
                 mcda$weighted_scores$weighted_score <= 100))  
   expect_true(all(mcda$total_value$score >= 0 & 
                 mcda$total_value$score <= 100))
-  expect_true(all(mcda$prob_rank$prob <=1 & 
-                  mcda$prob_rank$prob >=0))
+  expect_true(all(mcda$prob_rank$prob <= 1 & 
+                  mcda$prob_rank$prob >= 0))
 })

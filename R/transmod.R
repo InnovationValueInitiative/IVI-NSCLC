@@ -183,6 +183,11 @@ transmod_vars <- function(struct, data){
 #' head(transmod_data)
 #' @export
 create_transmod_data <- function(struct, trans_mat, patients){
+  if (!identical(create_trans_mat(struct), trans_mat)){
+    stop(paste0("Your transition matrix was incorrectly specified.",
+                " Use create_trans_mat() and ensure that the", 
+                " starting line and number of health states are correct."))
+  }
   strategies <- create_strategies(struct)
   hesim_data <- hesim::hesim_data(strategies = strategies,
                                   patients = patients)
