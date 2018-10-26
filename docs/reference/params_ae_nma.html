@@ -32,9 +32,9 @@
 
 <meta property="og:title" content="Adverse event NMA parameters — params_ae_nma" />
 
-<meta property="og:description" content="The posterior distribution of the probability of an adverse event by
-treatment. Based on separate models by adverse event with a binomial 
-likelihood and a logit link." />
+<meta property="og:description" content="The posterior distribution of the probability of an adverse event by available
+first and second line treatments. Based on separate models by adverse event 
+with a binomial likelihood and a logit link." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,9 +103,9 @@ likelihood and a logit link." />
 
     <div class="ref-description">
     
-    <p>The posterior distribution of the probability of an adverse event by
-treatment. Based on separate models by adverse event with a binomial 
-likelihood and a logit link.</p>
+    <p>The posterior distribution of the probability of an adverse event by available
+first and second line treatments. Based on separate models by adverse event 
+with a binomial likelihood and a logit link.</p>
     
     </div>
 
@@ -115,17 +115,44 @@ likelihood and a logit link.</p>
 
     <p>A list where each element is a matrix for a distinct adverse event.
 Each column is a distinct treatment and each row is a random draw from
-the posterior distribution. Each matrix contains a "lookup" attribute with 
-the abbreviations used in the columns for adverse events.</p>
+the posterior distribution. Each matrix contains a "imputed" attribute, which
+is vector of 0's and 1's with length equal to the number of columns, and a 1
+denotes whether values of a column have been imputed because of insufficient
+clinical trial data.</p>
+<p>When there is missing data for a TKI for a given adverse 
+event, it is assumed to have the same adverse event probabilities as the TKI 
+(among the TKI's with data) with the highest mean adverse event probability. When there
+is missing data for a combination therapy containing PBDC, it is assumed to have
+the same adverse event probabilities as PBDC. Finally, when there is not data for
+any PBDC based therapy, all PBDC based therapies are assumed to have the same
+adverse event probabilities as the TKI with the highest mean adverse event probability.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>names</span>(<span class='no'>params_ae_nma</span>)</div><div class='output co'>#&gt;  [1] "alt"          "ast"          "diarrhea"     "dry_skin"     "eye_problems"
+#&gt;  [6] "paronychia"   "pneumonitis"  "pruritus"     "rash"         "stomatitis"  </div><div class='input'><span class='fu'>head</span>(<span class='no'>params_ae_nma</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt;          prob_erl     prob_gef     prob_afa     prob_dac    prob_osi
+#&gt; [1,] 0.0005113060 0.0003843076 3.317018e-05 2.775941e-05 0.001466678
+#&gt; [2,] 0.0006702925 0.0042614230 4.696339e-04 9.955454e-04 0.001373670
+#&gt; [3,] 0.0102076810 0.0039458165 9.924525e-04 7.983287e-04 0.007057089
+#&gt; [4,] 0.0115339318 0.0044082965 1.800498e-04 6.814098e-04 0.005149922
+#&gt; [5,] 0.0012178507 0.0018150712 1.013994e-04 6.576672e-04 0.006001942
+#&gt; [6,] 0.0005781604 0.0015465088 4.459036e-05 1.013073e-04 0.008285123
+#&gt;         prob_pbdc prob_pbdc_bev
+#&gt; [1,] 5.211729e-05  0.0005113060
+#&gt; [2,] 4.466606e-04  0.0006702925
+#&gt; [3,] 5.381788e-04  0.0102076810
+#&gt; [4,] 5.770781e-04  0.0115339318
+#&gt; [5,] 2.765439e-04  0.0012178507
+#&gt; [6,] 1.491408e-04  0.0005781604</div><div class='input'><span class='fu'>attr</span>(<span class='no'>params_ae_nma</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='st'>"imputed"</span>)</div><div class='output co'>#&gt; [1] 0 0 0 0 0 0 1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

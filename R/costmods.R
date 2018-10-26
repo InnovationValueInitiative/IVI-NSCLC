@@ -40,7 +40,9 @@ create_costmods <- function(n = 100, struct, patients,
                             params_costs_tx = iviNSCLC::params_costs_tx,
                             params_costs_op = iviNSCLC::params_costs_op,
                             params_costs_inpt = iviNSCLC::params_costs_inpt,
-                            params_costs_ae = iviNSCLC::params_costs_ae){
+                            params_costs_ae = iviNSCLC::params_costs_ae,
+                            params_ae = iviNSCLC::params_ae_nma
+                            ){
   costmods <- list()
   costmods_tx <- create_costmod_tx(n, struct, patients, params_costs_tx)
   costmods$tx_ac <- costmods_tx$tx_ac
@@ -49,6 +51,9 @@ create_costmods <- function(n = 100, struct, patients,
                                         params_costs_op)
   costmods$inpt <- create_costmod_default(n, struct, patients,
                                           params_costs_inpt)
+  costmods$ae <- create_costmod_ae(n, struct, patients,
+                                   params_costs_ae,
+                                   params_ae)
   return(costmods)
 }
 
@@ -276,4 +281,76 @@ create_costmod_tx <- function(n = 100,
   
   # Return
   return(mods)
+}
+
+create_costmod_ae <- function(n = 100, 
+                              struct, patients, 
+                              params_costs_ae,
+                              params_ae){
+  
+  # Treatment used for AE
+  if (attr(struct$txseqs, "start_line") == "first"){
+    tx <- sapply(struct$txseqs, function (x) x$first)
+  } else if (attr(struct$txseqs, "start_line") == "second"){
+      if (attr(struct$txseqs, "mutation") == "positive") {
+        tx <- sapply(struct$txseqs, function (x) x$second["pos"]) 
+      } else{
+        tx <- sapply(struct$txseqs, function (x) x$second["neg"]) 
+      }
+  } else{
+    stop("The starting line must either be 'first' or 'second'.")
+  }
+  tx_abb <- iviNSCLC::treatments$tx_abb[match(tx, iviNSCLC::treatments$tx_name)]
+  
+  # Probability distribution for adverse event costs
+  costs_ae_dist <- matrix(rnorm(n * nrow(params_costs_ae),
+                                params_costs_ae$mean, params_costs_ae$se),
+                          nrow = n, byrow = TRUE)
+  colnames(costs_ae_dist) <- params_costs_ae$ae_abb
+  
+  # Compute costs weighted by adverse event probabilities
+  indices <- match(params_costs_ae$ae_abb, names(params_ae))
+  if (any(is.na(indices))){
+    stop(paste0("The adverse event abbreviations in 'params_costs_ae' do not match ",
+                "the names of the adverse events in 'params_ae'."))
+  }
+  expected_costs <- vector(mode = "list", length = length(params_ae))
+  names(expected_costs) <- names(params_ae)
+  prob_vars <- paste0("prob_", tx_abb)
+  for (i in 1:length(params_ae)){
+    name_i <- names(params_ae)[i]
+    
+    ## Sample rows for PSA based on posterior samples 
+    n_samples <- nrow(params_ae[[i]])
+    if (n <= n_samples){
+      sampled_rows <- sample.int(n_samples, n, replace = FALSE) 
+    } else if (n > n_samples) {
+      warning("'n' is larger than the values of 'n_samples' in 'params_mstate_nma'.")
+      sampled_rows <- sample.int(n_samples, n, replace = TRUE) 
+    } 
+    params_ae[[i]] <-  params_ae[[i]][sampled_rows, , drop = FALSE]
+    
+    ## Compute expected costs
+    expected_costs[[i]] <- params_ae[[name_i]][, prob_vars] * costs_ae_dist[, name_i]
+  }
+  expected_costs <- Reduce('+', expected_costs)
+  
+  # Create model
+  strategy_id <- 1:length(tx_abb)
+  hesim_dat <- hesim::hesim_data(strategies = data.table(strategy_id = strategy_id),
+                                 patients = patients,
+                                 states = create_states(struct))
+  ## stateval_tbl
+  tbl1 <- data.table(strategy_id = rep(strategy_id, each = n),
+                     sample = rep(1:n, times = length(strategy_id)),
+                     value = c(expected_costs),
+                     time_start = 0)
+  tbl2 <- data.table(strategy_id = tbl1$strategy_id,
+                     sample = tbl1$sample,
+                     value = 0,
+                     time_start = 1/12)
+  tbl <- rbind(tbl1, tbl2)
+  tbl <- hesim::stateval_tbl(tbl, dist = "custom", hesim_data = hesim_dat)
+  mod <- hesim::create_StateVals(tbl, n = n)
+  return(mod)  
 }

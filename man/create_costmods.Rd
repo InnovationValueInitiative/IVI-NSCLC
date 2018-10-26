@@ -8,7 +8,8 @@ create_costmods(n = 100, struct, patients,
   params_costs_tx = iviNSCLC::params_costs_tx,
   params_costs_op = iviNSCLC::params_costs_op,
   params_costs_inpt = iviNSCLC::params_costs_inpt,
-  params_costs_ae = iviNSCLC::params_costs_ae)
+  params_costs_ae = iviNSCLC::params_costs_ae,
+  params_ae = iviNSCLC::params_ae_nma)
 }
 \arguments{
 \item{n}{The number of random observations of the parameters to draw.}

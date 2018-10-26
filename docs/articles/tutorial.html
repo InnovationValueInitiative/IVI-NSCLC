@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-23</h4>
+            <h4 class="date">2018-10-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -376,9 +376,9 @@ costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[dr <spa
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/costs-1.png" width="384"></p>
 <p>We can also decompose costs by category.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costs[, category_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(category, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"tx_ac"</span>, <span class="st">"tx_admin"</span>, <span class="st">"op"</span>, <span class="st">"inpt"</span>, <span class="st">"total"</span>),
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costs[, category_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(category, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"tx_ac"</span>, <span class="st">"tx_admin"</span>, <span class="st">"op"</span>, <span class="st">"inpt"</span>, <span class="st">"ae"</span>, <span class="st">"total"</span>),
                                 <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Drug acquisition"</span>, <span class="st">"Drug administration"</span>,
-                                           <span class="st">"Outptient"</span>, <span class="st">"Inpatient"</span>, <span class="st">"Total"</span>))]
+                                           <span class="st">"Outptient"</span>, <span class="st">"Inpatient"</span>, <span class="st">"Adverse event"</span>, <span class="st">"Total"</span>))]
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(costs[category <span class="op">!=</span><span class="st"> "total"</span>], 
        <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean, <span class="dt">fill =</span> category_name)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
@@ -452,22 +452,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.05 (0.01, 0.10)</td>
+<td align="left">0.06 (0.02, 0.10)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">9,585 (860, 19,920)</td>
+<td align="left">10,915 (1,648, 22,567)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-4,149 (-11,999, 983)</td>
+<td align="left">-5,035 (-13,015, 1,507)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">176,304</td>
+<td align="left">185,640</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -538,23 +538,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.43 (0.41, 0.46)</td>
-<td align="left">0.51 (0.48, 0.53)</td>
+<td align="left">0.44 (0.41, 0.46)</td>
+<td align="left">0.51 (0.49, 0.53)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.09 (0.07, 0.11)</td>
 <td align="left">0.09 (0.08, 0.11)</td>
+<td align="left">0.09 (0.07, 0.11)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
+<td align="left">0.06 (0.05, 0.08)</td>
 <td align="left">0.07 (0.05, 0.09)</td>
-<td align="left">0.06 (0.04, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">79,546 (42,580, 114,007)</td>
-<td align="left">89,132 (49,050, 126,924)</td>
+<td align="left">81,812 (49,360, 118,093)</td>
+<td align="left">92,727 (54,446, 132,284)</td>
 </tr>
 </tbody>
 </table>
@@ -586,23 +586,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">23.47 (3.62, 41.90)</td>
-<td align="left">76.27 (58.51, 91.11)</td>
+<td align="left">28.09 (13.46, 44.91)</td>
+<td align="left">78.68 (62.47, 94.94)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">49.42 (15.02, 94.09)</td>
-<td align="left">49.78 (21.09, 86.41)</td>
+<td align="left">50.72 (15.99, 92.81)</td>
+<td align="left">48.37 (7.28, 93.44)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">44.49 (10.84, 76.14)</td>
-<td align="left">37.83 (5.79, 80.14)</td>
+<td align="left">46.59 (12.71, 84.64)</td>
+<td align="left">50.54 (10.62, 89.74)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">57.91 (19.88, 98.70)</td>
-<td align="left">47.33 (5.62, 91.56)</td>
+<td align="left">57.92 (17.41, 94.15)</td>
+<td align="left">45.73 (1.57, 88.47)</td>
 </tr>
 </tbody>
 </table>

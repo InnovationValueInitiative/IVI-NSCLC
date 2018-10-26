@@ -6,14 +6,29 @@
 \title{Adverse event NMA parameters}
 \format{A list where each element is a matrix for a distinct adverse event.
 Each column is a distinct treatment and each row is a random draw from
-the posterior distribution. Each matrix contains a "lookup" attribute with 
-the abbreviations used in the columns for adverse events.}
+the posterior distribution. Each matrix contains a "imputed" attribute, which
+is vector of 0's and 1's with length equal to the number of columns, and a 1
+denotes whether values of a column have been imputed because of insufficient
+clinical trial data.
+
+ When there is missing data for a TKI for a given adverse 
+event, it is assumed to have the same adverse event probabilities as the TKI 
+(among the TKI's with data) with the highest mean adverse event probability. When there
+is missing data for a combination therapy containing PBDC, it is assumed to have
+the same adverse event probabilities as PBDC. Finally, when there is not data for
+any PBDC based therapy, all PBDC based therapies are assumed to have the same
+adverse event probabilities as the TKI with the highest mean adverse event probability.}
 \usage{
 params_ae_nma
 }
 \description{
-The posterior distribution of the probability of an adverse event by
-treatment. Based on separate models by adverse event with a binomial 
-likelihood and a logit link.
+The posterior distribution of the probability of an adverse event by available
+first and second line treatments. Based on separate models by adverse event 
+with a binomial likelihood and a logit link.
+}
+\examples{
+names(params_ae_nma)
+head(params_ae_nma[[1]])
+attr(params_ae_nma[[1]], "imputed")
 }
 \keyword{datasets}

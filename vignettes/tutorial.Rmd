@@ -327,9 +327,9 @@ ggplot(costs[category == "total"],
 We can also decompose costs by category. 
 
 ```{r costs_cat, fig.width = 4}
-costs[, category_name := factor(category, levels = c("tx_ac", "tx_admin", "op", "inpt", "total"),
+costs[, category_name := factor(category, levels = c("tx_ac", "tx_admin", "op", "inpt", "ae", "total"),
                                 labels = c("Drug acquisition", "Drug administration",
-                                           "Outptient", "Inpatient", "Total"))]
+                                           "Outptient", "Inpatient", "Adverse event", "Total"))]
 ggplot(costs[category != "total"], 
        aes(x = strategy_name, y = costs_mean, fill = category_name)) + 
   geom_bar(stat = "identity") +
