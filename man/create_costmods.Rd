@@ -30,6 +30,9 @@ in the same format as \code{\link{params_costs_inpt}}.}
 
 \item{params_costs_ae}{Parameter estimates for adverse event costs
 in the same format as \code{\link{params_costs_ae}}.}
+
+\item{params_ae}{Parameter estimates of the probabilities of adverse 
+events in the same format as \code{\link{params_ae_nma}}.}
 }
 \value{
 A list of objects of class "StateVals" from the 

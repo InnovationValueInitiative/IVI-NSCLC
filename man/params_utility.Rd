@@ -32,9 +32,9 @@ The \code{as_disutility} element is a data table with the following columns:
 \describe{
 \item{ae_name}{Name of the adverse event.}
 \item{ae_abb}{Abbreviation for the adverse event.}
-\item{ae_mean}{Mean disutility.}
-\item{ae_se}{Standard error of disutility.}
-\item{ae_ref}{BibTeX reference for estimate.}
+\item{mean}{Mean disutility.}
+\item{se}{Standard error of disutility.}
+\item{ref}{BibTeX reference for estimate.}
 }
 }
 

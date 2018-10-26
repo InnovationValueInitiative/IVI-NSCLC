@@ -31,12 +31,13 @@ disutility_ae_se <- c(.01553, 0, 0, 0, 0, 0, 0, 0, .01171, 0)
 disutility_ae_ref <- c("nafees2008health", NA, NA, NA, NA, NA, NA, NA, "nafees2008health", NA)
 disutility_ae <- data.table(ae_name = disutility_ae_name,
                             ae_abb = disutility_ae_abb,
-                            ae_mean = disutility_ae_mean,
-                            ae_se = disutility_ae_se,
-                            ae_ref = disutility_ae_ref)
+                            mean = disutility_ae_mean,
+                            se = disutility_ae_se,
+                            ref = disutility_ae_ref)
 
 
 # Save
 params_utility <- list(state_utility = utility_states,
                        ae_disutility = disutility_ae)
+setorderv(params_utility$ae_disutility, "ae_abb")
 save(params_utility, file = "../data/params_utility.rda", compress = "bzip2")

@@ -15,6 +15,8 @@
 #' in the same format as \code{\link{params_costs_inpt}}.
 #' @param params_costs_ae Parameter estimates for adverse event costs
 #' in the same format as \code{\link{params_costs_ae}}.
+#' @param params_ae Parameter estimates of the probabilities of adverse 
+#' events in the same format as \code{\link{params_ae_nma}}.
 #' @examples
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
@@ -303,9 +305,9 @@ create_costmod_ae <- function(n = 100,
   tx_abb <- iviNSCLC::treatments$tx_abb[match(tx, iviNSCLC::treatments$tx_name)]
   
   # Probability distribution for adverse event costs
-  costs_ae_dist <- matrix(rnorm(n * nrow(params_costs_ae),
-                                params_costs_ae$mean, params_costs_ae$se),
-                          nrow = n, byrow = TRUE)
+  costs_ae_dist <- matrix(stats::rnorm(n * nrow(params_costs_ae),
+                                      params_costs_ae$mean, params_costs_ae$se),
+                                      nrow = n, byrow = TRUE)
   colnames(costs_ae_dist) <- params_costs_ae$ae_abb
   
   # Compute costs weighted by adverse event probabilities
