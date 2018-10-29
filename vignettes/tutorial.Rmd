@@ -65,14 +65,13 @@ ggplot2::theme_set(theme_minimal())
 # Parameter estimates
 A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the `iviNSCLC` package, are as follows:
 
-* `params_mstate_nma`: The posterior distribution for the parameters of the Bayesian multi-state NMA.
-* `params_ae_nma`: The posterior distribution for the parameters of the Bayesian NMA of adverse events (coming soon).
-* `params_utility`: The probability distribution of the health state utility associated with each health state (S1, P1, and P2).
-* `params_costs_tx`: The drug acquisition and administration costs for each treatment. 
-* `params_costs_inpt`: Inpatient medical costs by health state (S1, P1, and P2).
-* `params_costs_op`: Outpatient medical costs by health state (S1, P1, and P2).
-* `params_costs_ae`: The costs associated with each of the adverse events from the NMA. 
-* `params_prod`: Productivity losses by health state (S1, P1, and P2).
+* [`params_mstate_nma`](../reference/params_mstate_nma.html): The posterior distribution for the parameters of the Bayesian multi-state NMA.
+* [`params_ae_nma`](../reference/params_ae_nma.html): The posterior distribution for the parameters of the Bayesian NMA of adverse events. Estimated using a binomial model with a logit link.
+* [`params_utility`](../reference/params_utility.html): The probability distribution of the health state utility associated with each health state (S1, P1, and P2).
+* [`params_costs_tx`](../reference/params_costs_tx.html): The drug acquisition and administration costs for each treatment. 
+* [`params_costs_inpt`](../reference/params_costs_inpt.html): Inpatient medical costs by health state (S1, P1, and P2).
+* [`params_costs_op`](../reference/params_costs_op.html): Outpatient medical costs by health state (S1, P1, and P2).
+* [`params_costs_ae`](../reference/params_costs_ae.html): The costs associated with each of the adverse events from the NMA. 
 
 # Economic model
 We provide an example a four-state model for 1L treatment, while also showing how a three-state model could be specified. Importantly, different modeling approaches should be used for the three-state and four-state approaches. Since a "clock-forward" multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and "clock-reset" models. In the clock-reset approach, time $u$ in $h^{rs}(u)$ resets after each transition whereas in the clock-forward approach time $u$ refers to time since the start of the model (see the tutorial [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712) for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used. 
@@ -205,18 +204,25 @@ transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat)
 class(transmod)
 ```
 
-### Utility model
-We construct a "mean" model for utility. Adverse events---which vary across treatments---are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.
+### Adverse events
+Adverse events are assumed to occur during the first month of treatment and cause a decrease in utility and an increase in costs. Adverse event probabilities in the model are consequently based on the first treatment in a treatment sequence (i.e., the 1L treatment for a model starting at 1L and the 2L treatment for a model starting at 2L). We obtain these probabilities from the posterior distributions stored in `params_ae_nma` using the `ae_probs()` function. 
 
-```{r}
-utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats)
+```{r ae_probs, fig.height = 4}
+ae_probs <- ae_probs(n_samples, struct)
 ```
 
-### Cost models
-We construct models for each of the cost categories.
+### Utility and cost models
+We construct a "mean" model for utility. During the first month, utility varies across both treatment strategies and health states because adverse event probabilities vary across treatments; after the first month, utility varies across health states, but it assumed constant across treatments since adverse events no longer occur.
 
 ```{r}
-costmods <- create_costmods(n = n_samples, struct = struct, patients = pats)
+utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats,
+                          ae_probs = ae_probs)
+```
+
+We also construct models for each cost category.
+
+```{r}
+costmods <- create_costmods(n = n_samples, struct = struct, patients = pats, ae_probs = ae_probs)
 ```
 
 ### Combining the models
@@ -288,6 +294,36 @@ ggplot(quantiles[prob == .5], aes(x = strategy_name, y = quantile_prob_mean)) +
   coord_flip() 
 ```
 
+
+### Adverse events
+The `tidy.ae_probs()` function can be used to convert an `ae_probs` object into a tidy `data.table` suitable for plotting. We do that here to compare adverse event probabilities across treatment strategies.
+
+```{r ae_probs_plot, fig.height = 4}
+tidy_ae_probs <- tidy(ae_probs)
+plot_data <- tidy_ae_probs[, .(prob_mean = mean(prob),
+                               prob_lower = quantile(prob, .025),
+                                prob_upper = quantile(prob, .975)),
+                          by = c("strategy_id", "ae_name")]
+plot_data[, ":=" (num_mean = 1000 * prob_mean,
+                  num_lower = 1000 * prob_lower,
+                  num_upper = 1000 * prob_upper)]
+strategy_factor(plot_data, rev = TRUE)
+plot_data[, ae_name := ifelse(ae_name == "Elevated alanine transaminase",
+                              "Elevated \n alanine \n transaminase",
+                              ae_name)]
+plot_data[, ae_name := ifelse(ae_name == "Elevated aspartate transaminase",
+                              "Elevated \n aspartate \n transaminase",
+                              ae_name)]
+ggplot(plot_data, aes(x = rev(strategy_name), y = num_mean)) + 
+  facet_wrap(~factor(ae_name), nrow = 3) +
+  geom_bar(stat = "identity", fill = "#d9230f") +
+  geom_errorbar(aes(ymin = num_lower,
+                    ymax = num_upper), width = .2) +
+  scale_fill_discrete(name = "") +
+  scale_y_continuous(label = scales::comma) +
+  xlab("") + ylab("Number of adverse events per 1,000 patients") + 
+  coord_flip() 
+```
 
 ### QALYs
 Mean QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.

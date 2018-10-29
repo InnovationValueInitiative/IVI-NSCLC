@@ -17,3 +17,15 @@ check_is_class <- function(object, name, class){
          call. = FALSE)
   }  
 }
+
+#' Tidy data
+#' 
+#' A generic function for creating tidy data.
+#' @param object An object to create tidy data from.
+#' @param ... Further arguments passed to or from other methods. 
+#' @export
+#' @keywords internal
+#' @seealso \code{\link{tidy.ae_probs}}
+tidy <- function(object, ...){
+  UseMethod("tidy", object)
+}

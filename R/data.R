@@ -2,7 +2,7 @@
 #'
 #' Dataset of treatments for EGFR positive NSCLC.
 #'
-#' @format A data.table object with 1 row for each available treatment and with
+#' @format A data.table object with one row for each available treatment and with
 #' columns:
 #' \describe{
 #'   \item{tx_name}{Name of treatment.}
@@ -28,6 +28,20 @@
 #' distribution are predicted as a function of treatments, health state transitions, and
 #' treatment history (for 2L treatments).
 "params_mstate_nma"
+
+#' Adverse events
+#'
+#' Dataset of adverse events included in the model.
+#'
+#' @format A data.table object with one row for each adverse event and with
+#' columns:
+#' \describe{
+#'   \item{ae_name}{Name of adverse event.}
+#'   \item{ae_abb}{Abbreviation for the adverse event.}
+#' }
+#' @examples 
+#' print(adverse_events)
+"adverse_events"
 
 #' Adverse event NMA parameters
 #'

@@ -4,7 +4,7 @@
 \name{treatments}
 \alias{treatments}
 \title{Treatments}
-\format{A data.table object with 1 row for each available treatment and with
+\format{A data.table object with one row for each available treatment and with
 columns:
 \describe{
   \item{tx_name}{Name of treatment.}

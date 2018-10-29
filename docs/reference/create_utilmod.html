@@ -107,7 +107,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_utilmod</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>struct</span>, <span class='no'>patients</span>,
+    <pre class="usage"><span class='fu'>create_utilmod</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>struct</span>, <span class='no'>patients</span>, <span class='no'>ae_probs</span>,
   <span class='kw'>params_utility</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_utility'>params_utility</a></span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -124,6 +124,10 @@
     <tr>
       <th>patients</th>
       <td><p>A data table returned from <code><a href='create_patients.html'>create_patients</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>ae_probs</th>
+      <td><p>An "ae_probs" object as returned by <code><a href='ae_probs.html'>ae_probs</a></code>.</p></td>
     </tr>
     <tr>
       <th>params_utility</th>
@@ -155,7 +159,10 @@ adverse event disutilities in the same format as <code><a href='params_utility.h
 <span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"weibull"</span>)
 
 <span class='co'>## Utility model</span>
-<span class='no'>utilmod</span> <span class='kw'>&lt;-</span> <span class='fu'>create_utilmod</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>, <span class='kw'>patients</span> <span class='kw'>=</span> <span class='no'>pats</span>)</div></pre>
+<span class='no'>n_samples</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
+<span class='no'>ae_probs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ae_probs.html'>ae_probs</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n_samples</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>)
+<span class='no'>utilmod</span> <span class='kw'>&lt;-</span> <span class='fu'>create_utilmod</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n_samples</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>, <span class='kw'>patients</span> <span class='kw'>=</span> <span class='no'>pats</span>,
+                          <span class='kw'>ae_probs</span> <span class='kw'>=</span> <span class='no'>ae_probs</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -172,7 +179,7 @@ adverse event disutilities in the same format as <code><a href='params_utility.h
 
       <footer>
       <div class="copyright">
-  <p>Developed by Devin Incerti, Prodyumna Goutam, Jeroen P. Jansen.</p>
+  <p>Developed by Devin Incerti, Jeroen P. Jansen.</p>
 </div>
 
 <div class="pkgdown">

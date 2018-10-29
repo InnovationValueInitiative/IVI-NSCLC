@@ -4,7 +4,7 @@
 \alias{create_utilmod}
 \title{Create utility model}
 \usage{
-create_utilmod(n = 100, struct, patients,
+create_utilmod(n = 100, struct, patients, ae_probs,
   params_utility = iviNSCLC::params_utility)
 }
 \arguments{
@@ -13,6 +13,8 @@ create_utilmod(n = 100, struct, patients,
 \item{struct}{A \code{\link{model_structure}} object.}
 
 \item{patients}{A data table returned from \code{\link{create_patients}}.}
+
+\item{ae_probs}{An "ae_probs" object as returned by \code{\link{ae_probs}}.}
 
 \item{params_utility}{Parameter estimates for health state utilities and
 adverse event disutilities in the same format as \code{\link{params_utility}}.}
@@ -42,5 +44,8 @@ pats <- create_patients(n = 2)
 struct <- model_structure(txseqs, dist = "weibull")
 
 ## Utility model
-utilmod <- create_utilmod(n = 2, struct = struct, patients = pats)
+n_samples <- 2
+ae_probs <- ae_probs(n = n_samples, struct = struct)
+utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats,
+                          ae_probs = ae_probs)
 }

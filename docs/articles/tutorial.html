@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-10-26</h4>
+            <h4 class="date">2018-10-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -100,21 +100,19 @@ ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumenta
 <p>A number of different statistical models are used to parameterize the economic model. First, Bayesian network meta-analyses (NMAs) were conducted to parameterize multi-state statistical models for the health-state transitions and the probability of grade 3/4 adverse events. Second, estimates from the literature were used to characterize probability distributions of utility and each cost category. The parameter estimates, which load with the <code>iviNSCLC</code> package, are as follows:</p>
 <ul>
 <li>
-<code>params_mstate_nma</code>: The posterior distribution for the parameters of the Bayesian multi-state NMA.</li>
+<a href="../reference/params_mstate_nma.html"><code>params_mstate_nma</code></a>: The posterior distribution for the parameters of the Bayesian multi-state NMA.</li>
 <li>
-<code>params_ae_nma</code>: The posterior distribution for the parameters of the Bayesian NMA of adverse events (coming soon).</li>
+<a href="../reference/params_ae_nma.html"><code>params_ae_nma</code></a>: The posterior distribution for the parameters of the Bayesian NMA of adverse events. Estimated using a binomial model with a logit link.</li>
 <li>
-<code>params_utility</code>: The probability distribution of the health state utility associated with each health state (S1, P1, and P2).</li>
+<a href="../reference/params_utility.html"><code>params_utility</code></a>: The probability distribution of the health state utility associated with each health state (S1, P1, and P2).</li>
 <li>
-<code>params_costs_tx</code>: The drug acquisition and administration costs for each treatment.</li>
+<a href="../reference/params_costs_tx.html"><code>params_costs_tx</code></a>: The drug acquisition and administration costs for each treatment.</li>
 <li>
-<code>params_costs_inpt</code>: Inpatient medical costs by health state (S1, P1, and P2).</li>
+<a href="../reference/params_costs_inpt.html"><code>params_costs_inpt</code></a>: Inpatient medical costs by health state (S1, P1, and P2).</li>
 <li>
-<code>params_costs_op</code>: Outpatient medical costs by health state (S1, P1, and P2).</li>
+<a href="../reference/params_costs_op.html"><code>params_costs_op</code></a>: Outpatient medical costs by health state (S1, P1, and P2).</li>
 <li>
-<code>params_costs_ae</code>: The costs associated with each of the adverse events from the NMA.</li>
-<li>
-<code>params_prod</code>: Productivity losses by health state (S1, P1, and P2).</li>
+<a href="../reference/params_costs_ae.html"><code>params_costs_ae</code></a>: The costs associated with each of the adverse events from the NMA.</li>
 </ul>
 </div>
 <div id="economic-model" class="section level1">
@@ -273,17 +271,20 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <span class="kw">class</span>(transmod)</code></pre></div>
 <pre><code>## [1] "IndivCtstmTrans" "CtstmTrans"      "R6"</code></pre>
 </div>
-<div id="utility-model" class="section level3">
+<div id="adverse-events" class="section level3">
 <h3 class="hasAnchor">
-<a href="#utility-model" class="anchor"></a><span class="header-section-number">3.2.2</span> Utility model</h3>
-<p>We construct a “mean” model for utility. Adverse events—which vary across treatments—are assumed to occur during the first month of treatment and cause a decrease in utility. After the first month, utility varies across health states, but it assumed constant across treatments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
+<a href="#adverse-events" class="anchor"></a><span class="header-section-number">3.2.2</span> Adverse events</h3>
+<p>Adverse events are assumed to occur during the first month of treatment and cause a decrease in utility and an increase in costs. Adverse event probabilities in the model are consequently based on the first treatment in a treatment sequence (i.e., the 1L treatment for a model starting at 1L and the 2L treatment for a model starting at 2L). We obtain these probabilities from the posterior distributions stored in <code>params_ae_nma</code> using the <code><a href="../reference/ae_probs.html">ae_probs()</a></code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ae_probs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ae_probs.html">ae_probs</a></span>(n_samples, struct)</code></pre></div>
 </div>
-<div id="cost-models" class="section level3">
+<div id="utility-and-cost-models" class="section level3">
 <h3 class="hasAnchor">
-<a href="#cost-models" class="anchor"></a><span class="header-section-number">3.2.3</span> Cost models</h3>
-<p>We construct models for each of the cost categories.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats)</code></pre></div>
+<a href="#utility-and-cost-models" class="anchor"></a><span class="header-section-number">3.2.3</span> Utility and cost models</h3>
+<p>We construct a “mean” model for utility. During the first month, utility varies across both treatment strategies and health states because adverse event probabilities vary across treatments; after the first month, utility varies across health states, but it assumed constant across treatments since adverse events no longer occur.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats,
+                          <span class="dt">ae_probs =</span> ae_probs)</code></pre></div>
+<p>We also construct models for each cost category.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats, <span class="dt">ae_probs =</span> ae_probs)</code></pre></div>
 </div>
 <div id="combining-the-models" class="section level3">
 <h3 class="hasAnchor">
@@ -346,9 +347,39 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_quantiles-1.png" width="672"></p>
 </div>
+<div id="adverse-events-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#adverse-events-1" class="anchor"></a><span class="header-section-number">3.3.2</span> Adverse events</h3>
+<p>The <code><a href="../reference/tidy.ae_probs.html">tidy.ae_probs()</a></code> function can be used to convert an <code>ae_probs</code> object into a tidy <code>data.table</code> suitable for plotting. We do that here to compare adverse event probabilities across treatment strategies.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_ae_probs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidy.html">tidy</a></span>(ae_probs)
+plot_data &lt;-<span class="st"> </span>tidy_ae_probs[, .(<span class="dt">prob_mean =</span> <span class="kw">mean</span>(prob),
+                               <span class="dt">prob_lower =</span> <span class="kw">quantile</span>(prob, .<span class="dv">025</span>),
+                                <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
+                          by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"ae_name"</span>)]
+plot_data[, <span class="st">":="</span> (<span class="dt">num_mean =</span> <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span>prob_mean,
+                  <span class="dt">num_lower =</span> <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span>prob_lower,
+                  <span class="dt">num_upper =</span> <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span>prob_upper)]
+<span class="kw">strategy_factor</span>(plot_data, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
+plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(ae_name <span class="op">==</span><span class="st"> "Elevated alanine transaminase"</span>,
+                              <span class="st">"Elevated </span><span class="ch">\n</span><span class="st"> alanine </span><span class="ch">\n</span><span class="st"> transaminase"</span>,
+                              ae_name)]
+plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(ae_name <span class="op">==</span><span class="st"> "Elevated aspartate transaminase"</span>,
+                              <span class="st">"Elevated </span><span class="ch">\n</span><span class="st"> aspartate </span><span class="ch">\n</span><span class="st"> transaminase"</span>,
+                              ae_name)]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw">rev</span>(strategy_name), <span class="dt">y =</span> num_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span><span class="kw">factor</span>(ae_name), <span class="dt">nrow =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> num_lower,
+                    <span class="dt">ymax =</span> num_upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Number of adverse events per 1,000 patients"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
+<p><img src="tutorial_files/figure-html/ae_probs_plot-1.png" width="672"></p>
+</div>
 <div id="qalys" class="section level3">
 <h3 class="hasAnchor">
-<a href="#qalys" class="anchor"></a><span class="header-section-number">3.3.2</span> QALYs</h3>
+<a href="#qalys" class="anchor"></a><span class="header-section-number">3.3.3</span> QALYs</h3>
 <p>Mean QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="dt">dr =</span> <span class="kw">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>))
@@ -367,7 +398,7 @@ lys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[dr <spa
 </div>
 <div id="costs" class="section level3">
 <h3 class="hasAnchor">
-<a href="#costs" class="anchor"></a><span class="header-section-number">3.3.3</span> Costs</h3>
+<a href="#costs" class="anchor"></a><span class="header-section-number">3.3.4</span> Costs</h3>
 <p>Mean costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e, compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_costs</span>(<span class="dt">dr =</span> .<span class="dv">03</span>)
@@ -465,22 +496,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.03, 0.10)</td>
+<td align="left">0.06 (0.02, 0.10)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">10,500 (2,882, 22,202)</td>
+<td align="left">9,751 (885, 26,023)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-4,645 (-14,225, 1,194)</td>
+<td align="left">-4,239 (-15,881, 2,351)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">179,339</td>
+<td align="left">176,897</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -552,7 +583,7 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Life-years stable disease</td>
 <td align="left">0.44 (0.41, 0.46)</td>
-<td align="left">0.51 (0.49, 0.53)</td>
+<td align="left">0.51 (0.48, 0.53)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
@@ -562,12 +593,12 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Life-years progressed 2L</td>
 <td align="left">0.07 (0.05, 0.09)</td>
-<td align="left">0.07 (0.05, 0.09)</td>
+<td align="left">0.07 (0.04, 0.08)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">82,162 (47,398, 116,755)</td>
-<td align="left">92,662 (53,642, 131,026)</td>
+<td align="left">82,436 (47,935, 122,218)</td>
+<td align="left">92,187 (55,022, 131,544)</td>
 </tr>
 </tbody>
 </table>
@@ -599,23 +630,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">24.82 (8.64, 41.59)</td>
-<td align="left">79.26 (65.54, 95.68)</td>
+<td align="left">22.71 (3.66, 38.26)</td>
+<td align="left">71.62 (51.91, 86.62)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">42.53 (13.04, 70.88)</td>
-<td align="left">43.38 (9.07, 82.61)</td>
+<td align="left">61.77 (33.05, 93.07)</td>
+<td align="left">62.10 (31.41, 96.79)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">44.53 (5.23, 89.75)</td>
-<td align="left">44.21 (17.81, 80.89)</td>
+<td align="left">48.18 (15.92, 80.77)</td>
+<td align="left">45.19 (8.84, 78.55)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">57.11 (20.67, 93.73)</td>
-<td align="left">46.05 (5.63, 87.15)</td>
+<td align="left">58.51 (13.93, 97.18)</td>
+<td align="left">47.59 (3.47, 89.24)</td>
 </tr>
 </tbody>
 </table>
@@ -708,7 +739,7 @@ p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 
 
       <footer><div class="copyright">
-  <p>Developed by Devin Incerti, Prodyumna Goutam, Jeroen P. Jansen.</p>
+  <p>Developed by Devin Incerti, Jeroen P. Jansen.</p>
 </div>
 
 <div class="pkgdown">

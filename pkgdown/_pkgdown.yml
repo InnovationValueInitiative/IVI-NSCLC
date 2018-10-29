@@ -9,6 +9,7 @@ reference:
   - title: "Parameter estimates"
     contents:
       - params_mstate_nma
+      - adverse_events
       - params_ae_nma
       - params_utility
       - params_costs_tx
@@ -38,6 +39,8 @@ reference:
       - create_transmod_params
       - create_utilmod
       - create_costmods
+      - ae_probs
+      - tidy.ae_probs
   - title: "Multi criteria decision analysis"
     contents:
       - performance_matrix

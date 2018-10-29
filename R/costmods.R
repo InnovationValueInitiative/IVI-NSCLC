@@ -6,6 +6,7 @@
 #' @param n The number of random observations of the parameters to draw.
 #' @param struct A \code{\link{model_structure}} object.
 #' @param patients A data table returned from \code{\link{create_patients}}.
+#' @param ae_probs An "ae_probs" object as returned by \code{\link{ae_probs}}.
 #' @param params_costs_tx Parameter estimates for treatment costs (i.e.,
 #' acquisition and administration costs) in the same format as 
 #' \code{\link{params_costs_tx}}.
@@ -15,8 +16,6 @@
 #' in the same format as \code{\link{params_costs_inpt}}.
 #' @param params_costs_ae Parameter estimates for adverse event costs
 #' in the same format as \code{\link{params_costs_ae}}.
-#' @param params_ae Parameter estimates of the probabilities of adverse 
-#' events in the same format as \code{\link{params_ae_nma}}.
 #' @examples
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
@@ -30,20 +29,23 @@
 #' # Patient population
 #' pats <- create_patients(n = 2)
 #'
-#' ## Model structure
+#' # Model structure
 #' struct <- model_structure(txseqs, dist = "weibull")
 #'
 #' ## Cost models
-#' costmods <- create_costmods(n = 2, struct = struct, patients = pats)
+#' n_samples <- 2
+#' ae_probs <- ae_probs(n = n_samples, struct = struct)
+#' costmods <- create_costmods(n = 2, struct = struct, patients = pats,
+#'                             ae_probs = ae_probs)
 #' @return A list of objects of class "StateVals" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 #' @export
 create_costmods <- function(n = 100, struct, patients,
+                            ae_probs,
                             params_costs_tx = iviNSCLC::params_costs_tx,
                             params_costs_op = iviNSCLC::params_costs_op,
                             params_costs_inpt = iviNSCLC::params_costs_inpt,
-                            params_costs_ae = iviNSCLC::params_costs_ae,
-                            params_ae = iviNSCLC::params_ae_nma
+                            params_costs_ae = iviNSCLC::params_costs_ae
                             ){
   costmods <- list()
   costmods_tx <- create_costmod_tx(n, struct, patients, params_costs_tx)
@@ -54,8 +56,8 @@ create_costmods <- function(n = 100, struct, patients,
   costmods$inpt <- create_costmod_default(n, struct, patients,
                                           params_costs_inpt)
   costmods$ae <- create_costmod_ae(n, struct, patients,
-                                   params_costs_ae,
-                                   params_ae)
+                                   ae_probs,
+                                   params_costs_ae)
   return(costmods)
 }
 
@@ -287,22 +289,9 @@ create_costmod_tx <- function(n = 100,
 
 create_costmod_ae <- function(n = 100, 
                               struct, patients, 
-                              params_costs_ae,
-                              params_ae){
+                              ae_probs,
+                              params_costs_ae){
   
-  # Treatment used for AE
-  if (attr(struct$txseqs, "start_line") == "first"){
-    tx <- sapply(struct$txseqs, function (x) x$first)
-  } else if (attr(struct$txseqs, "start_line") == "second"){
-      if (attr(struct$txseqs, "mutation") == "positive") {
-        tx <- sapply(struct$txseqs, function (x) x$second["pos"]) 
-      } else{
-        tx <- sapply(struct$txseqs, function (x) x$second["neg"]) 
-      }
-  } else{
-    stop("The starting line must either be 'first' or 'second'.")
-  }
-  tx_abb <- iviNSCLC::treatments$tx_abb[match(tx, iviNSCLC::treatments$tx_name)]
   
   # Probability distribution for adverse event costs
   costs_ae_dist <- matrix(stats::rnorm(n * nrow(params_costs_ae),
@@ -311,34 +300,21 @@ create_costmod_ae <- function(n = 100,
   colnames(costs_ae_dist) <- params_costs_ae$ae_abb
   
   # Compute costs weighted by adverse event probabilities
-  indices <- match(params_costs_ae$ae_abb, names(params_ae))
+  indices <- match(params_costs_ae$ae_abb, names(ae_probs))
   if (any(is.na(indices))){
     stop(paste0("The adverse event abbreviations in 'params_costs_ae' do not match ",
-                "the names of the adverse events in 'params_ae'."))
+                "the names of the adverse events in 'ae_probs'."))
   }
-  expected_costs <- vector(mode = "list", length = length(params_ae))
-  names(expected_costs) <- names(params_ae)
-  prob_vars <- paste0("prob_", tx_abb)
-  for (i in 1:length(params_ae)){
-    name_i <- names(params_ae)[i]
-    
-    ## Sample rows for PSA based on posterior samples 
-    n_samples <- nrow(params_ae[[i]])
-    if (n <= n_samples){
-      sampled_rows <- sample.int(n_samples, n, replace = FALSE) 
-    } else if (n > n_samples) {
-      warning("'n' is larger than the values of 'n_samples' in 'params_mstate_nma'.")
-      sampled_rows <- sample.int(n_samples, n, replace = TRUE) 
-    } 
-    params_ae[[i]] <-  params_ae[[i]][sampled_rows, , drop = FALSE]
-    
-    ## Compute expected costs
-    expected_costs[[i]] <- params_ae[[name_i]][, prob_vars] * costs_ae_dist[, name_i]
+  expected_costs <- vector(mode = "list", length = length(ae_probs))
+  names(expected_costs) <- names(ae_probs)
+  for (i in 1:length(ae_probs)){
+    name_i <- names(ae_probs)[i]
+    expected_costs[[i]] <- ae_probs[[i]] * costs_ae_dist[, name_i]
   }
   expected_costs <- Reduce('+', expected_costs)
   
   # Create model
-  strategy_id <- 1:length(tx_abb)
+  strategy_id <- 1:length(struct$txseqs)
   hesim_dat <- hesim::hesim_data(strategies = data.table(strategy_id = strategy_id),
                                  patients = patients,
                                  states = create_states(struct))

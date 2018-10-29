@@ -5,10 +5,11 @@
 #' @param n The number of random observations of the parameters to draw.
 #' @param struct A \code{\link{model_structure}} object.
 #' @param patients A data table returned from \code{\link{create_patients}}.
-#' @return An object of class "StateVals" from the 
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' @param ae_probs An "ae_probs" object as returned by \code{\link{ae_probs}}.
 #' @param params_utility Parameter estimates for health state utilities and
 #' adverse event disutilities in the same format as \code{\link{params_utility}}.
+#' @return An object of class "StateVals" from the 
+#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 #' @examples
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
@@ -26,10 +27,14 @@
 #' struct <- model_structure(txseqs, dist = "weibull")
 #'
 #' ## Utility model
-#' utilmod <- create_utilmod(n = 2, struct = struct, patients = pats)
+#' n_samples <- 2
+#' ae_probs <- ae_probs(n = n_samples, struct = struct)
+#' utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats,
+#'                           ae_probs = ae_probs)
 #' @export
 create_utilmod <- function(n = 100, struct, patients,
-                            params_utility = iviNSCLC::params_utility){
+                           ae_probs,
+                           params_utility = iviNSCLC::params_utility){
   strategies <- data.table(strategy_id = 1:length(struct$txseqs))
   hesim_dat <- hesim::hesim_data(strategies = strategies,
                                  patients = patients)

@@ -4,12 +4,11 @@
 \alias{create_costmods}
 \title{Create cost models}
 \usage{
-create_costmods(n = 100, struct, patients,
+create_costmods(n = 100, struct, patients, ae_probs,
   params_costs_tx = iviNSCLC::params_costs_tx,
   params_costs_op = iviNSCLC::params_costs_op,
   params_costs_inpt = iviNSCLC::params_costs_inpt,
-  params_costs_ae = iviNSCLC::params_costs_ae,
-  params_ae = iviNSCLC::params_ae_nma)
+  params_costs_ae = iviNSCLC::params_costs_ae)
 }
 \arguments{
 \item{n}{The number of random observations of the parameters to draw.}
@@ -17,6 +16,8 @@ create_costmods(n = 100, struct, patients,
 \item{struct}{A \code{\link{model_structure}} object.}
 
 \item{patients}{A data table returned from \code{\link{create_patients}}.}
+
+\item{ae_probs}{An "ae_probs" object as returned by \code{\link{ae_probs}}.}
 
 \item{params_costs_tx}{Parameter estimates for treatment costs (i.e.,
 acquisition and administration costs) in the same format as 
@@ -30,9 +31,6 @@ in the same format as \code{\link{params_costs_inpt}}.}
 
 \item{params_costs_ae}{Parameter estimates for adverse event costs
 in the same format as \code{\link{params_costs_ae}}.}
-
-\item{params_ae}{Parameter estimates of the probabilities of adverse 
-events in the same format as \code{\link{params_ae_nma}}.}
 }
 \value{
 A list of objects of class "StateVals" from the 
@@ -56,9 +54,12 @@ txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
 # Patient population
 pats <- create_patients(n = 2)
 
-## Model structure
+# Model structure
 struct <- model_structure(txseqs, dist = "weibull")
 
 ## Cost models
-costmods <- create_costmods(n = 2, struct = struct, patients = pats)
+n_samples <- 2
+ae_probs <- ae_probs(n = n_samples, struct = struct)
+costmods <- create_costmods(n = 2, struct = struct, patients = pats,
+                            ae_probs = ae_probs)
 }

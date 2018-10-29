@@ -109,12 +109,11 @@ acquisition and administration costs), (ii) inpatient medical costs,
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_costmods</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>struct</span>, <span class='no'>patients</span>,
+    <pre class="usage"><span class='fu'>create_costmods</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>struct</span>, <span class='no'>patients</span>, <span class='no'>ae_probs</span>,
   <span class='kw'>params_costs_tx</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_costs_tx'>params_costs_tx</a></span>,
   <span class='kw'>params_costs_op</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_costs_op'>params_costs_op</a></span>,
   <span class='kw'>params_costs_inpt</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_costs_inpt'>params_costs_inpt</a></span>,
-  <span class='kw'>params_costs_ae</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_costs_ae'>params_costs_ae</a></span>,
-  <span class='kw'>params_ae</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_ae_nma'>params_ae_nma</a></span>)</pre>
+  <span class='kw'>params_costs_ae</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_costs_ae'>params_costs_ae</a></span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,6 +129,10 @@ acquisition and administration costs), (ii) inpatient medical costs,
     <tr>
       <th>patients</th>
       <td><p>A data table returned from <code><a href='create_patients.html'>create_patients</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>ae_probs</th>
+      <td><p>An "ae_probs" object as returned by <code><a href='ae_probs.html'>ae_probs</a></code>.</p></td>
     </tr>
     <tr>
       <th>params_costs_tx</th>
@@ -152,11 +155,6 @@ in the same format as <code><a href='params_costs_inpt.html'>params_costs_inpt</
       <td><p>Parameter estimates for adverse event costs
 in the same format as <code><a href='params_costs_ae.html'>params_costs_ae</a></code>.</p></td>
     </tr>
-    <tr>
-      <th>params_ae</th>
-      <td><p>Parameter estimates of the probabilities of adverse 
-events in the same format as <code><a href='params_ae_nma.html'>params_ae_nma</a></code>.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -178,11 +176,14 @@ events in the same format as <code><a href='params_ae_nma.html'>params_ae_nma</a
 <span class='co'># Patient population</span>
 <span class='no'>pats</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_patients.html'>create_patients</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='co'>## Model structure</span>
+<span class='co'># Model structure</span>
 <span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"weibull"</span>)
 
 <span class='co'>## Cost models</span>
-<span class='no'>costmods</span> <span class='kw'>&lt;-</span> <span class='fu'>create_costmods</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>, <span class='kw'>patients</span> <span class='kw'>=</span> <span class='no'>pats</span>)</div></pre>
+<span class='no'>n_samples</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
+<span class='no'>ae_probs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ae_probs.html'>ae_probs</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n_samples</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>)
+<span class='no'>costmods</span> <span class='kw'>&lt;-</span> <span class='fu'>create_costmods</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>, <span class='kw'>patients</span> <span class='kw'>=</span> <span class='no'>pats</span>,
+                            <span class='kw'>ae_probs</span> <span class='kw'>=</span> <span class='no'>ae_probs</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -199,7 +200,7 @@ events in the same format as <code><a href='params_ae_nma.html'>params_ae_nma</a
 
       <footer>
       <div class="copyright">
-  <p>Developed by Devin Incerti, Prodyumna Goutam, Jeroen P. Jansen.</p>
+  <p>Developed by Devin Incerti, Jeroen P. Jansen.</p>
 </div>
 
 <div class="pkgdown">
