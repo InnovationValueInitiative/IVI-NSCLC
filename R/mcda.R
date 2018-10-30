@@ -340,6 +340,7 @@ txattr_performance <- function(struct, patients, econmod, treatments = iviNSCLC:
                by = c("strategy_id", "state_id", "mutation"),
                sort = FALSE)
   lys[, weight := time/sum(time), by = c("sample", "strategy_id", "patient_id")]
+  lys[, weight := ifelse(time == 0, 1, weight)]
   lys[, weighted_route := route * weight]
   lys[, weighted_yrs_since_approval := yrs_since_approval * weight]
   lys <- lys[, lapply(.SD, sum),

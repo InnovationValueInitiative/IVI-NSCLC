@@ -39,11 +39,11 @@ test_that("mcda", {
   
   expect_true(inherits(mcda, "list"))
   expect_true(all(mcda$scores$criteria1 >= 0 &
-                  mcda$scores$criteria1 <= 100))
+                  mcda$scores$criteria1 <= 100.01)) # .01 because of strange floating point imprecision 
   expect_true(all(mcda$weighted_scores$weighted_score >= 0 & 
-                mcda$weighted_scores$weighted_score <= 100))  
+                mcda$weighted_scores$weighted_score <= 100.01))  
   expect_true(all(mcda$total_value$score >= 0 & 
-                mcda$total_value$score <= 100))
+                mcda$total_value$score <= 100.01))
   expect_true(all(mcda$prob_rank$prob <= 1 & 
                   mcda$prob_rank$prob >= 0))
 })

@@ -494,22 +494,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.01, 0.10)</td>
+<td align="left">0.06 (0.02, 0.11)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">11,070 (1,242, 26,019)</td>
+<td align="left">11,929 (1,841, 26,395)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-5,209 (-16,354, 1,562)</td>
+<td align="left">-5,743 (-17,021, 999)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">188,877</td>
+<td align="left">192,823</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -550,7 +550,7 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span clas
 <div id="multi-criteria-decision-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multi-criteria-decision-analysis" class="anchor"></a><span class="header-section-number">4.2</span> Multi criteria decision analysis</h2>
-<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on four criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, and health care sector costs. High values are better for life-years and lower values are better for costs.</p>
+<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on six criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, route of administration, and years since FDA approval. High values are better for life-years, route of admnistration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for costs. Performance for the two treatemnt attributes—route of administration and years since FDA aprpoval—can be computed with <code><a href="../reference/txattr_performance.html">txattr_performance()</a></code>. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.</p>
 <p>Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a “performance matrix”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc_costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[<span class="op">!</span>category <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"prod"</span>, <span class="st">"total"</span>), 
                            .(<span class="dt">costs =</span> <span class="kw">sum</span>(costs)),
@@ -595,12 +595,12 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Life-years progressed 2L</td>
 <td align="left">0.07 (0.04, 0.09)</td>
-<td align="left">0.06 (0.04, 0.09)</td>
+<td align="left">0.07 (0.05, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">81,567 (46,848, 118,830)</td>
-<td align="left">92,638 (54,362, 131,673)</td>
+<td align="left">81,075 (44,891, 116,852)</td>
+<td align="left">93,005 (53,662, 133,581)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
@@ -609,8 +609,8 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">13.69 (13.62, 13.76)</td>
-<td align="left">3.50 (3.40, 3.60)</td>
+<td align="left">13.69 (13.63, 13.75)</td>
+<td align="left">3.50 (3.42, 3.60)</td>
 </tr>
 </tbody>
 </table>
@@ -642,33 +642,33 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">24.92 (3.87, 42.21)</td>
-<td align="left">79.32 (59.73, 97.90)</td>
+<td align="left">20.60 (3.71, 41.06)</td>
+<td align="left">77.97 (57.73, 94.91)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">40.17 (4.12, 80.03)</td>
-<td align="left">43.56 (8.23, 82.75)</td>
+<td align="left">40.64 (8.24, 83.87)</td>
+<td align="left">41.99 (6.61, 82.95)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">50.33 (16.72, 86.14)</td>
-<td align="left">48.44 (11.36, 87.16)</td>
+<td align="left">36.34 (4.71, 72.84)</td>
+<td align="left">37.15 (11.13, 67.84)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">60.87 (20.36, 98.61)</td>
-<td align="left">48.83 (6.40, 90.44)</td>
+<td align="left">58.41 (19.53, 97.73)</td>
+<td align="left">45.44 (1.35, 88.20)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
-<td align="left">46.70 (9.41, 78.32)</td>
-<td align="left">53.85 (20.39, 82.80)</td>
+<td align="left">55.94 (23.59, 85.56)</td>
+<td align="left">61.70 (25.13, 92.16)</td>
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">99.23 (98.62, 99.95)</td>
-<td align="left">1.29 (0.40, 2.24)</td>
+<td align="left">99.41 (98.83, 99.99)</td>
+<td align="left">0.89 (0.10, 1.88)</td>
 </tr>
 </tbody>
 </table>

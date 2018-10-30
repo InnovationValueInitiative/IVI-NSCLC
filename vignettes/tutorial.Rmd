@@ -480,7 +480,7 @@ ggplot(icea$evpi, aes(x = k, y = evpi)) +
 ```
 
 ## Multi criteria decision analysis
-We perform the MCDA using the approach described by the [2016 ISPOR Task Force](https://www.ncbi.nlm.nih.gov/pubmed/26797229). Here, we assess the treatment strategies on four criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, and health care sector costs. High values are better for life-years and lower values are better for costs. 
+We perform the MCDA using the approach described by the [2016 ISPOR Task Force](https://www.ncbi.nlm.nih.gov/pubmed/26797229). Here, we assess the treatment strategies on six criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, route of administration, and years since FDA approval. High values are better for life-years, route of admnistration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for costs. Performance for the two treatemnt attributes---route of administration and years since FDA aprpoval---can be computed with `txattr_performance()`. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.
 
 Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a "performance matrix".
 
