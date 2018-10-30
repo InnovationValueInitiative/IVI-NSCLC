@@ -356,9 +356,6 @@ plot_data &lt;-<span class="st"> </span>tidy_ae_probs[, .(<span class="dt">prob_
                                <span class="dt">prob_lower =</span> <span class="kw">quantile</span>(prob, .<span class="dv">025</span>),
                                 <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
                           by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"ae_name"</span>)]
-plot_data[, <span class="st">":="</span> (<span class="dt">num_mean =</span> <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span>prob_mean,
-                  <span class="dt">num_lower =</span> <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span>prob_lower,
-                  <span class="dt">num_upper =</span> <span class="dv">1000</span> <span class="op">*</span><span class="st"> </span>prob_upper)]
 <span class="kw">strategy_factor</span>(plot_data, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
 plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(ae_name <span class="op">==</span><span class="st"> "Elevated alanine transaminase"</span>,
                               <span class="st">"Elevated </span><span class="ch">\n</span><span class="st"> alanine </span><span class="ch">\n</span><span class="st"> transaminase"</span>,
@@ -366,15 +363,16 @@ plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span clas
 plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(ae_name <span class="op">==</span><span class="st"> "Elevated aspartate transaminase"</span>,
                               <span class="st">"Elevated </span><span class="ch">\n</span><span class="st"> aspartate </span><span class="ch">\n</span><span class="st"> transaminase"</span>,
                               ae_name)]
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw">rev</span>(strategy_name), <span class="dt">y =</span> num_mean)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span><span class="kw">factor</span>(ae_name), <span class="dt">nrow =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> <span class="kw">rev</span>(strategy_name), <span class="dt">y =</span> prob_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span><span class="kw">factor</span>(ae_name), <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> num_lower,
-                    <span class="dt">ymax =</span> num_upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> prob_lower,
+                    <span class="dt">ymax =</span> prob_upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>comma) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Number of adverse events per 1,000 patients"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">breaks =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/pretty_breaks">pretty_breaks</a></span>(<span class="dt">n =</span> <span class="dv">3</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability of adverse event"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">panel.spacing =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/reexports">unit</a></span>(<span class="dv">2</span>, <span class="st">"lines"</span>))</code></pre></div>
 <p><img src="tutorial_files/figure-html/ae_probs_plot-1.png" width="672"></p>
 </div>
 <div id="qalys" class="section level3">
@@ -496,22 +494,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.02, 0.10)</td>
+<td align="left">0.06 (0.01, 0.10)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">9,751 (885, 26,023)</td>
+<td align="left">11,723 (262, 25,127)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-4,239 (-15,881, 2,351)</td>
+<td align="left">-5,594 (-16,016, 1,725)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">176,897</td>
+<td align="left">191,276</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -582,23 +580,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.44 (0.41, 0.46)</td>
-<td align="left">0.51 (0.48, 0.53)</td>
+<td align="left">0.43 (0.41, 0.46)</td>
+<td align="left">0.51 (0.49, 0.53)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
 <td align="left">0.09 (0.07, 0.11)</td>
-<td align="left">0.09 (0.07, 0.11)</td>
+<td align="left">0.09 (0.08, 0.11)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.07 (0.05, 0.09)</td>
-<td align="left">0.07 (0.04, 0.08)</td>
+<td align="left">0.07 (0.05, 0.08)</td>
+<td align="left">0.07 (0.04, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">82,436 (47,935, 122,218)</td>
-<td align="left">92,187 (55,022, 131,544)</td>
+<td align="left">81,131 (47,648, 115,677)</td>
+<td align="left">92,854 (52,902, 132,744)</td>
 </tr>
 </tbody>
 </table>
@@ -630,23 +628,23 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">22.71 (3.66, 38.26)</td>
-<td align="left">71.62 (51.91, 86.62)</td>
+<td align="left">21.00 (2.01, 40.56)</td>
+<td align="left">79.82 (62.28, 97.86)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">61.77 (33.05, 93.07)</td>
-<td align="left">62.10 (31.41, 96.79)</td>
+<td align="left">38.74 (12.11, 65.12)</td>
+<td align="left">37.35 (15.17, 67.16)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">48.18 (15.92, 80.77)</td>
-<td align="left">45.19 (8.84, 78.55)</td>
+<td align="left">44.31 (13.85, 79.84)</td>
+<td align="left">51.38 (5.65, 93.07)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">58.51 (13.93, 97.18)</td>
-<td align="left">47.59 (3.47, 89.24)</td>
+<td align="left">58.70 (20.20, 96.02)</td>
+<td align="left">45.64 (1.18, 90.17)</td>
 </tr>
 </tbody>
 </table>

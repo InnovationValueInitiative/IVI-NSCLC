@@ -298,15 +298,12 @@ ggplot(quantiles[prob == .5], aes(x = strategy_name, y = quantile_prob_mean)) +
 ### Adverse events
 The `tidy.ae_probs()` function can be used to convert an `ae_probs` object into a tidy `data.table` suitable for plotting. We do that here to compare adverse event probabilities across treatment strategies.
 
-```{r ae_probs_plot, fig.height = 4}
+```{r ae_probs_plot, fig.height = 6.5}
 tidy_ae_probs <- tidy(ae_probs)
 plot_data <- tidy_ae_probs[, .(prob_mean = mean(prob),
                                prob_lower = quantile(prob, .025),
                                 prob_upper = quantile(prob, .975)),
                           by = c("strategy_id", "ae_name")]
-plot_data[, ":=" (num_mean = 1000 * prob_mean,
-                  num_lower = 1000 * prob_lower,
-                  num_upper = 1000 * prob_upper)]
 strategy_factor(plot_data, rev = TRUE)
 plot_data[, ae_name := ifelse(ae_name == "Elevated alanine transaminase",
                               "Elevated \n alanine \n transaminase",
@@ -314,15 +311,16 @@ plot_data[, ae_name := ifelse(ae_name == "Elevated alanine transaminase",
 plot_data[, ae_name := ifelse(ae_name == "Elevated aspartate transaminase",
                               "Elevated \n aspartate \n transaminase",
                               ae_name)]
-ggplot(plot_data, aes(x = rev(strategy_name), y = num_mean)) + 
-  facet_wrap(~factor(ae_name), nrow = 3) +
+ggplot(plot_data, aes(x = rev(strategy_name), y = prob_mean)) + 
+  facet_wrap(~factor(ae_name), ncol = 3) +
   geom_bar(stat = "identity", fill = "#d9230f") +
-  geom_errorbar(aes(ymin = num_lower,
-                    ymax = num_upper), width = .2) +
+  geom_errorbar(aes(ymin = prob_lower,
+                    ymax = prob_upper), width = .2) +
   scale_fill_discrete(name = "") +
-  scale_y_continuous(label = scales::comma) +
-  xlab("") + ylab("Number of adverse events per 1,000 patients") + 
-  coord_flip() 
+  scale_y_continuous(breaks = pretty_breaks(n = 3)) +
+  xlab("") + ylab("Probability of adverse event") + 
+  coord_flip() +
+  theme(panel.spacing = unit(2, "lines"))
 ```
 
 ### QALYs
