@@ -8,8 +8,8 @@
 #'   \item{tx_name}{Name of treatment.}
 #'   \item{tx_abb}{Abbreviation for the treatment.}
 #'   \item{route}{Route of administration.}
-#'   \item{approval_data}{Date that treatment was approved in the US by the Federal Drug Administration (FDA)}
-#'   \item{years_since_approval}{Years (from last update of the model) since the treatment was approved.}
+#'   \item{approval_yr}{Year that treatment was approved in the US by the Federal Drug Administration (FDA)}
+#'   \item{yrs_since_approval}{Years (from the last update of the model) since the treatment was approved.}
 #' }
 #' @examples 
 #' print(treatments)
