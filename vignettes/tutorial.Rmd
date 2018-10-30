@@ -488,16 +488,20 @@ Before conducting the MCDA, it useful to summarize the performance of the criter
 hc_costs <- ce_sim$costs[!category %in% c("prod", "total"), 
                            .(costs = sum(costs)),
                              by = c("sample", "strategy_id")]
+txattr <- txattr_performance(struct = struct, patients = pats, econmod = econmod)
 outcomes <- data.table(sample = rep(1:n_samples, each = length(txseqs)),
                        strategy_id = rep(1:length(txseqs), times = n_samples),
                        lys_s1 = econmod$qalys_[state_id == 1 & dr == 0.03, lys],
                        lys_p1 = econmod$qalys_[state_id == 2 & dr == 0.03, lys],
                        lys_p2 = econmod$qalys_[state_id == 3 & dr == 0.03, lys],
-                       hc_costs = hc_costs$costs)
-criteria_vars <- c("lys_s1", "lys_p1", "lys_p2", "hc_costs")
+                       hc_costs = hc_costs$costs,
+                       route = txattr$route,
+                       yrs_since_approval = txattr$yrs_since_approval)
+criteria_vars <- c("lys_s1", "lys_p1", "lys_p2", "hc_costs", "route", "yrs_since_approval")
 criteria_names <- c("Life-years stable disease", "Life-years progressed 1L", 
-                    "Life-years progressed 2L", "Health care sector costs")
-optimal <- c("high", "high", "high", "low")
+                    "Life-years progressed 2L", "Health care sector costs",
+                    "Route of administration", "Years since FDA approval")
+optimal <- c("high", "high", "high", "low", "high", "high")
 performance_mat_orig <- performance_matrix(outcomes, 
                                            strategy = "strategy_id", 
                                            criteria = criteria_vars,
@@ -518,7 +522,7 @@ ggplot(plot_data, aes(x = x, y = y)) + geom_line() +
 We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we'll use example weights for the analysis. We conduct the MCDA with function `mcda()`, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a "total value" and the probability that each treatment strategy has a given rank.
 
 ```{r mcda}
-weights <- c(.2, .2, .2, .4)
+weights <- c(.2, .2, .2, .3, .05, .05)
 mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",
              criteria = criteria_vars,
              weights = weights,

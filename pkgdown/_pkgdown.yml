@@ -43,6 +43,7 @@ reference:
       - tidy.ae_probs
   - title: "Multi criteria decision analysis"
     contents:
+      - txattr_performance
       - performance_matrix
       - lpvf_plot_data
       - mcda

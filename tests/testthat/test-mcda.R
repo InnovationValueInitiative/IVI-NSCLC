@@ -1,5 +1,7 @@
 context("mcda.R unit tests")
 library("data.table")
+library("flexsurv")
+library("hesim")
 rm(list = ls())
 
 n_samples <- 5
@@ -44,4 +46,48 @@ test_that("mcda", {
                 mcda$total_value$score <= 100))
   expect_true(all(mcda$prob_rank$prob <= 1 & 
                   mcda$prob_rank$prob >= 0))
+})
+
+test_that("txattr_performance", {
+  # Simulate economic model
+  strategies <- data.frame(strategy_id = c(1, 2))
+  patients <- create_patients(n = 3)
+  hesim_dat <- hesim_data(strategies = strategies,
+                          patients = patients)  
+  tmat <- rbind(c(NA, 1, 2),
+              c(3, NA, 4),
+              c(NA, NA, NA))
+  surv_dat <- data.frame(ctstm3_exdata$transitions)
+  fits <- vector(length = max(tmat, na.rm = TRUE), mode = "list")  
+  for (i in 1:length(fits)){
+    fits[[i]] <- flexsurvreg(Surv(years, status) ~ factor(strategy_id), 
+                             data = surv_dat,
+                             subset = (trans == i),
+                             dist = "weibull")
+  }  
+  transmod_data <- expand(hesim_dat)
+  transmod <- create_IndivCtstmTrans(flexsurvreg_list(fits), data = transmod_data, trans_mat = tmat,
+                                    n = 2)  
+  ictstm <- IndivCtstm$new(trans_model = transmod)
+  ictstm$sim_disease()
+  
+  # Set up economic model
+  txseq1 <- txseq(first = "erlotinib",
+                 second = c("osimertinib", "PBDC"),
+                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+  txseq2 <- txseq(first = "gefitinib",
+                 second = c("osimertinib", "PBDC"),
+                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab")) 
+  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+  struct <- model_structure(txseqs, dist = "weibull")
+  
+  # Test
+  txattr <- txattr_performance(struct = struct, patients = patients, econmod = ictstm)
+  expect_true(max(txattr$route) <= 1)
+  expect_true(min(txattr$route) >= 0)
+  
+  ## Errors
+  expect_error(txattr_performance(struct = 2, patients = patients, econmod = ictstm))
+  expect_error(txattr_performance(struct = struct, patients = 2, econmod = ictstm))
+  expect_error(txattr_performance(struct = struct, patients = patients, econmod = 2))
 })

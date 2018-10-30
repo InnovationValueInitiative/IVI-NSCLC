@@ -283,3 +283,72 @@ lpvf_plot_data <- function(x, optimal = c("low", "high"),
                     y = lpvf(x = x_data, x_min = min_x, x_max = max_x))
 }
 
+#' MCDA treatment attribute performance
+#' 
+#' Compute performance for MCDA criteria related to treatment attributes.
+#' @param struct A \code{\link{model_structure}} object.
+#' @param patients A data table returned from \code{\link{create_patients}}.
+#' @param econmod An economic model of class \code{"IndivCtstm"}. Disease progression
+#' must have been previously simulated (i.e., \code{$disprog_} cannot be \code{NULL}.)
+#' @param treatments An object in the same format as \code{\link{treatments}}.
+#' @return A \code{data.table} with four columns:
+#' \describe{
+#' \item{sample}{\code{sample} from \code{econmod$disprog_}}
+#' \item{strategy_id}{\code{strategy_id} from \code{econmod$disprog_}}
+#' \item{route}{Route of administration, weighted by the time each
+#' simulated patient uses each therapy in a treatment sequence. Oral administration
+#' is given a value of 1 and intravenous administration is given a value of 0.}
+#' \item{yrs_since_approval}{Years since FDA approval, weighted by the time each
+#' simulated patient uses each therapy in a treatment sequence.}
+#' }
+#' @seealso See the example in the \href{https://innovationvalueinitiative.github.io/IVI-NSCLC/articles/tutorial.html}{tutorial}.
+#' @export
+txattr_performance <- function(struct, patients, econmod, treatments = iviNSCLC::treatments){
+  # Prevent CRAN warnings
+  time <- time_stop <- time_start <- NULL
+  route <- yrs_since_approval <- NULL
+  weight <- weighted_route <- weighted_yrs_since_approval <- NULL
+  
+  # Errors
+  if(!inherits(struct, "model_structure")){
+    stop("'struct' must be an object of class 'model_structure'.")
+  }
+  if(!inherits(patients, "patients")){
+    stop("'patients' must be an object of class 'patients'.")
+  }  
+  if(!inherits(econmod, "IndivCtstm")){
+    stop("'econmod' must be an object of class 'IndivCtstm'.")
+  }    
+  
+  # Commpute performance
+  txseq_dt <- tx_by_state(struct)
+  txseq_dt <- merge(txseq_dt, 
+                    treatments[, c("tx_name", "route", "yrs_since_approval"),
+                               with = FALSE])
+  txseq_dt[, route := ifelse(route == "IV", 0, 1)]
+  
+  disprog <- copy(econmod$disprog_)
+  disprog[, time := time_stop - time_start]
+  lys <- disprog[, lapply(.SD, sum),
+                 .SDcols = "time",
+                  by = c("sample", "strategy_id", "patient_id", "from", "to")]
+  lys[, ("mutation") := patients[match(lys$patient_id, patients$patient_id)]$mutation]
+  setnames(lys, "from", "state_id")
+  lys <- merge(lys, 
+               txseq_dt[, c("strategy_id", "state_id", "mutation", "route", 
+                            "yrs_since_approval"), with = FALSE], 
+               by = c("strategy_id", "state_id", "mutation"),
+               sort = FALSE)
+  lys[, weight := time/sum(time), by = c("sample", "strategy_id", "patient_id")]
+  lys[, weighted_route := route * weight]
+  lys[, weighted_yrs_since_approval := yrs_since_approval * weight]
+  lys <- lys[, lapply(.SD, sum),
+             .SDcols = c("weighted_route", "weighted_yrs_since_approval"),
+             by = c("sample", "strategy_id", "patient_id")]
+  lys <- lys[, lapply(.SD, mean),
+             .SDcols = c("weighted_route", "weighted_yrs_since_approval"),
+             by = c("sample", "strategy_id")]
+  setnames(lys, c("weighted_route", "weighted_yrs_since_approval"), 
+           c("route", "yrs_since_approval"))
+  return(lys[,])
+}

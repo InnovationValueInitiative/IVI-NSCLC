@@ -29,3 +29,25 @@ check_is_class <- function(object, name, class){
 tidy <- function(object, ...){
   UseMethod("tidy", object)
 }
+
+tx_by_state <- function(struct){
+  line <- state_id <- NULL
+  
+  n_txseqs <- length(struct$txseqs)
+  txseq_dt <- vector(mode = "list", length = n_txseqs)
+  for (i in 1:n_txseqs){
+    txseq_i <- unlist(struct$txseqs[[i]])
+    txseq_dt[[i]] <- data.table(strategy_id = i,
+                                tx_name = c(txseq_i[1], txseq_i),
+                                line = rep(c("first", "second", "second_plus"), 
+                                           each = 2),
+                                mutation = rep(c(0, 1), 3),
+                                grp_id = rep(c(1, 2), 3)) 
+  }
+  txseq_dt <- rbindlist(txseq_dt)
+  if (attr(struct$txseqs, "start_line") == "second"){
+    txseq_dt <- txseq_dt[line != "first"]
+  }
+  txseq_dt[, state_id := .GRP, by = "line"]
+  return(txseq_dt[,])
+}

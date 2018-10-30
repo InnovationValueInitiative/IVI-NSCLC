@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Treatments — treatments • iviNSCLC</title>
+<title>MCDA treatment attribute performance — txattr_performance • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Treatments — treatments" />
+<meta property="og:title" content="MCDA treatment attribute performance — txattr_performance" />
 
-<meta property="og:description" content="Dataset of treatments for EGFR positive NSCLC." />
+<meta property="og:description" content="Compute performance for MCDA criteria related to treatment attributes." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,77 +94,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Treatments</h1>
-    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>treatments.Rd</code></div>
+    <h1>MCDA treatment attribute performance</h1>
+    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/mcda.R'><code>R/mcda.R</code></a></small>
+    <div class="hidden name"><code>txattr_performance.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Dataset of treatments for EGFR positive NSCLC.</p>
+    <p>Compute performance for MCDA criteria related to treatment attributes.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>treatments</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>txattr_performance</span>(<span class='no'>struct</span>, <span class='no'>patients</span>, <span class='no'>econmod</span>,
+  <span class='kw'>treatments</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/treatments'>treatments</a></span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>struct</th>
+      <td><p>A <code><a href='model_structure.html'>model_structure</a></code> object.</p></td>
+    </tr>
+    <tr>
+      <th>patients</th>
+      <td><p>A data table returned from <code><a href='create_patients.html'>create_patients</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>econmod</th>
+      <td><p>An economic model of class <code>"IndivCtstm"</code>. Disease progression
+must have been previously simulated (i.e., <code>$disprog_</code> cannot be <code>NULL</code>.)</p></td>
+    </tr>
+    <tr>
+      <th>treatments</th>
+      <td><p>An object in the same format as <code><a href='treatments.html'>treatments</a></code>.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.table object with one row for each available treatment and with
-columns:</p><dl class='dl-horizontal'>
-  <dt>tx_name</dt><dd><p>Name of treatment.</p></dd>
-  <dt>tx_abb</dt><dd><p>Abbreviation for the treatment.</p></dd>
-  <dt>route</dt><dd><p>Route of administration.</p></dd>
-  <dt>approval_yr</dt><dd><p>Year that treatment was approved in the US by the Federal Drug Administration (FDA)</p></dd>
-  <dt>yrs_since_approval</dt><dd><p>Years (from the last update of the model) since the treatment was approved.</p></dd>
+    <p>A <code>data.table</code> with four columns:</p><dl class='dl-horizontal'>
+<dt>sample</dt><dd><p><code>sample</code> from <code>econmod$disprog_</code></p></dd>
+<dt>strategy_id</dt><dd><p><code>strategy_id</code> from <code>econmod$disprog_</code></p></dd>
+<dt>route</dt><dd><p>Route of administration, weighted by the time each
+simulated patient uses each therapy in a treatment sequence. Oral administration
+is given a value of 1 and intravenous administration is given a value of 0.</p></dd>
+<dt>yrs_since_approval</dt><dd><p>Years since FDA approval, weighted by the time each
+simulated patient uses each therapy in a treatment sequence.</p></dd>
 </dl>
+
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>See the example in the <a href='https://innovationvalueinitiative.github.io/IVI-NSCLC/articles/tutorial.html'>tutorial</a>.</p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>treatments</span>)</div><div class='output co'>#&gt;                                tx_name       tx_abb route approval_yr
-#&gt;  1:                          erlotinib          erl  oral        2004
-#&gt;  2:                          gefitinib          gef  oral        2015
-#&gt;  3:                           afatinib          afa  oral        2013
-#&gt;  4:                        dacomitinib          dac  oral        2018
-#&gt;  5:                        osimertinib          osi  oral        2015
-#&gt;  6:                               PBDC         pbdc    IV        2004
-#&gt;  7:                        bevacizumab          bev    IV        2004
-#&gt;  8:                          nivolumab          niv    IV        2014
-#&gt;  9:                      pembrolizumab          pem    IV        2014
-#&gt; 10:                       atezolizumab          ate    IV        2016
-#&gt; 11:                 PBDC + bevacizumab     pbdc_bev    IV        2006
-#&gt; 12:                   PBDC + nivolumab     pbdc_niv    IV        2015
-#&gt; 13:               PBDC + pembrolizumab     pbdc_pem    IV        2017
-#&gt; 14:                PBDC + atezolizumab     pbdc_ate    IV        2016
-#&gt; 15:     PBDC + bevacizumab + nivolumab pbdc_bev_niv    IV        2015
-#&gt; 16: PBDC + bevacizumab + pembrolizumab pbdc_bev_pem    IV        2017
-#&gt; 17:  PBDC + bevacizumab + atezolizumab pbdc_bev_ate    IV        2016
-#&gt;     yrs_since_approval
-#&gt;  1:                 14
-#&gt;  2:                  3
-#&gt;  3:                  5
-#&gt;  4:                  0
-#&gt;  5:                  3
-#&gt;  6:                 14
-#&gt;  7:                 14
-#&gt;  8:                  4
-#&gt;  9:                  4
-#&gt; 10:                  2
-#&gt; 11:                 12
-#&gt; 12:                  3
-#&gt; 13:                  1
-#&gt; 14:                  2
-#&gt; 15:                  3
-#&gt; 16:                  1
-#&gt; 17:                  2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>
