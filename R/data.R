@@ -15,6 +15,31 @@
 #' print(treatments)
 "treatments"
 
+#' Patient age
+#'
+#' Distribution of patient ages.
+#'
+#' @format A \code{data.table} with columns:
+#' \describe{
+#'   \item{age_cat}{Age category.}
+#'   \item{age_lower}{Lower bound of age category.}
+#'   \item{age_upper}{Upper bound of age category.}
+#'   \item{age_mid}{Midpoint of age category.}
+#'   \item{prop}{Proportion of patients in age category.}
+#' }
+#' Also contains the attributes:
+#' \describe{
+#' \item{mean}{Mean age.}
+#' \item{sd}{Standard deviation of age.}
+#' } 
+#' @source {\url{https://seer.cancer.gov/archive/csr/1975_2010/results_merged/topic_med_age.pdf}}
+#'
+#' @examples 
+#' print(age_dist)
+#' attr(age_dist, "mean")
+#' attr(age_dist, "sd")
+"age_dist"
+
 #' Multi-state NMA parameters
 #'
 #' Posterior distributions of the regression coefficients of the continuous 

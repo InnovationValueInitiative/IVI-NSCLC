@@ -157,6 +157,9 @@ create_trans_mat <- function(object){
 #' 
 #' Create a data table of patients to model.
 #' @param n Number of patients to model.
+#' @param female_prop The proportion of patients that are female.
+#' @param age_mean Mean age. Based on sources cited in \code{\link{age_dist}}.
+#' @param age_sd Standard deviation of age. Based on sources cited in \code{\link{age_dist}}.
 #' @param mutation_prob The probability of a T790M mutation. The default value
 #' is based on Table 3 from the article by Ma et al. cited below.
 #' @examples
@@ -169,16 +172,29 @@ create_trans_mat <- function(object){
 #' \describe{
 #' \item{patient_id}{An integer from 1 to \code{n} denoting a unique patient.}
 #' \item{mutation}{1 if a patient has a T790M mutation and 0 otherwise.}
+#' \item{female}{1 if a patient is female and 0 otherwise.}
 #' }
 #' 
 #' @export
-create_patients <- function(n, mutation_prob = .52){
+create_patients <- function(n, female_prop = .45, 
+                            age_mean = 70.39, age_sd = 11.68,
+                            mutation_prob = .52){
   patient_id <- 1:n
-  n_mutations <- round(mutation_prob * n)
-  mutation <- c(rep(0, n - n_mutations),
-                rep(1, n_mutations))
+  
+  # Age
+  age <- truncnorm::rtruncnorm(n, a = 0, b = 100, mean = age_mean, sd = age_sd)
+  
+  # Gender
+  female <- stats::rbinom(n, 1, female_prop)
+  
+  # Mutations
+  mutation <- stats::rbinom(n, 1, mutation_prob)
+  
+  # Create dataset
   object <- data.table(patient_id = patient_id,
-                    mutation = mutation)
+                       female = female,
+                       age = age,
+                       mutation = mutation)
   setattr(object, "class", c("patients", "data.table", "data.frame"))
   return(object)
 }

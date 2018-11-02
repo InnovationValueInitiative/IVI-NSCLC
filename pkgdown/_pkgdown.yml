@@ -19,6 +19,7 @@ reference:
       - params_costs_ae
   - title: "Patient population"
     contents:
+      - age_dist
       - create_patients
   - title: "Treatment sequences"
     contents:

@@ -4,10 +4,17 @@
 \alias{create_patients}
 \title{Create patient data table}
 \usage{
-create_patients(n, mutation_prob = 0.52)
+create_patients(n, female_prop = 0.45, age_mean = 70.39, age_sd = 11.68,
+  mutation_prob = 0.52)
 }
 \arguments{
 \item{n}{Number of patients to model.}
+
+\item{female_prop}{The proportion of patients that are female.}
+
+\item{age_mean}{Mean age. Based on sources cited in \code{\link{age_dist}}.}
+
+\item{age_sd}{Standard deviation of age. Based on sources cited in \code{\link{age_dist}}.}
 
 \item{mutation_prob}{The probability of a T790M mutation. The default value
 is based on Table 3 from the article by Ma et al. cited below.}
@@ -18,6 +25,7 @@ containing each modeled patient. Columns are:
 \describe{
 \item{patient_id}{An integer from 1 to \code{n} denoting a unique patient.}
 \item{mutation}{1 if a patient has a T790M mutation and 0 otherwise.}
+\item{female}{1 if a patient is female and 0 otherwise.}
 }
 }
 \description{

@@ -162,48 +162,55 @@ distribution is stored as a "dist" attribute.</p>
 
 <span class='co'>## Data</span>
 <span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'>create_transmod_data</span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>)
-<span class='fu'>head</span>(<span class='no'>transmod_data</span>)</div><div class='output co'>#&gt;    strategy_id patient_id transition_id mutation tx_abb tx_hist osi_s1p1_scale
-#&gt; 1:           1          1             1        0    erl    &lt;NA&gt;              1
-#&gt; 2:           1          1             2        0    erl    &lt;NA&gt;              0
-#&gt; 3:           1          1             3        0   pbdc     erl              0
-#&gt; 4:           1          1             4        0   pbdc     erl              0
-#&gt; 5:           1          1             5        0   pbdc     erl              0
-#&gt; 6:           1          2             1        1    erl    &lt;NA&gt;              1
-#&gt;    osi_s1d_scale d_erl_s1p1_scale d_erl_s1d_scale d_gef_s1p1_scale
-#&gt; 1:             0                1               0                0
-#&gt; 2:             1                0               1                0
-#&gt; 3:             0                0               0                0
-#&gt; 4:             0                0               0                0
-#&gt; 5:             0                0               0                0
-#&gt; 6:             0                1               0                0
-#&gt;    d_gef_s1d_scale osi_s2p2_scale osi_s2d_scale osi_p2d_scale pbdc_s2p2_scale
-#&gt; 1:               0              0             0             0               0
-#&gt; 2:               0              0             0             0               0
-#&gt; 3:               0              0             0             0               1
-#&gt; 4:               0              0             0             0               0
-#&gt; 5:               0              0             0             0               0
-#&gt; 6:               0              0             0             0               0
-#&gt;    pbdc_s2d_scale pbdc_p2d_scale osi_s1p1_shape osi_s1d_shape d_erl_s1p1_shape
-#&gt; 1:              0              0              1             0                1
-#&gt; 2:              0              0              0             1                0
-#&gt; 3:              0              0              0             0                0
-#&gt; 4:              1              0              0             0                0
-#&gt; 5:              0              1              0             0                0
-#&gt; 6:              0              0              1             0                1
-#&gt;    d_erl_s1d_shape d_gef_s1p1_shape d_gef_s1d_shape osi_s2p2_shape
-#&gt; 1:               0                0               0              0
-#&gt; 2:               1                0               0              0
-#&gt; 3:               0                0               0              0
-#&gt; 4:               0                0               0              0
-#&gt; 5:               0                0               0              0
-#&gt; 6:               0                0               0              0
-#&gt;    osi_s2d_shape osi_p2d_shape pbdc_s2p2_shape pbdc_s2d_shape pbdc_p2d_shape
-#&gt; 1:             0             0               0              0              0
-#&gt; 2:             0             0               0              0              0
-#&gt; 3:             0             0               1              0              0
-#&gt; 4:             0             0               0              1              0
-#&gt; 5:             0             0               0              0              1
-#&gt; 6:             0             0               0              0              0</div></pre>
+<span class='fu'>head</span>(<span class='no'>transmod_data</span>)</div><div class='output co'>#&gt;    strategy_id patient_id transition_id female      age mutation tx_abb tx_hist
+#&gt; 1:           1          1             1      0 61.16995        0    erl    &lt;NA&gt;
+#&gt; 2:           1          1             2      0 61.16995        0    erl    &lt;NA&gt;
+#&gt; 3:           1          1             3      0 61.16995        0   pbdc     erl
+#&gt; 4:           1          1             4      0 61.16995        0   pbdc     erl
+#&gt; 5:           1          1             5      0 61.16995        0   pbdc     erl
+#&gt; 6:           1          2             1      0 77.25874        1    erl    &lt;NA&gt;
+#&gt;    osi_s1p1_scale osi_s1d_scale d_erl_s1p1_scale d_erl_s1d_scale
+#&gt; 1:              1             0                1               0
+#&gt; 2:              0             1                0               1
+#&gt; 3:              0             0                0               0
+#&gt; 4:              0             0                0               0
+#&gt; 5:              0             0                0               0
+#&gt; 6:              1             0                1               0
+#&gt;    d_gef_s1p1_scale d_gef_s1d_scale osi_s2p2_scale osi_s2d_scale osi_p2d_scale
+#&gt; 1:                0               0              0             0             0
+#&gt; 2:                0               0              0             0             0
+#&gt; 3:                0               0              0             0             0
+#&gt; 4:                0               0              0             0             0
+#&gt; 5:                0               0              0             0             0
+#&gt; 6:                0               0              0             0             0
+#&gt;    pbdc_s2p2_scale pbdc_s2d_scale pbdc_p2d_scale osi_s1p1_shape osi_s1d_shape
+#&gt; 1:               0              0              0              1             0
+#&gt; 2:               0              0              0              0             1
+#&gt; 3:               1              0              0              0             0
+#&gt; 4:               0              1              0              0             0
+#&gt; 5:               0              0              1              0             0
+#&gt; 6:               0              0              0              1             0
+#&gt;    d_erl_s1p1_shape d_erl_s1d_shape d_gef_s1p1_shape d_gef_s1d_shape
+#&gt; 1:                1               0                0               0
+#&gt; 2:                0               1                0               0
+#&gt; 3:                0               0                0               0
+#&gt; 4:                0               0                0               0
+#&gt; 5:                0               0                0               0
+#&gt; 6:                1               0                0               0
+#&gt;    osi_s2p2_shape osi_s2d_shape osi_p2d_shape pbdc_s2p2_shape pbdc_s2d_shape
+#&gt; 1:              0             0             0               0              0
+#&gt; 2:              0             0             0               0              0
+#&gt; 3:              0             0             0               1              0
+#&gt; 4:              0             0             0               0              1
+#&gt; 5:              0             0             0               0              0
+#&gt; 6:              0             0             0               0              0
+#&gt;    pbdc_p2d_shape
+#&gt; 1:              0
+#&gt; 2:              0
+#&gt; 3:              0
+#&gt; 4:              0
+#&gt; 5:              1
+#&gt; 6:              0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

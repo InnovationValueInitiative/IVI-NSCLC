@@ -23,7 +23,8 @@ Imports:
     MASS,
     R6,
     stats,
-    survival
+    survival,
+    truncnorm
 Remotes: InnovationValueInitiative/hesim    
 Suggests:
     covr,

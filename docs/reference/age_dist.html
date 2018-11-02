@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create patient data table — create_patients • iviNSCLC</title>
+<title>Patient age — age_dist • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Create patient data table — create_patients" />
+<meta property="og:title" content="Patient age — age_dist" />
 
-<meta property="og:description" content="Create a data table of patients to model." />
+<meta property="og:description" content="Distribution of patient ages." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,83 +94,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create patient data table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/model-setup.R'><code>R/model-setup.R</code></a></small>
-    <div class="hidden name"><code>create_patients.Rd</code></div>
+    <h1>Patient age</h1>
+    <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>age_dist.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a data table of patients to model.</p>
+    <p>Distribution of patient ages.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_patients</span>(<span class='no'>n</span>, <span class='kw'>female_prop</span> <span class='kw'>=</span> <span class='fl'>0.45</span>, <span class='kw'>age_mean</span> <span class='kw'>=</span> <span class='fl'>70.39</span>, <span class='kw'>age_sd</span> <span class='kw'>=</span> <span class='fl'>11.68</span>,
-  <span class='kw'>mutation_prob</span> <span class='kw'>=</span> <span class='fl'>0.52</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>n</th>
-      <td><p>Number of patients to model.</p></td>
-    </tr>
-    <tr>
-      <th>female_prop</th>
-      <td><p>The proportion of patients that are female.</p></td>
-    </tr>
-    <tr>
-      <th>age_mean</th>
-      <td><p>Mean age. Based on sources cited in <code><a href='age_dist.html'>age_dist</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>age_sd</th>
-      <td><p>Standard deviation of age. Based on sources cited in <code><a href='age_dist.html'>age_dist</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>mutation_prob</th>
-      <td><p>The probability of a T790M mutation. The default value
-is based on Table 3 from the article by Ma et al. cited below.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='no'>age_dist</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class "patients", which is a <code>data.table</code> 
-containing each modeled patient. Columns are:</p><dl class='dl-horizontal'>
-<dt>patient_id</dt><dd><p>An integer from 1 to <code>n</code> denoting a unique patient.</p></dd>
-<dt>mutation</dt><dd><p>1 if a patient has a T790M mutation and 0 otherwise.</p></dd>
-<dt>female</dt><dd><p>1 if a patient is female and 0 otherwise.</p></dd>
+    <p>A <code>data.table</code> with columns:</p><dl class='dl-horizontal'>
+  <dt>age_cat</dt><dd><p>Age category.</p></dd>
+  <dt>age_lower</dt><dd><p>Lower bound of age category.</p></dd>
+  <dt>age_upper</dt><dd><p>Upper bound of age category.</p></dd>
+  <dt>age_mid</dt><dd><p>Midpoint of age category.</p></dd>
+  <dt>prop</dt><dd><p>Proportion of patients in age category.</p></dd>
+</dl><p>Also contains the attributes:</p><dl class='dl-horizontal'>
+<dt>mean</dt><dd><p>Mean age.</p></dd>
+<dt>sd</dt><dd><p>Standard deviation of age.</p></dd>
 </dl>
-
     
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Ma C, Wei S, Song Y. T790M and acquired resistance of EGFR TKI: a literature 
-review of clinical reports. Journal of thoracic disease. 2011 Mar;3(1):10.</p>
+    <p><a href='https://seer.cancer.gov/archive/csr/1975_2010/results_merged/topic_med_age.pdf'>https://seer.cancer.gov/archive/csr/1975_2010/results_merged/topic_med_age.pdf</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>create_patients</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt;     patient_id female      age mutation
-#&gt;  1:          1      0 86.70774        1
-#&gt;  2:          2      1 62.45817        0
-#&gt;  3:          3      0 79.00551        1
-#&gt;  4:          4      1 60.33674        1
-#&gt;  5:          5      1 75.30997        0
-#&gt;  6:          6      1 87.33234        0
-#&gt;  7:          7      0 72.66050        0
-#&gt;  8:          8      1 62.31672        0
-#&gt;  9:          9      0 86.03956        0
-#&gt; 10:         10      0 59.36289        0</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>age_dist</span>)</div><div class='output co'>#&gt;    age_cat age_bot age_top age_mid   prop
+#&gt; 1:  0 - 19       0      19     9.5 0.0000
+#&gt; 2: 20 - 34      20      34    27.0 0.0002
+#&gt; 3: 35 - 44      35      44    39.5 0.0100
+#&gt; 4: 45 - 54      45      54    49.5 0.0740
+#&gt; 5: 55 - 64      55      64    59.5 0.2170
+#&gt; 6: 65 - 74      65      74    69.5 0.3340
+#&gt; 7: 75 - 84      75      84    79.5 0.2680
+#&gt; 8:     85+      85     100    92.5 0.0940</div><div class='input'><span class='fu'>attr</span>(<span class='no'>age_dist</span>, <span class='st'>"mean"</span>)</div><div class='output co'>#&gt; [1] 70.38598</div><div class='input'><span class='fu'>attr</span>(<span class='no'>age_dist</span>, <span class='st'>"sd"</span>)</div><div class='output co'>#&gt; [1] 11.67923</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
 
-      <li><a href="#references">References</a></li>
+      <li><a href="#source">Source</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
