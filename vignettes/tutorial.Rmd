@@ -200,7 +200,8 @@ transmod_params <- create_transmod_params(n = n_samples, data = transmod_data)
 transmod_params$coefs$scale[1:5, 1:4]
 
 # Health state transition model
-transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat)
+transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat,
+                                          start_age = pats$age)
 class(transmod)
 ```
 
