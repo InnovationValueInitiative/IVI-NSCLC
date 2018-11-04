@@ -30,6 +30,14 @@ tidy <- function(object, ...){
   UseMethod("tidy", object)
 }
 
+pv <- function(z, r, t1, t2){
+  if (r == 0){
+    return (z * (t2 - t1))
+  } else{
+    return (z * ((exp(-r * t1) - exp(-r * t2))/r))
+  }  
+}
+
 tx_by_state <- function(struct){
   line <- state_id <- NULL
   

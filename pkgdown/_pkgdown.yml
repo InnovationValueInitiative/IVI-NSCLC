@@ -17,6 +17,7 @@ reference:
       - params_costs_op
       - params_costs_inpt
       - params_costs_ae
+      - params_costs_prod
   - title: "Patient population"
     contents:
       - age_dist
@@ -42,6 +43,7 @@ reference:
       - create_costmods
       - ae_probs
       - tidy.ae_probs
+      - sim_prod_costs
   - title: "Multi criteria decision analysis"
     contents:
       - txattr_performance

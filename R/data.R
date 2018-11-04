@@ -253,3 +253,44 @@
 #' @examples 
 #' print(params_costs_ae)
 "params_costs_ae"
+
+#' Productivity cost parameters
+#'
+#' Parameters used to estimate productivity costs including costs from 
+#' temporary disability, permanent disability, and premature mortality. 
+#' 
+#' @format A list with the following elements:
+#' 
+#' @section wages:
+#' A \code{data.table} with columns:
+#' \describe{
+#' \item{gender}{Male or female gender.}
+#' \item{employment_status}{Employed full-time, employed part-time, or unemployed.}
+#' \item{prop}{Proportion of population.}
+#' \item{weekly_wage}{Weekly wage.}
+#' \item{source_prop}{Source for \code{prop}.}
+#' \item{source_wage}{Source for \code{wage}.}
+#' }
+#' Mean wages are computed as a weighted average of wages for full-time,
+#' part-time, and unemployed workers. 
+#' 
+#' @section temporary_disability:
+#' A vector with three elements:
+#' \describe{
+#' \item{missed_days_est}{Estimate for number of days worked following diagnosis 
+#' due to sick leave and leave of absence.}
+#' \item{missed_days_lower}{Lower bound for \code{missed_days_est}.}
+#' \item{missed_days_upper}{Upper bound for \code{missed_days_upper}.}
+#' }
+#' 
+#' @section permanent_disability:
+#' A vector with three elements:
+#' \describe{
+#' \item{hours_reduction_est}{Estimate of reduced working hours following initial abscence.}
+#' \item{hours_reduction_lower}{Lower bound for \code{hours_reduction_est}.}
+#' \item{hours_reduction_upper}{Upper bound for \code{hours_reduction_est}.}
+#' } 
+#' 
+#' @examples 
+#' print(params_costs_prod)
+"params_costs_prod"

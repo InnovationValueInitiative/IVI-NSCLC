@@ -310,15 +310,9 @@ txattr_performance <- function(struct, patients, econmod, treatments = iviNSCLC:
   weight <- weighted_route <- weighted_yrs_since_approval <- NULL
   
   # Errors
-  if(!inherits(struct, "model_structure")){
-    stop("'struct' must be an object of class 'model_structure'.")
-  }
-  if(!inherits(patients, "patients")){
-    stop("'patients' must be an object of class 'patients'.")
-  }  
-  if(!inherits(econmod, "IndivCtstm")){
-    stop("'econmod' must be an object of class 'IndivCtstm'.")
-  }    
+  check_is_class(struct, name = "struct", class = "model_structure") 
+  check_is_class(patients, name = "patients", class = "patients")  
+  check_is_class(econmod, name = "econmod", class = "IndivCtstm")   
   
   # Commpute performance
   txseq_dt <- tx_by_state(struct)

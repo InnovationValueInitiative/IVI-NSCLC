@@ -344,7 +344,8 @@ ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) +
 ```
 
 ### Costs
-Mean costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e,  compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals. 
+#### Health care sector costs
+Mean health care sector costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e,  compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals. 
 
 ```{r costs, fig.width = 4}
 # Simulate
@@ -369,10 +370,11 @@ ggplot(costs[category == "total"],
 
 We can also decompose costs by category. 
 
-```{r costs_cat, fig.width = 4}
-costs[, category_name := factor(category, levels = c("tx_ac", "tx_admin", "op", "inpt", "ae", "total"),
-                                labels = c("Drug acquisition", "Drug administration",
-                                           "Outptient", "Inpatient", "Adverse event", "Total"))]
+```{r costs_cat, fig.width = 5}
+costs[, category_name := factor(category, 
+                                levels = c("ae", "tx_ac", "tx_admin", "inpt", "op", "total"),
+                                labels = c("Adverse event", "Drug acquisition", "Drug administration",
+                                           "Inpatient", "Outptient", "Total"))]
 ggplot(costs[category != "total"], 
        aes(x = strategy_name, y = costs_mean, fill = category_name)) + 
   geom_bar(stat = "identity") +
@@ -384,29 +386,22 @@ ggplot(costs[category != "total"],
 We might also want to examine incremental costs relative to a comparator (say treatment sequence 1). 
 
 ```{r incr_costs, fig.width = 4}
-# Incremental costs with Strategy 1 as the reference treatment
+# Compute incremental costs for each possible reference treatment sequence
 incr_costs <- vector(mode = "list", length = length(txseqs))
+incr_costs_i <- copy(ce_sim$costs)
 for (i in 1:length(txseqs)){
-  incr_costs[[i]] <- ce_sim$costs[, costs_comparator := costs[i], 
+  incr_costs_i[, costs_comparator := costs[i], 
                            by = c("category", "dr", "sample")]
-  incr_costs[[i]][, icosts := costs - costs_comparator]
-  incr_costs[[i]] <- incr_costs[[i]][, .(icosts_mean = mean(icosts),
+  incr_costs_i[, icosts := costs - costs_comparator]
+  incr_costs[[i]] <- incr_costs_i[, .(icosts_mean = mean(icosts),
                                    icosts_lower = quantile(icosts, .025),
                                    icosts_upper = quantile(icosts, .975)),
                                by = c("category", "dr", "strategy_id")]
   strategy_factor(incr_costs[[i]])
 }
 
-
-incr_costs <- ce_sim$costs[, costs_comparator := costs[1], 
-                           by = c("category", "dr", "sample")]
-incr_costs[, icosts := costs - costs_comparator]
-incr_costs <- incr_costs[, .(icosts_mean = mean(icosts),
-                             icosts_lower = quantile(icosts, .025),
-                             icosts_upper = quantile(icosts, .975)),
-               by = c("category", "dr", "strategy_id")]
-strategy_factor(incr_costs)
-ggplot(incr_costs[dr == .03 & category == "total" & 
+# Plot incremental costs with treatment sequence 1 as the reference treatment
+ggplot(incr_costs[[1]][dr == .03 & category == "total" & 
                     strategy_id != 1], 
        aes(x = strategy_name, y = icosts_mean)) + 
   geom_bar(stat = "identity", fill = "#d9230f") +
@@ -418,6 +413,32 @@ ggplot(incr_costs[dr == .03 & category == "total" &
   scale_y_continuous(label = dollar_format())
 ```
 
+#### Productivity costs
+Simulated productivity costs are computed using the `sim_prod_costs()` function. They are, by default, computed using the human capital approach (HCA) and incorporate productivity losses from premature mortality, temporary leave of absence upon diagnosis, and reduced hours among survivors following a return to work. 
+
+```{r compute_prod_costs}
+prodcosts <- sim_prod_costs(econmod, patients = pats)
+ce_sim2 <- add_prod_costs(ce_sim, prod_costs = prodcosts)
+```
+
+We will replot costs decomposed by category so that we can examine the magnitude of productivity costs. 
+```{r plot_prod_costs_cat, fig.width = 5}
+costs2 <- ce_sim2$costs[dr == .03 , .(costs_mean = mean(costs)),
+                        by = c("strategy_id", "category")]
+strategy_factor(costs2)
+costs2[, category_name := factor(category, 
+                                levels = c("ae", "tx_ac", "tx_admin", "prod", "inpt", "op", "total"),
+                                labels = c("Adverse event", "Drug acquisition", "Drug administration",
+                                           "Productivity", "Inpatient", "Outptient", "Total"))]
+ggplot(costs2[category != "total"], 
+       aes(x = strategy_name, y = costs_mean, fill = category_name)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Costs") + 
+  scale_y_continuous(label = dollar_format()) 
+```
+
+Plots of undecomposed or incremental costs could be recreated in a similar fashion. 
 
 # Decision analysis
 Decision analysis can be performed using either a cost-effectiveness analysis (CEA) or a multi criteria decision analysis (MCDA) framework.

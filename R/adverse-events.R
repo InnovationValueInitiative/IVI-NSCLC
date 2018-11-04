@@ -26,9 +26,7 @@
 #' head(tidy_ae_probs)
 #' @export
 ae_probs <- function(n, struct, params_ae = iviNSCLC::params_ae_nma){
-  if(!inherits(struct, "model_structure")){
-    stop("'struct' must be an object of class 'model_structure'.")
-  }
+  check_is_class(struct, name = "struct", class = "model_structure") 
   
   # Treatment used for AE
   if (attr(struct$txseqs, "start_line") == "first"){
