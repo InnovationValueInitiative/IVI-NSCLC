@@ -1,4 +1,4 @@
-context("prod_costs.R unit tests")
+context("productivity-costs.R unit tests")
 library("data.table")
 library("flexsurv")
 library("hesim")

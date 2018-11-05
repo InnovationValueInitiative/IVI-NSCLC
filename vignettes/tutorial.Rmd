@@ -627,3 +627,46 @@ p2 <- ggplot(prank,
 # Combine
 grid.arrange(p1, p2, ncol = 2)
 ```
+
+# Value of hope
+Standard CEAs implicitly ignores preferences over the distribution of survival outcomes because they are based on mean QALYs. There is however some evidence that patients prefer therapies with longer right tails. We refer to these preferences as the "value of hope", which can be computed using the function `value_of_hope()`.
+
+```{r voh}
+voh <- value_of_hope(econmod, comparator = 1)
+```
+
+The certainty equivalent is the number of QALYs that a patient would need to obtain to be indifferent between the comparator and the alternative treatment strategies. The value of hope is the difference between expected incremental QALYs and the certainty equivalent. The plot below compares QALYs computed using "standard" approached based on expected values adjusted according by the value of hope.
+
+```{r voh-plot-qalys}
+plot_data <- copy(voh)
+plot_data[, iqalys_voh := iqalys + voh]
+plot_data <- melt(plot_data, id.vars = c("strategy_id"),
+                  measure.vars = c("iqalys", "iqalys_voh"),
+                  value.name = "qalys")
+plot_data[, variable := ifelse(variable == "iqalys", 
+                               "Standard",
+                               "With value of hope")]
+strategy_factor(plot_data)
+ggplot(plot_data, 
+       aes(x = strategy_name, y = qalys, fill = variable)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_discrete(name = "") +
+  geom_hline(yintercept = 0) +
+  xlab("") + ylab("Incremental QALYs")
+```
+
+Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB with and without the value of hope.
+```{r voh-plot-nmb}
+k <- 150000
+incr_costs_mean <- incr_costs[[1]][category == "total" & dr == .03, 
+                                   .(strategy_id, icosts_mean)]
+plot_data[, icosts := incr_costs_mean$icosts_mean[match(strategy_id,
+                                            incr_costs_mean$strategy_id)]]
+plot_data[, inmb := k * qalys - icosts]
+ggplot(plot_data, 
+       aes(x = strategy_name, y = inmb, fill = variable)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_discrete(name = "") +
+  geom_hline(yintercept = 0) +
+  xlab("") + ylab("Incremental NMB")
+```

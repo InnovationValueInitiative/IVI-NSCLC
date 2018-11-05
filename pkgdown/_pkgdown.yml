@@ -50,6 +50,9 @@ reference:
       - performance_matrix
       - lpvf_plot_data
       - mcda
+  - title: "Value of hope"
+    contents:
+      - value_of_hope
     
 navbar:
   title: IVI-NSCLC

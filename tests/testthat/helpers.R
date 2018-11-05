@@ -1,6 +1,7 @@
-example_IndivCtstm <- function(n_samples = 2, n_strategies = 2, n_patients = 3){
+example_IndivCtstm <- function(n_samples = 2, n_patients = 3){
   
   # Treatment strategies, target population, and model structure
+  n_strategies <- 2
   strategies <- data.frame(strategy_id = 1:n_strategies)
   patients <- create_patients(n = n_patients)
   states <- data.frame(state_id = c(1, 2))

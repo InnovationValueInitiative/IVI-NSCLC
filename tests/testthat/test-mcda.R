@@ -50,7 +50,7 @@ test_that("mcda", {
 
 test_that("txattr_performance", {
   # Simulate economic model
-  ictstm <- example_IndivCtstm(n_strategies = 2, n_patients = 3)
+  ictstm <- example_IndivCtstm(n_patients = 3)
   pats <- create_patients(n = 3)
   
   # Set up economic model
