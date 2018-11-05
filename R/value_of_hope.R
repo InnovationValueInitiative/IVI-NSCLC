@@ -36,7 +36,7 @@ value_of_hope <- function(econmod, comparator, crra = .39, dr = .03){
   # Functions
   ## Utility function
   utility_fun <- function(x, r, alpha = 0){
-    m <- x + alpha
+    m <- x - alpha
     res <- ifelse(m <= 0, 0, (m)^r)
     return(res)
   }

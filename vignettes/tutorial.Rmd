@@ -87,7 +87,7 @@ pats <- create_patients(n = 1000)
 ```
 
 ### Treatment sequences
-Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a "txseq_list" object using `txseq_list()`. We specifiy that the model begins at first line treatment with the argument `start_line = "first"`. 
+Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a "txseq_list" object using `txseq_list()`. We specify that the model begins at first line treatment with the argument `start_line = "first"`. 
 
 ```{r}
 txseq1 <- txseq(first = "erlotinib",
@@ -451,7 +451,7 @@ icea <- hesim::icea(ce_sim, dr = .03)
 icea_pw <- hesim::icea_pw(ce_sim, comparator = 1, dr = .03)
 ```
 
-We report [incremental cost-effective ratios (ICERs)](https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio)---a commonly used measure for summarizing the cost-effectiveness of interventions.
+We report [incremental cost-effective ratios (ICERs)](https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio)---a commonly used measure for summarizing the cost-effectiveness of interventions---as well as the incremental net monetary benefit (NMB). The incremental NMB is defined as incremental QALYs multiplied by a willingness to pay threshold (\$100,000 in this example) less incremental costs.
 
 ```{r icer}
 icer <- hesim::icer_tbl(icea_pw,
@@ -502,7 +502,7 @@ ggplot(icea$evpi, aes(x = k, y = evpi)) +
 ```
 
 ## Multi criteria decision analysis
-We perform the MCDA using the approach described by the [2016 ISPOR Task Force](https://www.ncbi.nlm.nih.gov/pubmed/26797229). Here, we assess the treatment strategies on six criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, route of administration, and years since FDA approval. High values are better for life-years, route of admnistration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for costs. Performance for the two treatemnt attributes---route of administration and years since FDA aprpoval---can be computed with `txattr_performance()`. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.
+We perform the MCDA using the approach described by the [2016 ISPOR Task Force](https://www.ncbi.nlm.nih.gov/pubmed/26797229). Here, we assess the treatment strategies on six criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, route of administration, and years since FDA approval. High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for costs. Performance for the two treatment attributes---route of administration and years since FDA approval---can be computed with `txattr_performance()`. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.
 
 Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a "performance matrix".
 
@@ -629,7 +629,7 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 # Value of hope
-Standard CEAs implicitly ignores preferences over the distribution of survival outcomes because they are based on mean QALYs. There is however some evidence that patients prefer therapies with longer right tails. We refer to these preferences as the "value of hope", which can be computed using the function `value_of_hope()`.
+Standard CEA implicitly ignores preferences over the distribution of survival outcomes because they are based on mean QALYs. There is however some evidence that patients prefer therapies with longer right tails. We refer to these preferences as the "value of hope", which can be computed using the function `value_of_hope()`.
 
 ```{r voh}
 voh <- value_of_hope(econmod, comparator = 1)
@@ -655,9 +655,9 @@ ggplot(plot_data,
   xlab("") + ylab("Incremental QALYs")
 ```
 
-Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB with and without the value of hope.
+Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB (again using a willingness to pay of \$100,000) with and without the value of hope.
 ```{r voh-plot-nmb}
-k <- 150000
+k <- 100000
 incr_costs_mean <- incr_costs[[1]][category == "total" & dr == .03, 
                                    .(strategy_id, icosts_mean)]
 plot_data[, icosts := incr_costs_mean$icosts_mean[match(strategy_id,
@@ -668,5 +668,6 @@ ggplot(plot_data,
   geom_bar(stat = "identity", position = "dodge") +
   scale_fill_discrete(name = "") +
   geom_hline(yintercept = 0) +
-  xlab("") + ylab("Incremental NMB")
+  xlab("") + ylab("Incremental NMB") + 
+  scale_y_continuous(label = scales::dollar)
 ```
