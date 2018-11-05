@@ -66,7 +66,7 @@ value_of_hope <- function(econmod, comparator, crra = .39, dr = .03){
   
   ## Expected utility for comparator
   sim_comparator <- sim[strategy_id == comparator]
-  eu1 <- sum(sim_comparator$prob * utility_fun(sim_comparator$qalys, r = crra))
+  eu1 <- sum(sim_comparator$prob * utility_fun(sim_comparator$qalys, r = 1 + crra))
   
   ## Certainty equivalent
   sim_treatments <- sim[strategy_id != comparator]
@@ -79,7 +79,7 @@ value_of_hope <- function(econmod, comparator, crra = .39, dr = .03){
       root_list <- stats::uniroot(certainty_equivalent_fun, 
                                 c(-10, 10),
                                 extendInt = "yes",
-                                r = crra,
+                                r = 1 + crra,
                                 qalys = sim_treatments_i$qalys,
                                 prob = sim_treatments_i$prob,
                                 eu1 = eu1)  
