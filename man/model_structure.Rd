@@ -4,14 +4,18 @@
 \alias{model_structure}
 \title{Model structure}
 \usage{
-model_structure(txseqs, n_states = c("four", "three"), dist = c("weibull"))
+model_structure(txseqs, n_states = c("four", "three"), dist = c("weibull",
+  "gompertz", "fracpoly1", "fracpoly2"))
 }
 \arguments{
 \item{txseqs}{A \code{\link{txseq_list}} object.}
 
 \item{n_states}{Number of modeled health states.}
 
-\item{dist}{Parametric distribution used to model health state transitions.}
+\item{dist}{Parametric distribution used to model health state transitions.
+Options are \code{"weibull"} (Weibull), \code{"gompertz"} (gompertz),
+\code{"fracpoly1"}(2nd order fractional polynomial with \eqn{p_1 = 0} and \eqn{p_2 = 0}),
+and \code{"fracpoly2"}(2nd order fractional polynomial with \eqn{p_1 = 0} and \eqn{p_2 = 1}).}
 }
 \value{
 A list containing the elements \code{txseqs}, \code{n_states} and

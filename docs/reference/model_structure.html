@@ -105,7 +105,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>model_structure</span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"four"</span>, <span class='st'>"three"</span>), <span class='kw'>dist</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"weibull"</span>))</pre>
+    <pre class="usage"><span class='fu'>model_structure</span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"four"</span>, <span class='st'>"three"</span>), <span class='kw'>dist</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"weibull"</span>,
+  <span class='st'>"gompertz"</span>, <span class='st'>"fracpoly1"</span>, <span class='st'>"fracpoly2"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -120,7 +121,10 @@
     </tr>
     <tr>
       <th>dist</th>
-      <td><p>Parametric distribution used to model health state transitions.</p></td>
+      <td><p>Parametric distribution used to model health state transitions.
+Options are <code>"weibull"</code> (Weibull), <code>"gompertz"</code> (gompertz),
+<code>"fracpoly1"</code>(2nd order fractional polynomial with \(p_1 = 0\) and \(p_2 = 0\)),
+and <code>"fracpoly2"</code>(2nd order fractional polynomial with \(p_1 = 0\) and \(p_2 = 1\)).</p></td>
     </tr>
     </table>
     
