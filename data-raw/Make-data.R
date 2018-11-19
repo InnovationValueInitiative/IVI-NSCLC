@@ -6,7 +6,7 @@ rm(list = ls())
 unlink("../data/*") # deletes all files in data directory
 source("treatments.R")
 source("age.R")
-source("params_mstate_nma.R")
+#source("params_mstate_nma.R")
 source("adverse_events.R")
 source("params_ae_nma.R")
 source("params_utility.R")
