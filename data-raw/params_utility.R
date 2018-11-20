@@ -23,7 +23,7 @@ disutility_ae_name <- c("Diarrhea", "Dry skin",
                         "Elevated aspartate transaminase",
                         "Eye problems", "Paronychia",
                       "Pneumonitis", "Pruritus", "Rash", "Stomatitis")
-disutility_ae_abb <- c("diarrhea", "dry_skin", "alt", "ast", "eye_prob",
+disutility_ae_abb <- c("diarrhea", "dry_skin", "alt", "ast", "eye_problems",
                        "paronychia", "pneumonitis",
                        "pruritus", "rash", "stomatitis")
 disutility_ae_mean <- c(.0468, 0, 0, 0, 0, 0, 0, 0, -.03248, 0)

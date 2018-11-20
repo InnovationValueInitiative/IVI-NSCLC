@@ -243,12 +243,12 @@ tmat_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/c
 transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
-<pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      0 52.89732        0    erl
-## 2:           1          1             2      0 52.89732        0    erl
-## 3:           1          1             3      0 52.89732        0   pbdc
-## 4:           1          1             4      0 52.89732        0   pbdc
-## 5:           1          1             5      0 52.89732        0   pbdc
+<pre><code>##    strategy_id patient_id transition_id female    age mutation tx_abb
+## 1:           1          1             1      1 71.076        0    erl
+## 2:           1          1             2      1 71.076        0    erl
+## 3:           1          1             3      1 71.076        0   pbdc
+## 4:           1          1             4      1 71.076        0   pbdc
+## 5:           1          1             5      1 71.076        0   pbdc
 ##    tx_hist osi_s1p1_scale osi_s1d_scale
 ## 1:    &lt;NA&gt;              1             0
 ## 2:    &lt;NA&gt;              0             1
@@ -516,27 +516,27 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.05 (0.00, 0.11)</td>
+<td align="left">0.06 (0.01, 0.11)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">5,139 (-7,784, 17,712)</td>
+<td align="left">5,824 (-5,761, 17,692)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">295 (-7,415, 8,129)</td>
+<td align="left">-4 (-7,978, 7,786)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">94,571</td>
+<td align="left">100,066</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
 <td align="left">-</td>
-<td align="left">Cost-effective</td>
+<td align="left">Not cost-effective</td>
 </tr>
 </tbody>
 </table>
@@ -606,33 +606,33 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.44 (0.41, 0.46)</td>
+<td align="left">0.43 (0.41, 0.46)</td>
 <td align="left">0.51 (0.48, 0.53)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
 <td align="left">0.18 (0.15, 0.20)</td>
-<td align="left">0.17 (0.15, 0.20)</td>
+<td align="left">0.18 (0.16, 0.20)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.17 (0.14, 0.20)</td>
-<td align="left">0.17 (0.14, 0.20)</td>
+<td align="left">0.17 (0.14, 0.21)</td>
+<td align="left">0.17 (0.14, 0.21)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">103,766 (94,616, 116,827)</td>
-<td align="left">108,905 (100,505, 120,257)</td>
+<td align="left">103,909 (92,888, 116,284)</td>
+<td align="left">109,733 (100,316, 120,494)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
 <td align="left">0.88 (0.87, 0.90)</td>
-<td align="left">0.89 (0.87, 0.90)</td>
+<td align="left">0.89 (0.88, 0.90)</td>
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">13.40 (13.31, 13.49)</td>
-<td align="left">4.10 (3.96, 4.24)</td>
+<td align="left">13.38 (13.30, 13.46)</td>
+<td align="left">4.10 (3.98, 4.23)</td>
 </tr>
 </tbody>
 </table>
@@ -664,33 +664,33 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">23.63 (7.24, 43.12)</td>
-<td align="left">74.29 (55.70, 90.05)</td>
+<td align="left">16.95 (1.45, 33.22)</td>
+<td align="left">72.84 (53.97, 90.88)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">48.44 (12.01, 84.68)</td>
-<td align="left">46.02 (14.59, 89.04)</td>
+<td align="left">46.68 (11.74, 75.16)</td>
+<td align="left">46.36 (14.71, 88.23)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">51.96 (15.84, 89.77)</td>
-<td align="left">52.98 (8.39, 86.04)</td>
+<td align="left">50.09 (20.06, 85.88)</td>
+<td align="left">51.06 (17.05, 86.15)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">58.29 (17.64, 86.77)</td>
-<td align="left">42.29 (6.96, 68.44)</td>
+<td align="left">62.70 (30.91, 91.02)</td>
+<td align="left">47.74 (20.09, 71.94)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
-<td align="left">44.91 (21.67, 73.91)</td>
-<td align="left">57.15 (26.83, 88.67)</td>
+<td align="left">46.75 (7.09, 80.14)</td>
+<td align="left">59.02 (20.79, 97.09)</td>
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">98.83 (97.91, 99.79)</td>
-<td align="left">1.98 (0.50, 3.45)</td>
+<td align="left">98.69 (97.92, 99.57)</td>
+<td align="left">1.38 (0.11, 2.71)</td>
 </tr>
 </tbody>
 </table>
