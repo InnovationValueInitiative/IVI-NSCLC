@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.13)  20 NOV 2018 09:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.13)  20 NOV 2018 11:24
 entering extended mode
 **./model-doc.tex
 (model-doc.tex
@@ -1028,127 +1028,130 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
  [2] [3
 
 ]
-<Figure 1.PNG, id=226, 481.8pt x 360.59718pt>
+<Figure 1.PNG, id=246, 481.8pt x 360.59718pt>
 File: Figure 1.PNG Graphic file (type png)
 <use Figure 1.PNG>
-Package pdftex.def Info: Figure 1.PNG  used on input line 248.
+Package pdftex.def Info: Figure 1.PNG  used on input line 249.
 (pdftex.def)             Requested size: 481.79881pt x 360.5963pt.
 
-Overfull \hbox (12.0438pt too wide) in paragraph at lines 248--249
+Overfull \hbox (12.0438pt too wide) in paragraph at lines 249--250
 [][] 
  []
 
 [4 <./Figure 1.PNG>] [5] [6]
-<Figure 2.png, id=242, 1570.36688pt x 359.84438pt>
+<Figure 2.png, id=262, 1570.36688pt x 359.84438pt>
 File: Figure 2.png Graphic file (type png)
 <use Figure 2.png>
-Package pdftex.def Info: Figure 2.png  used on input line 294.
+Package pdftex.def Info: Figure 2.png  used on input line 295.
 (pdftex.def)             Requested size: 471.11371pt x 107.95413pt.
 
-Overfull \hbox (1.35869pt too wide) in paragraph at lines 294--295
+Overfull \hbox (1.35869pt too wide) in paragraph at lines 295--296
 [][] 
  []
 
 
-Overfull \hbox (244.19366pt too wide) in paragraph at lines 303--304
+Overfull \hbox (244.19366pt too wide) in paragraph at lines 304--305
 []$ \OML/cmm/m/it/10.95 P[][]$ 
  []
 
 
-Overfull \hbox (18.8488pt too wide) in paragraph at lines 307--308
+Overfull \hbox (18.8488pt too wide) in paragraph at lines 308--309
 []$ \OML/cmm/m/it/10.95 h[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 u\OT1/cmr/m/
 n/10.95 )[]$ 
  []
 
 
-Overfull \hbox (18.8488pt too wide) in paragraph at lines 311--312
+Overfull \hbox (18.8488pt too wide) in paragraph at lines 312--313
 []$ \OML/cmm/m/it/10.95 h[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 u\OT1/cmr/m/
 n/10.95 )[]$ 
  []
 
-<Figure 3.png, id=243, 1570.36688pt x 359.84438pt>
+<Figure 3.png, id=263, 1570.36688pt x 359.84438pt>
 File: Figure 3.png Graphic file (type png)
 <use Figure 3.png>
-Package pdftex.def Info: Figure 3.png  used on input line 319.
+Package pdftex.def Info: Figure 3.png  used on input line 320.
 (pdftex.def)             Requested size: 471.11371pt x 107.95413pt.
 
-Overfull \hbox (1.35869pt too wide) in paragraph at lines 319--320
+Overfull \hbox (1.35869pt too wide) in paragraph at lines 320--321
 [][] 
  []
 
 [7 <./Figure 2.png>]
-Overfull \hbox (276.46284pt too wide) in paragraph at lines 323--324
+Overfull \hbox (276.46284pt too wide) in paragraph at lines 324--325
 []$ \OML/cmm/m/it/10.95 P[][]$ 
  []
 
 
-Overfull \hbox (18.8488pt too wide) in paragraph at lines 327--328
+Overfull \hbox (18.8488pt too wide) in paragraph at lines 328--329
 []$ \OML/cmm/m/it/10.95 h[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 u\OT1/cmr/m/
 n/10.95 )[]$ 
  []
 
 [8 <./Figure 3.png>]
-<Table 1.PNG, id=261, 487.8225pt x 198.7425pt>
+<Table 1.PNG, id=281, 487.8225pt x 198.7425pt>
 File: Table 1.PNG Graphic file (type png)
 <use Table 1.PNG>
-Package pdftex.def Info: Table 1.PNG  used on input line 359.
+Package pdftex.def Info: Table 1.PNG  used on input line 360.
 (pdftex.def)             Requested size: 487.8213pt x 198.742pt.
 
-Overfull \hbox (18.06628pt too wide) in paragraph at lines 359--360
+Overfull \hbox (18.06628pt too wide) in paragraph at lines 360--361
 [][] 
  []
 
 [9 <./Table 1.PNG>] [10]
-<Table 2.PNG, id=271, 478.03593pt x 107.65219pt>
+<Table 2.PNG, id=291, 478.03593pt x 107.65219pt>
 File: Table 2.PNG Graphic file (type png)
 <use Table 2.PNG>
-Package pdftex.def Info: Table 2.PNG  used on input line 393.
+Package pdftex.def Info: Table 2.PNG  used on input line 391.
 (pdftex.def)             Requested size: 478.03476pt x 107.65192pt.
 
-Overfull \hbox (8.27974pt too wide) in paragraph at lines 393--394
+Overfull \hbox (8.27974pt too wide) in paragraph at lines 391--392
 [][] 
  []
 
 [11 <./Table 2.PNG>]
 
-Package natbib Warning: Citation `baio2015probabilistic' on page 12 undefined o
-n input line 416.
+LaTeX Warning: Reference `app:nma' on page 12 undefined on input line 414.
 
-<Appendix Table 1.PNG, id=277, 391.4625pt x 324.46219pt>
+
+Package natbib Warning: Citation `dias2018network' on page 12 undefined on inpu
+t line 420.
+
+[12]
+<Appendix Table 1.PNG, id=303, 391.4625pt x 324.46219pt>
 File: Appendix Table 1.PNG Graphic file (type png)
 <use Appendix Table 1.PNG>
-Package pdftex.def Info: Appendix Table 1.PNG  used on input line 434.
+Package pdftex.def Info: Appendix Table 1.PNG  used on input line 445.
 (pdftex.def)             Requested size: 391.46153pt x 324.46138pt.
-[12]
-<Appendix Table 2.PNG, id=283, 392.96812pt x 360.59718pt>
+<Appendix Table 2.PNG, id=304, 392.96812pt x 360.59718pt>
 File: Appendix Table 2.PNG Graphic file (type png)
 <use Appendix Table 2.PNG>
-Package pdftex.def Info: Appendix Table 2.PNG  used on input line 440.
+Package pdftex.def Info: Appendix Table 2.PNG  used on input line 451.
 (pdftex.def)             Requested size: 392.96715pt x 360.5963pt.
  [13 <./Appendix Table 1.PNG>]
-<Appendix Table 3.PNG, id=290, 394.47375pt x 324.46219pt>
+<Appendix Table 3.PNG, id=311, 394.47375pt x 324.46219pt>
 File: Appendix Table 3.PNG Graphic file (type png)
 <use Appendix Table 3.PNG>
-Package pdftex.def Info: Appendix Table 3.PNG  used on input line 446.
+Package pdftex.def Info: Appendix Table 3.PNG  used on input line 457.
 (pdftex.def)             Requested size: 394.47278pt x 324.46138pt.
  [14 <./Appendix Table 2.PNG>]
-<Appendix Table 4.PNG, id=296, 396.7322pt x 176.91093pt>
+<Appendix Table 4.PNG, id=317, 396.7322pt x 176.91093pt>
 File: Appendix Table 4.PNG Graphic file (type png)
 <use Appendix Table 4.PNG>
-Package pdftex.def Info: Appendix Table 4.PNG  used on input line 456.
+Package pdftex.def Info: Appendix Table 4.PNG  used on input line 467.
 (pdftex.def)             Requested size: 396.73122pt x 176.91049pt.
  [15 <./Appendix Table 3.PNG>]
-<Appendix Table 5.PNG, id=302, 398.23781pt x 146.79843pt>
+<Appendix Table 5.PNG, id=323, 398.23781pt x 146.79843pt>
 File: Appendix Table 5.PNG Graphic file (type png)
 <use Appendix Table 5.PNG>
-Package pdftex.def Info: Appendix Table 5.PNG  used on input line 464.
+Package pdftex.def Info: Appendix Table 5.PNG  used on input line 475.
 (pdftex.def)             Requested size: 398.23683pt x 146.79807pt.
  [16 <./Appendix Table 4.PNG> <./Appendix Table 5.PNG>] [17]
 [18]
-<Appendix Figure 1.png, id=317, 878.53218pt x 202.50656pt>
+<Appendix Figure 1.png, id=338, 878.53218pt x 202.50656pt>
 File: Appendix Figure 1.png Graphic file (type png)
 <use Appendix Figure 1.png>
-Package pdftex.def Info: Appendix Figure 1.png  used on input line 520.
+Package pdftex.def Info: Appendix Figure 1.png  used on input line 531.
 (pdftex.def)             Requested size: 351.40665pt x 81.00117pt.
  [19 <./Appendix Figure 1.png>] [20]
 No file model-doc.bbl.
@@ -1159,28 +1162,32 @@ Package natbib Warning: There were undefined citations.
 Package caption Warning: Unused \captionsetup[table] on input line 115.
 See the caption package documentation for explanation.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 559.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 570.
 [21]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 559.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 570.
  (model-doc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 559.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 559.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 570.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 570.
 Package rerunfilecheck Info: File `model-doc.out' has not changed.
-(rerunfilecheck)             Checksum: C516399D8DBDCA409AD9D5BD1BB1CC9A;2869.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 559.
+(rerunfilecheck)             Checksum: 50111DDBB57C907F03C36D818B005B2A;3156.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 570.
  )
 (\end occurred inside a group at level 1)
 
-### simple group (level 1) entered at line 236 ({)
+### simple group (level 1) entered at line 237 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 21249 strings out of 492970
- 364675 string characters out of 3123929
+ 21263 strings out of 492970
+ 364898 string characters out of 3123929
  610468 words of memory out of 3000000
- 24740 multiletter control sequences out of 15000+200000
+ 24750 multiletter control sequences out of 15000+200000
  558194 words of font info for 96 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,11n,63p,1614b,601s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 40i,11n,63p,1614b,617s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Lauren.Zhao\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour
 \jknappen\ec\dpi600\ecbx2074.pk> <C:\Users\Lauren.Zhao\AppData\Local\MiKTeX\2.9
 \fonts\pk\ljfour\jknappen\ec\dpi600\ecti1095.pk> <C:\Users\Lauren.Zhao\AppData\
@@ -1202,9 +1209,9 @@ cm/cmr8.pfb><C:/Users/Lauren.Zhao/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmsy10.pfb><C:/Users/Lauren.Zhao/AppData/Local/Programs/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/Lauren.Zhao/AppData/
 Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on model-doc.pdf (21 pages, 447349 bytes).
+Output written on model-doc.pdf (21 pages, 450721 bytes).
 PDF statistics:
- 720 PDF objects out of 1000 (max. 8388607)
- 63 named destinations out of 1000 (max. 500000)
- 376 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 743 PDF objects out of 1000 (max. 8388607)
+ 67 named destinations out of 1000 (max. 500000)
+ 408 words of extra memory for PDF output out of 10000 (max. 10000000)
 

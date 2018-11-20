@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-11-05</h4>
+            <h4 class="date">2018-11-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -244,11 +244,11 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      0 76.99278        1    erl
-## 2:           1          1             2      0 76.99278        1    erl
-## 3:           1          1             3      0 76.99278        1    osi
-## 4:           1          1             4      0 76.99278        1    osi
-## 5:           1          1             5      0 76.99278        1    osi
+## 1:           1          1             1      0 64.90543        1    erl
+## 2:           1          1             2      0 64.90543        1    erl
+## 3:           1          1             3      0 64.90543        1    osi
+## 4:           1          1             4      0 64.90543        1    osi
+## 5:           1          1             5      0 64.90543        1    osi
 ##    tx_hist osi_s1p1_scale osi_s1d_scale
 ## 1:    &lt;NA&gt;              1             0
 ## 2:    &lt;NA&gt;              0             1
@@ -516,27 +516,27 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.05 (0.01, 0.09)</td>
+<td align="left">0.05 (0.00, 0.11)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">10,363 (655, 24,362)</td>
+<td align="left">2,241 (-9,316, 12,678)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-4,881 (-15,741, 837)</td>
+<td align="left">3,113 (-2,635, 10,327)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">189,023</td>
+<td align="left">41,859</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
 <td align="left">-</td>
-<td align="left">Not cost-effective</td>
+<td align="left">Cost-effective</td>
 </tr>
 </tbody>
 </table>
@@ -607,32 +607,32 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Life-years stable disease</td>
 <td align="left">0.44 (0.41, 0.46)</td>
-<td align="left">0.51 (0.49, 0.53)</td>
+<td align="left">0.51 (0.48, 0.53)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.09 (0.07, 0.11)</td>
-<td align="left">0.09 (0.07, 0.11)</td>
+<td align="left">0.18 (0.15, 0.21)</td>
+<td align="left">0.18 (0.15, 0.20)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.06 (0.04, 0.08)</td>
-<td align="left">0.06 (0.04, 0.08)</td>
+<td align="left">0.18 (0.15, 0.21)</td>
+<td align="left">0.17 (0.15, 0.21)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">80,511 (45,647, 115,449)</td>
-<td align="left">90,874 (52,055, 131,111)</td>
+<td align="left">83,703 (72,865, 93,647)</td>
+<td align="left">85,944 (77,176, 94,369)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
-<td align="left">0.95 (0.94, 0.96)</td>
-<td align="left">0.95 (0.94, 0.96)</td>
+<td align="left">0.88 (0.87, 0.90)</td>
+<td align="left">0.89 (0.88, 0.90)</td>
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">13.68 (13.61, 13.74)</td>
-<td align="left">3.47 (3.39, 3.57)</td>
+<td align="left">13.36 (13.27, 13.44)</td>
+<td align="left">4.08 (3.95, 4.20)</td>
 </tr>
 </tbody>
 </table>
@@ -664,33 +664,33 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">25.21 (6.52, 45.03)</td>
-<td align="left">78.63 (62.39, 95.47)</td>
+<td align="left">26.10 (3.69, 46.89)</td>
+<td align="left">82.81 (61.13, 97.59)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">54.86 (14.37, 93.78)</td>
-<td align="left">51.76 (13.18, 91.02)</td>
+<td align="left">50.55 (19.81, 82.66)</td>
+<td align="left">48.83 (19.24, 75.31)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">45.08 (9.02, 83.64)</td>
-<td align="left">41.86 (9.99, 82.76)</td>
+<td align="left">47.21 (15.51, 82.87)</td>
+<td align="left">40.62 (14.70, 79.42)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">59.66 (21.33, 97.91)</td>
-<td align="left">48.29 (4.14, 90.88)</td>
+<td align="left">58.17 (26.15, 93.06)</td>
+<td align="left">50.95 (23.82, 79.18)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
-<td align="left">44.36 (10.26, 83.31)</td>
-<td align="left">55.62 (18.64, 86.90)</td>
+<td align="left">41.68 (10.78, 72.74)</td>
+<td align="left">57.32 (30.42, 85.43)</td>
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">99.13 (98.52, 99.69)</td>
-<td align="left">0.91 (0.10, 1.84)</td>
+<td align="left">98.77 (97.78, 99.64)</td>
+<td align="left">1.97 (0.66, 3.19)</td>
 </tr>
 </tbody>
 </table>

@@ -280,7 +280,7 @@ create_costmod_ae <- function(n = 100,
   
   # Probability distribution for adverse event costs
   costs_ae_dist <- matrix(stats::rnorm(n * nrow(params_costs_ae),
-                                      params_costs_ae$mean, params_costs_ae$se),
+                                      params_costs_ae$mean * 12, params_costs_ae$se * 12), # Note: Convert to annualized costs
                                       nrow = n, byrow = TRUE)
   colnames(costs_ae_dist) <- params_costs_ae$ae_abb
   

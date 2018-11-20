@@ -14,13 +14,17 @@
 \contentsline {subsection}{\numberline {5.2}Risks}{10}{subsection.5.2}
 \contentsline {subsection}{\numberline {5.3}Costs}{10}{subsection.5.3}
 \contentsline {subsection}{\numberline {5.4}Value assessment}{10}{subsection.5.4}
-\contentsline {section}{\numberline {6}Source data and parameter estimation}{11}{section.6}
-\contentsline {section}{\numberline {7}Simulation and uncertainty analysis}{11}{section.7}
-\contentsline {subsection}{\numberline {7.1}Parameter uncertainty}{11}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Structural uncertainty}{11}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Implementation}{12}{subsection.7.3}
+\contentsline {section}{\numberline {6}Simulation and uncertainty analysis}{11}{section.6}
+\contentsline {subsection}{\numberline {6.1}Parameter uncertainty}{11}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Structural uncertainty}{11}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Implementation}{12}{subsection.6.3}
+\contentsline {section}{\numberline {7}Source data and parameter estimation}{12}{section.7}
+\contentsline {subsection}{\numberline {7.1}Transition probabilities}{12}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Adverse events}{12}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Utilities}{12}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Resource use, productivity, and cost}{12}{subsection.7.4}
 \contentsline {section}{Appendices}{12}{section*.2}
-\contentsline {section}{\numberline {A}Systematic literature review}{12}{Appendix.1.A}
+\contentsline {section}{\numberline {A}Systematic Literature Review}{12}{Appendix.1.A}
 \contentsline {subsection}{\numberline {A.1}Treatment effects}{12}{subsection.1.A.1}
 \contentsline {subsection}{\numberline {A.2}Utilities}{15}{subsection.1.A.2}
 \contentsline {subsection}{\numberline {A.3}Resource use, productivity, and cost}{16}{subsection.1.A.3}

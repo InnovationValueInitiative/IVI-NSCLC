@@ -4,6 +4,9 @@
 #' @param txseqs A \code{\link{txseq_list}} object.
 #' @param n_states Number of modeled health states.
 #' @param dist Parametric distribution used to model health state transitions.
+#' Options are \code{"weibull"} (Weibull), \code{"gompertz"} (gompertz),
+#' \code{"fracpoly1"}(2nd order fractional polynomial with \eqn{p_1 = 0} and \eqn{p_2 = 0}),
+#' and \code{"fracpoly2"}(2nd order fractional polynomial with \eqn{p_1 = 0} and \eqn{p_2 = 1}).
 #' @return A list containing the elements \code{txseqs}, \code{n_states} and
 #' \code{dist}.
 #' @examples
@@ -28,8 +31,10 @@
 #' @export
 model_structure <- function(txseqs,
                             n_states = c("four", "three"),
-                            dist = c("weibull")) {
+                            dist = c("weibull", "gompertz", "fracpoly1",
+                                     "fracpoly2")) {
   dist <- match.arg(dist)
+  if (dist != "weibull") dist <- "weibull" # NEED TO CHANGE THIS!
   n_states <- match.arg(n_states)
   check_is_class(txseqs, "txseqs", "txseq_list")
   if (n_states == "four" & attributes(txseqs)$start_line == "second"){

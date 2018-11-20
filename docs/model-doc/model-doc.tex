@@ -227,6 +227,7 @@
 
 \clearpage
 \phantomsection
+
 \section{Open Source Value Project}\label{sec:osvp}
 
 The continuing increase in U.S. healthcare costs has stimulated the introduction of initiatives to promote the use of high-value care.  Cost-effectiveness analysis can inform efficient use of healthcare resources by formally computing costs and benefits to identify the most valuable treatment options for a given disease.  In many countries, a single health technology assessment agency assesses the value of healthcare technology by means of cost-effectiveness analysis and recommends a utilization strategy. In the US, however, utilization decisions are decentralized and made by a variety of payers and provider organizations. Value frameworks are gaining prominence to guide utilization of therapies, but vary in perspective, the evidence considered, and approaches, thereby resulting in confusion and debate among stakeholders.
@@ -243,7 +244,7 @@ Lung cancer is the leading cause of cancer related death worldwide. (1) Non-smal
 \subsection{Value assessment}
 The IVI-NSCLC (egfr+) model is designed to assess the value of multiple competing sequential treatment strategies for patients with metastatic EGFR+ NSCLC. Sequential treatment strategies of interest are outlined in \textbf{Figure 1}. The final treatment strategies--starting with 1st line treatment (1L), followed by 2nd line treatment (2L), and treatment beyond 2nd line (2L+)--that can be evaluated with version 1 of the model were informed by the available evidence base, guidelines, and clinician input. The model is primarily designed to evaluate sequences starting with 1L, but sequences starting with 2L were analyzed given a certain 1L treatment received.
 
-\textbf{Figure 1. Potential sequential treatment strategies of interest to be compared with the model} 
+\textbf{Figure 1. Sequential treatment strategies of interest to be compared with the model} 
 
 \includegraphics[scale=1]{Figure 1.PNG} 
 
@@ -378,9 +379,6 @@ Value was assessed using two frameworks: CEA and MCDA. If CEA is used for value 
 
 With MCDA, the value of each treatment strategy is based on a "total value" score. The score is calculated in three steps. First, a number of distinct criteria are assigned values on a common scale, for instance, ranging from 0 to 100. Second, each criterion is assigned points, say, ranging from 0 to 10, which is, in turn, used to calculate a weight by dividing each criterion's points by the sum of points across all criteria. For example, if there were 3 criteria and each criterion was given a score of 5, then each criterion would receive a weight of $ \dfrac{1}{3} $. If, on the other hand, the three criteria were given scores of 2.5, 5, and 7.5, then they would be given weights of 0.167, 0.33, and 0.5, respectively. Third, to aggregate results, we multiplied the value of each criterion on the common scale by its weight and sum the weighted scores across criteria. Future iterations of the model will consider using the Patient Experience Study to inform the baseline weights across attributes. 
 
-\section{Source data and parameter estimation}\label{sec:source-data}
-
-Key parameters for the model relate to: (i) the treatment effects of the interventions used for the different lines of treatment in terms of PFS and OS; (ii) utilities; (iii) healthcare resource use; and (iv) productivity.  Estimates for these parameters were based on currently available published evidence identified by means of a systematic literature review (SLR) and synthesized with meta-analysis techniques where appropriate.
 
 \section{Simulation and uncertainty analysis}\label{sec:uncertainty-analysis}
 
@@ -412,8 +410,21 @@ The individual-level CTSTM was implemented using the R package \textit{hesim} de
 Although \textit{hesim} supports standard individual-level CTSTMs using R alone, the package also provides a comprehensive C++ library for developing custom simulations with C++. We took this approach by customizing \textit{hesim's} individual-level CTSTM classes and adding new features such as functions for simulating adverse events. 
 
 
- 
-\citet{baio2015probabilistic}
+\section{Source data and parameter estimation}\label{sec:data}
+Key parameters for the model relate to: (i) transition probabilities; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates are based on currently available published evidence identified by means of a systematic literature review (SLR) and synthesized with meta-analysis techniques where appropriate. Details of our SLR (\autoref{app:slr}) and NMA (\autoref{app:nma})  techniques are provided in the Appendix. 
+
+\subsection{Transition probabilities}\label{subsec:data-transprobs}
+Protocol Section 7.4.2.5.1 to go here.
+
+\subsection{Adverse events}\label{subsec:data-aes}
+Since adverse events in nearly all clinical trials were reported as the number of patients experiencing the event, the NMA was performed on the proportion of patients experiecning the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}.
+
+\subsection{Utilities}\label{subsec:data-utility}
+To be added.
+
+\subsection{Resource use, productivity, and cost}\label{subsec:data-costs}
+To be added.
+
 
 \begin{appendices}
 \setcounter{table}{0}
@@ -423,7 +434,7 @@ Although \textit{hesim} supports standard individual-level CTSTMs using R alone,
 \setcounter{equation}{0}
 \renewcommand{\theequation}{A\arabic{equation}}
 
-\section{Systematic literature review}\label{app:slr}
+\section{Systematic Literature Review}\label{app:slr}
 
 \subsection{Treatment effects}
 

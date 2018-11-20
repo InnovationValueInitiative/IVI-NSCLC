@@ -74,9 +74,11 @@ struct_3_2L <- model_structure(txseqs_2L_pos, dist = "weibull",
 print(create_states(struct_3_2L))
 print(create_trans_mat(struct_3_2L))
 
-# Recall that the transition matrix depends on the model structure
+## ------------------------------------------------------------------------
 tmat_3_1L <- create_trans_mat(struct_3_1L)
 tmat_3_2L <- create_trans_mat(struct_3_2L)
+print(tmat_3_1L)
+print(tmat_3_2L)
 
 ## ------------------------------------------------------------------------
 state_factor <- function(x){
@@ -89,7 +91,7 @@ n_samples <- 100
 
 ## ------------------------------------------------------------------------
 # Input data
-transmod_data <- create_transmod_data(struct_3_1L, tmat, pats)
+transmod_data <- create_transmod_data(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 print(transmod_data[1:5, 1:10]) 
 
@@ -100,14 +102,19 @@ transmod_params <- create_transmod_params(n = n_samples, data = transmod_data)
 transmod_params$coefs$scale[1:5, 1:4]
 
 # Health state transition model
-transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat)
+transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat,
+                                          start_age = pats$age)
 class(transmod)
 
-## ------------------------------------------------------------------------
-utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats)
+## ----ae_probs, fig.height = 4--------------------------------------------
+ae_probs <- ae_probs(n_samples, struct)
 
 ## ------------------------------------------------------------------------
-costmods <- create_costmods(n = n_samples, struct = struct, patients = pats)
+utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats,
+                          ae_probs = ae_probs)
+
+## ------------------------------------------------------------------------
+costmods <- create_costmods(n = n_samples, struct = struct, patients = pats, ae_probs = ae_probs)
 
 ## ------------------------------------------------------------------------
 econmod <- hesim::IndivCtstm$new(trans_model = transmod,
@@ -160,6 +167,30 @@ ggplot(quantiles[prob == .5], aes(x = strategy_name, y = quantile_prob_mean)) +
   xlab("") + ylab("Median years") + 
   coord_flip() 
 
+## ----ae_probs_plot, fig.height = 6.5-------------------------------------
+tidy_ae_probs <- tidy(ae_probs)
+plot_data <- tidy_ae_probs[, .(prob_mean = mean(prob),
+                               prob_lower = quantile(prob, .025),
+                                prob_upper = quantile(prob, .975)),
+                          by = c("strategy_id", "ae_name")]
+strategy_factor(plot_data, rev = TRUE)
+plot_data[, ae_name := ifelse(ae_name == "Elevated alanine transaminase",
+                              "Elevated \n alanine \n transaminase",
+                              ae_name)]
+plot_data[, ae_name := ifelse(ae_name == "Elevated aspartate transaminase",
+                              "Elevated \n aspartate \n transaminase",
+                              ae_name)]
+ggplot(plot_data, aes(x = rev(strategy_name), y = prob_mean)) + 
+  facet_wrap(~factor(ae_name), ncol = 3) +
+  geom_bar(stat = "identity", fill = "#d9230f") +
+  geom_errorbar(aes(ymin = prob_lower,
+                    ymax = prob_upper), width = .2) +
+  scale_fill_discrete(name = "") +
+  scale_y_continuous(breaks = pretty_breaks(n = 3)) +
+  xlab("") + ylab("Probability of adverse event") + 
+  coord_flip() +
+  theme(panel.spacing = unit(2, "lines"))
+
 ## ----mean_lys, fig.height = 1.5------------------------------------------
 # Simulate
 econmod$sim_qalys(dr = c(0, .03))
@@ -195,10 +226,11 @@ ggplot(costs[category == "total"],
   xlab("") + ylab("Costs") + 
   scale_y_continuous(label = dollar_format()) 
 
-## ----costs_cat, fig.width = 4--------------------------------------------
-costs[, category_name := factor(category, levels = c("tx_ac", "tx_admin", "op", "inpt", "ae", "total"),
-                                labels = c("Drug acquisition", "Drug administration",
-                                           "Outptient", "Inpatient", "Adverse event", "Total"))]
+## ----costs_cat, fig.width = 5--------------------------------------------
+costs[, category_name := factor(category, 
+                                levels = c("ae", "tx_ac", "tx_admin", "inpt", "op", "total"),
+                                labels = c("Adverse event", "Drug acquisition", "Drug administration",
+                                           "Inpatient", "Outptient", "Total"))]
 ggplot(costs[category != "total"], 
        aes(x = strategy_name, y = costs_mean, fill = category_name)) + 
   geom_bar(stat = "identity") +
@@ -207,29 +239,22 @@ ggplot(costs[category != "total"],
   scale_y_continuous(label = dollar_format()) 
 
 ## ----incr_costs, fig.width = 4-------------------------------------------
-# Incremental costs with Strategy 1 as the reference treatment
+# Compute incremental costs for each possible reference treatment sequence
 incr_costs <- vector(mode = "list", length = length(txseqs))
+incr_costs_i <- copy(ce_sim$costs)
 for (i in 1:length(txseqs)){
-  incr_costs[[i]] <- ce_sim$costs[, costs_comparator := costs[i], 
+  incr_costs_i[, costs_comparator := costs[i], 
                            by = c("category", "dr", "sample")]
-  incr_costs[[i]][, icosts := costs - costs_comparator]
-  incr_costs[[i]] <- incr_costs[[i]][, .(icosts_mean = mean(icosts),
+  incr_costs_i[, icosts := costs - costs_comparator]
+  incr_costs[[i]] <- incr_costs_i[, .(icosts_mean = mean(icosts),
                                    icosts_lower = quantile(icosts, .025),
                                    icosts_upper = quantile(icosts, .975)),
                                by = c("category", "dr", "strategy_id")]
   strategy_factor(incr_costs[[i]])
 }
 
-
-incr_costs <- ce_sim$costs[, costs_comparator := costs[1], 
-                           by = c("category", "dr", "sample")]
-incr_costs[, icosts := costs - costs_comparator]
-incr_costs <- incr_costs[, .(icosts_mean = mean(icosts),
-                             icosts_lower = quantile(icosts, .025),
-                             icosts_upper = quantile(icosts, .975)),
-               by = c("category", "dr", "strategy_id")]
-strategy_factor(incr_costs)
-ggplot(incr_costs[dr == .03 & category == "total" & 
+# Plot incremental costs with treatment sequence 1 as the reference treatment
+ggplot(incr_costs[[1]][dr == .03 & category == "total" & 
                     strategy_id != 1], 
        aes(x = strategy_name, y = icosts_mean)) + 
   geom_bar(stat = "identity", fill = "#d9230f") +
@@ -239,6 +264,25 @@ ggplot(incr_costs[dr == .03 & category == "total" &
   scale_x_discrete(drop = FALSE) +
   xlab("") + ylab("Incremental costs") + 
   scale_y_continuous(label = dollar_format())
+
+## ----compute_prod_costs--------------------------------------------------
+prodcosts <- sim_prod_costs(econmod, patients = pats)
+ce_sim2 <- add_prod_costs(ce_sim, prod_costs = prodcosts)
+
+## ----plot_prod_costs_cat, fig.width = 5----------------------------------
+costs2 <- ce_sim2$costs[dr == .03 , .(costs_mean = mean(costs)),
+                        by = c("strategy_id", "category")]
+strategy_factor(costs2)
+costs2[, category_name := factor(category, 
+                                levels = c("ae", "tx_ac", "tx_admin", "prod", "inpt", "op", "total"),
+                                labels = c("Adverse event", "Drug acquisition", "Drug administration",
+                                           "Productivity", "Inpatient", "Outptient", "Total"))]
+ggplot(costs2[category != "total"], 
+       aes(x = strategy_name, y = costs_mean, fill = category_name)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Costs") + 
+  scale_y_continuous(label = dollar_format()) 
 
 ## ----icea----------------------------------------------------------------
 icea <- hesim::icea(ce_sim, dr = .03)
@@ -286,16 +330,20 @@ ggplot(icea$evpi, aes(x = k, y = evpi)) +
 hc_costs <- ce_sim$costs[!category %in% c("prod", "total"), 
                            .(costs = sum(costs)),
                              by = c("sample", "strategy_id")]
+txattr <- txattr_performance(struct = struct, patients = pats, econmod = econmod)
 outcomes <- data.table(sample = rep(1:n_samples, each = length(txseqs)),
                        strategy_id = rep(1:length(txseqs), times = n_samples),
                        lys_s1 = econmod$qalys_[state_id == 1 & dr == 0.03, lys],
                        lys_p1 = econmod$qalys_[state_id == 2 & dr == 0.03, lys],
                        lys_p2 = econmod$qalys_[state_id == 3 & dr == 0.03, lys],
-                       hc_costs = hc_costs$costs)
-criteria_vars <- c("lys_s1", "lys_p1", "lys_p2", "hc_costs")
+                       hc_costs = hc_costs$costs,
+                       route = txattr$route,
+                       yrs_since_approval = txattr$yrs_since_approval)
+criteria_vars <- c("lys_s1", "lys_p1", "lys_p2", "hc_costs", "route", "yrs_since_approval")
 criteria_names <- c("Life-years stable disease", "Life-years progressed 1L", 
-                    "Life-years progressed 2L", "Health care sector costs")
-optimal <- c("high", "high", "high", "low")
+                    "Life-years progressed 2L", "Health care sector costs",
+                    "Route of administration", "Years since FDA approval")
+optimal <- c("high", "high", "high", "low", "high", "high")
 performance_mat_orig <- performance_matrix(outcomes, 
                                            strategy = "strategy_id", 
                                            criteria = criteria_vars,
@@ -310,7 +358,7 @@ ggplot(plot_data, aes(x = x, y = y)) + geom_line() +
   scale_x_continuous(label = dollar_format()) 
 
 ## ----mcda----------------------------------------------------------------
-weights <- c(.2, .2, .2, .4)
+weights <- c(.2, .2, .2, .3, .05, .05)
 mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",
              criteria = criteria_vars,
              weights = weights,
@@ -380,4 +428,39 @@ p2 <- ggplot(prank,
 
 # Combine
 grid.arrange(p1, p2, ncol = 2)
+
+## ----voh-----------------------------------------------------------------
+voh <- value_of_hope(econmod, comparator = 1)
+
+## ----voh-plot-qalys------------------------------------------------------
+plot_data <- copy(voh)
+plot_data[, iqalys_voh := iqalys + voh]
+plot_data <- melt(plot_data, id.vars = c("strategy_id"),
+                  measure.vars = c("iqalys", "iqalys_voh"),
+                  value.name = "qalys")
+plot_data[, variable := ifelse(variable == "iqalys", 
+                               "Standard",
+                               "With value of hope")]
+strategy_factor(plot_data)
+ggplot(plot_data, 
+       aes(x = strategy_name, y = qalys, fill = variable)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_discrete(name = "") +
+  geom_hline(yintercept = 0) +
+  xlab("") + ylab("Incremental QALYs")
+
+## ----voh-plot-nmb--------------------------------------------------------
+k <- 100000
+incr_costs_mean <- incr_costs[[1]][category == "total" & dr == .03, 
+                                   .(strategy_id, icosts_mean)]
+plot_data[, icosts := incr_costs_mean$icosts_mean[match(strategy_id,
+                                            incr_costs_mean$strategy_id)]]
+plot_data[, inmb := k * qalys - icosts]
+ggplot(plot_data, 
+       aes(x = strategy_name, y = inmb, fill = variable)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_discrete(name = "") +
+  geom_hline(yintercept = 0) +
+  xlab("") + ylab("Incremental NMB") + 
+  scale_y_continuous(label = scales::dollar)
 
