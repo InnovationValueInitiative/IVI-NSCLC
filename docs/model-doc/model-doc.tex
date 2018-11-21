@@ -242,11 +242,14 @@ Lung cancer is the leading cause of cancer related death worldwide. (1) Non-smal
 
 \section{Purpose}\label{sec:purpose}
 \subsection{Value assessment}
-The IVI-NSCLC (egfr+) model is designed to assess the value of multiple competing sequential treatment strategies for patients with metastatic EGFR+ NSCLC. Sequential treatment strategies of interest are outlined in \textbf{Figure 1}. The final treatment strategies--starting with 1st line treatment (1L), followed by 2nd line treatment (2L), and treatment beyond 2nd line (2L+)--that can be evaluated with version 1 of the model were informed by the available evidence base, guidelines, and clinician input. The model is primarily designed to evaluate sequences starting with 1L, but sequences starting with 2L were analyzed given a certain 1L treatment received.
+The IVI-NSCLC (egfr+) model is designed to assess the value of multiple competing sequential treatment strategies for patients with metastatic EGFR+ NSCLC. Sequential treatment strategies of interest are outlined in \autoref{fig:reatment-strategies}. The final treatment strategies--starting with 1st line treatment (1L), followed by 2nd line treatment (2L), and treatment beyond 2nd line (2L+)--that can be evaluated with version 1 of the model were informed by the available evidence base, guidelines, and clinician input. The model is primarily designed to evaluate sequences starting with 1L, but sequences starting with 2L were analyzed given a certain 1L treatment received.
 
-\textbf{Figure 1. Sequential treatment strategies of interest to be compared with the model} 
+\begin{figure}[h]
+\centering
+\caption{Sequential treatment strategies of interest to be compared with the model}\label{fig:reatment-strategies}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
 
-\includegraphics[scale=1]{Figure 1.PNG} 
+\end{figure}
 
 
 The IVI-NSCLC(egfr+) model is suitable for informing decisions for specific (sub)populations, but is not suitable for making predictions at the individual level, nor should it replace the patient-physician shared decision-making process.  Local decision makers can modify the model to perform analysis of value that reflect the local setting while accounting for all scientific uncertainty and help them understand the confidence with which they make decisions. 
@@ -284,16 +287,17 @@ Version 1 of the IVI-NSCLC(egfr+) model is designed to provide a starting point 
 
 \subsection{Disease model}
 
-The IVI-NSCLC is an individual-level continuous-time state transition model (CTSTM) in which patients can either have stable disease, progressed disease, or have died. To model sequential treatment strategies, we assumed that patients move to the next treatment after disease progression. In other words, a patient with stable disease moves to the second treatment in a sequence after progression on the first treatment, to the third treatment after progression on the second treatment, and so on. A patient can die at any time. \textbf{Figure 2} shows health state transitions for an example sequence of 3 treatments. Sequential treatment is incorporated into the CTSTM by expanding the number of health states according to the number of treatment lines. In the figure there are 3 treatment lines and 5 health states; more generally, there is one health state for each treatment line, a health state after progression on the final line, and a death state, so a model with n treatment lines will have n+2 health states. 
+The IVI-NSCLC is an individual-level continuous-time state transition model (CTSTM) in which patients can either have stable disease, progressed disease, or have died. To model sequential treatment strategies, we assumed that patients move to the next treatment after disease progression. In other words, a patient with stable disease moves to the second treatment in a sequence after progression on the first treatment, to the third treatment after progression on the second treatment, and so on. A patient can die at any time. \autoref{fig:model-structure-4-states} shows health state transitions for an example sequence of 3 treatments. Sequential treatment is incorporated into the CTSTM by expanding the number of health states according to the number of treatment lines. In the figure there are 3 treatment lines and 5 health states; more generally, there is one health state for each treatment line, a health state after progression on the final line, and a death state, so a model with n treatment lines will have n+2 health states. 
 
 The hazard rate, $\ h^{qr} $ \textit{(u)} for a transition from state \textit{q} to state \textit{r} at time \textit{u} follows different parametric distributions including the exponential, Weibull, Gompertz, log-logistic, and fractional polynomial distributions as estimated with a multi-state network meta-analysis (NMA). In the individual-level model, time to each state \textit{r} that can be entered from state \textit{q} is sampled based on time-varying hazard rates and patients' transition to the state with the shortest sampled time.
 
 The parameterization of transitions between health states allows incorporating potentially relevant prognostic factors or effect-modifiers. This would also facilitate including carry-over effects from one line of treatment to the next, once such data becomes available. 
 
-\textbf{Figure 2. Simplified model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state}
-
-\includegraphics[scale=0.3]{Figure 2.png} 
-
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/model-structure-4-states.png}
+\caption{Simplified model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state}\label{fig:model-structure-4-states}
+\end{figure}
 
 $\ S_{1} \textrm{ = Progression-free (stable disease) with 1L treatment }$
 
@@ -315,9 +319,13 @@ $\ h^{S_{2}D} (u) \textrm{ = hazard for transitioning from stable disease to dea
 
 $\ h^{P_{2}D} (u) \textrm{ = hazard for transitioning from progression on 2L to dead at time \textit{u} } $
 
-\textbf{Figure 3. Simplified model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state} 
 
-\includegraphics[scale=0.3]{Figure 3.png} 
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/model-structure-3-states.png}
+\caption{Simplified model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state}\label{fig:model-structure-3-states}
+\end{figure}
+
 
 $\ S_{1} \textrm{ = Progression-free (stable disease) with 1L treatment }$ 
 
@@ -442,19 +450,19 @@ The systematic literature reviews of treatment effects focused on randomized con
 
 \textbf{Appendix Table 1. PICOS criteria for review of treatment effects (metastatic 1L population)}
 
-\includegraphics[scale=1]{Appendix Table 1.PNG} 
+\includegraphics[scale=1]{tables/picos-metastatic-1L.png} 
 
 *Trials where the overall study population is an all-comer population, but subgroup results are reported for the target population of interest will be included; a trial or subgroup where the study population is a mixture of non-squamous and squamous  patients will be included of >90\% is non-squamous.
 
 \textbf{Appendix Table 2. PICOS criteria for review of treatment effects (metastatic 2L population)}
 
-\includegraphics[scale=1]{Appendix Table 2.PNG} 
+\includegraphics[scale=1]{tables/picos-metastatic-2L.png} 
 
 *Trials where the overall study population is an all-comer population, but subgroup results are reported for the target population of interest will be included; a trial or subgroup where the study population is a mixture of non-squamous and squamous patients will be included of >90\% is non-squamous.
 
 \textbf{Appendix Table 3: PICOS criteria for review of treatment effects (metastatic 2L+ population)}
 
-\includegraphics[scale=1]{Appendix Table 3.PNG}
+\includegraphics[scale=1]{tables/picos-metastatic-2LP.png}
 
 *Trials where the overall study population is an all-comer population, but subgroup results are reported for the target population of interest will be included; a trial or subgroup where the study population is a mixture of non-squamous and squamous  patients will be included of >90\% is non-squamous. 
 
@@ -464,7 +472,7 @@ Health state utility values (EQ-5d, HUI2, HUI-3, SF-6D) for the different health
 
 \textbf{Appendix Table 4: PICOS criteria for review of utility estimates}
 
-\includegraphics[scale=1]{Appendix Table 4.PNG} 
+\includegraphics[scale=1]{tables/picos-utility.png} 
 
 \subsection{Resource use, productivity, and cost}
 
@@ -472,7 +480,7 @@ Relevant evidence regarding resource use, productivity and cost estimates were i
 
 \textbf{Appendix Table 5. PICOS criteria for studies providing information on resource use, productivity, and cost estimates} 
 
-\includegraphics[scale=1]{Appendix Table 5.PNG} 
+\includegraphics[scale=1]{tables/picos-costs.png} 
 
 \subsection{Study identification}
 
@@ -524,11 +532,14 @@ We performed the NMA in a Bayesian framework.  Analysis within the Bayesian fram
 
 \subsubsection{Progression-free survival and overall survival}
 
-Traditional NMA for survival outcomes are based on hazard ratio (HR) estimates and rely on the proportional hazards assumption, which is implausible if the hazard functions of competing interventions cross.(29) Furthermore, separate meta-analyses of OS and of PFS data ignore the relationship between these outcomes. We performed NMA of OS and PFS that is based on a tri-state (stable, progression, and death) transition model where time-varying hazard rates and relative treatment effects are modeled with known parametric survival functions or fractional polynomials according to Equation 1 and illustrated in Appendix Figure 1.(29,30)
+Traditional NMA for survival outcomes are based on hazard ratio (HR) estimates and rely on the proportional hazards assumption, which is implausible if the hazard functions of competing interventions cross.(29) Furthermore, separate meta-analyses of OS and of PFS data ignore the relationship between these outcomes. We performed NMA of OS and PFS that is based on a tri-state (stable, progression, and death) transition model where time-varying hazard rates and relative treatment effects are modeled with known parametric survival functions or fractional polynomials according to Equation 1 and illustrated in \autoref{fig:multistate-nma}.(29,30)
 
-\textbf{Appendix Figure 1. Relationship between stable disease (S), progression (P) and death (D) as used in the multistate network meta-analysis model }
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/multistate-nma.png}
+\caption{Relationship between stable disease (S), progression (P) and death (D) as used in the multi-state network meta-analysis model}\label{fig:multistate-nma}
+\end{figure}
 
-\includegraphics[scale=0.4]{Appendix Figure 1.png} 
 
 $\ S_{ik} (u) \textrm{ = Progression-free (stable disease) in study i, treatment arm k at time u }$
 
