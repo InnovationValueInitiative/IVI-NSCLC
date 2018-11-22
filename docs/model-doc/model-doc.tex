@@ -163,6 +163,7 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setstretch{1}
+\setlength{\abovecaptionskip}{15pt plus 3pt minus 2pt} % Space between captiona and figure
 
 % appendix settings
 \usepackage[toc,page,header]{appendix}
@@ -178,6 +179,7 @@
 \newcommand\floor[1]{\lfloor#1\rfloor}
 \newcommand\ceil[1]{\lceil#1\rceil}
 \newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}} 
 
 % subsubsection
 
@@ -246,9 +248,8 @@ The IVI-NSCLC (egfr+) model is designed to assess the value of multiple competin
 
 \begin{figure}[h]
 \centering
-\caption{Sequential treatment strategies of interest to be compared with the model}\label{fig:reatment-strategies}
 \includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
-
+\caption{Sequential treatment strategies of interest to be compared with the model}\label{fig:reatment-strategies}
 \end{figure}
 
 
@@ -299,45 +300,12 @@ The parameterization of transitions between health states allows incorporating p
 \caption{Simplified model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state}\label{fig:model-structure-4-states}
 \end{figure}
 
-$\ S_{1} \textrm{ = Progression-free (stable disease) with 1L treatment }$
-
-$\ P_{1} \textrm{ = Progression with 1L treatment }$
-
-$\ S_{2} \textrm{ = Progression-free (stable disease) with 2L treatment }$
-
-$\ P_{2} \textrm{ = Progression with 2L treatment, captures the survival with 2L+ without making a distinction between a progression free and progression phase }$
-
-$\ D \textrm{ = Dead }$ 
-
-$\ h^{S_{1}P_{1}} (u) \textrm{ = hazard for transitioning from progression-free to progression with 1L treatment at time \textit{u} } $ 
-
-$\ h^{S_{1}D} (u) \textrm{ = hazard for transitioning from progression-free to dead with 1L treatment at time \textit{u} } $ 
-
-$\ h^{S_{2}P_{2}} (u) \textrm{ = hazard for transitioning from progression-free to progression with 2L treatment at time \textit{u} } $ 
-
-$\ h^{S_{2}D} (u) \textrm{ = hazard for transitioning from stable disease to dead with 2L treatment at time \textit{u} } $ 
-
-$\ h^{P_{2}D} (u) \textrm{ = hazard for transitioning from progression on 2L to dead at time \textit{u} } $
-
-
 \begin{figure}
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/model-structure-3-states.png}
-\caption{Simplified model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state}\label{fig:model-structure-3-states}
+\caption{Simplified model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state}\label{fig:model-structure-3-states} 
 \end{figure}
 
-
-$\ S_{1} \textrm{ = Progression-free (stable disease) with 1L treatment }$ 
-
-$\ P_{1} \textrm{ = Progression with 1L treatment, captures the survival with 2L and 2L+ without making a distinction between progression free and progression phases }$ 
-
-$\ D \textrm{ = Dead }$ 
-
-$\ h^{S_{1}P_{1}} (u) \textrm{ = hazard for transitioning from progression-free to progression with 1L treatment at time \textit{u} } $
-
-$\ h^{S_{1}D} (u) \textrm{ = hazard for transitioning from progression-free to dead with 1L treatment at time \textit{u} } $ 
-
-$\ h^{P_{1}D} (u) \textrm{ = hazard for transitioning from progression on 1L to dead at time \textit{u} } $
 
 \subsection{Adverse events}
 
@@ -361,11 +329,31 @@ Our primary motivation for using an individual-level model relates to the distin
 
 \section{Model outcomes}\label{sec:model-outcomes}
 
-The model simulates the health outcomes, risks, and costs associated with alternative treatment strategies in oncology. The model's time horizon can be selected by the user and will default to a lifetime horizon. The health outcomes, risks, and costs will be combined to assess value using two frameworks: CEA and MCDA. Both disaggregated model outcomes and value estimates will be based on mean values (i.e., averages across all simulated patients). An overview of all model outcomes is shown in \textbf{Table 1.} Additional details are provided in the text below.  
+The model simulates the health outcomes, risks, and costs associated with alternative treatment strategies in oncology. The model's time horizon can be selected by the user and will default to a lifetime horizon. The health outcomes, risks, and costs will be combined to assess value using two frameworks: CEA and MCDA. Both disaggregated model outcomes and value estimates will be based on mean values (i.e., averages across all simulated patients). An overview of all model outcomes is shown in \autoref{tbl:model-outcomes}. Additional details are provided in the text below.  
 
-\textbf{Table 1. Model outcomes} 
-
-\includegraphics[scale=1]{Table 1.PNG} 
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\caption{Model outcomes} \label{tbl:model-outcomes}
+\begin{tabular}{p{0.3\linewidth}p{0.7\linewidth}}
+\hline
+\multicolumn{1}{l}{Category} & \multicolumn{1}{l}{Outcomes}\\
+\hline
+Health outcomes & Health state probabilities; progression free survival \& overall survival; quality-adjusted life-years\\
+&\\
+Risks & Adverse events (diarrhea, dry skin, elevated alanine transaminase, elevated aspartate transaminase, eye problems, paronychia, pneumonitis, pruritus, rash, stomatitis)\\
+&\\
+Health care sector costs & Drug acquisition and administration costs; adverse event costs; costs from inpatient hospital stays; costs from hospital outpatient or doctor office visits\\
+&\\
+Non-health care sector costs & Productivity losses \\
+&\\
+Value assessment & Cost-effectiveness analysis; multi-criteria decision analysis\\
+\hline
+\end{tabular}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
 
 \subsection{Health outcomes}
 
@@ -394,9 +382,50 @@ With MCDA, the value of each treatment strategy is based on a "total value" scor
 
 Parameter uncertainty is quantified using probabilistic sensitivity analysis (PSA), which propagates uncertainty in the model input parameters throughout the model by randomly sampling the input parameters from their joint probability distribution.(14,15) Probability distributions are determined according to the distributional properties of the statistical estimates, which, in turn, depend on the statistical techniques used, and the distributions of the underlying data. \textbf{Table 2} displays the probability distribution that we used for the model parameters. When conducting a CEA, the results of the PSA are summarized using standard measures from the literature including cost-effectiveness planes, cost-effectiveness acceptability curves, and estimates of the expected value of perfect information.(16-19) Furthermore, all point estimates from a CEA or MCDA will be reported along with 95 percent confidence intervals. 
 
-\textbf{Table 2. Probability distributions for probabilistic sensitivity analysis } 
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\caption{Probability distributions for probabilistic sensitivity analysis} \label{tbl:psa-distributions}
+\begin{tabular}{p{0.5\linewidth}p{0.5\linewidth}}
+\hline
+\multicolumn{1}{l}{Parameter(s)} & \multicolumn{1}{l}{Distribution}\\
+\hline
+\multicolumn{2}{@{}l}{\textbf{Health state transitions}} \\
+Bayesian multi-state NMA & Simulated posterior distribution\\
+&\\
+\multicolumn{2}{@{}l}{\textbf{Adverse events}} \\
+Bayesian NMA for adverse events & Simulated posterior distribution\\
+&\\
+\multicolumn{2}{@{}l}{\textbf{Utility}} \\
+Health state utility & Normal distribution\\
+&\\
+Adverse event disutilities & Normal distribution\\
+&\\
+\multicolumn{2}{@{}l}{\textbf{Health care sector costs}} \\
+Drug acquisition and administration cost & Fixed \\
+&\\
+Discounts and rebates applied to drug acquisition cost & Uniform \\
+&\\
+Inpatient costs & Gamma \\
+&\\
+Outpatient costs & Gamma \\
+&\\
+Adverse event costs & Normal\\
+&\\
+\multicolumn{2}{@{}l}{\textbf{Productivity costs}} \\
+Missed work days & Uniform\\
+&\\
+Reduction in hours worked & Uniform\\
 
-\includegraphics[scale=1]{Table 2.PNG} 
+
+\hline
+\end{tabular}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
+
+
 
 \subsection{Structural uncertainty}
 
@@ -412,11 +441,7 @@ Finally, different methods for simulating adverse events, costs, and utilities w
 
 \subsection{Implementation} 
 
-The individual-level CTSTM was implemented using the R package \textit{hesim} developed by IVI. The package provides a general framework for integrating parameter estimates from a statistical model with different types of simulation models for economic evaluation. Parameter uncertainty is propagated throughout \textit{hesim} models using PSA. In our case, we randomly drew all input parameters from appropriate probability distributions, and simulated the CTSTM for each randomly sampled parameter set. All computationally intensive steps in \textit{hesim} simulation models are written in C++ so the simulations are fast enough to be run with a PSA in web applications. 
-
-
-Although \textit{hesim} supports standard individual-level CTSTMs using R alone, the package also provides a comprehensive C++ library for developing custom simulations with C++. We took this approach by customizing \textit{hesim's} individual-level CTSTM classes and adding new features such as functions for simulating adverse events. 
-
+The individual-level CTSTM was implemented using the R package \pkg{hesim} developed by IVI. The package provides a general framework for integrating parameter estimates from a statistical model with different types of simulation models for economic evaluation. Parameter uncertainty is propagated throughout \pkg{hesim} models using PSA. In our case, we randomly drew all input parameters from appropriate probability distributions, and simulated the CTSTM for each randomly sampled parameter set. All computationally intensive steps in \pkg{hesim} simulation models are written in C++ so the simulations are fast enough to be run with a PSA in web applications. 
 
 \section{Source data and parameter estimation}\label{sec:data}
 Key parameters for the model relate to: (i) transition probabilities; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates are based on currently available published evidence identified by means of a systematic literature review (SLR) and synthesized with meta-analysis techniques where appropriate. Details of our SLR (\autoref{app:slr}) and NMA (\autoref{app:nma})  techniques are provided in the Appendix. 
@@ -448,11 +473,47 @@ To be added.
 
 The systematic literature reviews of treatment effects focused on randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of metastatic EGFR+ non-squamous NSCLC by line of treatment, i.e. 1L, 2L, and 2L+. Primary outcomes of interest were OS, PFS and time to progression (TTP). Details regarding eligibility criteria defining the scope of the studies considered relevant are outlined in Appendix Tables 1, 2 and 3. The identified evidence was used to estimate the relative treatment effects for each intervention versus a defined intervention of reference by line of treatment conditional upon the prior treatment (class), as well as to estimate the absolute treatment effects with the corresponding reference treatments.
 
-\textbf{Appendix Table 1. PICOS criteria for review of treatment effects (metastatic 1L population)}
 
-\includegraphics[scale=1]{tables/picos-metastatic-1L.png} 
-
-*Trials where the overall study population is an all-comer population, but subgroup results are reported for the target population of interest will be included; a trial or subgroup where the study population is a mixture of non-squamous and squamous  patients will be included of >90\% is non-squamous.
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\caption{PICOS criteria for review of treatment effects (metastatic 1L population)} \label{tbl:picos-tx-effects-1L}
+\begin{tabular}{p{0.3\linewidth}p{0.7\linewidth}}
+\hline
+\multicolumn{1}{l}{PICOS} &  \multicolumn{1}{l}{Criteria}\\
+\hline
+Population & Adult patients with metastatic non-squamous NSCLC who are EGFR positive and without prior treatment for their disease.\\
+&\\
+Interventions & The following drugs as monotherapy or in combination with other drugs 
+\begin{itemize}
+\item erlotinib
+\item afatinib
+\item gefitinib
+\item osimertinib
+\item dacomitinib
+\end{itemize} \\
+Comparators & 
+\begin{itemize}
+\item placebo
+\item best supportive care (BSC), defined as whichever therapy was judged to be appropriate by the treating physician.
+\item any intervention of interest
+\item any treatment that facilitates an indirect comparison
+\end{itemize} \\
+Outcomes & 
+\begin{itemize}
+\item OS
+\item PFS
+\item TTP
+\end{itemize} \\
+Study design & RCTs \\
+&\\
+Other & English language\\
+\hline
+\end{tabular}
+\scriptsize Note: Trials where the overall study population is an all-comer population, but subgroup results are reported for the target population of interest are included. A trial or subgroup where the study population is a mixture of non-squamous and squamous patients is included if over 90\% is non-squamous. 
+\end{threeparttable}
+\end{center}
+\end{table}
 
 \textbf{Appendix Table 2. PICOS criteria for review of treatment effects (metastatic 2L population)}
 
