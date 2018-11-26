@@ -244,11 +244,11 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      0 79.51053        1    erl
-## 2:           1          1             2      0 79.51053        1    erl
-## 3:           1          1             3      0 79.51053        1    osi
-## 4:           1          1             4      0 79.51053        1    osi
-## 5:           1          1             5      0 79.51053        1    osi
+## 1:           1          1             1      0 55.94965        1    erl
+## 2:           1          1             2      0 55.94965        1    erl
+## 3:           1          1             3      0 55.94965        1    osi
+## 4:           1          1             4      0 55.94965        1    osi
+## 5:           1          1             5      0 55.94965        1    osi
 ##    tx_hist osi_s1p1_scale osi_s1d_scale
 ## 1:    &lt;NA&gt;              1             0
 ## 2:    &lt;NA&gt;              0             1
@@ -516,22 +516,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.05 (0.00, 0.11)</td>
+<td align="left">0.06 (0.01, 0.11)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">2,476 (-6,555, 13,381)</td>
+<td align="left">3,725 (-7,127, 12,645)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">2,740 (-3,904, 8,716)</td>
+<td align="left">2,332 (-3,716, 9,059)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">47,469</td>
+<td align="left">61,493</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -572,7 +572,7 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span clas
 <div id="multi-criteria-decision-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multi-criteria-decision-analysis" class="anchor"></a><span class="header-section-number">4.2</span> Multi criteria decision analysis</h2>
-<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, the probability of experiencing diarrhea, health care sector costs, productivity costs, route of administration, and years since FDA approval. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for health care sector costs, productivity losses, and the probability of experiencing diarrhea. Performance for the two treatment attributes—route of administration and years since FDA approval—can be computed with <code><a href="../reference/txattr_performance.html">txattr_performance()</a></code>. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.</p>
+<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, productivity costs, route of administration, years since FDA approval, and the probability of experiencing diarrhea. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for health care sector costs, productivity losses, and the probability of experiencing diarrhea. Performance for the two treatment attributes—route of administration and years since FDA approval—can be computed with <code><a href="../reference/txattr_performance.html">txattr_performance()</a></code>. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.</p>
 <p>Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a “performance matrix”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc_costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[<span class="op">!</span>category <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"prod"</span>, <span class="st">"total"</span>), 
                            .(<span class="dt">costs =</span> <span class="kw">sum</span>(costs)),
@@ -610,43 +610,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.44 (0.41, 0.46)</td>
-<td align="left">0.51 (0.48, 0.53)</td>
+<td align="left">0.43 (0.41, 0.46)</td>
+<td align="left">0.51 (0.49, 0.53)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
 <td align="left">0.18 (0.15, 0.20)</td>
-<td align="left">0.17 (0.15, 0.20)</td>
+<td align="left">0.18 (0.15, 0.20)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.17 (0.14, 0.20)</td>
-<td align="left">0.17 (0.14, 0.20)</td>
+<td align="left">0.17 (0.14, 0.19)</td>
+<td align="left">0.17 (0.13, 0.20)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">82,432 (73,213, 93,004)</td>
-<td align="left">84,908 (74,505, 96,112)</td>
+<td align="left">82,063 (72,820, 91,945)</td>
+<td align="left">85,788 (76,266, 92,450)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">83,664 (81,965, 85,617)</td>
-<td align="left">84,426 (82,515, 86,687)</td>
+<td align="left">79,220 (77,183, 81,108)</td>
+<td align="left">79,975 (77,779, 82,205)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.88 (0.87, 0.89)</td>
-<td align="left">0.89 (0.87, 0.90)</td>
+<td align="left">0.88 (0.87, 0.90)</td>
+<td align="left">0.89 (0.88, 0.90)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">13.39 (13.30, 13.47)</td>
-<td align="left">4.09 (3.98, 4.24)</td>
+<td align="left">13.39 (13.31, 13.48)</td>
+<td align="left">4.10 (3.97, 4.22)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">0.56 (0.00, 0.96)</td>
-<td align="left">0.06 (0.00, 0.43)</td>
+<td align="left">0.58 (0.01, 0.96)</td>
+<td align="left">0.07 (0.00, 0.33)</td>
 </tr>
 </tbody>
 </table>
@@ -678,43 +678,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">26.44 (6.70, 44.20)</td>
-<td align="left">80.13 (62.40, 98.45)</td>
+<td align="left">25.88 (5.63, 45.43)</td>
+<td align="left">82.36 (66.50, 98.23)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">50.64 (13.64, 95.18)</td>
-<td align="left">46.49 (9.30, 92.65)</td>
+<td align="left">47.66 (13.64, 86.88)</td>
+<td align="left">48.72 (11.80, 84.05)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">51.36 (12.66, 92.45)</td>
-<td align="left">46.13 (7.09, 80.88)</td>
+<td align="left">57.39 (28.31, 81.88)</td>
+<td align="left">58.18 (21.42, 86.12)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">54.39 (16.95, 87.03)</td>
-<td align="left">45.62 (5.95, 82.45)</td>
+<td align="left">53.27 (13.05, 90.90)</td>
+<td align="left">38.11 (11.00, 76.87)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">56.38 (23.04, 85.38)</td>
-<td align="left">43.36 (4.75, 75.98)</td>
+<td align="left">56.78 (27.43, 88.45)</td>
+<td align="left">45.04 (10.37, 79.19)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">47.86 (19.79, 74.92)</td>
-<td align="left">63.07 (26.13, 91.85)</td>
+<td align="left">36.41 (7.66, 66.97)</td>
+<td align="left">45.12 (19.95, 73.29)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">98.87 (97.99, 99.71)</td>
-<td align="left">1.64 (0.44, 3.24)</td>
+<td align="left">98.82 (97.96, 99.67)</td>
+<td align="left">2.59 (1.26, 3.79)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">41.65 (0.60, 99.81)</td>
-<td align="left">93.41 (55.34, 99.97)</td>
+<td align="left">40.62 (0.63, 98.50)</td>
+<td align="left">93.22 (65.78, 99.99)</td>
 </tr>
 </tbody>
 </table>
