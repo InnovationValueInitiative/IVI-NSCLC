@@ -312,7 +312,7 @@ plot_data[, ae_name := ifelse(ae_name == "Elevated alanine transaminase",
 plot_data[, ae_name := ifelse(ae_name == "Elevated aspartate transaminase",
                               "Elevated \n aspartate \n transaminase",
                               ae_name)]
-ggplot(plot_data, aes(x = rev(strategy_name), y = prob_mean)) + 
+ggplot(plot_data, aes(x = strategy_name, y = prob_mean)) + 
   facet_wrap(~factor(ae_name), ncol = 3) +
   geom_bar(stat = "identity", fill = "#d9230f") +
   geom_errorbar(aes(ymin = prob_lower,

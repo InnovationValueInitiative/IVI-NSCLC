@@ -244,11 +244,11 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      0 55.94965        1    erl
-## 2:           1          1             2      0 55.94965        1    erl
-## 3:           1          1             3      0 55.94965        1    osi
-## 4:           1          1             4      0 55.94965        1    osi
-## 5:           1          1             5      0 55.94965        1    osi
+## 1:           1          1             1      0 76.14277        1    erl
+## 2:           1          1             2      0 76.14277        1    erl
+## 3:           1          1             3      0 76.14277        1    osi
+## 4:           1          1             4      0 76.14277        1    osi
+## 5:           1          1             5      0 76.14277        1    osi
 ##    tx_hist osi_s1p1_scale osi_s1d_scale
 ## 1:    &lt;NA&gt;              1             0
 ## 2:    &lt;NA&gt;              0             1
@@ -364,7 +364,7 @@ plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span clas
 plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(ae_name <span class="op">==</span><span class="st"> "Elevated aspartate transaminase"</span>,
                               <span class="st">"Elevated </span><span class="ch">\n</span><span class="st"> aspartate </span><span class="ch">\n</span><span class="st"> transaminase"</span>,
                               ae_name)]
-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(plot_data, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> <span class="kw">rev</span>(strategy_name), <span class="dt">y =</span> prob_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(plot_data, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> prob_mean)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="kw">factor</span>(ae_name), <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">ymin =</span> prob_lower,
@@ -516,22 +516,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.01, 0.11)</td>
+<td align="left">0.06 (0.02, 0.12)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">3,725 (-7,127, 12,645)</td>
+<td align="left">4,038 (-5,810, 16,087)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">2,332 (-3,716, 9,059)</td>
+<td align="left">2,034 (-5,893, 7,674)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">61,493</td>
+<td align="left">66,500</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -610,8 +610,8 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.43 (0.41, 0.46)</td>
-<td align="left">0.51 (0.49, 0.53)</td>
+<td align="left">0.43 (0.41, 0.47)</td>
+<td align="left">0.51 (0.49, 0.54)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
@@ -620,33 +620,33 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.17 (0.14, 0.19)</td>
-<td align="left">0.17 (0.13, 0.20)</td>
+<td align="left">0.17 (0.14, 0.20)</td>
+<td align="left">0.17 (0.14, 0.20)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">82,063 (72,820, 91,945)</td>
-<td align="left">85,788 (76,266, 92,450)</td>
+<td align="left">82,908 (71,113, 91,743)</td>
+<td align="left">86,947 (78,417, 97,204)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">79,220 (77,183, 81,108)</td>
-<td align="left">79,975 (77,779, 82,205)</td>
+<td align="left">78,040 (76,366, 79,985)</td>
+<td align="left">78,858 (76,714, 81,358)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.88 (0.87, 0.90)</td>
+<td align="left">0.89 (0.87, 0.90)</td>
 <td align="left">0.89 (0.88, 0.90)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">13.39 (13.31, 13.48)</td>
-<td align="left">4.10 (3.97, 4.22)</td>
+<td align="left">13.36 (13.28, 13.47)</td>
+<td align="left">4.08 (3.97, 4.21)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">0.58 (0.01, 0.96)</td>
-<td align="left">0.07 (0.00, 0.33)</td>
+<td align="left">0.56 (0.01, 0.96)</td>
+<td align="left">0.07 (0.00, 0.44)</td>
 </tr>
 </tbody>
 </table>
@@ -678,43 +678,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">25.88 (5.63, 45.43)</td>
-<td align="left">82.36 (66.50, 98.23)</td>
+<td align="left">21.38 (4.49, 45.58)</td>
+<td align="left">77.17 (63.04, 96.75)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">47.66 (13.64, 86.88)</td>
-<td align="left">48.72 (11.80, 84.05)</td>
+<td align="left">52.00 (17.43, 85.68)</td>
+<td align="left">50.72 (20.59, 78.19)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">57.39 (28.31, 81.88)</td>
-<td align="left">58.18 (21.42, 86.12)</td>
+<td align="left">42.02 (13.69, 71.53)</td>
+<td align="left">46.83 (8.79, 79.85)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">53.27 (13.05, 90.90)</td>
-<td align="left">38.11 (11.00, 76.87)</td>
+<td align="left">54.63 (24.89, 94.33)</td>
+<td align="left">41.04 (6.51, 69.75)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">56.78 (27.43, 88.45)</td>
-<td align="left">45.04 (10.37, 79.19)</td>
+<td align="left">64.94 (31.54, 93.72)</td>
+<td align="left">50.90 (7.94, 87.73)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">36.41 (7.66, 66.97)</td>
-<td align="left">45.12 (19.95, 73.29)</td>
+<td align="left">43.68 (5.21, 75.55)</td>
+<td align="left">55.08 (21.70, 86.54)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">98.82 (97.96, 99.67)</td>
-<td align="left">2.59 (1.26, 3.79)</td>
+<td align="left">98.86 (98.00, 99.98)</td>
+<td align="left">1.82 (0.65, 3.11)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">40.62 (0.63, 98.50)</td>
-<td align="left">93.22 (65.78, 99.99)</td>
+<td align="left">42.43 (0.88, 99.41)</td>
+<td align="left">92.66 (54.64, 99.98)</td>
 </tr>
 </tbody>
 </table>
