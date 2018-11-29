@@ -135,82 +135,15 @@ a function of the selected treatment sequences and the modeled patients.</p>
     <p>An object of class "expanded_hesim_data" from the 
 <a href='https://innovationvalueinitiative.github.io/hesim/'>hesim</a> package, which
 is a data table with one observation for each treatment strategy 
-(i.e., treatment sequence), patient, and transition combination. The survival
-distribution is stored as a "dist" attribute.</p>
+(i.e., treatment sequence), patient, and transition combination. The model 
+structure (<code>struct</code>) is stored as a "model_structure" attribute and the
+transition matrix (<code>trans_mat</code>) is stored as a "trans_mat" attribute.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='create_transmod_params.html'>create_transmod_params</a></code></p></div>
+    <div class='dont-index'><p><code><a href='create_transmod.html'>create_transmod</a></code>, <code><a href='create_transmod_params.html'>create_transmod_params</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Treatment sequences</span>
-<span class='no'>txseq1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"erlotinib"</span>,
-                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
-                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseq2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq.html'>txseq</a></span>(<span class='kw'>first</span> <span class='kw'>=</span> <span class='st'>"gefitinib"</span>,
-                <span class='kw'>second</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"osimertinib"</span>, <span class='st'>"PBDC"</span>),
-                <span class='kw'>second_plus</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PBDC + bevacizumab"</span>, <span class='st'>"PBDC + bevacizumab"</span>))
-<span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>)
-
-<span class='co'># Patient population</span>
-<span class='no'>pats</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_patients.html'>create_patients</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-
-<span class='co'>## Model structure</span>
-<span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>dist</span> <span class='kw'>=</span> <span class='st'>"weibull"</span>)
-<span class='no'>tmat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_trans_mat.html'>create_trans_mat</a></span>(<span class='no'>struct</span>)
-
-<span class='co'>## Data</span>
-<span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'>create_transmod_data</span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>)
-<span class='fu'>head</span>(<span class='no'>transmod_data</span>)</div><div class='output co'>#&gt;    strategy_id patient_id transition_id female      age mutation tx_abb tx_hist
-#&gt; 1:           1          1             1      0 61.16995        0    erl    &lt;NA&gt;
-#&gt; 2:           1          1             2      0 61.16995        0    erl    &lt;NA&gt;
-#&gt; 3:           1          1             3      0 61.16995        0   pbdc     erl
-#&gt; 4:           1          1             4      0 61.16995        0   pbdc     erl
-#&gt; 5:           1          1             5      0 61.16995        0   pbdc     erl
-#&gt; 6:           1          2             1      0 77.25874        1    erl    &lt;NA&gt;
-#&gt;    osi_s1p1_scale osi_s1d_scale d_erl_s1p1_scale d_erl_s1d_scale
-#&gt; 1:              1             0                1               0
-#&gt; 2:              0             1                0               1
-#&gt; 3:              0             0                0               0
-#&gt; 4:              0             0                0               0
-#&gt; 5:              0             0                0               0
-#&gt; 6:              1             0                1               0
-#&gt;    d_gef_s1p1_scale d_gef_s1d_scale osi_s2p2_scale osi_s2d_scale osi_p2d_scale
-#&gt; 1:                0               0              0             0             0
-#&gt; 2:                0               0              0             0             0
-#&gt; 3:                0               0              0             0             0
-#&gt; 4:                0               0              0             0             0
-#&gt; 5:                0               0              0             0             0
-#&gt; 6:                0               0              0             0             0
-#&gt;    pbdc_s2p2_scale pbdc_s2d_scale pbdc_p2d_scale osi_s1p1_shape osi_s1d_shape
-#&gt; 1:               0              0              0              1             0
-#&gt; 2:               0              0              0              0             1
-#&gt; 3:               1              0              0              0             0
-#&gt; 4:               0              1              0              0             0
-#&gt; 5:               0              0              1              0             0
-#&gt; 6:               0              0              0              1             0
-#&gt;    d_erl_s1p1_shape d_erl_s1d_shape d_gef_s1p1_shape d_gef_s1d_shape
-#&gt; 1:                1               0                0               0
-#&gt; 2:                0               1                0               0
-#&gt; 3:                0               0                0               0
-#&gt; 4:                0               0                0               0
-#&gt; 5:                0               0                0               0
-#&gt; 6:                1               0                0               0
-#&gt;    osi_s2p2_shape osi_s2d_shape osi_p2d_shape pbdc_s2p2_shape pbdc_s2d_shape
-#&gt; 1:              0             0             0               0              0
-#&gt; 2:              0             0             0               0              0
-#&gt; 3:              0             0             0               1              0
-#&gt; 4:              0             0             0               0              1
-#&gt; 5:              0             0             0               0              0
-#&gt; 6:              0             0             0               0              0
-#&gt;    pbdc_p2d_shape
-#&gt; 1:              0
-#&gt; 2:              0
-#&gt; 3:              0
-#&gt; 4:              0
-#&gt; 5:              1
-#&gt; 6:              0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -220,9 +153,7 @@ distribution is stored as a "dist" attribute.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

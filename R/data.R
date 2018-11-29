@@ -40,7 +40,7 @@
 #' attr(age_dist, "sd")
 "age_dist"
 
-#' Multi-state NMA parameters
+#' Multi-state network meta-analysis parameters
 #'
 #' Posterior distributions of the regression coefficients of the continuous 
 #' time state transition model estimated using the multi-state network meta-analysis. 
@@ -68,7 +68,7 @@
 #' print(adverse_events)
 "adverse_events"
 
-#' Adverse event NMA parameters
+#' Adverse event network meta-analysis parameters
 #'
 #' The posterior distribution of the probability of an adverse event by available
 #' first and second line treatments. Based on separate models by adverse event 
@@ -294,3 +294,21 @@
 #' @examples 
 #' print(params_costs_prod)
 "params_costs_prod"
+
+#' Progression-free survival from network meta-analysis
+#'
+#' Curves of progression-free survival (PFS)---the duration of time a patient is alive without disease 
+#' progression---estimated using a Bayesian multi-state network meta-analyis (NMA).
+#'
+#' @format A data.table with the following columns:
+#' \describe{
+#'   \item{model}{The statistical model.} 
+#'   \item{tx_name}{Name of the treatment.}
+#'   \item{month}{Trial month.}
+#'   \item{mean}{Mean PFS from the posterior distribution.}
+#'   \item{l95}{Lower limit of 95 percent credible interval from posterior distribution.}
+#'   \item{u95}{Upper limit of the 95 percent credible interval from the posterior distribution.}
+#' }
+#' @examples 
+#' head(mstate_nma_pfs)
+"mstate_nma_pfs"

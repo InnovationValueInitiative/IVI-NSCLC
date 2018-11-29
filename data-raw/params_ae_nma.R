@@ -14,7 +14,7 @@ for (i in 1:n_aes){
   file <- paste0("ae_nma/", aes[i], ".xlsx")
   if (!file.exists(file)){
     stop("The file ", paste0("ae_nma/", aes[i], ".xlsx"), " does not exist. ",
-         "You must conduct a NMA and produced the required file.")
+         "You must conduct a NMA and produce the required file.")
   }
 }
 

@@ -14,7 +14,7 @@ characterizing the probability distribution of model outcomes.}
 \item{strategy}{Character name of column from \code{x} denoting treatment strategy.}
 
 \item{criteria}{A vector of character names of columns from \code{x} denoting
-the criteria to use in the MCDA.}
+the criteria to use in the multi criteria decision analysis (MCDA).}
 
 \item{cri}{If \code{TRUE}, credible intervals are computed; otherwise they are not.}
 

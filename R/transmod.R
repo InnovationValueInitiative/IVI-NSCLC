@@ -31,11 +31,15 @@ create_strategies <- function(struct, txseqs){
   return(strategies)
 }
 
-dist_params <- function(dist = "weibull"){
+dist_params <- function(dist = c("weibull", "gompertz", "fracpoly1", "fracpoly2")){
   dist <- match.arg(dist)
   if (dist == "weibull"){
-    return (c("scale", "shape"))
-  }
+    return (c("a0", "a1"))
+  } else if (dist == "gompertz"){
+    return (c("rate", "shape"))
+  } else { # Fractional polynomial cases
+    return (c("gamma1", "gamma2", "gamma3"))
+  } 
 }
 
 transmod_vars <- function(struct, data){
@@ -56,15 +60,13 @@ transmod_vars <- function(struct, data){
         data[, "tx_hist" := NA]
       }
   } else{
-    stop("Functionality has not yet been added when starting at second line.")
+    stop("There is insufficient clinical evidence to simulate a model starting at second line.")
   }
-
-  
   
   # Treatments
   ## First line
   abb_first <- unique(data$abb_first)
-  abb_first <- c("osi", abb_first[abb_first != "osi"])
+  abb_first <- c("gef", abb_first[abb_first != "gef"])
   
   ## Second line
   ## Positive mutation
@@ -84,13 +86,13 @@ transmod_vars <- function(struct, data){
       # Loop through first line treatments
       for (i in 1:length(abb_first)){
         abb_first_i <- abb_first[i]
-        if (abb_first_i =="osi"){
-          data[, paste0("osi_s1p1_", params[j]) := ifelse(transition_id == 1, 1, 0)]
-          data[, paste0("osi_s1d_", params[j]) := ifelse(transition_id == 2, 1, 0)]
+        if (abb_first_i =="gef"){ # Mu
+          data[, paste0("gef_s1p1_", params[j]) := ifelse(transition_id == 1, 1, 0)]
+          data[, paste0("gef_s1d_", params[j]) := ifelse(transition_id == 2, 1, 0)]
           if (struct$n_states == "three"){
-            data[, paste0("osi_p1d_", params[j]) := ifelse(transition_id == 3, 1, 0)]
+            data[, paste0("gef_p1d_", params[j]) := ifelse(transition_id == 3, 1, 0)]
           }
-        } else {
+        } else { # d's
           data[, paste0("d_", abb_first_i, "_s1p1_", params[j]) := ifelse(transition_id == 1 &
                                                                            tx_abb == abb_first_i, 
                                                                            1, 0)]
@@ -139,7 +141,7 @@ transmod_vars <- function(struct, data){
     
     # (2) Model starting at second line
     # if (start_line == "second"){
-    #   # Second line T790M positive treatments 
+    #   # There is currently insufficient evidence to do this
     # }
     
   } # end parameter loop
@@ -158,29 +160,10 @@ transmod_vars <- function(struct, data){
 #' @return An object of class "expanded_hesim_data" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package, which
 #' is a data table with one observation for each treatment strategy 
-#' (i.e., treatment sequence), patient, and transition combination. The survival
-#' distribution is stored as a "dist" attribute.  
-#' @seealso \code{\link{create_transmod_params}}
-#' @examples
-#' ## Treatment sequences
-#' txseq1 <- txseq(first = "erlotinib",
-#'                 second = c("osimertinib", "PBDC"),
-#'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-#' txseq2 <- txseq(first = "gefitinib",
-#'                 second = c("osimertinib", "PBDC"),
-#'                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-#' txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
-#'
-#' # Patient population
-#' pats <- create_patients(n = 2)
-#'
-#' ## Model structure
-#' struct <- model_structure(txseqs, dist = "weibull")
-#' tmat <- create_trans_mat(struct)
-#'
-#' ## Data
-#' transmod_data <- create_transmod_data(struct, tmat, pats)
-#' head(transmod_data)
+#' (i.e., treatment sequence), patient, and transition combination. The model 
+#' structure (\code{struct}) is stored as a "model_structure" attribute and the
+#' transition matrix (\code{trans_mat}) is stored as a "trans_mat" attribute.  
+#' @seealso \code{\link{create_transmod}}, \code{\link{create_transmod_params}}
 #' @export
 create_transmod_data <- function(struct, trans_mat, patients){
   if (!identical(create_trans_mat(struct), trans_mat)){
@@ -204,7 +187,8 @@ create_transmod_data <- function(struct, trans_mat, patients){
   data <- transmod_vars(struct, data)
   data[, c("abb_first", "abb_second_pos", "abb_second_neg", 
            "abb_second_plus_pos", "abb_second_plus_neg") := NULL]
-  setattr(data, "dist", struct$dist)
+  setattr(data, "model_structure", struct)
+  setattr(data, "trans_mat", trans_mat)
   return(data[, ])
 }
 
@@ -246,9 +230,56 @@ sample_params_mstate_nma <- function(n, object){
 #' that are also contained in \code{data} are extracted.
 #' @return  A \code{\link[hesim]{params_surv}} objects from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
-#' @seealso \code{\link{create_transmod_data}}
+#' @seealso \code{\link{create_transmod}}, \code{\link{create_transmod_data}}
+#' @export
+create_transmod_params <- function(n = 100,
+                                   data,
+                                   params_mstate_nma = iviNSCLC::params_mstate_nma,
+                                   check_covs = FALSE,
+                                   covs = NULL){
+  if(!inherits(data, "expanded_hesim_data")){
+    stop("'data' must be an object of class 'expanded_hesim_data'.")
+  }
+  if (check_covs){
+    if (is.null(covs)){
+      stop("If 'check_covs' = TRUE, then 'covs' cannot be NULL.")
+    }
+  }
+  dist <- attr(data, "model_structure")$dist
+  for (i in 1:length(params_mstate_nma)){
+    if(!inherits(params_mstate_nma[[i]], "params_surv")){
+      stop("Each element of 'params_mstate_nma' must be an object of class 'params_surv'.")
+    }
+  }
+  params <- params_mstate_nma[[dist]]
+  params <- sample_params_mstate_nma(n, params)
+  n_params <- length(params$coefs)
+  for (i in 1:n_params){
+    if (check_covs){
+      param_name <- names(params$coefs)[i]
+      vars <- colnames(params$coefs[[i]])
+      covs_i <- covs[grep(param_name, covs)]
+      if (!all(covs_i %in% vars)){
+        stop("All variables from 'data' are not contained in 'params'.")
+      }  
+    }
+    col_inds <- which(colnames(params$coefs[[i]]) %in% colnames(data))
+    params$coefs[[i]] <- params$coefs[[i]][, col_inds, drop = FALSE]
+  }
+  return(params)
+}
+
+#' Create transition model
+#' 
+#' Create a model for simulating health state transitions with a 
+#' continuous time state transition model (CTSTM).
+#' @param params A "params_surv" object returned from 
+#' \code{\link{create_transmod_params}}.
+#' @param data A data table of class "expanded_hesim_data" returned from 
+#' \code{\link{create_transmod_data}}.
+#' @return An object of class "IndivCtstmTrans" from the 
+#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 #' @examples
-#' # Joint distribution of parameters
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",
 #'                 second = c("osimertinib", "PBDC"),
@@ -265,44 +296,37 @@ sample_params_mstate_nma <- function(n, object){
 #' struct <- model_structure(txseqs, dist = "weibull")
 #' tmat <- create_trans_mat(struct)
 #'
-#' # Data and parameters for state transition model
+#' # Data for state transition model
 #' transmod_data <- create_transmod_data(struct, tmat, pats)
+#' head(transmod_data)
+#' 
+#' # Parameters for state transition model
 #' transmod_params <- create_transmod_params(n = 2, transmod_data)
 #' print(transmod_params)
+#' 
+#' # State transition model
+#' transmod <- create_transmod(transmod_params, transmod_data)
 #' @export
-create_transmod_params <- function(n = 100,
-                                   data,
-                                   params_mstate_nma = iviNSCLC::params_mstate_nma,
-                                   check_covs = FALSE,
-                                   covs = NULL){
-  if(!inherits(data, "expanded_hesim_data")){
-    stop("'data' must be an object of class 'expanded_hesim_data'.")
+create_transmod <- function(params, data){
+  # Avoid no visible binding CRAN warning
+  strategy_id <- transition_id <- NULL 
+  
+  # Create model
+  start_age <- data[strategy_id == 1 & transition_id == 1]$age
+  n_states <- attr(data, "model_structure")$n_states
+  tmat <- attr(data, "trans_mat")
+  clock <- switch(n_states,
+                  "three" = "forward",
+                  "four" = "mix")
+  if (clock == "mix"){
+    reset_state <- 3    
+  } else{
+    reset_state <- NULL
   }
-  if (check_covs){
-    if (is.null(covs)){
-      stop("If 'check_covs' = TRUE, then 'covs' cannot be NULL.")
-    }
-  }
-  dist <- attributes(data)$dist
-  for (i in 1:length(params_mstate_nma)){
-    if(!inherits(params_mstate_nma[[i]], "params_surv")){
-      stop("Each element of 'params_mstate_nma' must be an object of class 'params_surv'.")
-    }
-  }
-  params <- params_mstate_nma[[dist]]
-  params <- sample_params_mstate_nma(n, params)
-  n_params <- length(params$coefs)
-  for (i in 1:n_params){
-    if (check_covs){
-      param_name <- names(params$coefs)[i]
-      vars <- colnames(params$coefs[[i]])
-      covs_i <- covs[grep(param_name, covs)]
-      if (!all(covs_i %in% vars)){
-        stop("All variables from 'data' are non contained in 'params'.")
-      }  
-    }
-    col_inds <- which(colnames(params$coefs[[i]]) %in% colnames(data))
-    params$coefs[[i]] <- params$coefs[[i]][, col_inds]
-  }
-  return(params)
+  
+  transmod <- hesim::create_IndivCtstmTrans(params, data, tmat,
+                                            start_age = start_age,
+                                            clock = clock,
+                                            reset_states = reset_state)
+  return(transmod)
 }

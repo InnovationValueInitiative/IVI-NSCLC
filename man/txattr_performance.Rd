@@ -2,7 +2,7 @@
 % Please edit documentation in R/mcda.R
 \name{txattr_performance}
 \alias{txattr_performance}
-\title{MCDA treatment attribute performance}
+\title{Treatment attribute performance}
 \usage{
 txattr_performance(struct, patients, econmod,
   treatments = iviNSCLC::treatments)
@@ -30,7 +30,8 @@ simulated patient uses each therapy in a treatment sequence.}
 }
 }
 \description{
-Compute performance for MCDA criteria related to treatment attributes.
+Compute performance for multi criteria decision analysis (MCDA)
+ criteria related to treatment attributes.
 }
 \seealso{
 See the example in the \href{https://innovationvalueinitiative.github.io/IVI-NSCLC/articles/tutorial.html}{tutorial}.

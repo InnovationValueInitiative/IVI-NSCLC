@@ -145,7 +145,7 @@ We could have also specified a three-state model, starting at either first or se
 
 ```{r}
 # 1st line model
-struct_3_1L <- model_structure(txseqs, dist = "weibull",
+struct_3_1L <- model_structure(txseqs, dist = "gompertz",
                             n_states = "three")
 print(create_states(struct_3_1L))
 print(create_trans_mat(struct_3_1L))
@@ -185,7 +185,7 @@ n_samples <- 100
 ### Health state transition model
 Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with `create_transmod_data()` and stored below in a data table named `transmod_data`. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in `transmod_data` are extracted using `transmod_params()`. 
 
-Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the `IndivCtstmTrans` class in `hesim`.  
+Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. The `create_transmod()` function constructs an individual-level CTSTM (iCTSTM) to model health state transitions (i.e., it returns a `hesim` object of class  `IndivCtstmTrans`).  
 
 ```{r}
 # Input data
@@ -197,11 +197,10 @@ print(transmod_data[1:5, 1:10])
 transmod_params <- create_transmod_params(n = n_samples, data = transmod_data)
 ## Print first 5 samples from the probability distribution and 4 covariates (which
 ## match those in 'transmod_data')
-transmod_params$coefs$scale[1:5, 1:4]
+transmod_params$coefs$a0[1:5, 1:4]
 
 # Health state transition model
-transmod <- hesim::create_IndivCtstmTrans(transmod_params, transmod_data, tmat,
-                                          start_age = pats$age)
+transmod <- create_transmod(params = transmod_params, data = transmod_data)
 class(transmod)
 ```
 
@@ -237,16 +236,19 @@ econmod <- hesim::IndivCtstm$new(trans_model = transmod,
 
 ## Simulation
 ### Disease progression
-The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with `$sim_disease()` and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time. 
+The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with `$sim_disease()` and set the time horizon to 20 years. Since the NMA meausured time in months, we convert simulated months to years for the economic model.
 
 ```{r}
-econmod$sim_disease(max_t = 20)
-econmod$sim_stateprobs(t = seq(0, 20 , 1/26)) # Biweekly probabilities
+max_yrs <- 20
+econmod$sim_disease(max_t = max_yrs * 12)
+econmod$disprog_[, ':=' (time_start = time_start/12, time_stop = time_stop/12)]
 ```
 
-We plot mean state probabilities (averaged across the joint probability distribution of the parameters). 
+We then compute the probability that a patient is in each of the four health states as a function of time and plot mean state probabilities (averaged across the joint probability distribution of the parameters). 
 
 ```{r stateprobs}
+econmod$sim_stateprobs(t = seq(0, 20 , 1/26)) # Biweekly probabilities
+
 # Plot of state probabilities
 stprobs <- econmod$stateprobs_[, .(prob_mean = mean(prob),
                                      prob_lower = quantile(prob, .025),
@@ -271,8 +273,8 @@ curves <- curves[, .(prob_mean = mean(prob),
                             prob_upper = quantile(prob, .975)),
                           by = c("strategy_id", "lab", "t")]
 strategy_factor(curves)
-ggplot(curves[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
-  geom_line() + facet_wrap(~lab) + 
+ggplot(curves[t < 5], aes(x = t, y = prob_mean, col = strategy_name)) +
+  geom_line() + facet_wrap(~lab, scales = "free_x") + 
   xlab("Years") + ylab("Survival probability") +
   scale_color_discrete(name = "") 
 ```
@@ -467,8 +469,8 @@ knitr::kable(icer)
 We can also visualize the degree of uncertainty in our simulated cost and QALY values with a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 given our willingness to pay threshold of \$100,000.
 
 ```{r ceplane}
-ylim <- max(icea_pw$delta[, ic]) * 1.1
-xlim <- max(icea_pw$delta[, ie]) * 1.1
+ylim <- max(abs(icea_pw$delta[, ic])) * 1.1
+xlim <- max(abs(icea_pw$delta[, ie])) * 1.1
 strategy_factor(icea_pw$delta)
 ggplot(icea_pw$delta, aes(x = ie, y = ic, col = strategy_name)) + 
   geom_jitter(size = .5)  + 

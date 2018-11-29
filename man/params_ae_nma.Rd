@@ -3,7 +3,7 @@
 \docType{data}
 \name{params_ae_nma}
 \alias{params_ae_nma}
-\title{Adverse event NMA parameters}
+\title{Adverse event network meta-analysis parameters}
 \format{A list where each element is a matrix for a distinct adverse event.
 Each column is a distinct treatment and each row is a random draw from
 the posterior distribution. Each matrix contains a "imputed" attribute, which

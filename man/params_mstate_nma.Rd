@@ -3,7 +3,7 @@
 \docType{data}
 \name{params_mstate_nma}
 \alias{params_mstate_nma}
-\title{Multi-state NMA parameters}
+\title{Multi-state network meta-analysis parameters}
 \format{A list of \code{\link[hesim]{params_surv}} objects from the 
 \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package
 package. The list contains regression coefficient estimates from the Weibull,

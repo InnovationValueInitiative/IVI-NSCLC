@@ -40,29 +40,6 @@ distribution from the \code{mstate_nma} element contained in \code{params}. The
 covariates for the selected survival distribution in \code{mstate_nma} 
 that are also contained in \code{data} are extracted.
 }
-\examples{
-# Joint distribution of parameters
-# Treatment sequences
-txseq1 <- txseq(first = "erlotinib",
-                second = c("osimertinib", "PBDC"),
-                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseq2 <- txseq(first = "gefitinib",
-                second = c("osimertinib", "PBDC"),
-                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
-
-# Patient population
-pats <- create_patients(n = 2)
-
-# Model structure
-struct <- model_structure(txseqs, dist = "weibull")
-tmat <- create_trans_mat(struct)
-
-# Data and parameters for state transition model
-transmod_data <- create_transmod_data(struct, tmat, pats)
-transmod_params <- create_transmod_params(n = 2, transmod_data)
-print(transmod_params)
-}
 \seealso{
-\code{\link{create_transmod_data}}
+\code{\link{create_transmod}}, \code{\link{create_transmod_data}}
 }

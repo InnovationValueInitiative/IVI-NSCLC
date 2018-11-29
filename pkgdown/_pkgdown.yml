@@ -9,6 +9,7 @@ reference:
   - title: "Parameter estimates"
     contents:
       - params_mstate_nma
+      - mstate_nma_pfs
       - adverse_events
       - params_ae_nma
       - params_utility
@@ -39,6 +40,7 @@ reference:
     contents:
       - create_transmod_data
       - create_transmod_params
+      - create_transmod
       - create_utilmod
       - create_costmods
       - ae_probs

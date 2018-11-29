@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-11-26</h4>
+            <h4 class="date">2018-11-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -184,7 +184,7 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 ## D     NA    NA NA NA</code></pre>
 <p>We could have also specified a three-state model, starting at either first or second line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 1st line model</span>
-struct_3_1L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>,
+struct_3_1L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"gompertz"</span>,
                             <span class="dt">n_states =</span> <span class="st">"three"</span>)
 <span class="kw">print</span>(<span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct_3_1L))</code></pre></div>
 <pre><code>##    state_id state_name     state_name_long
@@ -238,37 +238,36 @@ tmat_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/c
 <h3 class="hasAnchor">
 <a href="#health-state-transition-model" class="anchor"></a><span class="header-section-number">3.2.1</span> Health state transition model</h3>
 <p>Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with <code><a href="../reference/create_transmod_data.html">create_transmod_data()</a></code> and stored below in a data table named <code>transmod_data</code>. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in <code>transmod_data</code> are extracted using <code>transmod_params()</code>.</p>
-<p>Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. A model of health state transitions for an individual-level CTSTM (iCTSTM) can be constructed with the <code>IndivCtstmTrans</code> class in <code>hesim</code>.</p>
+<p>Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. The <code><a href="../reference/create_transmod.html">create_transmod()</a></code> function constructs an individual-level CTSTM (iCTSTM) to model health state transitions (i.e., it returns a <code>hesim</code> object of class <code>IndivCtstmTrans</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Input data</span>
 transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      0 76.14277        1    erl
-## 2:           1          1             2      0 76.14277        1    erl
-## 3:           1          1             3      0 76.14277        1    osi
-## 4:           1          1             4      0 76.14277        1    osi
-## 5:           1          1             5      0 76.14277        1    osi
-##    tx_hist osi_s1p1_scale osi_s1d_scale
-## 1:    &lt;NA&gt;              1             0
-## 2:    &lt;NA&gt;              0             1
-## 3:     erl              0             0
-## 4:     erl              0             0
-## 5:     erl              0             0</code></pre>
+## 1:           1          1             1      1 75.09674        0    erl
+## 2:           1          1             2      1 75.09674        0    erl
+## 3:           1          1             3      1 75.09674        0   pbdc
+## 4:           1          1             4      1 75.09674        0   pbdc
+## 5:           1          1             5      1 75.09674        0   pbdc
+##    tx_hist gef_s1p1_a0 gef_s1d_a0
+## 1:    &lt;NA&gt;           1          0
+## 2:    &lt;NA&gt;           0          1
+## 3:     erl           0          0
+## 4:     erl           0          0
+## 5:     erl           0          0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Parameters</span>
 transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_params.html">create_transmod_params</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">data =</span> transmod_data)
 ## Print first 5 samples from the probability distribution and 4 covariates (which
 ## match those in 'transmod_data')
-transmod_params<span class="op">$</span>coefs<span class="op">$</span>scale[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
-<pre><code>##      osi_s1p1_scale d_erl_s1p1_scale d_gef_s1p1_scale osi_s1d_scale
-## [1,]              2               -1             -0.5             0
-## [2,]              2               -1             -0.5             0
-## [3,]              2               -1             -0.5             0
-## [4,]              2               -1             -0.5             0
-## [5,]              2               -1             -0.5             0</code></pre>
+transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
+<pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
+## [1,]    -0.3547093            0   -3.594589  -7.118358
+## [2,]     0.3434152            0   -3.734854  -6.896942
+## [3,]    -0.7004350            0   -3.784070  -6.893212
+## [4,]    -0.2503532            0   -3.736012  -5.819008
+## [5,]    -1.1058031            0   -3.690171  -7.998846</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
-transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/create_IndivCtstmTrans">create_IndivCtstmTrans</a></span>(transmod_params, transmod_data, tmat,
-                                          <span class="dt">start_age =</span> pats<span class="op">$</span>age)
+transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
 <pre><code>## [1] "IndivCtstmTrans" "CtstmTrans"      "R6"</code></pre>
 </div>
@@ -302,11 +301,14 @@ transmod &lt;-<span class="st"> </span>hesim<span class="op">::</span><span clas
 <div id="disease-progression" class="section level3">
 <h3 class="hasAnchor">
 <a href="#disease-progression" class="anchor"></a><span class="header-section-number">3.3.1</span> Disease progression</h3>
-<p>The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with <code>$sim_disease()</code> and set the time horizon to 20 years. We compute the probability that a patient is in each of the four health states as a function of time.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod<span class="op">$</span><span class="kw">sim_disease</span>(<span class="dt">max_t =</span> <span class="dv">20</span>)
-econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span> , <span class="dv">1</span><span class="op">/</span><span class="dv">26</span>)) <span class="co"># Biweekly probabilities</span></code></pre></div>
-<p>We plot mean state probabilities (averaged across the joint probability distribution of the parameters).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of state probabilities</span>
+<p>The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with <code>$sim_disease()</code> and set the time horizon to 20 years. Since the NMA meausured time in months, we convert simulated months to years for the economic model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">max_yrs &lt;-<span class="st"> </span><span class="dv">20</span>
+econmod<span class="op">$</span><span class="kw">sim_disease</span>(<span class="dt">max_t =</span> max_yrs <span class="op">*</span><span class="st"> </span><span class="dv">12</span>)
+econmod<span class="op">$</span>disprog_[, <span class="st">':='</span> (<span class="dt">time_start =</span> time_start<span class="op">/</span><span class="dv">12</span>, <span class="dt">time_stop =</span> time_stop<span class="op">/</span><span class="dv">12</span>)]</code></pre></div>
+<p>We then compute the probability that a patient is in each of the four health states as a function of time and plot mean state probabilities (averaged across the joint probability distribution of the parameters).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econmod<span class="op">$</span><span class="kw">sim_stateprobs</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span> , <span class="dv">1</span><span class="op">/</span><span class="dv">26</span>)) <span class="co"># Biweekly probabilities</span>
+
+<span class="co"># Plot of state probabilities</span>
 stprobs &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[, .(<span class="dt">prob_mean =</span> <span class="kw">mean</span>(prob),
                                      <span class="dt">prob_lower =</span> <span class="kw">quantile</span>(prob, .<span class="dv">025</span>),
                                      <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
@@ -327,8 +329,8 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
                             <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
                           by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>, <span class="st">"t"</span>)]
 <span class="kw">strategy_factor</span>(curves)
-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>lab) <span class="op">+</span><span class="st"> </span>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">scales =</span> <span class="st">"free_x"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="672"></p>
@@ -516,33 +518,33 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.06 (0.02, 0.12)</td>
+<td align="left">-0.15 (-0.36, 0.09)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">4,038 (-5,810, 16,087)</td>
+<td align="left">5,807 (-7,679, 20,335)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">2,034 (-5,893, 7,674)</td>
+<td align="left">-20,416 (-52,515, 10,249)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">66,500</td>
+<td align="left">Dominated</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
 <td align="left">-</td>
-<td align="left">Cost-effective</td>
+<td align="left">Not cost-effective</td>
 </tr>
 </tbody>
 </table>
 <p>We can also visualize the degree of uncertainty in our simulated cost and QALY values with a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 given our willingness to pay threshold of $100,000.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ylim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span class="op">$</span>delta[, ic]) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
-xlim &lt;-<span class="st"> </span><span class="kw">max</span>(icea_pw<span class="op">$</span>delta[, ie]) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ylim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(icea_pw<span class="op">$</span>delta[, ic])) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
+xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(icea_pw<span class="op">$</span>delta[, ie])) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
 <span class="kw">strategy_factor</span>(icea_pw<span class="op">$</span>delta)
 <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(icea_pw<span class="op">$</span>delta, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> ie, <span class="dt">y =</span> ic, <span class="dt">col =</span> strategy_name)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span>(<span class="dt">size =</span> .<span class="dv">5</span>)  <span class="op">+</span><span class="st"> </span>
@@ -610,43 +612,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.43 (0.41, 0.47)</td>
-<td align="left">0.51 (0.49, 0.54)</td>
+<td align="left">1.32 (0.76, 1.91)</td>
+<td align="left">0.94 (0.85, 1.02)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.18 (0.15, 0.20)</td>
-<td align="left">0.18 (0.15, 0.20)</td>
+<td align="left">0.28 (0.12, 0.44)</td>
+<td align="left">0.38 (0.31, 0.46)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.17 (0.14, 0.20)</td>
-<td align="left">0.17 (0.14, 0.20)</td>
+<td align="left">0.54 (0.25, 0.83)</td>
+<td align="left">0.72 (0.63, 0.80)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">82,908 (71,113, 91,743)</td>
-<td align="left">86,947 (78,417, 97,204)</td>
+<td align="left">215,801 (195,641, 237,742)</td>
+<td align="left">221,607 (209,543, 237,311)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">78,040 (76,366, 79,985)</td>
-<td align="left">78,858 (76,714, 81,358)</td>
+<td align="left">66,685 (62,206, 72,020)</td>
+<td align="left">68,855 (65,487, 72,175)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.89 (0.87, 0.90)</td>
-<td align="left">0.89 (0.88, 0.90)</td>
+<td align="left">0.68 (0.49, 0.85)</td>
+<td align="left">0.57 (0.53, 0.60)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">13.36 (13.28, 13.47)</td>
-<td align="left">4.08 (3.97, 4.21)</td>
+<td align="left">12.96 (12.39, 13.53)</td>
+<td align="left">7.14 (6.87, 7.44)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">0.56 (0.01, 0.96)</td>
-<td align="left">0.07 (0.00, 0.44)</td>
+<td align="left">0.56 (0.01, 0.95)</td>
+<td align="left">0.11 (0.00, 0.69)</td>
 </tr>
 </tbody>
 </table>
@@ -678,43 +680,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">21.38 (4.49, 45.58)</td>
-<td align="left">77.17 (63.04, 96.75)</td>
+<td align="left">51.88 (13.93, 91.57)</td>
+<td align="left">26.21 (20.42, 31.86)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">52.00 (17.43, 85.68)</td>
-<td align="left">50.72 (20.59, 78.19)</td>
+<td align="left">49.59 (6.51, 89.71)</td>
+<td align="left">75.10 (57.42, 94.66)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">42.02 (13.69, 71.53)</td>
-<td align="left">46.83 (8.79, 79.85)</td>
+<td align="left">43.05 (5.64, 80.94)</td>
+<td align="left">67.08 (55.56, 78.12)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">54.63 (24.89, 94.33)</td>
-<td align="left">41.04 (6.51, 69.75)</td>
+<td align="left">57.12 (18.70, 92.42)</td>
+<td align="left">46.95 (19.45, 68.08)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">64.94 (31.54, 93.72)</td>
-<td align="left">50.90 (7.94, 87.73)</td>
+<td align="left">58.33 (14.55, 95.07)</td>
+<td align="left">40.51 (13.27, 68.15)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">43.68 (5.21, 75.55)</td>
-<td align="left">55.08 (21.70, 86.54)</td>
+<td align="left">57.07 (18.04, 91.89)</td>
+<td align="left">33.27 (26.79, 39.48)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">98.86 (98.00, 99.98)</td>
-<td align="left">1.82 (0.65, 3.11)</td>
+<td align="left">90.83 (82.72, 98.91)</td>
+<td align="left">8.01 (4.21, 12.31)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">42.43 (0.88, 99.41)</td>
-<td align="left">92.66 (54.64, 99.98)</td>
+<td align="left">42.98 (2.42, 99.12)</td>
+<td align="left">89.12 (28.86, 99.99)</td>
 </tr>
 </tbody>
 </table>

@@ -17,8 +17,9 @@ create_transmod_data(struct, trans_mat, patients)
 An object of class "expanded_hesim_data" from the 
 \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package, which
 is a data table with one observation for each treatment strategy 
-(i.e., treatment sequence), patient, and transition combination. The survival
-distribution is stored as a "dist" attribute.
+(i.e., treatment sequence), patient, and transition combination. The model 
+structure (\code{struct}) is stored as a "model_structure" attribute and the
+transition matrix (\code{trans_mat}) is stored as a "trans_mat" attribute.
 }
 \description{
 Create data used to simulate health state transitions with a 
@@ -26,27 +27,6 @@ continuous time state transition model (CTSTM) given the parameters from the
 multi-state NMA (i.e., \code{\link{params_mstate_nma}}). The included variables are 
 a function of the selected treatment sequences and the modeled patients.
 }
-\examples{
-## Treatment sequences
-txseq1 <- txseq(first = "erlotinib",
-                second = c("osimertinib", "PBDC"),
-                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseq2 <- txseq(first = "gefitinib",
-                second = c("osimertinib", "PBDC"),
-                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
-
-# Patient population
-pats <- create_patients(n = 2)
-
-## Model structure
-struct <- model_structure(txseqs, dist = "weibull")
-tmat <- create_trans_mat(struct)
-
-## Data
-transmod_data <- create_transmod_data(struct, tmat, pats)
-head(transmod_data)
-}
 \seealso{
-\code{\link{create_transmod_params}}
+\code{\link{create_transmod}}, \code{\link{create_transmod_params}}
 }

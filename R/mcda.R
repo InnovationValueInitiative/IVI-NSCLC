@@ -184,7 +184,7 @@ mcda <- function(x, sample, strategy, criteria,
 #' characterizing the probability distribution of model outcomes. 
 #' @param strategy Character name of column from \code{x} denoting treatment strategy.
 #' @param criteria A vector of character names of columns from \code{x} denoting
-#' the criteria to use in the MCDA.
+#' the criteria to use in the multi criteria decision analysis (MCDA).
 #' @param cri If \code{TRUE}, credible intervals are computed; otherwise they are not.
 #' @param digits Number of digits to use.
 #' @param rownames Row names for returned table.
@@ -283,9 +283,10 @@ lpvf_plot_data <- function(x, optimal = c("low", "high"),
                     y = lpvf(x = x_data, x_min = min_x, x_max = max_x))
 }
 
-#' MCDA treatment attribute performance
+#' Treatment attribute performance
 #' 
-#' Compute performance for MCDA criteria related to treatment attributes.
+#' Compute performance for multi criteria decision analysis (MCDA)
+#'  criteria related to treatment attributes.
 #' @param struct A \code{\link{model_structure}} object.
 #' @param patients A data table returned from \code{\link{create_patients}}.
 #' @param econmod An economic model of class \code{"IndivCtstm"}. Disease progression
