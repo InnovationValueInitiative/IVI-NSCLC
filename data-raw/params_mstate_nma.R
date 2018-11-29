@@ -3,7 +3,7 @@ library("data.table")
 library("readxl")
 library("MASS")
 library("hesim")
-library("iviNSCLC")
+library("ggplot2")
 treatments <- fread("treatments.csv")
 
 d_col <- function(i, j){
