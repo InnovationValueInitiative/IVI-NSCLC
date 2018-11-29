@@ -35,6 +35,19 @@ time_vec <- function(t, powers) {
   return(cbind(1, X))
 }
 
+# Models types -----------------------------------------------------------------
+mod_names <- c("weibull", "gompertz", "fracpoly1", "fracpoly2")
+fp_powers <- list(weibull = c(0),
+                  gompertz = c(1),
+                  fracpoly1 = c(0, 0),
+                  fracpoly2 = c(0, 1))
+n_models <- length(mod_names)
+mod_dists <- c("weibullNMA", "gompertz", "fracpoly", "fracpoly")
+mod_aux <- list(weibull = NULL,
+                gompertz = NULL,
+                fracpoly1 = list(fp_powers$fracpoly1),
+                fracpoly2 = list(fp_powers$fracpoly1))
+
 model_lookup <- function(powers){
   powers <- paste(as.character(powers), collapse = ", ")
   model <- switch(powers,
@@ -44,15 +57,6 @@ model_lookup <- function(powers){
                   "0, 1" = "Fractional polynomial (0, 1)")
   return(model)
 }
-
-# Models types -----------------------------------------------------------------
-mod_names <- c("weibull", "gompertz", "fracpoly1", "fracpoly2")
-n_models <- length(mod_names)
-mod_dists <- c("weibullNMA", "gompertz", "fracpoly", "fracpoly")
-mod_aux <- list(weibullNMA = NULL,
-                gompertz = NULL,
-                fracpoly1 = list(powers = c(0, 0)),
-                fracpoly2 = list(powers = c(0, 1)))
 
 # NMA parameter estimates ------------------------------------------------------
 sample_posterior <- function(x, n_sims){
@@ -379,6 +383,7 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
   names(pfs) <- names(os) <- econmod_tx_lookup$name
   
   for (i in 1:nrow(econmod_tx_lookup)){
+    tx_num <- econmod_tx_lookup$num[i]
     pfs[[i]] <- os[[i]] <- matrix(NA, nrow = length(t), ncol = n_sims)
     pfs[[i]][1, ] <- os[[i]][1, ] <- 1 # PFS and OS are 1 in first time period
     gamma <- vector(mode = "list", length = n_trans)
@@ -388,7 +393,7 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
       for (k in 1:nrow(nma_params_lookup_j)){
         d_num <- nma_params_lookup_j$d_num[k]
         if (!is.na(d_num)){
-          d <- nma_post[, d_col(i, d_num)]
+          d <- nma_post[, d_col(tx_num, d_num)]
         } else{
           d <- rep(0, n_sims)
         }
@@ -581,6 +586,44 @@ mstate_nma_pfs <- pfs[, .(mean = mean(survival),
 # Save -------------------------------------------------------------------------
 save(params_mstate_nma, file = "../data/params_mstate_nma.rda", compress = "bzip2")
 save(mstate_nma_pfs, file = "../data/mstate_nma_pfs.rda", compress = "bzip2")
+
+# Check PFS against JAGS code --------------------------------------------------
+jags_v_R <- function(ma_post, line, tx_name){
+  tx_name_env <- tx_name
+  line_env <- line
+  pfs_jags <- vector(mode = "list", length = n_models)
+  for (i in 1:n_models){
+    cols <- grep("PFS", colnames(ma_post[[i]]))
+    n_months <- length(cols)
+    pfs_jags[[i]] <- data.table(computation = "JAGS",
+                                       model = model_lookup(fp_powers[[i]]),
+                                       sim = rep(1:n_sims, each = n_months),
+                                       month = rep(1:n_months, n_sims),
+                                       survival = c(t(ma_post[[i]][, cols])))  
+  }
+  pfs_jags <- rbindlist(pfs_jags)
+  pfs_jags <- pfs_jags[, .(mean = mean(survival)),
+                           by = c("computation", "model", "month")]
+  pfs_R <- mstate_nma_pfs[line == line_env & tx_name == tx_name_env]
+  pfs_R[, computation := "R"]
+  pfs <- rbind(pfs_jags, 
+               pfs_R[, colnames(pfs_jags), with = FALSE])
+  p <- ggplot(pfs, aes(x = month, y = mean, col = computation)) + 
+        geom_line(position = position_jitter()) +
+        facet_wrap(~model) +
+        xlab("Month") + ylab("Progression-free survival") +
+        scale_color_discrete(name = "") 
+  return(p)
+}
+p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib")
+ggsave("figs/pfs_1L_gef_check.pdf", p)
+
+p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC")
+ggsave("figs/pfs_2L_pbdc_check.pdf", p)
+
+p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib")
+ggsave("figs/pfs_2L_t790m_osi_check.pdf", p)
+
 
 
 
