@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-11-28</h4>
+            <h4 class="date">2018-11-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -133,10 +133,10 @@ ggplot2<span class="op">::</span><span class="kw"><a href="https://ggplot2.tidyv
 <h3 class="hasAnchor">
 <a href="#treatment-sequences" class="anchor"></a><span class="header-section-number">3.1.2</span> Treatment sequences</h3>
 <p>Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a “txseq_list” object using <code><a href="../reference/txseq_list.html">txseq_list()</a></code>. We specify that the model begins at first line treatment with the argument <code>start_line = "first"</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txseq1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"erlotinib"</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txseq1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"gefitinib"</span>,
                 <span class="dt">second =</span> <span class="kw">c</span>(<span class="st">"osimertinib"</span>, <span class="st">"PBDC"</span>),
                 <span class="dt">second_plus =</span> <span class="kw">c</span>(<span class="st">"PBDC + bevacizumab"</span>, <span class="st">"PBDC + bevacizumab"</span>))
-txseq2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"gefitinib"</span>,
+txseq2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"erlotinib"</span>,
                 <span class="dt">second =</span> <span class="kw">c</span>(<span class="st">"osimertinib"</span>, <span class="st">"PBDC"</span>),
                 <span class="dt">second_plus =</span> <span class="kw">c</span>(<span class="st">"PBDC + bevacizumab"</span>, <span class="st">"PBDC + bevacizumab"</span>))
 txseqs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq_list.html">txseq_list</a></span>(<span class="st">"Sequence 1"</span> =<span class="st"> </span>txseq1, <span class="st">"Sequence 2"</span> =<span class="st"> </span>txseq2, <span class="dt">start_line =</span> <span class="st">"first"</span>,
@@ -184,7 +184,7 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 ## D     NA    NA NA NA</code></pre>
 <p>We could have also specified a three-state model, starting at either first or second line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 1st line model</span>
-struct_3_1L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"gompertz"</span>,
+struct_3_1L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>,
                             <span class="dt">n_states =</span> <span class="st">"three"</span>)
 <span class="kw">print</span>(<span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct_3_1L))</code></pre></div>
 <pre><code>##    state_id state_name     state_name_long
@@ -244,28 +244,28 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      1 75.09674        0    erl
-## 2:           1          1             2      1 75.09674        0    erl
-## 3:           1          1             3      1 75.09674        0   pbdc
-## 4:           1          1             4      1 75.09674        0   pbdc
-## 5:           1          1             5      1 75.09674        0   pbdc
+## 1:           1          1             1      1 53.70742        0    gef
+## 2:           1          1             2      1 53.70742        0    gef
+## 3:           1          1             3      1 53.70742        0   pbdc
+## 4:           1          1             4      1 53.70742        0   pbdc
+## 5:           1          1             5      1 53.70742        0   pbdc
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:    &lt;NA&gt;           1          0
 ## 2:    &lt;NA&gt;           0          1
-## 3:     erl           0          0
-## 4:     erl           0          0
-## 5:     erl           0          0</code></pre>
+## 3:     gef           0          0
+## 4:     gef           0          0
+## 5:     gef           0          0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Parameters</span>
 transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_params.html">create_transmod_params</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">data =</span> transmod_data)
 ## Print first 5 samples from the probability distribution and 4 covariates (which
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
-## [1,]    -0.3547093            0   -3.594589  -7.118358
-## [2,]     0.3434152            0   -3.734854  -6.896942
-## [3,]    -0.7004350            0   -3.784070  -6.893212
-## [4,]    -0.2503532            0   -3.736012  -5.819008
-## [5,]    -1.1058031            0   -3.690171  -7.998846</code></pre>
+## [1,]    -0.6265128            0   -3.622034 -14.881281
+## [2,]    -0.7741423            0   -3.602539  -9.711467
+## [3,]    -0.3272112            0   -3.604551 -12.844922
+## [4,]    -0.9303044            0   -3.797981 -16.759499
+## [5,]    -1.2877656            0   -3.630205 -16.456922</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -518,27 +518,27 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">-0.15 (-0.36, 0.09)</td>
+<td align="left">0.16 (-0.01, 0.35)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">5,807 (-7,679, 20,335)</td>
+<td align="left">621 (-14,207, 13,050)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-20,416 (-52,515, 10,249)</td>
+<td align="left">15,162 (-13,315, 46,526)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">Dominated</td>
+<td align="left">3,932</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
 <td align="left">-</td>
-<td align="left">Not cost-effective</td>
+<td align="left">Cost-effective</td>
 </tr>
 </tbody>
 </table>
@@ -612,43 +612,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">1.32 (0.76, 1.91)</td>
-<td align="left">0.94 (0.85, 1.02)</td>
+<td align="left">0.94 (0.87, 1.03)</td>
+<td align="left">1.36 (0.89, 1.84)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.28 (0.12, 0.44)</td>
-<td align="left">0.38 (0.31, 0.46)</td>
+<td align="left">0.38 (0.30, 0.48)</td>
+<td align="left">0.28 (0.15, 0.42)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.54 (0.25, 0.83)</td>
-<td align="left">0.72 (0.63, 0.80)</td>
+<td align="left">0.72 (0.65, 0.79)</td>
+<td align="left">0.52 (0.29, 0.77)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">215,801 (195,641, 237,742)</td>
-<td align="left">221,607 (209,543, 237,311)</td>
+<td align="left">212,010 (197,772, 223,413)</td>
+<td align="left">212,631 (190,604, 227,443)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">66,685 (62,206, 72,020)</td>
-<td align="left">68,855 (65,487, 72,175)</td>
+<td align="left">76,795 (73,162, 80,520)</td>
+<td align="left">74,242 (69,325, 79,460)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.68 (0.49, 0.85)</td>
 <td align="left">0.57 (0.53, 0.60)</td>
+<td align="left">0.69 (0.54, 0.83)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">12.96 (12.39, 13.53)</td>
-<td align="left">7.14 (6.87, 7.44)</td>
+<td align="left">7.14 (6.78, 7.47)</td>
+<td align="left">13.03 (12.55, 13.47)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">0.56 (0.01, 0.95)</td>
-<td align="left">0.11 (0.00, 0.69)</td>
+<td align="left">0.09 (0.00, 0.66)</td>
+<td align="left">0.62 (0.01, 0.96)</td>
 </tr>
 </tbody>
 </table>
@@ -680,43 +680,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">51.88 (13.93, 91.57)</td>
-<td align="left">26.21 (20.42, 31.86)</td>
+<td align="left">19.17 (13.04, 25.80)</td>
+<td align="left">51.35 (14.88, 88.89)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">49.59 (6.51, 89.71)</td>
-<td align="left">75.10 (57.42, 94.66)</td>
+<td align="left">73.76 (50.82, 98.94)</td>
+<td align="left">45.35 (9.92, 84.25)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">43.05 (5.64, 80.94)</td>
-<td align="left">67.08 (55.56, 78.12)</td>
+<td align="left">80.01 (67.87, 91.36)</td>
+<td align="left">47.87 (10.39, 87.28)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">57.12 (18.70, 92.42)</td>
-<td align="left">46.95 (19.45, 68.08)</td>
+<td align="left">44.56 (17.27, 78.62)</td>
+<td align="left">43.07 (7.63, 95.78)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">58.33 (14.55, 95.07)</td>
-<td align="left">40.51 (13.27, 68.15)</td>
+<td align="left">33.91 (3.16, 63.90)</td>
+<td align="left">54.98 (11.91, 95.57)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">57.07 (18.04, 91.89)</td>
-<td align="left">33.27 (26.79, 39.48)</td>
+<td align="left">19.53 (10.44, 29.37)</td>
+<td align="left">52.61 (12.94, 89.57)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">90.83 (82.72, 98.91)</td>
-<td align="left">8.01 (4.21, 12.31)</td>
+<td align="left">6.95 (1.75, 11.69)</td>
+<td align="left">91.08 (84.18, 97.29)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">42.98 (2.42, 99.12)</td>
-<td align="left">89.12 (28.86, 99.99)</td>
+<td align="left">91.06 (32.64, 99.98)</td>
+<td align="left">37.01 (1.25, 99.40)</td>
 </tr>
 </tbody>
 </table>

@@ -90,10 +90,10 @@ pats <- create_patients(n = 1000)
 Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a "txseq_list" object using `txseq_list()`. We specify that the model begins at first line treatment with the argument `start_line = "first"`. 
 
 ```{r}
-txseq1 <- txseq(first = "erlotinib",
+txseq1 <- txseq(first = "gefitinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseq2 <- txseq(first = "gefitinib",
+txseq2 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
 txseqs <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = "first",
@@ -145,7 +145,7 @@ We could have also specified a three-state model, starting at either first or se
 
 ```{r}
 # 1st line model
-struct_3_1L <- model_structure(txseqs, dist = "gompertz",
+struct_3_1L <- model_structure(txseqs, dist = "weibull",
                             n_states = "three")
 print(create_states(struct_3_1L))
 print(create_trans_mat(struct_3_1L))
