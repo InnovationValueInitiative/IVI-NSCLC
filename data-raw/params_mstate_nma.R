@@ -6,6 +6,7 @@ library("hesim")
 library("ggplot2")
 treatments <- fread("treatments.csv")
 
+# Helpful functions ------------------------------------------------------------
 d_col <- function(i, j){
   res <- paste0("d[", i, ",", j, "]")
   return(res)
@@ -33,6 +34,26 @@ time_vec <- function(t, powers) {
       }
   }
   return(cbind(1, X))
+}
+
+# Function to compute probability in stable and progressed states...and PFS/OS
+state_probs <- function(gamma, powers, t, n_sims){
+  p_s <- p_p <- matrix(NA, nrow = length(t), ncol = n_sims)
+  p_s[1, ] <- 1 # PFS is 1 in first time period
+  p_p[1, ] <- 0 # Proportion in the progressed state is 0 in first time period
+  for (j in 2:length(t)){
+    tvec <- time_vec(t[j], powers)
+    haz_sp <- exp(gamma[[1]] %*% t(tvec))
+    haz_sd <- exp(gamma[[2]] %*% t(tvec))
+    haz_pd <- exp(gamma[[3]] %*% t(tvec))
+    p_s[j, ] <- p_s[j - 1, ] * exp(-(haz_sp + haz_sd))
+    term2_num <- p_s[j - 1, ] * haz_sp * (exp(-(haz_sp + haz_sd)) - exp(-haz_pd))
+    term2_denom <- haz_pd - haz_sp - haz_sd
+    p_p[j, ] <- p_p[j - 1, ] * exp(-haz_pd) + term2_num/term2_denom
+  } # End loop over time periods
+  pfs <- p_s
+  os <- p_s + p_p  
+  return(list(pfs = pfs, os = os))
 }
 
 # Models types -----------------------------------------------------------------
@@ -379,13 +400,13 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
   }  
 
   # Loop over treatments and months
-  pfs <- os <- vector(mode = "list", length = nrow(econmod_tx_lookup))
-  names(pfs) <- names(os) <- econmod_tx_lookup$name
+  surv <- vector(mode = "list", length = nrow(econmod_tx_lookup))
+  names(surv) <- econmod_tx_lookup$name
   
   for (i in 1:nrow(econmod_tx_lookup)){
+    
+    # Parameter estimates for treatment i (i.e., "gamma")
     tx_num <- econmod_tx_lookup$num[i]
-    pfs[[i]] <- os[[i]] <- matrix(NA, nrow = length(t), ncol = n_sims)
-    pfs[[i]][1, ] <- os[[i]][1, ] <- 1 # PFS and OS are 1 in first time period
     gamma <- vector(mode = "list", length = n_trans)
     for (j in 1:n_trans){
       nma_params_lookup_j <- nma_params_lookup[transition_id == j]
@@ -407,24 +428,19 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
       } # End loop over parameters
     } # End loop over transitions
     
-    for (j in 2:length(t)){
-      tvec <- time_vec(t[j], powers)
-      haz_sp <- exp(gamma[[1]] %*% t(tvec))
-      haz_sd <- exp(gamma[[2]] %*% t(tvec))
-      haz_pd <- exp(gamma[[3]] %*% t(tvec))
-      pfs[[i]][j, ] <- pfs[[i]][j - 1, ] * exp(-(haz_sp + haz_sd))
-    } # End loop over time periods
-    pfs[[i]] <- data.table(line = 1,
+    # Compute PFS/OS give parameter estimates
+    stprobs <- state_probs(gamma, powers, t, n_sims)
+    surv[[i]] <- data.table(line = 1,
                            mutation = NA,
                            model = model_lookup(powers),
                            tx_name = econmod_tx_lookup$name[i],
                            sample = rep(1:n_sims, each = length(t)),
                            month = rep(t, n_sims),
-                           survival = c(pfs[[i]]))
+                           pfs = c(stprobs$pfs),
+                           os = c(stprobs$os))
   } # End loop over treatments
-  pfs <- rbindlist(pfs)
-  os <- NULL
-  return(list(pfs = pfs, os = os))
+  surv <- rbindlist(surv)
+  return(surv)
 }
 
 surv_1L_est <- list()
@@ -452,11 +468,7 @@ surv_1L_est$fracpoly2 <- surv_1L(n_months = 72,
                                  econmod_tx_lookup = econmod_tx_lookup_1L,
                                  nma_params_lookup = nma_params_lookup_1L$fracpoly2,
                                  powers = c(0, 1))
-pfs_1L <- vector(mode = "list", length = n_models)
-for (i in 1:n_models){
-  pfs_1L[[i]] <- surv_1L_est[[i]]$pfs
-}
-pfs_1L <- rbindlist(pfs_1L)
+surv_1L_est <- rbindlist(surv_1L_est)
 
 # Second line PFS/OS -----------------------------------------------------------
 surv_2L <- function(n_months, ma_post,
@@ -470,39 +482,36 @@ surv_2L <- function(n_months, ma_post,
 
   # Loop over treatments and months
   pfs <- os <- matrix(NA, nrow = length(t), ncol = n_sims)
-  pfs[1, ] <- os[1, ] <- 1 # PFS and OS are 1 in first time period
+  pfs[1, ] <- os[1, ] <- 1 # PFS and OS are 1 in f
+  
+  # Parameter estimates for treatment (i.e., "gamma")
   gamma <- vector(mode = "list", length = n_trans)
     
   for (j in 1:n_trans){
-      ma_params_lookup_j <- ma_params_lookup[transition_id == j + 2]
-      gamma[[j]] <- matrix(NA, nrow = n_sims, ncol = nrow(ma_params_lookup_j))
-      for (k in 1:nrow(ma_params_lookup_j)){
-        mu_num <- ma_params_lookup_j$mu_num[k]
-        if (!is.na(mu_num)){
-          mu <- ma_post[, mu_col(mu_num)]
-        } else{
-          mu <- rep(0, n_sims)
-        }
-        gamma[[j]][, k] <- mu
-      } # End loop over parameters
-    } # End loop over transitions
-    
-    for (j in 2:length(t)){
-      tvec <- time_vec(t[j], powers)
-      haz_sp <- exp(gamma[[1]] %*% t(tvec))
-      haz_sd <- exp(gamma[[2]] %*% t(tvec))
-      haz_pd <- exp(gamma[[3]] %*% t(tvec))
-      pfs[j, ] <- pfs[j - 1, ] * exp(-(haz_sp + haz_sd))
-    } # End loop over time periods
-    pfs <- data.table(line = 2,
-                      mutation = mutation,
-                      model = model_lookup(powers),
-                      tx_name = tx_name,
-                      sample = rep(1:n_sims, each = length(t)),
-                      month = rep(t, n_sims),
-                      survival = c(pfs))
-  os <- NULL
-  return(list(pfs = pfs, os = os))
+    ma_params_lookup_j <- ma_params_lookup[transition_id == j + 2]
+    gamma[[j]] <- matrix(NA, nrow = n_sims, ncol = nrow(ma_params_lookup_j))
+    for (k in 1:nrow(ma_params_lookup_j)){
+      mu_num <- ma_params_lookup_j$mu_num[k]
+      if (!is.na(mu_num)){
+        mu <- ma_post[, mu_col(mu_num)]
+      } else{
+        mu <- rep(0, n_sims)
+      }
+      gamma[[j]][, k] <- mu
+    } # End loop over parameters
+  } # End loop over transitions
+  
+  # Compute PFS/OS give parameter estimates
+  stprobs <- state_probs(gamma, powers, t, n_sims)
+  surv <- data.table(line = 2,
+                     mutation = mutation,
+                     model = model_lookup(powers),
+                     tx_name = tx_name,
+                     sample = rep(1:n_sims, each = length(t)),
+                     month = rep(t, n_sims),
+                     pfs = c(stprobs$pfs),
+                     os = c(stprobs$os))
+  return(surv)
 }
 
 # T790M positive (osimertinib)
@@ -537,11 +546,7 @@ surv_2L_t790m_osi_est$fracpoly2 <- surv_2L(n_months = 72,
                                            powers = c(0, 1),
                                            "osimertinib",
                                            mutation = 1)
-pfs_2L_t790m_osi <- vector(mode = "list", length = n_models)
-for (i in 1:n_models){
-  pfs_2L_t790m_osi[[i]] <- surv_2L_t790m_osi_est[[i]]$pfs
-}
-pfs_2L_t790m_osi <- rbindlist(pfs_2L_t790m_osi)
+surv_2L_t790m_osi_est <- rbindlist(surv_2L_t790m_osi_est)
 
 # T790M negative (PBDC)
 surv_2L_pbdc_est <- list()
@@ -569,60 +574,91 @@ surv_2L_pbdc_est$fracpoly2 <- surv_2L(n_months = 72,
                                       powers = c(0, 1),
                                       "PBDC",
                                       mutation = 0)
-pfs_2L_pbdc <- vector(mode = "list", length = n_models)
-for (i in 1:n_models){
-  pfs_2L_pbdc[[i]] <- surv_2L_pbdc_est[[i]]$pfs
-}
-pfs_2L_pbdc <- rbindlist(pfs_2L_pbdc)
-pfs_2L <- rbind(pfs_2L_t790m_osi, pfs_2L_pbdc)
+surv_2L_pbdc_est <- rbindlist(surv_2L_pbdc_est)
 
 # Combine PFS/OS ---------------------------------------------------------------
-pfs <- rbind(pfs_1L, pfs_2L)
-mstate_nma_pfs <- pfs[, .(mean = mean(survival),
-                      l95 = quantile(survival, .025),
-                      u95 = quantile(survival, .975)),
-                      by = c("line", "mutation", "model", "tx_name", "month")]
+surv_est <- rbind(surv_1L_est,
+                  surv_2L_t790m_osi_est,
+                  surv_2L_pbdc_est)
+mstate_nma_pfs <- surv_est[, .(mean = mean(pfs),
+                          l95 = quantile(pfs, .025),
+                          u95 = quantile(pfs, .975)),
+                          by = c("line", "mutation", "model", "tx_name", "month")]
+mstate_nma_os <- surv_est[, .(mean = mean(os),
+                          l95 = quantile(os, .025),
+                          u95 = quantile(os, .975)),
+                          by = c("line", "mutation", "model", "tx_name", "month")]
 
 # Save -------------------------------------------------------------------------
 save(params_mstate_nma, file = "../data/params_mstate_nma.rda", compress = "bzip2")
 save(mstate_nma_pfs, file = "../data/mstate_nma_pfs.rda", compress = "bzip2")
+save(mstate_nma_os, file = "../data/mstate_nma_os.rda", compress = "bzip2")
 
 # Check PFS against JAGS code --------------------------------------------------
-jags_v_R <- function(ma_post, line, tx_name){
+jags_v_R <- function(ma_post, line, tx_name, outcome = c("PFS", "OS")){
+  
+  outcome <- match.arg(outcome)
+  
+  # JAGS estimates
+  surv_jags <- vector(mode = "list", length = n_models)
+  for (i in 1:n_models){
+    cols <- grep(outcome, colnames(ma_post[[i]]))
+    n_months <- length(cols)
+    surv_jags[[i]] <- data.table(computation = "JAGS",
+                                model = model_lookup(fp_powers[[i]]),
+                                sim = rep(1:n_sims, each = n_months),
+                                month = rep(1:n_months, n_sims),
+                                survival = c(t(ma_post[[i]][, cols]))) 
+  }
+  surv_jags <- rbindlist(surv_jags)
+  surv_jags <- surv_jags[, .(mean = mean(survival)),
+                          by = c("computation", "model", "month")]
+  
+  # R estimates
   tx_name_env <- tx_name
   line_env <- line
-  pfs_jags <- vector(mode = "list", length = n_models)
-  for (i in 1:n_models){
-    cols <- grep("PFS", colnames(ma_post[[i]]))
-    n_months <- length(cols)
-    pfs_jags[[i]] <- data.table(computation = "JAGS",
-                                       model = model_lookup(fp_powers[[i]]),
-                                       sim = rep(1:n_sims, each = n_months),
-                                       month = rep(1:n_months, n_sims),
-                                       survival = c(t(ma_post[[i]][, cols])))  
-  }
-  pfs_jags <- rbindlist(pfs_jags)
-  pfs_jags <- pfs_jags[, .(mean = mean(survival)),
-                           by = c("computation", "model", "month")]
-  pfs_R <- mstate_nma_pfs[line == line_env & tx_name == tx_name_env]
-  pfs_R[, computation := "R"]
-  pfs <- rbind(pfs_jags, 
-               pfs_R[, colnames(pfs_jags), with = FALSE])
-  p <- ggplot(pfs, aes(x = month, y = mean, col = computation)) + 
+  surv_R <- switch(outcome,
+                   "PFS" = mstate_nma_pfs[line == line_env & tx_name == tx_name_env],
+                   "OS" = mstate_nma_os[line == line_env & tx_name == tx_name_env]
+                   )
+  surv_R[, computation := "R"]
+  surv <- rbind(surv_jags, 
+               surv_R[, colnames(surv_jags), with = FALSE])
+  
+  # Plot
+  y_lab <- switch(outcome,
+                  "PFS" = "Progression-free survival",
+                  "OS" = "Overall survival"
+                  )
+  p <- ggplot(surv, aes(x = month, y = mean, col = computation)) + 
         geom_line(position = position_jitter()) +
         facet_wrap(~model) +
-        xlab("Month") + ylab("Progression-free survival") +
+        xlab("Month") + ylab(y_lab) +
         scale_color_discrete(name = "") 
   return(p)
 }
-p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib")
+
+# 1st Line
+p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "PFS")
 ggsave("figs/pfs_1L_gef_check.pdf", p)
 
-p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC")
+p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "OS")
+ggsave("figs/os_1L_gef_check.pdf", p)
+
+# Second line (T790m positive, osimertinib)
+p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib", outcome = "PFS")
+ggsave("figs/pfs_2L_t790m_osi_check.pdf", p)
+
+p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib", outcome = "OS")
+ggsave("figs/os_2L_t790m_osi_check.pdf", p)
+
+# Second line (PBDC)
+p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC", outcome = "PFS")
 ggsave("figs/pfs_2L_pbdc_check.pdf", p)
 
-p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib")
-ggsave("figs/pfs_2L_t790m_osi_check.pdf", p)
+p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC", outcome = "OS")
+ggsave("figs/os_2L_pbdc_check.pdf", p)
+
 
 # Check the d's ----------------------------------------------------------------
 # Print the mean of the posterior distribution

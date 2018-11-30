@@ -295,10 +295,12 @@
 #' print(params_costs_prod)
 "params_costs_prod"
 
-#' Progression-free survival from network meta-analysis
+#' Progression-free survival and overall survival from network meta-analysis
 #'
-#' Curves of progression-free survival (PFS)---the duration of time a patient is alive without disease 
-#' progression---estimated using a Bayesian multi-state network meta-analyis (NMA).
+#' Curves of progression-free survival (PFS) and overall survival (OS) 
+#' estimated using a Bayesian multi-state network meta-analyis (NMA). PFS is 
+#' the duration of time a patient is alive without disease 
+#' progression and OS is the duration of a time a patient is alive.
 #'
 #' @format A data.table with the following columns:
 #' \describe{
@@ -311,4 +313,12 @@
 #' }
 #' @examples 
 #' head(mstate_nma_pfs)
+#' head(mstate_nma_os)
+#' @name mstate_nma_surv
+NULL
+
+#' @rdname mstate_nma_surv
 "mstate_nma_pfs"
+
+#'@rdname mstate_nma_surv
+"mstate_nma_os"
