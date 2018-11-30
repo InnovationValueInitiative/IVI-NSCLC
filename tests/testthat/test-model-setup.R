@@ -32,13 +32,13 @@ test_that("create_states", {
   
   struct <- model_structure(txseqs, n_states = "three")
   states <- create_states(struct)
-  expect_equal(states$state_name, c("S1", "P1", "D"))
+  expect_equal(states$state_name, c("S1", "P1/S2", "D"))
   
   txseqs_v2 <- txseq_list(seq1 = txseq1, seq2 = txseq2, 
                           start_line = "second", mutation = "negative")
   struct <- model_structure(txseqs_v2, n_states = "three")
   states <- create_states(struct)
-  expect_equal(states$state_name, c("S2", "P2", "D"))
+  expect_equal(states$state_name, c("P1/S2", "P2", "D"))
   
   expect_error(create_states(2, 2))
   expect_error(create_states(txseqs, 2))

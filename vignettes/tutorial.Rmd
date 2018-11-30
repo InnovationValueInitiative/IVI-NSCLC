@@ -130,7 +130,7 @@ txseqs_2L_neg <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_
 In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
 
 ```{r}
-struct <- model_structure(txseqs, dist = "weibull")
+struct <- model_structure(txseqs, dist = "weibull", n_states = "four")
 
 # Health states
 states <- create_states(struct)
@@ -169,9 +169,15 @@ print(tmat_3_2L)
 As with treatment strategies, its useful to write a convenience function for generating informative names for health states for plotting.
 
 ```{r}
-state_factor <- function(x){
-  x[, state_name := factor(state_id, levels = 1:nrow(states), 
-                           labels = states$state_name)]
+state_factor <- function(x, rev = FALSE){ 
+  state_names <- states$state_name
+  if (rev == FALSE){
+    x[, state_name := factor(state_id, levels = 1:nrow(states), 
+                            labels = state_names)]
+  } else{
+    x[, state_name := factor(state_id, levels = rev(1:nrow(states)), 
+                            labels = rev(state_names))]
+  }  
 }
 ```
 
@@ -259,15 +265,19 @@ strategy_factor(stprobs)
 ggplot(stprobs[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~state_name) + 
   xlab("Years") + ylab("Probability in health state") +
-  scale_color_discrete(name = "") 
+  scale_color_discrete(name = "") +
+  theme(legend.position = "bottom")
 ```
 
 Since [progression-free survival](https://en.wikipedia.org/wiki/Progression-free_survival) and [overall survival](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival) are the most commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.
 
 ```{r pfs_os_curves}
-curves <- econmod$stateprobs_[state_id == 1 | state_id == 4]
-curves[, prob := ifelse(state_id == 4, 1 - prob, prob)] # OS is 1 - pr(death)
-curves[, lab := factor(state_id, levels = c(1, 4), labels = c("PFS", "OS"))]
+death_state <- switch(struct$n_states,
+                      "three" = 3,
+                      "four" = 4)
+curves <- econmod$stateprobs_[state_id == 1 | state_id == death_state]
+curves[, prob := ifelse(state_id == death_state, 1 - prob, prob)] # OS is 1 - pr(death)
+curves[, lab := factor(state_id, levels = c(1, death_state), labels = c("PFS", "OS"))]
 curves <- curves[, .(prob_mean = mean(prob),
                             prob_lower = quantile(prob, .025),
                             prob_upper = quantile(prob, .975)),
@@ -276,7 +286,8 @@ strategy_factor(curves)
 ggplot(curves[t < 5], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~lab, scales = "free_x") + 
   xlab("Years") + ylab("Survival probability") +
-  scale_color_discrete(name = "") 
+  scale_color_discrete(name = "") + 
+  theme(legend.position = "bottom")
 ```
 
 We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS. 
@@ -336,12 +347,12 @@ econmod$sim_qalys(dr = c(0, .03))
 # Plot
 lys <- econmod$qalys_[dr == 0, .(mean_lys = mean(lys)),
                             by = c("strategy_id", "state_id")]
-state_factor(lys)
+state_factor(lys, rev = TRUE)
 strategy_factor(lys, rev = TRUE)
 ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) + 
   geom_bar(stat = "identity") +
   scale_fill_discrete(name = "") +
-  xlab("") + ylab("Mean life-years") + 
+  xlab("") + ylab("Mean life-years") +
   coord_flip() 
 ```
 
@@ -504,32 +515,49 @@ ggplot(icea$evpi, aes(x = k, y = evpi)) +
 ```
 
 ## Multi criteria decision analysis
-We perform the MCDA using the approach described by the [2016 ISPOR Task Force](https://www.ncbi.nlm.nih.gov/pubmed/26797229). Here, we assess the treatment strategies on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, productivity costs, route of administration, years since FDA approval, and the probability of experiencing diarrhea. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for health care sector costs, productivity losses, and the probability of experiencing diarrhea. Performance for the two treatment attributes---route of administration and years since FDA approval---can be computed with `txattr_performance()`. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.
+We perform the MCDA using the approach described by the [2016 ISPOR Task Force](https://www.ncbi.nlm.nih.gov/pubmed/26797229). Here, we assess the treatment strategies on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, productivity costs, route of administration, years since FDA approval, and the probability of experiencing diarrhea. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). Performance for the two treatment attributes---route of administration and years since FDA approval---can be computed with `txattr_performance()`. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.
 
-Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a "performance matrix".
-
-```{r performance-matrix1}
+```{r criteria}
+# Outcomes by criteria
+lys <- data.table(lys_s1 = econmod$qalys_[state_id == 1 & dr == 0.03, lys],
+                  lys_p1 = econmod$qalys_[state_id == 2 & dr == 0.03, lys])
+if (struct$n_states == "four") {
+  lys$lys_p2 = econmod$qalys_[state_id == 3 & dr == 0.03, lys]
+}
 hc_costs <- ce_sim$costs[!category %in% c("prod", "total"), 
                            .(costs = sum(costs)),
                              by = c("sample", "strategy_id")]
 txattr <- txattr_performance(struct = struct, patients = pats, econmod = econmod)
 outcomes <- data.table(sample = rep(1:n_samples, each = length(txseqs)),
                        strategy_id = rep(1:length(txseqs), times = n_samples),
-                       lys_s1 = econmod$qalys_[state_id == 1 & dr == 0.03, lys],
-                       lys_p1 = econmod$qalys_[state_id == 2 & dr == 0.03, lys],
-                       lys_p2 = econmod$qalys_[state_id == 3 & dr == 0.03, lys],
+                       lys,
                        hc_costs = hc_costs$costs,
                        prod_costs = prodcosts$costs,
                        route = txattr$route,
                        yrs_since_approval = txattr$yrs_since_approval,
                        diarhhea = c(t(ae_probs$diarrhea)))
-criteria_vars <- c("lys_s1", "lys_p1", "lys_p2", "hc_costs", "prod_costs", "route", "yrs_since_approval", "diarhhea")
-criteria_names <- c("Life-years stable disease", "Life-years progressed 1L", 
-                    "Life-years progressed 2L", 
+
+# Label criteria
+lys_vars <- c("lys_s1", "lys_p1")
+if (struct$n_states == "four") {
+  lys_vars <- c(lys_vars, "lys_p2")
+}
+lys_names <- c("Life-years stable disease", "Life-years progressed 1L")
+if (struct$n_states == "four"){
+  lys_names <- c(lys_names, "Life-years progressed 2L")
+}
+criteria_vars <- c(lys_vars, "hc_costs", "prod_costs", "route", "yrs_since_approval", "diarhhea")
+criteria_names <- c(lys_names, 
                     "Health care sector costs", "Productivity costs",
                     "Route of administration", "Years since FDA approval",
                     "Diarrhea")
-optimal <- c("high", "high", "high", "low", "low", "high", "high", "low")
+
+```
+
+Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a "performance matrix". High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for health care sector costs, productivity losses, and the probability of experiencing diarrhea.
+
+```{r performance-matrix1}
+optimal <- c(rep("high", length(lys_vars)), "low", "low", "high", "high", "low")
 performance_mat_orig <- performance_matrix(outcomes, 
                                            strategy = "strategy_id", 
                                            criteria = criteria_vars,
@@ -537,6 +565,7 @@ performance_mat_orig <- performance_matrix(outcomes,
                                            colnames = names(txseqs))
 knitr::kable(performance_mat_orig)
 ```
+
 
 Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a "total value" is computed as weighted average of each criteria on this common scale. We'll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.
 
@@ -559,7 +588,7 @@ mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",
 
 We can reexamine the performance matrix with criteria now translated to a common scale.
 
-```{r performance-matrix}
+```{r performance-matrix2}
 performance_mat_common <- performance_matrix(mcda$scores, 
                                              strategy = "strategy_id", 
                                              criteria = criteria_vars,
@@ -581,7 +610,7 @@ ggplot(total_value,
        aes(x = strategy_name, y = mean)) + 
   geom_bar(stat = "identity", fill = "#d9230f") +
   geom_errorbar(aes(ymin = lower, 
-                    ymax = upper), width=.2) +
+                    ymax = upper), width = .2) +
   scale_fill_discrete(name = "") +
   xlab("") + ylab("Total value") 
 ```

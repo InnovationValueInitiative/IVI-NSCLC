@@ -11,20 +11,22 @@ pkg_env$ici <- c("nivolumab", "pembrolizumab", "atezolizumab")
 
 # State names
 ## Start at first line
-### 1st/2nd generation TKIs with 7 states
+### Four state model
 pkg_env$state_names_start1L_4 <- c("S1", "P1/S2", "P2", "D")
 pkg_env$state_names_long_start1L_4 <- c("Stable with 1L",
                                         "Progression with 1L -> Stable with 2L",
                                         "Progression with 2L",
                                         "Death")
 
-### Osimertinib
-pkg_env$state_names_start1L_3 <- c("S1", "P1", "D") 
+### Three state model
+pkg_env$state_names_start1L_3 <- c("S1", "P1/S2", "D") 
 pkg_env$state_names_long_start1L_3 <- c("Stable with 1L",
-                                          "Progression with 1L", "Death")  
+                                        "Progression with 1L",
+                                        "Death")  
 
 ## Start at second line
-pkg_env$state_names_start2L_3 <- c("S2", "P2", "D") 
+pkg_env$state_names_start2L_3 <- c("P1/S2", "P2", "D") 
 pkg_env$state_names_long_start2L_3 <- c("Stable with 2L",
-                                     "Progression with 2L", "Death")  
+                                        "Progression with 2L", 
+                                        "Death")  
 

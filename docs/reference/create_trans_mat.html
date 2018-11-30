@@ -140,17 +140,17 @@ package.</p>
 #&gt; P2    NA    NA NA  5
 #&gt; D     NA    NA NA NA</div><div class='input'>
 <span class='no'>struct2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>)
-<span class='fu'>create_trans_mat</span>(<span class='no'>struct2</span>)</div><div class='output co'>#&gt;    S1 P1  D
-#&gt; S1 NA  1  2
-#&gt; P1 NA NA  3
-#&gt; D  NA NA NA</div><div class='input'>
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct2</span>)</div><div class='output co'>#&gt;       S1 P1/S2  D
+#&gt; S1    NA     1  2
+#&gt; P1/S2 NA    NA  3
+#&gt; D     NA    NA NA</div><div class='input'>
 <span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>,
                      <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>, <span class='kw'>mutation</span> <span class='kw'>=</span> <span class='st'>"positive"</span>)
 <span class='no'>struct3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>)
-<span class='fu'>create_trans_mat</span>(<span class='no'>struct3</span>)</div><div class='output co'>#&gt;    S2 P2  D
-#&gt; S2 NA  1  2
-#&gt; P2 NA NA  3
-#&gt; D  NA NA NA</div></pre>
+<span class='fu'>create_trans_mat</span>(<span class='no'>struct3</span>)</div><div class='output co'>#&gt;       P1/S2 P2  D
+#&gt; P1/S2    NA  1  2
+#&gt; P2       NA NA  3
+#&gt; D        NA NA NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

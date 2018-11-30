@@ -144,13 +144,13 @@
 <span class='no'>struct2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>)
 <span class='fu'>create_states</span>(<span class='no'>struct2</span>)</div><div class='output co'>#&gt;    state_id state_name     state_name_long
 #&gt; 1:        1         S1      Stable with 1L
-#&gt; 2:        2         P1 Progression with 1L
+#&gt; 2:        2      P1/S2 Progression with 1L
 #&gt; 3:        3          D               Death</div><div class='input'>
 <span class='no'>txseqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='txseq_list.html'>txseq_list</a></span>(<span class='kw'>seq1</span> <span class='kw'>=</span> <span class='no'>txseq1</span>, <span class='kw'>seq2</span> <span class='kw'>=</span> <span class='no'>txseq2</span>,
                      <span class='kw'>start_line</span> <span class='kw'>=</span> <span class='st'>"second"</span>, <span class='kw'>mutation</span> <span class='kw'>=</span> <span class='st'>"negative"</span>)
 <span class='no'>struct3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>, <span class='kw'>n_states</span> <span class='kw'>=</span> <span class='st'>"three"</span>)
 <span class='fu'>create_states</span>(<span class='no'>struct3</span>)</div><div class='output co'>#&gt;    state_id state_name     state_name_long
-#&gt; 1:        1         S2      Stable with 2L
+#&gt; 1:        1      P1/S2      Stable with 2L
 #&gt; 2:        2         P2 Progression with 2L
 #&gt; 3:        3          D               Death</div></pre>
   </div>

@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-11-29</h4>
+            <h4 class="date">2018-11-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -164,7 +164,7 @@ txseqs_2L_neg &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 <h3 class="hasAnchor">
 <a href="#model-structure" class="anchor"></a><span class="header-section-number">3.1.3</span> Model structure</h3>
 <p>In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with <code><a href="../reference/model_structure.html">model_structure()</a></code>. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the <code>dist</code> argument. A description of the relevant health states can be generated using <code><a href="../reference/create_states.html">create_states()</a></code> and possible health state transitions are stored in a transition matrix generated using <code><a href="../reference/create_trans_mat.html">create_trans_mat()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">struct &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">struct &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>, <span class="dt">n_states =</span> <span class="st">"four"</span>)
 
 <span class="co"># Health states</span>
 states &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct)
@@ -189,43 +189,49 @@ struct_3_1L &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 <span class="kw">print</span>(<span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct_3_1L))</code></pre></div>
 <pre><code>##    state_id state_name     state_name_long
 ## 1:        1         S1      Stable with 1L
-## 2:        2         P1 Progression with 1L
+## 2:        2      P1/S2 Progression with 1L
 ## 3:        3          D               Death</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct_3_1L))</code></pre></div>
-<pre><code>##    S1 P1  D
-## S1 NA  1  2
-## P1 NA NA  3
-## D  NA NA NA</code></pre>
+<pre><code>##       S1 P1/S2  D
+## S1    NA     1  2
+## P1/S2 NA    NA  3
+## D     NA    NA NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2nd line model (T790M positive)</span>
 struct_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs_2L_pos, <span class="dt">dist =</span> <span class="st">"weibull"</span>,
                               <span class="dt">n_states =</span> <span class="st">"three"</span>)
 <span class="kw">print</span>(<span class="kw"><a href="../reference/create_states.html">create_states</a></span>(struct_3_2L))</code></pre></div>
 <pre><code>##    state_id state_name     state_name_long
-## 1:        1         S2      Stable with 2L
+## 1:        1      P1/S2      Stable with 2L
 ## 2:        2         P2 Progression with 2L
 ## 3:        3          D               Death</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct_3_2L))</code></pre></div>
-<pre><code>##    S2 P2  D
-## S2 NA  1  2
-## P2 NA NA  3
-## D  NA NA NA</code></pre>
+<pre><code>##       P1/S2 P2  D
+## P1/S2    NA  1  2
+## P2       NA NA  3
+## D        NA NA NA</code></pre>
 <p>Recall that the transition matrix depends on the model structure.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmat_3_1L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct_3_1L)
 tmat_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_trans_mat.html">create_trans_mat</a></span>(struct_3_2L)
 <span class="kw">print</span>(tmat_3_1L)</code></pre></div>
-<pre><code>##    S1 P1  D
-## S1 NA  1  2
-## P1 NA NA  3
-## D  NA NA NA</code></pre>
+<pre><code>##       S1 P1/S2  D
+## S1    NA     1  2
+## P1/S2 NA    NA  3
+## D     NA    NA NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tmat_3_2L)</code></pre></div>
-<pre><code>##    S2 P2  D
-## S2 NA  1  2
-## P2 NA NA  3
-## D  NA NA NA</code></pre>
+<pre><code>##       P1/S2 P2  D
+## P1/S2    NA  1  2
+## P2       NA NA  3
+## D        NA NA NA</code></pre>
 <p>As with treatment strategies, its useful to write a convenience function for generating informative names for health states for plotting.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state_factor &lt;-<span class="st"> </span><span class="cf">function</span>(x){
-  x[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states), 
-                           <span class="dt">labels =</span> states<span class="op">$</span>state_name)]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">state_factor &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">rev =</span> <span class="ot">FALSE</span>){ 
+  state_names &lt;-<span class="st"> </span>states<span class="op">$</span>state_name
+  <span class="cf">if</span> (rev <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){
+    x[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states), 
+                            <span class="dt">labels =</span> state_names)]
+  } <span class="cf">else</span>{
+    x[, state_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="kw">rev</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(states)), 
+                            <span class="dt">labels =</span> <span class="kw">rev</span>(state_names))]
+  }  
 }</code></pre></div>
 </div>
 </div>
@@ -244,11 +250,11 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      1 53.70742        0    gef
-## 2:           1          1             2      1 53.70742        0    gef
-## 3:           1          1             3      1 53.70742        0   pbdc
-## 4:           1          1             4      1 53.70742        0   pbdc
-## 5:           1          1             5      1 53.70742        0   pbdc
+## 1:           1          1             1      0 67.04835        1    gef
+## 2:           1          1             2      0 67.04835        1    gef
+## 3:           1          1             3      0 67.04835        1    osi
+## 4:           1          1             4      0 67.04835        1    osi
+## 5:           1          1             5      0 67.04835        1    osi
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:    &lt;NA&gt;           1          0
 ## 2:    &lt;NA&gt;           0          1
@@ -261,11 +267,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
-## [1,]    -0.6265128            0   -3.622034 -14.881281
-## [2,]    -0.7741423            0   -3.602539  -9.711467
-## [3,]    -0.3272112            0   -3.604551 -12.844922
-## [4,]    -0.9303044            0   -3.797981 -16.759499
-## [5,]    -1.2877656            0   -3.630205 -16.456922</code></pre>
+## [1,]    0.30802134            0   -3.837348  -7.217177
+## [2,]   -0.94177754            0   -3.562967 -13.399398
+## [3,]    0.07603365            0   -3.811762  -6.235691
+## [4,]   -0.54814063            0   -3.760276  -9.043087
+## [5,]   -0.59400257            0   -3.797428  -6.365069</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -318,12 +324,16 @@ stprobs &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs
 <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(stprobs[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/stateprobs-1.png" width="672"></p>
 <p>Since <a href="https://en.wikipedia.org/wiki/Progression-free_survival">progression-free survival</a> and <a href="https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival">overall survival</a> are the most commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">curves &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>state_id <span class="op">==</span><span class="st"> </span><span class="dv">4</span>]
-curves[, prob <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(state_id <span class="op">==</span><span class="st"> </span><span class="dv">4</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob, prob)] <span class="co"># OS is 1 - pr(death)</span>
-curves[, lab <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"PFS"</span>, <span class="st">"OS"</span>))]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">death_state &lt;-<span class="st"> </span><span class="cf">switch</span>(struct<span class="op">$</span>n_states,
+                      <span class="st">"three"</span> =<span class="st"> </span><span class="dv">3</span>,
+                      <span class="st">"four"</span> =<span class="st"> </span><span class="dv">4</span>)
+curves &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>state_id <span class="op">==</span><span class="st"> </span>death_state]
+curves[, prob <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(state_id <span class="op">==</span><span class="st"> </span>death_state, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob, prob)] <span class="co"># OS is 1 - pr(death)</span>
+curves[, lab <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(state_id, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, death_state), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"PFS"</span>, <span class="st">"OS"</span>))]
 curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</span> <span class="kw">mean</span>(prob),
                             <span class="dt">prob_lower =</span> <span class="kw">quantile</span>(prob, .<span class="dv">025</span>),
                             <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
@@ -332,7 +342,8 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
 <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">scales =</span> <span class="st">"free_x"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="672"></p>
 <p>We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quantiles &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/surv_quantile">surv_quantile</a></span>(curves, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, .<span class="dv">975</span>),
@@ -388,12 +399,12 @@ econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="d
 <span class="co"># Plot</span>
 lys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[dr <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, .(<span class="dt">mean_lys =</span> <span class="kw">mean</span>(lys)),
                             by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>)]
-<span class="kw">state_factor</span>(lys)
+<span class="kw">state_factor</span>(lys, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
 <span class="kw">strategy_factor</span>(lys, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
 <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(lys, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_lys, <span class="dt">fill =</span> state_name)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/mean_lys-1.png" width="672"></p>
 </div>
@@ -518,22 +529,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.16 (-0.01, 0.35)</td>
+<td align="left">0.16 (-0.07, 0.32)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">621 (-14,207, 13,050)</td>
+<td align="left">1,595 (-14,249, 16,729)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">15,162 (-13,315, 46,526)</td>
+<td align="left">13,918 (-22,480, 45,254)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">3,932</td>
+<td align="left">10,283</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -574,29 +585,42 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">
 <div id="multi-criteria-decision-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multi-criteria-decision-analysis" class="anchor"></a><span class="header-section-number">4.2</span> Multi criteria decision analysis</h2>
-<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, productivity costs, route of administration, years since FDA approval, and the probability of experiencing diarrhea. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for health care sector costs, productivity losses, and the probability of experiencing diarrhea. Performance for the two treatment attributes—route of administration and years since FDA approval—can be computed with <code><a href="../reference/txattr_performance.html">txattr_performance()</a></code>. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.</p>
-<p>Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a “performance matrix”.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc_costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[<span class="op">!</span>category <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"prod"</span>, <span class="st">"total"</span>), 
+<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, productivity costs, route of administration, years since FDA approval, and the probability of experiencing diarrhea. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). Performance for the two treatment attributes—route of administration and years since FDA approval—can be computed with <code><a href="../reference/txattr_performance.html">txattr_performance()</a></code>. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Outcomes by criteria</span>
+lys &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/data.table">data.table</a></span>(<span class="dt">lys_s1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
+                  <span class="dt">lys_p1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys])
+<span class="cf">if</span> (struct<span class="op">$</span>n_states <span class="op">==</span><span class="st"> "four"</span>) {
+  lys<span class="op">$</span>lys_p2 =<span class="st"> </span>econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys]
+}
+hc_costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[<span class="op">!</span>category <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"prod"</span>, <span class="st">"total"</span>), 
                            .(<span class="dt">costs =</span> <span class="kw">sum</span>(costs)),
                              by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"sample"</span>, <span class="st">"strategy_id"</span>)]
 txattr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txattr_performance.html">txattr_performance</a></span>(<span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats, <span class="dt">econmod =</span> econmod)
 outcomes &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/data.table">data.table</a></span>(<span class="dt">sample =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span>n_samples, <span class="dt">each =</span> <span class="kw">length</span>(txseqs)),
                        <span class="dt">strategy_id =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(txseqs), <span class="dt">times =</span> n_samples),
-                       <span class="dt">lys_s1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
-                       <span class="dt">lys_p1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
-                       <span class="dt">lys_p2 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
+                       lys,
                        <span class="dt">hc_costs =</span> hc_costs<span class="op">$</span>costs,
                        <span class="dt">prod_costs =</span> prodcosts<span class="op">$</span>costs,
                        <span class="dt">route =</span> txattr<span class="op">$</span>route,
                        <span class="dt">yrs_since_approval =</span> txattr<span class="op">$</span>yrs_since_approval,
                        <span class="dt">diarhhea =</span> <span class="kw">c</span>(<span class="kw">t</span>(ae_probs<span class="op">$</span>diarrhea)))
-criteria_vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"lys_s1"</span>, <span class="st">"lys_p1"</span>, <span class="st">"lys_p2"</span>, <span class="st">"hc_costs"</span>, <span class="st">"prod_costs"</span>, <span class="st">"route"</span>, <span class="st">"yrs_since_approval"</span>, <span class="st">"diarhhea"</span>)
-criteria_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"Life-years stable disease"</span>, <span class="st">"Life-years progressed 1L"</span>, 
-                    <span class="st">"Life-years progressed 2L"</span>, 
+
+<span class="co"># Label criteria</span>
+lys_vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"lys_s1"</span>, <span class="st">"lys_p1"</span>)
+<span class="cf">if</span> (struct<span class="op">$</span>n_states <span class="op">==</span><span class="st"> "four"</span>) {
+  lys_vars &lt;-<span class="st"> </span><span class="kw">c</span>(lys_vars, <span class="st">"lys_p2"</span>)
+}
+lys_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"Life-years stable disease"</span>, <span class="st">"Life-years progressed 1L"</span>)
+<span class="cf">if</span> (struct<span class="op">$</span>n_states <span class="op">==</span><span class="st"> "four"</span>){
+  lys_names &lt;-<span class="st"> </span><span class="kw">c</span>(lys_names, <span class="st">"Life-years progressed 2L"</span>)
+}
+criteria_vars &lt;-<span class="st"> </span><span class="kw">c</span>(lys_vars, <span class="st">"hc_costs"</span>, <span class="st">"prod_costs"</span>, <span class="st">"route"</span>, <span class="st">"yrs_since_approval"</span>, <span class="st">"diarhhea"</span>)
+criteria_names &lt;-<span class="st"> </span><span class="kw">c</span>(lys_names, 
                     <span class="st">"Health care sector costs"</span>, <span class="st">"Productivity costs"</span>,
                     <span class="st">"Route of administration"</span>, <span class="st">"Years since FDA approval"</span>,
-                    <span class="st">"Diarrhea"</span>)
-optimal &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"high"</span>, <span class="st">"high"</span>, <span class="st">"high"</span>, <span class="st">"low"</span>, <span class="st">"low"</span>, <span class="st">"high"</span>, <span class="st">"high"</span>, <span class="st">"low"</span>)
+                    <span class="st">"Diarrhea"</span>)</code></pre></div>
+<p>Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a “performance matrix”. High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for health care sector costs, productivity losses, and the probability of experiencing diarrhea.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">optimal &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">"high"</span>, <span class="kw">length</span>(lys_vars)), <span class="st">"low"</span>, <span class="st">"low"</span>, <span class="st">"high"</span>, <span class="st">"high"</span>, <span class="st">"low"</span>)
 performance_mat_orig &lt;-<span class="st"> </span><span class="kw"><a href="../reference/performance_matrix.html">performance_matrix</a></span>(outcomes, 
                                            <span class="dt">strategy =</span> <span class="st">"strategy_id"</span>, 
                                            <span class="dt">criteria =</span> criteria_vars,
@@ -612,43 +636,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.94 (0.87, 1.03)</td>
-<td align="left">1.36 (0.89, 1.84)</td>
+<td align="left">0.93 (0.86, 1.02)</td>
+<td align="left">1.34 (0.72, 1.81)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.38 (0.30, 0.48)</td>
-<td align="left">0.28 (0.15, 0.42)</td>
+<td align="left">0.37 (0.31, 0.43)</td>
+<td align="left">0.27 (0.15, 0.42)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">0.72 (0.65, 0.79)</td>
-<td align="left">0.52 (0.29, 0.77)</td>
+<td align="left">0.71 (0.63, 0.80)</td>
+<td align="left">0.52 (0.26, 0.79)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">212,010 (197,772, 223,413)</td>
-<td align="left">212,631 (190,604, 227,443)</td>
+<td align="left">209,182 (196,510, 222,607)</td>
+<td align="left">210,777 (195,129, 225,842)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">76,795 (73,162, 80,520)</td>
-<td align="left">74,242 (69,325, 79,460)</td>
+<td align="left">66,365 (62,700, 69,428)</td>
+<td align="left">64,087 (60,040, 68,452)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.57 (0.53, 0.60)</td>
-<td align="left">0.69 (0.54, 0.83)</td>
+<td align="left">0.58 (0.54, 0.60)</td>
+<td align="left">0.70 (0.51, 0.84)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">7.14 (6.78, 7.47)</td>
-<td align="left">13.03 (12.55, 13.47)</td>
+<td align="left">7.04 (6.80, 7.33)</td>
+<td align="left">12.98 (12.35, 13.44)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">0.09 (0.00, 0.66)</td>
-<td align="left">0.62 (0.01, 0.96)</td>
+<td align="left">0.06 (0.00, 0.30)</td>
+<td align="left">0.60 (0.01, 0.96)</td>
 </tr>
 </tbody>
 </table>
@@ -680,43 +704,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">19.17 (13.04, 25.80)</td>
-<td align="left">51.35 (14.88, 88.89)</td>
+<td align="left">27.79 (22.09, 34.62)</td>
+<td align="left">58.60 (11.27, 95.34)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">73.76 (50.82, 98.94)</td>
-<td align="left">45.35 (9.92, 84.25)</td>
+<td align="left">68.54 (49.89, 84.72)</td>
+<td align="left">40.26 (4.91, 81.40)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">80.01 (67.87, 91.36)</td>
-<td align="left">47.87 (10.39, 87.28)</td>
+<td align="left">72.70 (61.71, 86.17)</td>
+<td align="left">44.39 (7.31, 84.07)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">44.56 (17.27, 78.62)</td>
-<td align="left">43.07 (7.63, 95.78)</td>
+<td align="left">50.52 (17.51, 81.67)</td>
+<td align="left">46.60 (9.56, 85.07)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">33.91 (3.16, 63.90)</td>
-<td align="left">54.98 (11.91, 95.57)</td>
+<td align="left">35.28 (9.12, 66.57)</td>
+<td align="left">54.73 (17.46, 89.29)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">19.53 (10.44, 29.37)</td>
-<td align="left">52.61 (12.94, 89.57)</td>
+<td align="left">30.58 (22.58, 36.19)</td>
+<td align="left">60.00 (15.59, 93.84)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">6.95 (1.75, 11.69)</td>
-<td align="left">91.08 (84.18, 97.29)</td>
+<td align="left">7.49 (3.93, 11.61)</td>
+<td align="left">92.65 (83.54, 99.31)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">91.06 (32.64, 99.98)</td>
-<td align="left">37.01 (1.25, 99.40)</td>
+<td align="left">94.38 (68.96, 99.99)</td>
+<td align="left">39.12 (1.75, 98.64)</td>
 </tr>
 </tbody>
 </table>
@@ -731,7 +755,7 @@ total_value &lt;-<span class="st"> </span>mcda<span class="op">$</span>total_val
        <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">ymin =</span> lower, 
-                    <span class="dt">ymax =</span> upper), <span class="dt">width=</span>.<span class="dv">2</span>) <span class="op">+</span>
+                    <span class="dt">ymax =</span> upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/mcda-total-value-1.png" width="384"></p>
