@@ -624,6 +624,14 @@ ggsave("figs/pfs_2L_pbdc_check.pdf", p)
 p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib")
 ggsave("figs/pfs_2L_t790m_osi_check.pdf", p)
 
+# Check the d's ----------------------------------------------------------------
+# Print the mean of the posterior distribution
+check_d <- function(dist = "weibull"){
+  cols <- grep("d", colnames(nma_1L[[dist]]))
+  print(apply(nma_1L[[dist]][, cols], 2, mean))
+  print(econmod_tx_lookup_1L)
+  print(nma_params_lookup_1L[[dist]])
+}
 
 
 
