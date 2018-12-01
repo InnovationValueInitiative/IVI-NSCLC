@@ -20,9 +20,6 @@ test_that("model_structure", {
   txseqs_v2 <- txseq_list(seq1 = txseq1, seq2 = txseq2, 
                           start_line = "second", mutation = "positive")
   expect_error(model_structure(txseqs = txseqs_v2, n_states = "four"))
-  
-  txseqs_v2 <- txseq_list(seq1 = txseq1, seq2 = txseq3)
-  expect_error(model_structure(txseqs = txseqs_v2, n_states = "four"))
 })
 
 test_that("create_states", {

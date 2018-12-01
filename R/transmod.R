@@ -11,14 +11,6 @@ create_strategies <- function(struct, txseqs){
                            "abb_second_plus_neg")
   for (i in 1:n_strategies){
     txseqs_i <- unlist(struct$txseqs[[i]])
-    if (txseqs_i[1] == "osimertinib" & struct$n_states == "four" & 
-        start_line == "first"){
-      msg <- paste0("There is no evidence to parameterize a model with four health states ", 
-                    "when osimertinib is used as a first line treatment. ",
-                    "Use a model with three health states for sequences beginning ",
-                    "with osimertinib instead.")
-      stop(msg, call. = FALSE)   
-    }
     abb <- iviNSCLC::treatments$tx_abb[match(txseqs_i, iviNSCLC::treatments$tx_name)]
     names(abb) <- names(txseqs_i)
     container[i, "abb_first"] <- abb["first"]

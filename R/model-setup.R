@@ -41,13 +41,6 @@ model_structure <- function(txseqs,
     stop("If the model starts at second line, then n_states must be 'three'.",
          call. = FALSE)
   }  
-  if (n_states == "four" & "osimertinib" %in% sapply(txseqs, function (x) x$first)){
-      msg <- paste0("There is no evidence to parameterize a model with four health states ", 
-                    "when osimertinib is used as a first line treatment. ",
-                    "Use a model with three health states for sequences beginning ",
-                    "with osimertinib instead.")
-      stop(msg, call. = FALSE) 
-  }    
   l <- list(txseqs = txseqs,
             n_states = n_states,
             dist = dist)
