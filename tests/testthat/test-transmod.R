@@ -16,8 +16,7 @@ txseq2 <- txseq(first = "dacomitinib",
                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
 
 # Patient population
-pats <- create_patients(n = 4)
-
+pats <- create_patients(n = 10)
 
 test_that("create_transmod_data: first line,  4 health states", {
   # Model structure
