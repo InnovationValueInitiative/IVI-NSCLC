@@ -304,18 +304,15 @@ create_transmod <- function(params, data){
   strategy_id <- transition_id <- NULL 
   
   # Create model
-  start_age <- data[strategy_id == 1 & transition_id == 1]$age
+  start_age <- data[strategy_id == 1 & transition_id == 1]$age * 12 # NMA model is in months
   n_states <- attr(data, "model_structure")$n_states
   tmat <- attr(data, "trans_mat")
   clock <- switch(n_states,
                   "three" = "forward",
                   "four" = "mix")
-  if (clock == "mix"){
-    reset_state <- 3    
-  } else{
-    reset_state <- NULL
-  }
-  
+  reset_state <- switch(clock,
+                        "mix" = 2,
+                        NULL)
   transmod <- hesim::create_IndivCtstmTrans(params, data, tmat,
                                             start_age = start_age,
                                             clock = clock,

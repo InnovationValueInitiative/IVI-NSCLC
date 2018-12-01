@@ -246,7 +246,8 @@ The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin b
 
 ```{r}
 max_yrs <- 20
-econmod$sim_disease(max_t = max_yrs * 12)
+max_age <- 100
+econmod$sim_disease(max_t = max_yrs * 12, max_age = max_age * 12)
 econmod$disprog_[, ':=' (time_start = time_start/12, time_stop = time_stop/12)]
 ```
 
