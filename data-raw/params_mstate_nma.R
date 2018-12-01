@@ -660,14 +660,29 @@ p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC", outcome = "OS")
 ggsave("figs/os_2L_pbdc_check.pdf", p)
 
 
-# Check the d's ----------------------------------------------------------------
-# Print the mean of the posterior distribution
+# Check the coefficients -------------------------------------------------------
+# 1L mu's
+## Print the mean of the posterior distribution
+check_mu_1L <- function(dist = "weibull"){
+  cols <- grep("MU", colnames(ma_1L[[dist]]))
+  print(apply(ma_1L[[dist]][, cols], 2, mean))
+  print(nma_params_lookup_1L[[dist]])
+}
+check_mu_1L("weibull")
+apply(params_mstate_nma$weibull$coefs$a0, 2, mean)
+
+# 1L d's
+## Print the mean of the posterior distribution
 check_d <- function(dist = "weibull"){
   cols <- grep("d", colnames(nma_1L[[dist]]))
   print(apply(nma_1L[[dist]][, cols], 2, mean))
   print(econmod_tx_lookup_1L)
   print(nma_params_lookup_1L[[dist]])
 }
+# Weibull
+check_d("weibull")
+apply(params_mstate_nma$weibull$coefs$a0, 2, mean)
+apply(params_mstate_nma$weibull$coefs$a1, 2, mean)
 
 
 
