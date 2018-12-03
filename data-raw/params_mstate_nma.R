@@ -66,8 +66,8 @@ n_models <- length(mod_names)
 mod_dists <- c("weibullNMA", "gompertz", "fracpoly", "fracpoly")
 mod_aux <- list(weibull = NULL,
                 gompertz = NULL,
-                fracpoly1 = list(fp_powers$fracpoly1),
-                fracpoly2 = list(fp_powers$fracpoly1))
+                fracpoly1 = list(powers = fp_powers$fracpoly1),
+                fracpoly2 = list(powers =fp_powers$fracpoly1))
 
 model_lookup <- function(powers){
   powers <- paste(as.character(powers), collapse = ", ")
@@ -104,30 +104,30 @@ read_nma_1L <- function(filename){
   dat <- as.matrix(dat)
   return(dat)
 }
-nma_1L <- list(weibull = read_nma_1L("mstate_nma/nma_1L_re_fp_p0.csv"),
-               gompertz = read_nma_1L("mstate_nma/nma_1L_re_fp_p1.csv"), 
-               fracpoly1 = read_nma_1L("mstate_nma/nma_1L_re_fp_p00.csv"), # (p1 = 0, p2 = 0)
-               fracpoly2 = read_nma_1L("mstate_nma/nma_1L_re_fp_p01.csv")) # (p1 = 0, p2 = 1)
-ma_1L <- list(weibull = as.matrix(fread("mstate_nma/ma_1L_fe_gef_fp_p0.csv")),
-              gompertz = as.matrix(fread("mstate_nma/ma_1L_fe_gef_fp_p1.csv")), 
-              fracpoly1 = as.matrix(fread("mstate_nma/ma_1L_fe_gef_fp_p00.csv")), # (p1 = 0, p2 = 0)
-              fracpoly2 = as.matrix(fread("mstate_nma/ma_1L_fe_gef_fp_p01.csv"))) # (p1 = 0, p2 = 1)
+nma_1L <- list(weibull = read_nma_1L("mstate-nma/nma-1L-re-fp-p0.csv"),
+               gompertz = read_nma_1L("mstate-nma/nma-1L-re-fp-p1.csv"), 
+               fracpoly1 = read_nma_1L("mstate-nma/nma-1L-re-fp-p00.csv"), # (p1 = 0, p2 = 0)
+               fracpoly2 = read_nma_1L("mstate-nma/nma-1L-re-fp-p01.csv")) # (p1 = 0, p2 = 1)
+ma_1L <- list(weibull = as.matrix(fread("mstate-nma/ma-1L-fe-gef-fp-p0.csv")),
+              gompertz = as.matrix(fread("mstate-nma/ma-1L-fe-gef-fp-p1.csv")), 
+              fracpoly1 = as.matrix(fread("mstate-nma/ma-1L-fe-gef-fp-p00.csv")), # (p1 = 0, p2 = 0)
+              fracpoly2 = as.matrix(fread("mstate-nma/ma-1L-fe-gef-fp-p01.csv"))) # (p1 = 0, p2 = 1)
 n_sims <- min(c(sapply(nma_1L, nrow), sapply(ma_1L, nrow)))
 nma_1L <- sample_posterior(nma_1L, n_sims)
 ma_1L <- sample_posterior(ma_1L, n_sims)
 
 # 2L (osimertinib and T790M+)
-ma_2L_t790m_osi <- list(weibull = as.matrix(fread("mstate_nma/ma_2L_fe_t790m_osi_fp_p0.csv")),
-                        gompertz = as.matrix(fread("mstate_nma/ma_2L_fe_t790m_osi_fp_p1.csv")), 
-                        fracpoly1 = as.matrix(fread("mstate_nma/ma_2L_fe_t790m_osi_fp_p00.csv")), # (p1 = 0, p2 = 0)
-                        fracpoly2 = as.matrix(fread("mstate_nma/ma_2L_fe_t790m_osi_fp_p01.csv"))) # (p1 = 0, p2 = 1)
+ma_2L_t790m_osi <- list(weibull = as.matrix(fread("mstate-nma/ma-2L-fe-t790m-osi-fp-p0.csv")),
+                        gompertz = as.matrix(fread("mstate-nma/ma-2L-fe-t790m-osi-fp-p1.csv")), 
+                        fracpoly1 = as.matrix(fread("mstate-nma/ma-2L-fe-t790m-osi-fp-p00.csv")), # (p1 = 0, p2 = 0)
+                        fracpoly2 = as.matrix(fread("mstate-nma/ma-2L-fe-t790m-osi-fp-p01.csv"))) # (p1 = 0, p2 = 1)
 ma_2L_t790m_osi <- sample_posterior(ma_2L_t790m_osi, n_sims)
 
 # 2L (PBDC)
-ma_2L_pbdc <- list(weibull = as.matrix(fread("mstate_nma/ma_2L_fe_pbdc_fp_p0.csv")),
-                   gompertz = as.matrix(fread("mstate_nma/ma_2L_fe_pbdc_fp_p1.csv")), 
-                   fracpoly1 = as.matrix(fread("mstate_nma/ma_2L_fe_pbdc_fp_p00.csv")), # (p1 = 0, p2 = 0)
-                   fracpoly2 = as.matrix(fread("mstate_nma/ma_2L_fe_pbdc_fp_p01.csv"))) # (p1 = 0, p2 = 1)
+ma_2L_pbdc <- list(weibull = as.matrix(fread("mstate-nma/ma-2L-fe-pbdc-fp-p0.csv")),
+                   gompertz = as.matrix(fread("mstate-nma/ma-2L-fe-pbdc-fp-p1.csv")), 
+                   fracpoly1 = as.matrix(fread("mstate-nma/ma-2L-fe-pbdc-fp-p00.csv")), # (p1 = 0, p2 = 0)
+                   fracpoly2 = as.matrix(fread("mstate-nma/ma-2L-fe-pbdc-fp-p01.csv"))) # (p1 = 0, p2 = 1)
 ma_2L_pbdc <- sample_posterior(ma_2L_pbdc, n_sims)
 
 # First line parameter estimates -----------------------------------------------
@@ -135,12 +135,12 @@ ma_2L_pbdc <- sample_posterior(ma_2L_pbdc, n_sims)
 nma_params_lookup_1L <- vector(mode = "list", length = n_models)
 names(nma_params_lookup_1L) <- mod_names
 for (i in 1:n_models){ 
-    nma_params_lookup_1L[[i]] <- data.table(read_excel("mstate_nma/params_lookup_1L.xlsx",
+    nma_params_lookup_1L[[i]] <- data.table(read_excel("mstate-nma/params-lookup-1L.xlsx",
                                                        sheet = mod_names[i]))
 } # End loop over models
 
 # Fist line treatments
-nma_tx_lookup_1L <- fread("mstate_nma/tx_lookup_1L.csv")
+nma_tx_lookup_1L <- fread("mstate-nma/tx-lookup-1L.csv")
 econmod_tx_1L <- tx_1L()
 row <- match(econmod_tx_1L, nma_tx_lookup_1L$tx_name)
 econmod_tx_lookup_1L <- data.table(name = econmod_tx_1L,
@@ -232,7 +232,7 @@ mstate_coefs_1L$fracpoly2 <- create_mstate_coefs_1L(nma_post = nma_1L$fracpoly2,
 ma_params_lookup_2L_t790m_osi <- vector(mode = "list", length = n_models)
 names(ma_params_lookup_2L_t790m_osi) <- mod_names
 for (i in 1:n_models){ 
-    ma_params_lookup_2L_t790m_osi[[i]] <- data.table(read_excel("mstate_nma/params_lookup_2L_t790m_osi.xlsx",
+    ma_params_lookup_2L_t790m_osi[[i]] <- data.table(read_excel("mstate-nma/params-lookup-2L-t790m-osi.xlsx",
                                                        sheet = mod_names[i]))
 } # End loop over models
 
@@ -288,7 +288,7 @@ mstate_coefs_2L_t790m_osi$fracpoly2 <- create_mstate_coefs_2L_t790m_osi(ma_post 
 ma_params_lookup_2L_pbdc <- vector(mode = "list", length = n_models)
 names(ma_params_lookup_2L_pbdc) <- mod_names
 for (i in 1:n_models){ 
-    ma_params_lookup_2L_pbdc[[i]] <- data.table(read_excel("mstate_nma/params_lookup_2L_pbdc.xlsx",
+    ma_params_lookup_2L_pbdc[[i]] <- data.table(read_excel("mstate-nma/params-lookup-2L-pbdc.xlsx",
                                                            sheet = mod_names[i]))
 } # End loop over models
 
@@ -634,30 +634,31 @@ jags_v_R <- function(ma_post, line, tx_name, outcome = c("PFS", "OS")){
         geom_line(position = position_jitter()) +
         facet_wrap(~model) +
         xlab("Month") + ylab(y_lab) +
-        scale_color_discrete(name = "") 
+        scale_color_discrete(name = "") + 
+        theme(legend.position = "bottom")
   return(p)
 }
 
 # 1st Line
 p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "PFS")
-ggsave("figs/pfs_1L_gef_check.pdf", p)
+ggsave("figs/pfs-1L-gef-check.pdf", p, width = 7, height = 7)
 
 p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "OS")
-ggsave("figs/os_1L_gef_check.pdf", p)
+ggsave("figs/os-1L-gef-check.pdf", p, width = 7, height = 7)
 
 # Second line (T790m positive, osimertinib)
 p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib", outcome = "PFS")
-ggsave("figs/pfs_2L_t790m_osi_check.pdf", p)
+ggsave("figs/pfs-2L-t790m-osi-check.pdf", p, width = 7, height = 7)
 
 p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib", outcome = "OS")
-ggsave("figs/os_2L_t790m_osi_check.pdf", p)
+ggsave("figs/os-2L-t790m-osi-check.pdf", p, width = 7, height = 7)
 
 # Second line (PBDC)
 p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC", outcome = "PFS")
-ggsave("figs/pfs_2L_pbdc_check.pdf", p)
+ggsave("figs/pfs-2L-pbdc-check.pdf", p, width = 7, height = 7)
 
 p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC", outcome = "OS")
-ggsave("figs/os_2L_pbdc_check.pdf", p)
+ggsave("figs/os-2L-pbdc-check.pdf", p, width = 7, height = 7)
 
 
 # Check the coefficients -------------------------------------------------------

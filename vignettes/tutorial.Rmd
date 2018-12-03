@@ -130,7 +130,7 @@ txseqs_2L_neg <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_
 In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
 
 ```{r}
-struct <- model_structure(txseqs, dist = "weibull", n_states = "four")
+struct <- model_structure(txseqs, dist = "weibull", n_states = "three")
 
 # Health states
 states <- create_states(struct)
@@ -242,7 +242,7 @@ econmod <- hesim::IndivCtstm$new(trans_model = transmod,
 
 ## Simulation
 ### Disease progression
-The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with `$sim_disease()` and set the time horizon to 20 years. Since the NMA meausured time in months, we convert simulated months to years for the economic model.
+The iCTSTM is used to simulate disease progression, QALYs, and costs. We begin by simulating disease progression with `$sim_disease()` and set the time horizon to 20 years. Since the NMA measured time in months, we convert simulated months to years for the economic model.
 
 ```{r}
 max_yrs <- 20
@@ -305,7 +305,7 @@ ggplot(quantiles[prob == .5], aes(x = strategy_name, y = quantile_prob_mean)) +
   geom_errorbar(aes(ymin = quantile_prob_lower,
                     ymax = quantile_prob_upper), width = .2) +
   scale_fill_discrete(name = "") +
-  xlab("") + ylab("Median years") + 
+  xlab("") + ylab("Median years") +
   coord_flip() 
 ```
 

@@ -3,38 +3,39 @@ library("data.table")
 library("readxl")
 library("iviNSCLC")
 
-# Load data
+# Adverse events
 aes <- c("alt", "ast", "diarrhea", "dry_skin", 
          "eye_problems", "paronychia", "pneumonitis", "pruritus",
          "rash", "stomatitis")
 n_aes <- length(aes)
 
-## Check that files exisst
+## Check that files exist
 for (i in 1:n_aes){
-  file <- paste0("ae_nma/", aes[i], ".xlsx")
+  file <- paste0("ae_nma/", aes[i], ".csv")
   if (!file.exists(file)){
-    stop("The file ", paste0("ae_nma/", aes[i], ".xlsx"), " does not exist. ",
+    stop("The file ", paste0("ae_nma/", aes[i], ".csv"), " does not exist. ",
          "You must conduct a NMA and produce the required file.")
   }
 }
 
 ## Create posterior probabilities by treatment
+tx_lookup <- fread("ae-nma/tx_lookup.csv")
+
 posterior <- vector(mode = "list", length = n_aes)
 names(posterior) <- aes
 for (i in 1:n_aes){
-  file <- paste0("ae_nma/", aes[i], ".xlsx")
+  file <- paste0("ae-nma/", aes[i], ".csv")
   print(paste0("Loading file ", file))
-  lookup_i <- data.table(read_excel(file, sheet = "Lookup"))
-  posterior_i <- as.matrix(read_excel(file, sheet = "Random Effects Coda"))
+  posterior_i <- fread(file)
   prob_cols <- colnames(posterior_i)[grep("T\\[", colnames(posterior_i))]
-  posterior_i <- posterior_i[, prob_cols]
-  for (j in 1:nrow(lookup_i)){
-    old_var <- paste0("T[", lookup_i$num[j], "]")
-    new_var <- paste0("prob_", lookup_i$abb)[j]
+  posterior_i <- as.matrix(posterior_i[, prob_cols, with = FALSE])
+  for (j in 1:nrow(tx_lookup)){
+    old_var <- paste0("T[", tx_lookup[j][[aes[i]]], "]")
+    new_var <- paste0("prob_", tx_lookup[j]$abb)
     colnames(posterior_i)[colnames(posterior_i) == old_var] <- new_var
   }
   posterior[[i]] <- posterior_i
-  attr(posterior[[i]], "lookup") <- lookup_i[, .(name, abb)]
+  #attr(posterior[[i]], "lookup") <- lookup_i[, .(name, abb)]
 }
 
 ## Impute missing results
@@ -76,7 +77,7 @@ for (i in 1:length(params_ae_nma)){
       if (col_name %in% tki_cols){
         params_ae_nma[[i]][, col_name] <- posterior[[i]][, tki_max_col] 
       } else if (col_name %in% c("prob_pbdc", "prob_pbdc_bev")) {
-        if ("prob_pbdc_bev" %in% colnames(posterior[[i]])){
+        if ("prob_pbdc" %in% colnames(posterior[[i]])){
           params_ae_nma[[i]][, col_name] <- posterior[[i]][, "prob_pbdc"]
         } else{
           params_ae_nma[[i]][, col_name] <- posterior[[i]][, tki_max_col] 

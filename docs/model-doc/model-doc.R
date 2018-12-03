@@ -7,7 +7,7 @@ theme_set(theme_minimal())
 # Run this script out of the docs/model-doc directory. 
 # setwd("docs/model-doc")
 
-# Functions --------------------------------------------------------------------
+# Transition probabilities (i.e., multi-state NMA) -----------------------------
 surv_mean <- function(x){
   # Compute mean survival times from survival curves by model and treatment.
   # Args:
@@ -23,35 +23,45 @@ surv_mean <- function(x){
   return(res)
 }
 
-# Transition probabilities (i.e., multi-state NMA) -----------------------------
-# Progression free survival (1L)
-dat <- mstate_nma_pfs[line == 1]
-
-## Curves
-p <- ggplot(dat, aes(x = month, y = mean, col = tx_name)) + geom_line() +
+surv_results <- function(mstate_nma, 
+                         outcome = c("PFS", "OS"),
+                         line,
+                         mutation = NA){
+  outcome <- match.arg(outcome)
+  line_env <- line
+  dat <- mstate_nma[line == line_env]
+  if (!is.na(mutation)){
+    mutation_env <- mutation
+    dat <- mstate_nma[mutation == mutation_env]
+  }
+  
+  # Curves
+  if (outcome == "PFS"){
+    y_lab <- "Progression-free survival"
+    filename <- paste0("figs/", "pfs-", line, "L.pdf")
+  } else{
+      y_lab <- "Overall survival"
+      filename <- paste0("figs/", "os-", line, "L.pdf")
+  }
+  p <- ggplot(dat, aes(x = month, y = mean, col = tx_name)) + geom_line() +
             facet_wrap(~model) +
-            xlab("Month") + ylab("Progression-free survival") +
+            xlab("Month") + ylab(y_lab) +
              scale_color_discrete(name = "") + theme(legend.position = "bottom")
-ggsave("figs/pfs_1L.pdf", p, height = 8, width = 7)
+  ggsave(filename, p, height = 8, width = 7)
+  
+  # Median survival
+  surv_med_est <- hesim:::surv_quantile(dat, surv_cols = "mean", 
+                                        t = "month", by = c("model", "tx_name"))
+  
+  # Mean survival
+  surv_mean_est <- surv_mean(dat)
+  
+  # Return
+  return(list(p_curves = p, 
+              median = surv_med_est,
+              mean = surv_mean_est))
+  
+}
 
-## Median survival
-surv_med_est <- hesim:::surv_quantile(dat, surv_cols = "mean", t = "month", by = c("model", "tx_name"))
-
-## Mean survival
-surv_mean_est <- surv_mean(dat)
-
-# Overall survival (1L)
-dat <- mstate_nma_os[line == 1]
-
-## Curves
-p <- ggplot(dat, aes(x = month, y = mean, col = tx_name)) + geom_line() +
-            facet_wrap(~model) +
-            xlab("Month") + ylab("Overall survival") +
-             scale_color_discrete(name = "") + theme(legend.position = "bottom")
-ggsave("figs/os_1L.pdf", p, height = 8, width = 7)
-
-## Median survival
-surv_med_est <- hesim:::surv_quantile(dat, surv_cols = "mean", t = "month", by = c("model", "tx_name"))
-
-## Mean survival
-surv_mean_est <- surv_mean(dat)
+pfs_1L <- surv_results(mstate_nma_pfs, outcome = "PFS", line = 1)
+os_1L <- surv_results(mstate_nma_os, outcome = "OS", line = 1)
