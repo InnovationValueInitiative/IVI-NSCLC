@@ -1,0 +1,15 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Tue Dec  4 22:10:02 2018
+  \hline
+erlotinib & 150 mg orally, once daily \\ 
+  gefitinib & 250 mg orally, daily \\ 
+  afatinib & 40 mg orally, once daily \\ 
+  dacomitinib & 45 mg orally, once daily \\ 
+  osimertinib & 80 mg orally, once daily \\ 
+  cisplatin & 75mg/m2, 1x/cycle, 6 21-day cycles \\ 
+  pemetrexed & 500 mg, 1x/cycle, 6 21-day cycles \\ 
+  bevacizumab & 15mg/kg IV every 3 weeks with carboplatin/paclitaxel \\ 
+  nivolumab & 240 mg every 2 weeks or 480 mg every 4 weeks \\ 
+  pembrolizumab & 200 mg every 3 weeks \\ 
+  atezolizumab & 1200 mg as an IV infusion over 60 min every 3 weeks \\ 
+   \hline
