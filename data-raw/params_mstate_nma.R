@@ -79,6 +79,10 @@ model_lookup <- function(powers){
   return(model)
 }
 
+# Followup time ----------------------------------------------------------------
+pfs_followup <- 36
+os_followup <- 48
+
 # NMA parameter estimates ------------------------------------------------------
 sample_posterior <- function(x, n_sims){
   for (i in 1:length(x)){ 
@@ -595,6 +599,7 @@ save(mstate_nma_pfs, file = "../data/mstate_nma_pfs.rda", compress = "bzip2")
 save(mstate_nma_os, file = "../data/mstate_nma_os.rda", compress = "bzip2")
 
 # Check PFS against JAGS code --------------------------------------------------
+# The mu's
 jags_v_R <- function(ma_post, line, tx_name, outcome = c("PFS", "OS")){
   
   outcome <- match.arg(outcome)
@@ -622,10 +627,10 @@ jags_v_R <- function(ma_post, line, tx_name, outcome = c("PFS", "OS")){
                    "OS" = mstate_nma_os[line == line_env & tx_name == tx_name_env]
                    )
   surv_R[, computation := "R"]
-  surv <- rbind(surv_jags, 
-               surv_R[, colnames(surv_jags), with = FALSE])
   
   # Plot
+  surv <- rbind(surv_jags, 
+               surv_R[, colnames(surv_jags), with = FALSE])  
   y_lab <- switch(outcome,
                   "PFS" = "Progression-free survival",
                   "OS" = "Overall survival"
@@ -639,27 +644,97 @@ jags_v_R <- function(ma_post, line, tx_name, outcome = c("PFS", "OS")){
   return(p)
 }
 
-# 1st Line
-p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "PFS")
+## 1st Line
+p <- jags_v_R(nma_1L, line = 1, tx_name = "osimertinib", outcome = "PFS")
 ggsave("figs/pfs-1L-gef-check.pdf", p, width = 7, height = 7)
 
 p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "OS")
 ggsave("figs/os-1L-gef-check.pdf", p, width = 7, height = 7)
 
-# Second line (T790m positive, osimertinib)
+## Second line (T790m positive, osimertinib)
 p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib", outcome = "PFS")
 ggsave("figs/pfs-2L-t790m-osi-check.pdf", p, width = 7, height = 7)
 
 p <- jags_v_R(ma_2L_t790m_osi, line = 2, tx_name = "osimertinib", outcome = "OS")
 ggsave("figs/os-2L-t790m-osi-check.pdf", p, width = 7, height = 7)
 
-# Second line (PBDC)
+## Second line (PBDC)
 p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC", outcome = "PFS")
 ggsave("figs/pfs-2L-pbdc-check.pdf", p, width = 7, height = 7)
 
 p <- jags_v_R(ma_2L_pbdc, line = 2, tx_name = "PBDC", outcome = "OS")
 ggsave("figs/os-2L-pbdc-check.pdf", p, width = 7, height = 7)
 
+# The mu's and the d's
+jags_v_R_d <- function(nma_post, ma_post, econmod_tx_lookup, outcome = c("PFS", "OS")){
+  outcome <- match.arg(outcome)
+  y_lab <- switch(outcome,
+                  "PFS" = "Progression-free survival",
+                  "OS" = "Overall survival"
+                  )  
+  
+  # JAGS estimates
+  n_tx <- nrow(econmod_tx_lookup)
+  p <- vector(mode = "list", length = n_tx)
+  names(p) <- econmod_tx_lookup$name
+  for (j in 1:nrow(econmod_tx_lookup)){
+    num <- econmod_tx_lookup[j, num]
+    surv_jags <- vector(mode = "list", length = n_models)
+    for (i in 1:n_models){
+      cols <- grep(paste0(outcome, "\\[", num), colnames(nma_post[[i]]))
+      n_months <- length(cols)
+      surv_jags[[i]] <- data.table(computation = "JAGS",
+                                      model = model_lookup(fp_powers[[i]]),
+                                      tx_name = econmod_tx_lookup[j, name],
+                                      sim = rep(1:n_sims, each = n_months),
+                                      month = rep(1:n_months, n_sims),
+                                      survival = c(t(nma_post[[i]][, cols])))
+    } # End loop over models
+    surv_jags <- rbindlist(surv_jags)
+    surv_jags <- surv_jags[, .(mean = mean(survival)),
+                          by = c("computation", "model", "month")]  
+    
+    # R estimates
+    tx_name_env <- econmod_tx_lookup[j, name]
+    surv_R <- switch(outcome,
+                   "PFS" = mstate_nma_pfs[line == 1 & tx_name == tx_name_env],
+                   "OS" = mstate_nma_os[line == 1 & tx_name == tx_name_env]
+                   )  
+    surv_R[, computation := "R"]
+    
+    # Plot
+    surv <- rbind(surv_jags, 
+               surv_R[, colnames(surv_jags), with = FALSE])
+    p[[j]] <- ggplot(surv, aes(x = month, y = mean, col = computation)) + 
+                    geom_line(position = position_jitter()) +
+                    facet_wrap(~model) +
+                    xlab("Month") + ylab(y_lab) +
+                    scale_color_discrete(name = "") + 
+                    theme(legend.position = "bottom",
+                          plot.title = element_text(hjust = 0.5)) +
+                    scale_y_continuous(breaks = seq(0, 1, by = .2)) +
+                    ggtitle(tx_name_env) 
+  } # End loop over treatments
+  return(p)
+}
+
+## PFS
+p <- jags_v_R_d(nma_1L, ma_1L, econmod_tx_lookup = econmod_tx_lookup_1L,
+                outcome = "PFS")
+pdf("figs/pfs-1L-check.pdf")
+for (i in 1:length(p)) {
+  print(p[[i]])
+}
+dev.off()
+
+## OS
+p <- jags_v_R_d(nma_1L, ma_1L, econmod_tx_lookup = econmod_tx_lookup_1L,
+                outcome = "OS")
+pdf("figs/os-1L-check.pdf")
+for (i in 1:length(p)) {
+  print(p[[i]])
+}
+dev.off()
 
 # Check the coefficients -------------------------------------------------------
 # 1L mu's
@@ -680,6 +755,7 @@ check_d <- function(dist = "weibull"){
   print(econmod_tx_lookup_1L)
   print(nma_params_lookup_1L[[dist]])
 }
+
 # Weibull
 check_d("weibull")
 apply(params_mstate_nma$weibull$coefs$a0, 2, mean)
