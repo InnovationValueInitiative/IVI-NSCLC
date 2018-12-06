@@ -1,0 +1,14 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Dec  5 22:35:58 2018
+  \hline
+Diarrhea & 6,462 & 5,169 & 7,754 & DRG 391 \\ 
+  Dry skin & 940 & 752 & 1,128 & \citet{wong2018assessment} \\ 
+  Elevated alanine transaminase & 3,900 & 3,120 & 4,680 & \citet{latremouille2017economic} \\ 
+  Elevated aspartate transaminase & 3,900 & 3,120 & 4,680 & \citet{latremouille2017economic} \\ 
+  Eye problems & 2,737 & 2,189 & 3,284 & \citet{wong2018assessment} \\ 
+  Paronychia & 7,788 & 6,230 & 9,345 & DRG 602 \\ 
+  Pneumonitis & 7,728 & 6,182 & 9,273 & DRG 193 \\ 
+  Pruritus & 1,184 & 947 & 1,420 & \citet{wong2018assessment} \\ 
+  Rash & 940 & 752 & 1,128 & \citet{wong2018assessment} \\ 
+  Stomatitis & 8,101 & 6,480 & 9,721 & DRG 157 \\ 
+   \hline

@@ -5,6 +5,7 @@ library("xtable")
 library("pracma") # For numerical integration with trapezoid rule
 library("iviNSCLC")
 theme_set(theme_minimal())
+txt <- list() # List for storing numbers to use in text of model documentation
 # Run this script out of the docs/model-doc directory. 
 # setwd("docs/model-doc")
 
@@ -43,6 +44,8 @@ ggsave("figs/surv-1L.pdf", p, width = 8, height = 8)
 p <- ggplot(mstate_nma[line == 2 & mutation == 0], 
             aes(x = month, y = mean, linetype = outcome)) +
      geom_line() +
+     geom_ribbon(aes(ymin = l95, ymax = u95),
+                alpha = 0.2) + 
      facet_wrap(~model) + 
      xlab("Month") + ylab("Proportion surviving") +
      scale_linetype_discrete(name = "") +
@@ -53,12 +56,13 @@ ggsave("figs/surv-2L-pbdc.pdf", p, width = 7, height = 5)
 p <- ggplot(mstate_nma[line == 2 & mutation == 1], 
             aes(x = month, y = mean, linetype = outcome)) +
      geom_line() +
+      geom_ribbon(aes(ymin = l95, ymax = u95),
+                alpha = 0.2) +
      facet_wrap(~model) + 
      xlab("Month") + ylab("Proportion surviving") +
      scale_linetype_discrete(name = "") +
      theme(legend.position = "bottom")
 ggsave("figs/surv-2L-t790m-osi.pdf", p, width = 7, height = 5)
-
 
 # Median survival
 surv_med_est <- hesim:::surv_quantile(mstate_nma, 
@@ -112,31 +116,129 @@ ggsave("figs/medsurv-os.pdf", p, width = 7, height = 5)
 surv_mean(mstate_nma_pfs)
 surv_mean(mstate_nma_os)
 
-# DIC
-dic <- fread("output/dic.csv")
-dic[, keep := ifelse(analysis == "1L MA for gefitinib, FE" |
-                     analysis == "1L NMA, FE" |
-                     analysis == "2L MA for PBDC, FE" |
-                     analysis == "2L MA for osimertinib (T790M+), FE",
-                     1, 0)]
-p <- ggplot(dic[keep == 1],
-            aes(x = model, y = dic, label = dic)) +
-     geom_point() +
-     geom_text(size = 3, hjust = -.2, vjust = 0) +
-     facet_wrap(~analysis, scales = "free_y") + 
-     theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-     scale_y_continuous(breaks = pretty_breaks(n = 8)) + 
-     xlab("") +
-     ylab("Deviance information criterion") 
-ggsave("figs/dic.pdf", p, width = 7.5, height = 7.5)
+# Utility ----------------------------------------------------------------------
+# Utility by health state
+state_utility <- copy(params_utility$state_utility)
+state_utility[, mean := formatC(mean, format = "f", digits = 4)]
+state_utility[, se := formatC(se, format = "f", digits = 4)]
+state_utility[, ref := paste0("\\citet{", ref, "}")]
+print(xtable(state_utility), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/state-utility.txt")
 
-# Resource use and costs -------------------------------------------------------
-# Drug dosage
+# Disutility by adverse event
+ae_disutility <- params_utility$ae_disutility[ , .(ae_name, mean, se, ref)]
+ae_disutility[, mean := formatC(mean, format = "f", digits = 4)]
+ae_disutility[, se := formatC(se, format = "f", digits = 4)]
+ae_disutility[, ref := paste0("\\citet{", ref, "}")]
+print(xtable(ae_disutility), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/ae-disutility.txt")
+
+# Health care sector costs -----------------------------------------------------
+# Treatment costs
+## Drug dosage
 dosage <- params_costs_tx$dosage[, .(agent_name, dosage)]
 print(xtable(dosage), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,
       file = "tables/dosage.txt")
 
-# Drug acquisition costs
-params_costs_tx$acquisition_costs
+## Drug acquisition costs
+acq_costs <- params_costs_tx$acquisition_costs[, .(agent_name, strength, acquisition_cost)]
+acq_costs <- acq_costs[agent_name %in% unique(dosage$agent_name)]
+print(xtable(acq_costs), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/acq_costs.txt")
+
+## Drug administration
+admin_costs <- params_costs_tx$administration_costs
+print(xtable(admin_costs), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/admin_costs.txt")
+
+# Inpatient and outpatient costs
+## Inpatient
+inpt_costs = copy(params_costs_inpt)
+inpt_costs[, ref := paste0("\\citet{", ref, "}")]
+inpt_costs[state_name == "S1", ref := "None"]
+inpt_costs[, mean := formatC(mean, format = "d", big.mark = ",")]
+inpt_costs[, se := formatC(se, format = "d", big.mark = ",")]
+print(xtable(inpt_costs), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/inpt_costs.txt")
+
+## Outpatient
+op_costs = copy(params_costs_op)
+op_costs[, ref := paste0("\\citet{", ref, "}")]
+op_costs[state_name == "S1", ref := "None"]
+op_costs[, mean := formatC(mean, format = "d", big.mark = ",")]
+op_costs[, se := formatC(se, format = "d", big.mark = ",")]
+print(xtable(op_costs), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/op_costs.txt")
+
+# Adverse event costs
+ae_costs  <- params_costs_ae[, .(ae_name, mean, lower, upper, ref)]
+ae_costs[, ref := ifelse(grepl("DRG", ref) == 0,
+                         paste0("\\citet{", ref, "}"),
+                                ref)]
+ae_costs[, mean := formatC(mean, format = "d", big.mark = ",")]
+ae_costs[, lower := formatC(lower, format = "d", big.mark = ",")]
+ae_costs[, upper := formatC(upper, format = "d", big.mark = ",")]
+print(xtable(ae_costs), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/ae_costs.txt")
+
+# Productivity -----------------------------------------------------------------
+# Wages
+wages <- params_costs_prod$wages[, .(gender, employment_status, prop, weekly_wage)]
+wages[, gender := factor(gender, levels = c("female", "male"),
+                         labels = c("Female", "Male"))]
+wages[, employment_status := factor(employment_status,
+                                    levels = c("full", "part", "unemployed"),
+                                    labels = c("Full-time", "Part-time", "Unemployed"))]
+setnames(wages, "prop", "percent")
+wages[, percent := paste0(formatC(100 * percent, format = "f", digits = 1),
+                          "\\%")]
+wages[, weekly_wage := paste0("\\$",
+                              formatC(weekly_wage, format = "d", big.mark = ","))]
+print(xtable(wages), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/wages.txt")
+
+# Temporary disability
+tmp_disability <- params_costs_prod$temporary_disability
+txt$MissedDaysEst <- tmp_disability["missed_days_est"]
+txt$MissedDaysLower <- tmp_disability["missed_days_lower"]
+txt$MissedDaysUpper <- tmp_disability["missed_days_upper"]
+
+# Permanent disability
+perm_disability <- params_costs_prod$permanent_disability
+txt$HoursReductionEst <- perm_disability["hours_reduction_est"]
+txt$HoursReductionLower <- perm_disability["hours_reduction_lower"]
+txt$HoursReductionUpper <- perm_disability["hours_reduction_upper"]
+
+# Text for model documentation -------------------------------------------------
+# convert statistics to data frame
+txtstats <- data.frame(do.call(rbind, txt))
+rownames(txtstats) <- gsub("txt.", "", rownames(txtstats))
+
+# output to text file to input into latex
+txtstats$def <-  "\\def"
+names(txtstats)[1] <- "value"
+txtstats$value <- as.character(txtstats$value)
+txtstats <- data.frame(def = txtstats$def, name = rownames(txtstats), value =  txtstats$value)
+txtstats$output <- paste(txtstats[, 1], " ", "\\", txtstats[, 2],
+                         "{", txtstats[, 3], "}", sep = "")
+fileConn <- file("output/txtstats.txt")
+writeLines(txtstats$output, fileConn)
+close(fileConn)

@@ -1,0 +1,14 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Dec  5 22:35:58 2018
+  \hline
+Elevated alanine transaminase & 0.0735 & 0.0185 & \citet{nafees2008health} \\ 
+  Elevated aspartate transaminase & 0.0735 & 0.0185 & \citet{nafees2008health} \\ 
+  Diarrhea & 0.0468 & 0.0155 & \citet{nafees2008health} \\ 
+  Dry skin & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
+  Eye problems & 0.0449 & 0.0148 & \citet{nafees2008health} \\ 
+  Paronychia & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
+  Pneumonitis & 0.0500 & 0.0120 & \citet{doyle2008health} \\ 
+  Pruritus & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
+  Rash & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
+  Stomatitis & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
+   \hline

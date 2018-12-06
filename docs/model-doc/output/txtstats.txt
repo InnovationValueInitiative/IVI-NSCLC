@@ -1,0 +1,6 @@
+\def \MissedDaysEst{151}
+\def \MissedDaysLower{120.8}
+\def \MissedDaysUpper{181.2}
+\def \HoursReductionEst{4}
+\def \HoursReductionLower{3}
+\def \HoursReductionUpper{5}

@@ -1,0 +1,20 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Dec  5 22:35:58 2018
+  \hline
+erlotinib & 150mg tablet & 281.71 \\ 
+  gefitinib & 250mg tablet & 257.06 \\ 
+  afatinib & 40mg tablet & 235.05 \\ 
+  dacomitinib & 45mg tablet & 407.39 \\ 
+  osimertinib & 80mg tablet & 487.22 \\ 
+  cisplatin & 50mg/50ml vial & 14.51 \\ 
+  cisplatin & 100mg/100ml vial & 35.00 \\ 
+  cisplatin & 200mg/200ml vial & 100.00 \\ 
+  pemetrexed & 100mg vial & 676.52 \\ 
+  pemetrexed & 500mg vial & 3382.60 \\ 
+  bevacizumab & 100mg/4ml vial & 199.24 \\ 
+  bevacizumab & 400mg/16ml vial & 199.24 \\ 
+  nivolumab & 100mg/10ml vial & 262.21 \\ 
+  nivolumab & 40mg/4ml vial & 262.21 \\ 
+  pembrolizumab & 100mg/4ml vial & 1162.41 \\ 
+  atezolizumab & 1200mg/20ml vial & 444.03 \\ 
+   \hline
