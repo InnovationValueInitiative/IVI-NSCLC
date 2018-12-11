@@ -1,0 +1,47 @@
+\contentsline {section}{\numberline {1}Open Source Value Project}{4}{section.1}
+\contentsline {section}{\numberline {2}Topic definition}{4}{section.2}
+\contentsline {section}{\numberline {3}Purpose}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Value assessment}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Evaluation of scientific uncertainty}{6}{subsection.3.2}
+\contentsline {section}{\numberline {4}Iterative process}{7}{section.4}
+\contentsline {section}{\numberline {5}Components}{7}{section.5}
+\contentsline {section}{\numberline {6}Model structure}{8}{section.6}
+\contentsline {subsection}{\numberline {6.1}Disease model}{8}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Adverse events}{9}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Cost and utility}{9}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Patient heterogeneity}{9}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}Rationale for individual-level simulation}{9}{subsection.6.5}
+\contentsline {section}{\numberline {7}Model outcomes}{10}{section.7}
+\contentsline {subsection}{\numberline {7.1}Health outcomes}{10}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Risks}{10}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Costs}{11}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Value assessment}{11}{subsection.7.4}
+\contentsline {section}{\numberline {8}Source data and parameter estimation}{11}{section.8}
+\contentsline {subsection}{\numberline {8.1}Transition probabilities}{11}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Adverse events}{14}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Utilities}{14}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}Health care sector costs}{14}{subsection.8.4}
+\contentsline {subsubsection}{\numberline {8.4.1}Treatment costs}{14}{subsubsection.8.4.1}
+\contentsline {subsubsection}{\numberline {8.4.2}Inpatient and outpatient costs}{16}{subsubsection.8.4.2}
+\contentsline {subsubsection}{\numberline {8.4.3}Adverse event costs}{16}{subsubsection.8.4.3}
+\contentsline {subsection}{\numberline {8.5}Productivity}{16}{subsection.8.5}
+\contentsline {subsection}{\numberline {8.6}Value of hope}{16}{subsection.8.6}
+\contentsline {section}{\numberline {9}Simulation and uncertainty analysis}{19}{section.9}
+\contentsline {subsection}{\numberline {9.1}Parameter uncertainty}{19}{subsection.9.1}
+\contentsline {subsection}{\numberline {9.2}Structural uncertainty}{20}{subsection.9.2}
+\contentsline {subsection}{\numberline {9.3}Implementation}{20}{subsection.9.3}
+\contentsline {section}{Appendices}{20}{section*.32}
+\contentsline {section}{\numberline {A}Systematic Literature Review}{20}{Appendix.1.A}
+\contentsline {subsection}{\numberline {A.1}Treatment effects}{20}{subsection.1.A.1}
+\contentsline {subsection}{\numberline {A.2}Utilities}{20}{subsection.1.A.2}
+\contentsline {subsection}{\numberline {A.3}Resource use, productivity, and cost}{20}{subsection.1.A.3}
+\contentsline {subsection}{\numberline {A.4}Study identification}{21}{subsection.1.A.4}
+\contentsline {subsection}{\numberline {A.5}Study selection}{22}{subsection.1.A.5}
+\contentsline {subsection}{\numberline {A.6}Data collection}{22}{subsection.1.A.6}
+\contentsline {subsection}{\numberline {A.7}Limitations}{22}{subsection.1.A.7}
+\contentsline {section}{\numberline {B}Network meta-analysis}{26}{Appendix.1.B}
+\contentsline {subsection}{\numberline {B.1}Feasibility assessment}{26}{subsection.1.B.1}
+\contentsline {subsection}{\numberline {B.2}Evaluation of consistency between direct and indirect comparisons}{26}{subsection.1.B.2}
+\contentsline {subsection}{\numberline {B.3}Estimation of the relative treatment effects under the assumption of consistency}{26}{subsection.1.B.3}
+\contentsline {subsection}{\numberline {B.4}Model selection}{27}{subsection.1.B.4}
+\contentsline {subsection}{\numberline {B.5}Software}{27}{subsection.1.B.5}

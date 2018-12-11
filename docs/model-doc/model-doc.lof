@@ -1,0 +1,8 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Sequential treatment strategies of interest to be compared with the model\relax }}{5}{figure.caption.2}
+\contentsline {figure}{\numberline {2}{\ignorespaces Simplified model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state\relax }}{8}{figure.caption.3}
+\contentsline {figure}{\numberline {3}{\ignorespaces Simplified model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state\relax }}{8}{figure.caption.4}
+\contentsline {figure}{\numberline {4}{\ignorespaces Relationship between stable disease (S), progression (P) and death (D) as used in the multi-state network meta-analysis model\relax }}{13}{figure.caption.7}
+\contentsline {figure}{\numberline {5}{\ignorespaces First line estimates of progression-free survival and overall survival with gefitinib from multi-state meta-analyses\relax }}{13}{figure.caption.8}
+\contentsline {figure}{\numberline {6}{\ignorespaces First line estimates of hazard ratios from stable to progression relative to gefitinib from the multi-state network meta-analysis\relax }}{13}{figure.caption.9}
+\contentsline {figure}{\numberline {7}{\ignorespaces First line estimates of mean progression-free survival and overall survival from the multi-state network meta-analysis\relax }}{14}{figure.caption.10}
+\contentsline {figure}{\numberline {8}{\ignorespaces Second line estimates of progression-free survival and overall survival from the multi-state network meta-analysis\relax }}{15}{figure.caption.11}
