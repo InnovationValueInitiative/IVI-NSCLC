@@ -233,26 +233,26 @@
 \clearpage
 \phantomsection
 
-\section{Introduction}\label{sec:Intro}
-\subsection{Open Source Value Project}
-
+\section{Open Source Value Project}
 The continuing increase in U.S. healthcare costs has stimulated the introduction of initiatives to promote the use of high-value care.  Cost-effectiveness analysis can inform efficient use of healthcare resources by formally computing costs and benefits to identify the most valuable treatment options for a given disease.  In many countries, a single health technology assessment agency assesses the value of healthcare technology by means of cost-effectiveness analysis and recommends a utilization strategy. In the US, however, utilization decisions are decentralized and made by a variety of payers and provider organizations. Value frameworks are gaining prominence to guide utilization of therapies, but vary in perspective, the evidence considered, and approaches, thereby resulting in confusion and debate among stakeholders.
 
 A thorough evidence-based analysis of the value of medical technology is resource intensive and complex.  Typically, there is no empirical study with sufficient long-term follow-up that compares all treatments for a particular disease regarding relevant clinical outcomes and costs. Thus, cost-effectiveness analyses generally rely on mathematical models that integrate evidence on the course of disease, treatment effects, and the relationship between clinical outcomes and costs, from a variety of studies. The nature of these evaluations can lead to disputes in the scientific literature and community. Models are typically difficult to understand. Even modeling experts may not be able to fully understand a model-based cost-effectiveness analysis without public source code and detailed model documentation. This lack of transparency also poses problems for users whose perspective, local context, or patient population varies from that of the reported analysis. In the absence of public access to the actual model, updating the evaluation is cumbersome, if not impossible, for someone other than the original model developer. As a result, published cost-effectiveness findings risk immediate irrelevance to some stakeholders and growing irrelevance to all stakeholders as new clinical evidence emerges. Value assessment only has relevance for decision-making when it reflects the totality of the latest evidence, is transparent, deemed credible by different stakeholders, representative of the local context and patient population, and can be easily updated without duplication of effort. 
 
 With the Open-Source Value Project (OSVP), the Innovation and Value Initiative (IVI) aims to maximize both the relevance and credibility of value assessment in the context of the United States’ decentralized decision-making environment by developing and providing access to flexible open-source decision models for value assessment. These interactive models have two primary objectives: (i) to enable a more constructive dialogue regarding value assessment between stakeholders (e.g. patients, payers, providers, and manufacturers) with different beliefs about relevant clinical data, modeling approaches, and value perspectives; and (ii) to provide local decision-makers with means to credible value assessment that reflects the local setting and is based on the latest evidence while accounting for all scientific uncertainty (due to patient heterogeneity, gaps in evidence, and different modeling beliefs). 
+
 In order for a decision model to remain relevant over time it needs to evolve along with the clinical evidence and scientific insights. OSVP facilitates iterative development and collaboration between multiple clinical and methodological experts.
 Refer to the IVI website {\href{https://www.thevalueinitiative.org/open-source-value-project/}{here} for additional information about the OSVP. 
 
-\subsection{Topic definition}
-IVI conducted its most recent OSVP within oncology. When selecting the tumor type of interest, IVI considered criteria such as burden of disease, development of innovative treatment, alternative treatment strategies available, availability of clinical evidence, and engagement of patient organization(s) to actively contribute to the project. 
+
+\section{Topic definition}
+IVI was interested in developing its most recent OSVP within oncology. When selecting the tumor type of interest, IVI considered criteria such as burden of disease, development of innovative treatment, alternative treatment strategies available, availability of clinical evidence, and engagement of patient organization(s) to actively contribute to the project. 
 
 Lung cancer is the leading cause of cancer related death worldwide \citep{jemal2011global}. Non-small lung cancer (NSCLC) accounts for an estimated 85\% of lung cancer cases and comprises adenocarcinoma, squamous cell carcinoma, and large cell carcinoma \citep{d2010metastatic}. The five-year survival of stage IV NSCLC is less than 2\% \citep{cetin2011survival}. Given the rapid pace of development in NSCLC, the scope of the OSVP needed to be limited to a very specific sub-population in order to ensure a model could be developed in a reasonable time frame that allowed IVI to demonstrate the typical areas of uncertainty in value assessment in oncology. The selected target population of interest for the most recent OSVP is metastatic epidermal growth factor receptor positive (EGFR+) NSCLC. EGFR mutations are more commonly observed in tumors from female patients with adenocarcinomas without a history of smoking and with Asian ethnicity, but can occur in patients with prior smoking history and across all races and genders \citep{lynch2004activating}. The evidence base for the treatments used for the EGFR+ population is more modest than the evidence base for treatments used for EGFR negative NSCLC, which makes development of a model reflective of the latest evidence base more manageable given the logistical constraints set for this project. Future activities may include expanding the model to other subpopulations of interest.
 
-\section{Objective: Development of the IVI-NSCLC model for value asessment}\label{sec:purpose}
+
+\section{Purpose}
 The aim was to develop a flexible open-source simulation model that can be used to estimate the value of alternative sequential treatment strategies for patients with metastatic EGFR+ NSCLC. The IVI-NSCLC(egfr+) model is accessible to both technical and non-technical end-users and allows them evaluating the impact of uncertainty in clinical evidence, alternative model structures, the decision framework of choice (i.e. cost-effectiveness analysis [CEA)] or multi-criteria decision analysis [MCDA]), novel concepts of value, and perspective (healthcare or limited societal) on the estimates of value.
 
-\section{Purpose}\label{sec:purpose}
 \subsection{Value assessment}
 The IVI-NSCLC(egfr+) model is designed to assess the value of multiple competing sequential treatment strategies for patients with metastatic EGFR+ NSCLC starting with 1st line treatment (1L), followed by 2nd line treatment (2L), and treatment beyond 2nd line (2L+) as outlined in \autoref{fig:reatment-strategies}. Sequences that can be evaluated with version 1 of the model were informed by the available evidence base, guidelines, and clinician input.
 
@@ -272,14 +272,26 @@ The MCDA was implemented according to \citet{thokala2016multiple} and based on t
 
 The value of hope is most relevant for innovations that increase longevity and might be particularly well suited to the analyses of treatments for NSCLC. Traditionally, CEA focuses on maximizing expected QALYs; however, patients might be willing to take gambles (i.e., they become "risk lovers") and care about the variation in benefits and costs, not simply the means. If patients value hope, they may prefer the treatment with greater variability in survival over the treatment with less variability despite having the same expected survival. In contrast, if patients are risk-averse, they may prefer the latter to avoid an unlucky outcome. Either way, they have a preference for one intervention over its alternative that appear identical based on its average costs and benefits. Patients may place substantial value on a modest chance of a durable survival response, over and above average survival, and decision-makers acting on their behalf may want to consider this aspect when making population level decisions regarding the value of interventions. 
 
-The IVI-NSCLC(egfr+) model allows users to incorporate value of hope into their analyses, while noting that the approach is less well-established than conventional cost-effectiveness analysis. Future versions of the IVI-NSCLC(egfr+) may consider incorporating other value components.
-
+The IVI-NSCLC(egfr+) model allows users to incorporate value of hope into their analyses, while noting that the approach is less well-established than conventional cost-effectiveness analysis. Future versions of the IVI-NSCLC(egfr+) may consider incorporating other value components, such as insurance value.
 
 \subsection{Evaluation of scientific uncertainty}
 Decision models can be used to inform efficient use of health care resources, but often lead to scientific disagreements and mistrust among stakeholders. Model inputs are typically informed by a formal evidence synthesis to ensure all relevant evidence is considered. However, decisions regarding the mathematical structure relating model inputs to outputs are frequently made arbitrarily based on the idiosyncratic expertise of the model developer without evaluating the impact on findings. While robustness can be assessed by means of sensitivity analyses, these are typically limited to studying the impacts of varying model inputs. For any given disease, a variety of modeling approaches have typically been proposed in the literature. In order to evaluate the impact of these different approaches on estimates of value in a systematic way, we need flexible open-source models to not only capture the uncertainty in model input parameters (i.e. parameter uncertainty), but also capture alternative model structures (i.e. structural uncertainty). This flexibility facilitates demonstrating the implications of different areas of uncertainty and leads to a better understanding of the reasons why value estimates can vary.
 
-\section{Components}\label{sec:components}
 
+\section{Iterative process}
+In order for a decision model to remain relevant over time it needs to evolve along with the clinical evidence and scientific insights. An open-source approach facilitates iterative development and collaboration between multiple clinical and methodological experts. We will use a four-step process for the development of flexible decision or simulation models for value assessment:
+
+1.	Public release of the model. The initial release of an OSVP model must be flexible and allow users to choose from a large number of plausible model structures and approaches based on clinical practice and previous modeling efforts.
+
+2.	Invite feedback and suggested improvements to the model in a public comment period.
+
+3.	A panel of experts determines which of the evidence-based suggestions for improvement suggested in Step 2 should be implemented by means of a modified Delphi process.
+
+4.	Revise the model based on the feedback from the technical expert panel in Step 3.
+The four-step process is designed to be repeated many times so that the modeling approach and evidence considered can be refined over time. 
+
+
+\section{Components}
 Version 1 of the IVI-NSCLC(egfr+) model is designed to provide a starting point for open debate. To facilitate transparency, understanding, debate and collaboration among diverse stakeholders, the IVI-lung model will consist of the following components available in the public domain:
 
 \textbf{Source code:} R and C++ code for the model are available in an IVI GitHub repository. Modelers and programmers may adapt the source code for their own purposes or collaborate to improve the code.
@@ -288,14 +300,13 @@ Version 1 of the IVI-NSCLC(egfr+) model is designed to provide a starting point 
 
 \textbf{Detailed model documentation:} This document provides extensive technical details on the model structure, statistical methods for parameter estimation, and source data.
 
-\textbf{Model Interface:} For users not well-versed in the programming language, a web application for running the model online is provided. The web application is designed for custom analyses and allows users full control over the treatments, patient population, model structures, parameter values, and simulation settings.
+\textbf{Expert Model Interface:} For users not well-versed in the programming language, a web application for running the model online is provided. The web application is designed for custom analyses and allows users full control over the treatments, patient population, model structures, parameter values, and simulation settings.
 
 \textbf{Value Tool:} An important aim of OSVP is to obtain feedback from as many relevant stakeholders as possible. A general audience web-application has been developed, allowing those who are not experts in modeling or health economics, to interact with the model.
 
+
 \section{Model structure}\label{sec:model-structure}
-
 \subsection{Disease model}
-
 The IVI-NSCLC is an individual-level continuous-time state transition model (CTSTM) in which patients can either have stable disease, progressed disease, or have died. To model sequential treatment strategies, we assumed that patients move to the next treatment after disease progression. In other words, a patient with stable disease moves to the second treatment in a sequence after progression on the first treatment, to the third treatment after progression on the second treatment, and so on. A patient can die at any time. \autoref{fig:model-structure-4-states} shows health state transitions for an example sequence of 3 treatments. Sequential treatment is incorporated into the CTSTM by expanding the number of health states according to the number of treatment lines. In the figure there are 3 treatment lines and 5 health states; more generally, there is one health state for each treatment line, a health state after progression on the final line, and a death state, so a model with n treatment lines will have n+2 health states. 
 
 The hazard rate, $\ h^{qr} $ \textit{(u)} for a transition from state \textit{q} to state \textit{r} at time \textit{u} follows different parametric distributions including the exponential, Weibull, Gompertz, log-logistic, and fractional polynomial distributions as estimated with a multi-state network meta-analysis (NMA). In the individual-level model, time to each state \textit{r} that can be entered from state \textit{q} is sampled based on time-varying hazard rates and patients' transition to the state with the shortest sampled time.
@@ -316,11 +327,9 @@ The parameterization of transitions between health states allows incorporating p
 
 
 \subsection{Adverse events}
-
 The model includes multiple distinct adverse events associated with oncology treatment by treatment line. More precisely, for each treatment line and each patient, the model samples whether each adverse event occurs from a binomial distribution.
 
 \subsection{Cost and utility}
-
 All non-death health states are associated with utility and cost values. Cost values are separated into distinct categories (e.g., drug acquisition and administration costs, costs due to inpatient hospitalizations, etc.). Because we did not find strong evidence to the contrary, we assumed that utility and cost values remain constant over time within a given health state, but the model is also flexible enough to estimate utility and cost values that vary over time in a general manner. Adverse events cause utility decrements and more serious adverse events--such as those that require hospitalizations--increase health care costs. 
 
 Drug acquisition and administration related costs are modeled based on standard clinical practice. For example, consider a case in which a therapy is dosed daily. Then costs will accrue each day until disease progression and the patient switches to the next treatment in the sequence. Another possible scenario is that dosing is based on fixed cycles. In these cases, costs will accrue until the end of a cycle or until the patient switches treatment due to disease progression. Other scenarios will be considered as required. 
@@ -333,11 +342,10 @@ Adverse events cause utility decrements and more serious adverse events--such as
 The model is sufficiently flexible so that all model parameters (i.e., the parameters of probability distributions characterizing health state transitions, adverse event rates, costs, and utility) can depend on patient characteristics. In other words, we modeled input parameters as a function of covariates so that they can vary across individuals and treatments. That is, a given parameter, $\ a_{jt} $, for individual \textit{j} using treatment \textit{t} is modeled as $ \alpha_{jt} $ = $ \textit{g}^{-1} (X_{jt}\beta) $ where $ \textit{g}^{-1} $ (.) is an inverse transformation function. However, the extent heterogeneity can be modeled depends on the level of detail in the available evidence. We modeled heterogeneity based off of the level of evidence available. 
 
 \subsection{Rationale for individual-level simulation}
-
 Our primary motivation for using an individual-level model relates to the distinction between "clock forward" and "clock reset" approaches to parameter estimation. In the "clock reset" approach, time \textit{u} in $\ h^{qr} $ \textit{(u)} resets to 0 after each transition whereas in the "clock forward" approach, time \textit{u} refers to time since the start of the model. If a "clock forward" approach is used, then health state probabilities can be calculated analytically using the \citet{aalen1978empirical} estimator and a cohort CTSTM can be used; conversely, if a "clock reset" approach is taken, then individual-level simulation-based approaches must be used to estimate health state probabilities \citep{putter2007tutorial}, \citep{de2011mstate}, \citep{jackson2016flexsurv}. In our case, each line specific multi-state NMA is a "clock-forward" model; however, when modeling sequential treatment multiple multi-state NMAs are used so the disease model is a mixture between the two: a "clock forward" model is used for each treatment but time \textit{u} resets each time a patient begins a new treatment. To accommodate a mixture of "clock reset" and "clock forward" approaches, we use an individual-level model. 
 
-\section{Model outcomes}\label{sec:model-outcomes}
 
+\section{Model outcomes}\label{sec:model-outcomes}
 The model simulates the health outcomes, risks, and costs associated with alternative treatment strategies in oncology. The model's time horizon can be selected by the user and will default to a lifetime horizon. The health outcomes, risks, and costs will be combined to assess value using two frameworks: CEA and MCDA. Both disaggregated model outcomes and value estimates will be based on mean values (i.e., averages across all simulated patients). An overview of all model outcomes is shown in \autoref{tbl:model-outcomes}. Additional details are provided in the text below.  
 
 \begin{table}[!ht]
@@ -365,22 +373,19 @@ Value assessment & Cost-effectiveness analysis; multi-criteria decision analysis
 \end{table}
 
 \subsection{Health outcomes}
-
 The primary health outcome is the probability that a patient is in a given health state at a given point in time following treatment initiation. A survival curve was generated from the health state probabilities as one minus the probability that a patient has died. Since the model is an individual patient simulation, life expectancy is just the average time of death across simulated patients. Life-years was calculated as age at death minus age at treatment initiation. QALYs are weighted life-years, with weights equal to the utility values assigned to states.  Discounted QALYs were also calculated using a default discount rate of 3 percent.
 
 \subsection{Risks}
-
 The model calculates the expected number of adverse events per patient as the mean number of adverse events experienced by patients during the simulation. To improve interpretability, this number is reported as the expected number of adverse events per 1,000 patients. Both the expected number of total adverse events and the expected number of adverse events by type are reported.
 
 \subsection{Costs} 
-
-osts are calculated for multiple categories and separated into health care sector and non-heath care sector costs as recommended by the \citet{sanders2016recommendations}. Health care sector cost categories included drug acquisition and administration costs, adverse events costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity losses. We used both human-capital approach and friction-cost approach to estimate productivity losses associated with the different treatment sequences. The level of detail regarding productivity related cost estimates that were incorporated is based on the available data in the literature.
+Costs are calculated for multiple categories and separated into health care sector and non-heath care sector costs as recommended by the \citet{sanders2016recommendations}. Health care sector cost categories included drug acquisition and administration costs, adverse events costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity losses. We used both human-capital approach and friction-cost approach to estimate productivity losses associated with the different treatment sequences. The level of detail regarding productivity related cost estimates that were incorporated is based on the available data in the literature.
 
 \subsection{Value assessment} 
-
 Value can be assessed using two frameworks: CEA and MCDA. If CEA is used for value assessment, then the value of treatment is estimated using the NMB. CEA from a societal perspective includes productivity losses while analyses from a health care sector perspective do not.
 
 With MCDA, the value of each treatment strategy is based on a "total value" score. The score is calculated in three steps. First, a number of distinct criteria are assigned values on a common scale, for instance, ranging from 0 to 100. Second, each criterion is assigned points, say, ranging from 0 to 10, which is, in turn, used to calculate a weight by dividing each criterion's points by the sum of points across all criteria. For example, if there were 3 criteria and each criterion was given a score of 5, then each criterion would receive a weight of 1/3. If, on the other hand, the three criteria were given scores of 2.5, 5, and 7.5, then they would be given weights of 0.167, 0.33, and 0.5, respectively. Third, to aggregate results, we multiplied the value of each criterion on the common scale by its weight and sum the weighted scores across criteria. Future iterations of the model will consider using the Patient Experience Study to inform the baseline weights across attributes. 
+
 
 \section{Source data and parameter estimation}\label{sec:data}
 Key parameters for the model relate to: (i) transition probabilities; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates are based on currently available published evidence identified by means of a systematic literature review (SLR) and synthesized with meta-analysis techniques where appropriate. Additional information regarding the SLR (\autoref{app:slr}) and NMA (\autoref{app:nma}) are provided in the Appendix. 
