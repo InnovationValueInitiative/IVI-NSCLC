@@ -94,6 +94,7 @@
 \renewcommand*{\sectionautorefname}{Section}
 \renewcommand*{\subsectionautorefname}{Section}
 \renewcommand*{\subsubsectionautorefname}{Section}
+\renewcommand*{\subsubsubsectionautorefname}{Section}
 \newcommand{\subfigureautorefname}{\figureautorefname}
 \newcommand{\aref}[1]{\hyperref[#1]{Appendix~\ref{#1}}}
 \newcommand{\algorithmautorefname}{Algorithm}
@@ -185,7 +186,6 @@
 \newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}} 
 
 % subsubsection
-
 \titleclass{\subsubsubsection}{straight}[\subsection]
 
 \newcounter{subsubsubsection}[subsubsection]
@@ -316,14 +316,17 @@ The parameterization of transitions between health states allows incorporating p
 \begin{figure}
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/model-structure-4-states.png}
-\caption{Simplified model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state}\label{fig:model-structure-4-states}
+\caption{Model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state}\label{fig:model-structure-4-states}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/model-structure-3-states.png}
-\caption{Simplified model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state}\label{fig:model-structure-3-states} 
+\caption{Alternative model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state}\label{fig:model-structure-3-states} 
 \end{figure}
+
+
+\FloatBarrier
 
 \subsection{Adverse events}
 The model includes multiple distinct adverse events associated with oncology treatment by treatment line. More precisely, for each treatment line and each patient, the model samples whether each adverse event occurs from a binomial distribution.
@@ -470,18 +473,18 @@ The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and
 
 When $p_{1}=0$ and $\alpha_{3ik}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When ${(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to for allow arc- and bathtub shaped log-hazard functions. 
 
-A fixed effects model is obtained by replacing $\lambda_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $lambda_{1,ik} &= d_{1, t_{ik}} - d_{1, t_{i1}}$. 
+A fixed effects model is obtained by replacing $\delta_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $lambda_{1,ik} &= d_{1, t_{ik}} - d_{1, t_{i1}}$. 
 
 If it is assumed that treatment has only a direct effect on the transitions from stable to progression, which can be reasonably defended when a particular treatment upon disease progression is discontinued, the model can be simplified by setting $d_{3, t_{i1}}=0$.
 
 
 \subsubsubsection{Likelihood}
-The model parameters were estimated based on the number of patients $r$ in each of the three health states (stable, progression and death) at time $u$ for each arm $k$ of each trial $i$ obtained from the published Kaplan-Meier (KM) curves. Accordingly, a multinomial likelihood was used for the proportion of patients in each of the three health states at any time point for each arm of each trial ($S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$): 
+The model parameters were estimated based on the number of patients $r$ in each of the three health states (stable, progression and death) at time $u$ for each arm $k$ of each trial $i$ obtained from the published Kaplan-Meier (KM) curves. Accordingly, a multinomial likelihood was used for the proportion of patients in each of the three health states at any time point for each arm of each trial ($S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$) according to \autoref{eqn:multinomial_likelihood}. 
 
 \begin{equation} \label{eqn:multinomial_likelihood}
 \begin{aligned}
 % Likelihood
-(r_{ik}^{S}(u),r_{ik}^{P}(u),r_{ik}^{D}(u),n_{ik}(u)) \sim multinomial(S_{ik}(u),P_{ik}(u),D_{ik}(u}))
+(r_{ik}^{S}(u),r_{ik}^{P}(u),r_{ik}^{D}(u)) \sim multinomial(S_{ik}(u),P_{ik}(u),D_{ik}(u),n_{ik}(u))
 \end{aligned}
 \end{equation}
 
@@ -490,7 +493,7 @@ where $n_{ik}=r_{ik}^{S}(u)+r_{ik}^{P}(u)+r_{ik}^{D}(u)$ and $S_{ik}(u)+P_{ik}(u
 
 Arbitrary hazard rate functions can be approximated with a set of discontinuous constant hazard rates over successive time intervals. The total follow-up time can be partitioned into $M$ successive non-overlapping intervals indexed by $m= 1, ..., M$. We refer to interval $m$ as $U_{m}$ and write $u \in U_{m}$ to denote $u_{m}\leq u<  u_{m+1}$. The length of $U_{m}$ is $\Delta u_{m} =u_{m+1}-u_{m}$. 
 
-For each interval $m$, the proportions  $S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$ are related to the time-varying hazards $\ h_{ik}^{SP} (u) $,$\ h_{ik}^{SD} (u) $, $\ h_{ik}^{PD} (u)$ according to a set of differential equations \citep{jansen2013multivariate}. 
+For each interval $m$, the proportions  $S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$ are related to the time-varying hazards $\ h_{ik}^{SP} (u) $,$\ h_{ik}^{SD} (u) $, $\ h_{ik}^{PD} (u)$ according to a set of differential equations \citep{jansen2013multivariate} expressed in  \autoref{eqn:diff_equations}. 
 
 \begin{equation} \label{eqn:diff_equations}
 \begin{aligned}
@@ -505,22 +508,27 @@ D_{ik}(u) &= 1-S_{ik}(u) - P_{ik}(u) \\
 In order to estimate $h_{ikm}^{SP}$, $h_{ikm}^{SD}$, and $h_{ikm}^{PD}$ for each interval $m$,  data at three time points were used: $u_{m}$, $u_{m+\frac{1}{2}}$, and $u_{m+1}$. The obtained estimates of the hazards for interval $m$ were assigned to the time point corresponding to the mid point of the interval when used in the NMA.
 
 \subsubsubsection{Prior distributions}
- \hl{Need to add details about the priors.} 
-The prior distributions are displayed in \autoref{eqn:multistaate-nma-priors}: 
+The prior distributions for the parameters of the model expressed with \autoref{eqn:multistate-nma} are displayed in \autoref{eqn:multistate-nma-priors}.
 
-\begin{equation} \label{eqn:multistaate-nma-priors}
+\begin{equation} \label{eqn:multistate-nma-priors}
 \begin{aligned}
 % Prior for mu's
 \begin{pmatrix}
 \mu_{1i}  \\
-\vdots\\
+\mu_{2i}  \\
+\mu_{3i}  \\
+\mu_{4i}  \\
+\mu_{5i}  \\
 \mu_{6i}  \\
 \end{pmatrix} 
 &\sim 
 MVN\left(
 \begin{pmatrix}
 0  \\
-\vdots\\
+0  \\
+0  \\
+0  \\
+0  \\
 0 \\
 \end{pmatrix}, 
 T_\mu
@@ -528,9 +536,12 @@ T_\mu
 \qquad
 T_\mu =
 \begin{pmatrix}
-100 & \cdots & 0  \\
-\vdots & \ddots & \vdots   \\
-0 & \cdots & 10  \\
+100 & 0 & 0 & 0 & 0 & 0 \\
+0 & 10 & 0 & 0 & 0 & 0 \\
+0 & 0 & 10 & 0 & 0 & 0 \\
+0 & 0 & 0 & 100 & 0 & 0 \\
+0 & 0 & 0 & 0 & 10 & 0 \\
+0 & 0 & 0 & 0 & 0 & 10 \\
 \end{pmatrix}\\\\
 %
 % Prior for ds
@@ -543,7 +554,7 @@ d_{3, 1t}  \\
 MVN\left(
 \begin{pmatrix}
 0  \\
-\vdots  \\
+0  \\
 0 \\
 \end{pmatrix}, 
 T_d
@@ -556,17 +567,24 @@ T_d =
 0 & 0 & 2  \\
 \end{pmatrix} \\
 %
+\\
 % Prior for between-study heterogeneity
-\sigma_{d_{1}}=uniform(0.2)  \\
-%
-%Prior for probabilities at beginning of interval
+\sigma_{d_{1}} &= uniform(0.2)  \\
+\end{aligned}
+\end{equation}
+
+The prior distribution for the probabilities at the beginning of each interval, $u_{m}$, is presented in \autoref{eqn:multinomial-prior}. 
+
+\begin{equation} \label{eqn:multinomial-prior}
+\begin{aligned}
+% Prior for probabilities at beginning of interval
 (S_{ik}(u_{m}),P_{ik}(u_{m}),D_{ik}(u_{m})) \sim Dirichlet(0,0,0) \\
 \end{aligned}
 \end{equation}
 
 
 \subsubsubsection{Model selection}
-
+The residual deviance and the deviance information criterion (DIC) wereused to compare the goodness-of-fit of the competing NMA models \citep{dias2018network}. DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points was considered meaningful. 
 
 
 \begin{figure}[h]
@@ -1051,8 +1069,8 @@ Prior to the actual NMA, the consistency between direct and indirect comparisons
 \subsection{Estimation of the relative treatment effects under the assumption of consistency}
 Based on the findings of the feasibility assessment, the results of the RCTs that are part of one evidence network and deemed sufficiently similar were synthesized by means of NMAs by outcome of interest. Under the assumption of consistency, the NMA model relates the data from the individual studies to basic parameters reflecting the (pooled) relative treatment effect of each intervention compared to an overall treatment of reference. The NMA models were extended by incorporating covariates (i.e., meta-regression analysis) only if there was an imbalance in treatment potential effect modifiers across trials in the network \citep{dias2018network}. 
 
-\subsection{Model selection}
-The deviance information criterion (DIC) can be used to compare the goodness-of-fit of competing evidence synthesis models \citep{dias2018network}. DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in DIC of about 10 points can be considered meaningful. 
+
+
 
 \subsection{Software}
 The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using R statistical software \citep{team2014r}.

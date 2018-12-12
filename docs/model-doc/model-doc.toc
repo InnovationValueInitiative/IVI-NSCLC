@@ -7,13 +7,13 @@
 \contentsline {section}{\numberline {5}Components}{8}{section.5}
 \contentsline {section}{\numberline {6}Model structure}{9}{section.6}
 \contentsline {subsection}{\numberline {6.1}Disease model}{9}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Adverse events}{9}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.2}Adverse events}{11}{subsection.6.2}
 \contentsline {subsection}{\numberline {6.3}Cost and utility}{11}{subsection.6.3}
 \contentsline {subsection}{\numberline {6.4}Patient heterogeneity}{12}{subsection.6.4}
 \contentsline {subsection}{\numberline {6.5}Rationale for individual-level simulation}{12}{subsection.6.5}
 \contentsline {section}{\numberline {7}Model outcomes}{12}{section.7}
 \contentsline {subsection}{\numberline {7.1}Health outcomes}{12}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Risks}{12}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.2}Risks}{13}{subsection.7.2}
 \contentsline {subsection}{\numberline {7.3}Costs}{13}{subsection.7.3}
 \contentsline {subsection}{\numberline {7.4}Value assessment}{13}{subsection.7.4}
 \contentsline {section}{\numberline {8}Source data and parameter estimation}{14}{section.8}
@@ -51,5 +51,4 @@
 \contentsline {subsection}{\numberline {B.1}Feasibility assessment}{33}{subsection.1.B.1}
 \contentsline {subsection}{\numberline {B.2}Evaluation of consistency between direct and indirect comparisons}{33}{subsection.1.B.2}
 \contentsline {subsection}{\numberline {B.3}Estimation of the relative treatment effects under the assumption of consistency}{33}{subsection.1.B.3}
-\contentsline {subsection}{\numberline {B.4}Model selection}{34}{subsection.1.B.4}
-\contentsline {subsection}{\numberline {B.5}Software}{34}{subsection.1.B.5}
+\contentsline {subsection}{\numberline {B.4}Software}{34}{subsection.1.B.4}
