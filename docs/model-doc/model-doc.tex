@@ -387,12 +387,34 @@ With MCDA, the value of each treatment strategy is based on a "total value" scor
 
 
 \section{Source data and parameter estimation}\label{sec:data}
-Key parameters for the model relate to: (i) transition probabilities; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates are based on currently available published evidence identified by means of a systematic literature review (SLR) and synthesized with meta-analysis techniques where appropriate. Additional information regarding the SLR (\autoref{app:slr}) and NMA (\autoref{app:nma}) are provided in the Appendix. 
+Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. 
 
-\subsection{Transition probabilities}\label{subsec:data-transprobs}
-Traditional NMAs in oncology are based on separate analyses for OS and PFS, with relative treatment effects estimated using hazard ratios (HR). There are two limitations of this approach. First, HR estimates rely on the proportional hazard assumption, which is implausible if the hazard functions of the competing interventions cross \citep{dias2018network}. Second, separate analyses of OS and PFS ignore the structural relationship between stable disease, progression, and death and implicitly assume that transition probabilities for stable to death and progression to death are equal.
+\subsection{Treatment effects for transition rates}
+Relevant evidence to estimate treatment effects in terms of transitions between the health states was obtained with a systematic literature review of randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria that defined the scope of the studies considered relevant are outlined in the Appendix. The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
 
-We overcome these limitations by using a multi-state NMA that explicitly estimates each possible transition in a 3-state model---stable to progression, stable to death, and progression to death--and modeling time-varying hazard rates and relative treatment effects with known parametric survival functions or fractional polynomials. Our approach is illustrated in \autoref{fig:multistate-nma} and expressed mathematically in \autoref{eqn:multistate-nma},
+\subsubsection{Relative treatment effects with 1L therapy}
+Relative treatment effects between the competing interventions for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
+
+RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest – it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \hl{(add reference)}. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
+
+Patients are randomized only within trials, not across trials, so there is a risk that patients participating in different trials differ with respect to demographic, disease or other characteristics. In addition, features of the trials themselves may differ. If these trial or patient characteristics are effect modifiers, i.e. they affect the treatment effects of an intervention versus a control, then there are systematic differences in treatment effects across trials. Systematic differences in known and unknown effect-modifiers among studies comparing the same interventions in direct fashion result in between-study heterogeneity. An imbalance in the distribution of effect modifiers between studies comparing different interventions will result in transitivity or consistency violations and therefore biased indirect comparisons.
+
+The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \hl{(Appendix X)}, along with information on the distribution of patients characteristics across the studies in the network. 
+
+\subsubsubsection{Network meta-analysis model}
+Traditionally, NMAs in oncology are based on separate analyses for OS and PFS, with relative treatment effects estimated using reported hazard ratios (HR). There are two limitations of this approach. First, HR estimates rely on the proportional hazard assumption, which is implausible if the hazard functions of the competing interventions cross \citep{dias2018network}. Second, separate analyses of OS and PFS ignore the structural relationship between stable disease, progression, and death and implicitly assume that transition probabilities for stable to death and progression to death are equal.
+
+We overcome these limitations by introducing a multi-state NMA that explicitly estimates each possible transition in a 3-state model---stable to progression, stable to death, and progression to death--and modeling time-varying hazard rates and relative treatment effects with known parametric survival functions or fractional polynomials. Our approach is illustrated in \autoref{fig:multistate-nma} and expressed mathematically in \autoref{eqn:multistate-nma}.
+
+\FloatBarrier
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/multistate-nma.png}
+\caption{Relationship between stable disease (S), progression (P) and death (D) as used in the multi-state network meta-analysis model}\label{fig:multistate-nma}
+\end{figure}
+
+
 
 \begin{equation}\label{eqn:multistate-nma}
 \begin{aligned} 
@@ -404,15 +426,11 @@ We overcome these limitations by using a multi-state NMA that explicitly estimat
 \end{cases}\\ 
 % SD transition 
 \ln\left(h_{ik}^{SD}(u)\right) &=
-\begin{cases}
-\alpha_{4ik} + \alpha_{5ik}u^{p_1} + \alpha_{6ik}u^{p_2} & \text{if } p_1 \neq p_2 \\ 
-\alpha_{4ik} + \alpha_{5ik}u^{p} + \alpha_{6ik}u^{p}\ln(u) & \text{if } p_1 = p_2 = p \\ 
-\end{cases}\\ 
+\alpha_{4ik}\\
 % PD transition
 \ln\left(h_{ik}^{PD}(u)\right) &=
 \begin{cases}
-\alpha_{7ik} + \alpha_{8ik}u^{p_1} + \alpha_{9ik}u^{p_2} & \text{if } p_1 \neq p_2 \\ 
-\alpha_{7ik} + \alpha_{8ik}u^{p} + \alpha_{9ik}u^{p}\ln(u) & \text{if } p_1 = p_2 = p \\ 
+\alpha_{5ik} + \alpha_{6ik}u^{p_1}\\ 
 \end{cases}\\\\
 % Coefficient matrix
 \begin{pmatrix}
@@ -422,9 +440,6 @@ We overcome these limitations by using a multi-state NMA that explicitly estimat
 \alpha_{4ik} \\
 \alpha_{5ik} \\
 \alpha_{6ik} \\
-\alpha_{7ik} \\
-\alpha_{8ik} \\
-\alpha_{9ik} \\
 \end{pmatrix}
 &= 
 \begin{pmatrix}
@@ -434,42 +449,64 @@ We overcome these limitations by using a multi-state NMA that explicitly estimat
 \mu_{4ik} \\
 \mu_{5ik} \\
 \mu_{6ik} \\
-\mu_{7ik} \\
-\mu_{8ik} \\
-\mu_{9ik} \\
 \end{pmatrix} 
 +
 \begin{pmatrix}
-\lambda_{1,ik} \\
+\delta_{1,ik} \\
 d_{2, t_{ik}} - d_{2, t_{i1}}  \\
 0 \\
 0  \\
-0 \\
-0 \\
-d_{7, t_{ik}} - d_{7, t_{i1}} \\
-0 \\
+d_{3, t_{ik}} - d_{3, t_{i1}} \\
 0 \\
 \end{pmatrix} \\\\ 
 % Random effects
-\lambda_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2) 
+\delta_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma_{d_{1}}^{2}) 
 \end{aligned}
 \end{equation}
 
-where $t^0= \ln(u)$.
+where $u^0= \ln(u)$ and ${d_{1,1}}=0$, ${d_{2,1}}=0$, and ${d_{3,1}}=0$
 
-The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{0,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1 (${d_{0,1t}}$) and between study heterogeneity $\sigma_{0}^{2} $. The treatment effect for the first shape parameter for the transition from stable to progression (${d_{2,1t}}$) and the scale parameter for the transition from progression to death (${d_{7,1t}}$) are assumed to be fixed by treatment. 
+The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1, ${d_{1,1t}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $.  ${d_{2,1t}}$ are the treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression relative to reference treatment 1. To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. ${d_{3,1t}}$ are the treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death relative to reference treatment 1. 
 
-Weibull ($p_{1}=0$), Gompertz ($p_{1}=1$), and two second order fractional polynomial models $\{(p_0, p_1) = (0, 0), (0,1)\}$ were fit. The estimated 2nd order fractional polynomial models are extensions of the Weibull and Gompertz model and allow arc- and bathtub shaped hazard functions. To facilitate parameter estimation, we assume that treatment only has an impact on the time-varying transition rates from stable to progression; we assume that transition rates between stable disease and death are independent of treatment. In addition, we assume that treatment has no effect on the 2nd shape parameter in the transition from stable to progression or on either shape parameter in the transition from progression to death.   
+When $p_{1}=0$ and $\alpha_{3ik}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When ${(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to for allow arc- and bathtub shaped log-hazard functions. 
 
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/multistate-nma.png}
-\caption{Relationship between stable disease (S), progression (P) and death (D) as used in the multi-state network meta-analysis model}\label{fig:multistate-nma}
-\end{figure}
+A fixed effects model is obtained by replacing $\lambda_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $lambda_{1,ik} &= d_{1, t_{ik}} - d_{1, t_{i1}}$. 
 
-The model parameters were estimated based on the number of patients in each of the three health states over time obtained from the published Kaplan-Meier (KM) curves for each arm of each trial included in the NMA. Accordingly, we will use a multinomial likelihood for the proportion of patients in each of the three health states at any point in time. These proportions are related to the time-varying hazards $\ h_{ik}^{SP} (u) $,$\ h_{ik}^{SD} (u) $, $\ h_{ik}^{PD} (u)$ according to a set of differential equations \citep{jansen2013multivariate}. 
+If it is assumed that treatment has only a direct effect on the transitions from stable to progression, which can be reasonably defended when a particular treatment upon disease progression is discontinued, the model can be simplified by setting $d_{3, t_{i1}}=0$.
 
-Separate analyses were performed by line of treatment (i.e., 1L and 2L) conditional upon prior treatment (class) when relevant, based on data extracted from the studies identified with the SLR in a Bayesian framework using both fixed and random effects. We use the random effects by default in the model, which accounts for heterogeneity across studies. However, since few RCTs were available, heterogeneity estimation became unreliable and the use of conventional "non-informative priors" resulted in artificially wide uncertainty intervals. \hl{Need to add details about the priors.} The prior distributions are displayed in \autoref{eqn:multistaate-nma-priors}: 
+
+\subsubsubsection{Likelihood}
+The model parameters were estimated based on the number of patients $r$ in each of the three health states (stable, progression and death) at time $u$ for each arm $k$ of each trial $i$ obtained from the published Kaplan-Meier (KM) curves. Accordingly, a multinomial likelihood was used for the proportion of patients in each of the three health states at any time point for each arm of each trial ($S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$): 
+
+\begin{equation} \label{eqn:multinomial_likelihood}
+\begin{aligned}
+% Likelihood
+(r_{ik}^{S}(u),r_{ik}^{P}(u),r_{ik}^{D}(u),n_{ik}(u)) \sim multinomial(S_{ik}(u),P_{ik}(u),D_{ik}(u}))
+\end{aligned}
+\end{equation}
+
+where $n_{ik}=r_{ik}^{S}(u)+r_{ik}^{P}(u)+r_{ik}^{D}(u)$ and $S_{ik}(u)+P_{ik}(u)+D_{ik}(u)=1$
+\\
+
+Arbitrary hazard rate functions can be approximated with a set of discontinuous constant hazard rates over successive time intervals. The total follow-up time can be partitioned into $M$ successive non-overlapping intervals indexed by $m= 1, ..., M$. We refer to interval $m$ as $U_{m}$ and write $u \in U_{m}$ to denote $u_{m}\leq u<  u_{m+1}$. The length of $U_{m}$ is $\Delta u_{m} =u_{m+1}-u_{m}$. 
+
+For each interval $m$, the proportions  $S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$ are related to the time-varying hazards $\ h_{ik}^{SP} (u) $,$\ h_{ik}^{SD} (u) $, $\ h_{ik}^{PD} (u)$ according to a set of differential equations \citep{jansen2013multivariate}. 
+
+\begin{equation} \label{eqn:diff_equations}
+\begin{aligned}
+% Differential equations
+S_{ik}(u) &= S_{ik}(u_{m}) e^{-(h_{ikm}^{SP}+h_{ikm}^{SD})(u-u_{m})} \\
+P_{ik}(u) &= P_{ik}(u_{m}) e^{-h_{ikm}^{PD}(u-u_{m})}+\frac{S(u_{m})h_{ikm}^{SP}(e^{-(h_{ikm}^{SP}+h_{ikm}^{SD})(u-u_{m})}-e^{-h_{ikm}^{PD}(u-u_{m})})}{h_{ikm}^{PD}-h_{ik}^{SP}-h_{ikm}^{SD}} \\
+D_{ik}(u) &= 1-S_{ik}(u) - P_{ik}(u) \\
+\end{aligned}
+\end{equation}
+\\
+
+In order to estimate $h_{ikm}^{SP}$, $h_{ikm}^{SD}$, and $h_{ikm}^{PD}$ for each interval $m$,  data at three time points were used: $u_{m}$, $u_{m+\frac{1}{2}}$, and $u_{m+1}$. The obtained estimates of the hazards for interval $m$ were assigned to the time point corresponding to the mid point of the interval when used in the NMA.
+
+\subsubsubsection{Prior distributions}
+ \hl{Need to add details about the priors.} 
+The prior distributions are displayed in \autoref{eqn:multistaate-nma-priors}: 
 
 \begin{equation} \label{eqn:multistaate-nma-priors}
 \begin{aligned}
@@ -477,7 +514,7 @@ Separate analyses were performed by line of treatment (i.e., 1L and 2L) conditio
 \begin{pmatrix}
 \mu_{1i}  \\
 \vdots\\
-\mu_{9i}  \\
+\mu_{6i}  \\
 \end{pmatrix} 
 &\sim 
 MVN\left(
@@ -491,16 +528,16 @@ T_\mu
 \qquad
 T_\mu =
 \begin{pmatrix}
-10^4 & \cdots & 10^4  \\
+100 & \cdots & 0  \\
 \vdots & \ddots & \vdots   \\
-10^4 & \cdots & 10^4  \\
+0 & \cdots & 10  \\
 \end{pmatrix}\\\\
 %
-% Prior for d's
+% Prior for ds
 \begin{pmatrix}
 d_{1, 1t}  \\
 d_{2, 1t}  \\
-d_{7, 1t}  \\
+d_{3, 1t}  \\
 \end{pmatrix} 
 &\sim 
 MVN\left(
@@ -514,13 +551,33 @@ T_d
 \qquad
 T_d =
 \begin{pmatrix}
-10^4 & \cdots & 10^4  \\
-\vdots & \ddots & \vdots   \\
-10^4 & \cdots & 10^4  \\
-\end{pmatrix} 
+2 & 0 & 0  \\
+0 & 1 & 0   \\
+0 & 0 & 2  \\
+\end{pmatrix} \\
+%
+% Prior for between-study heterogeneity
+\sigma_{d_{1}}=uniform(0.2)  \\
+%
+%Prior for probabilities at beginning of interval
+(S_{ik}(u_{m}),P_{ik}(u_{m}),D_{ik}(u_{m})) \sim Dirichlet(0,0,0) \\
 \end{aligned}
 \end{equation}
 
+
+\subsubsubsection{Model selection}
+
+
+
+\begin{figure}[h]
+\centering
+%\includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
+\caption{First line estimates of hazard ratios from stable to progression relative to gefitinib from the multi-state network meta-analysis}\label{fig:hr-1L}
+\end{figure}
+
+
+
+\subsubsection{Absolute effects with 1L reference treatment}
 Absolute effects at 1L, the $\mu_{\cdot i}$, were estimated with a multi-state meta-analysis of gefitinib and the relative treatment effects, the ${d_{\cdot,1t}}$, were estimated using \autoref{eqn:multistate-nma}. The simulated posterior distribution of the parameter estimates were then used to simulate a posterior distribution for PFS and OS. \autoref{fig:surv-1L} reports mean estimates of PFS and OS by month for each 1L treatment and each fitted model. 
 
 \begin{figure}[h]
@@ -529,30 +586,31 @@ Absolute effects at 1L, the $\mu_{\cdot i}$, were estimated with a multi-state m
 \caption{First line estimates of progression-free survival and overall survival with gefitinib from multi-state meta-analyses}\label{fig:abs-effects-1L}
 \end{figure}
 
-\begin{figure}[h]
-\centering
-%\includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
-\caption{First line estimates of hazard ratios from stable to progression relative to gefitinib from the multi-state network meta-analysis}\label{fig:hr-1L}
-\end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/surv-1L.pdf} 
-\caption{First line estimates of mean progression-free survival and overall survival from the multi-state network meta-analysis}\label{fig:surv-1L}
+\caption{First line estimates of progression-free survival and overall survival for the competing interventions obtained with the multi-state network meta-analysis}\label{fig:surv-1L}
 \begin{minipage}{\linewidth}
 \footnotesize
 Notes: The simulated posterior distribution of the parameters of the Bayesian multi-state NMA was used to simulate a distribution of progression-free survival and overall survival curves. The curves in the figure are posterior means. Curves with credible intervals are shown in the appendix.
 \end{minipage}
 \end{figure}
 
-When a 3-state economic model is used, the 1L NMA is used to directly simulate disease progression. However, if a 4-state model is used, then both 1L and 2L estimates are incorporated. In particular, the 1L results are used to simulate the transition from $S_1$ to $P_1 \rightarrow S_2$ and the 2L results are used to simulate the transition from $P_1 \rightarrow S_2$ to $P_2$, $P_2$ to $D$, and $P_1 \rightarrow S_2$ to $D$ (see \autoref{fig:model-structure-4-states}). Furthermore, recall that second line treatment depend on whether a patient has a T790M mutation. Separate 2L multi-state meta-analyses were consequently conducted to parameterize transitions among T790M positive and T790M negative patients. For T790M positive patients, we performed a meta-analysis of osimertinib. Among possible treatments for T790M negative patients, there was only trial data available for PBDC, so we performed a meta-analysis of PBDC (estimates for other 2L treatment options including PBDC + anti-VEGF therapy and 1st/2nd genration TKIs are assumed to be equivalent to PBDC in the economic model). Since T790M mutation status was not a prognostic factor or an effect modifier, the PBDC meta-analysis was conducted using an all-comer population. Mean estimates of PFS and OS by month for the 2L treatments are displayed in \autoref{subfig:surv-2L-pbdc}.
+\FloatBarrier
+
+
+\subsubsection{Absolute effects in 2L}
+Recall that second line treatment depend on whether a patient has a T790M mutation. Separate 2L multi-state meta-analyses were consequently conducted to parameterize transitions among T790M positive and T790M negative patients. For T790M positive patients, we performed a meta-analysis of osimertinib. Among possible treatments for T790M negative patients, there was only trial data available for PBDC, so we performed a meta-analysis of PBDC (estimates for other 2L treatment options including PBDC + anti-VEGF therapy and 1st/2nd genration TKIs are assumed to be equivalent to PBDC in the economic model). Since T790M mutation status was not a prognostic factor or an effect modifier, the PBDC meta-analysis was conducted using an all-comer population. Mean estimates of PFS and OS by month for the 2L treatments are displayed in \autoref{subfig:surv-2L-pbdc}.
+
+
 
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
 \centering
 \includegraphics[max size={.8\textwidth}{.8\textheight}]{figs/surv-2L-pbdc.pdf}
-\caption{Platinum based doublet therapy} \label{subfig:surv-2L-pbdc}
+\caption{Platinum based doublet chemotherapy} \label{subfig:surv-2L-pbdc}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
 \centering
@@ -566,8 +624,16 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 \end{minipage}
 \end{figure}
 
+
+
+\subsubsection{Use of meta-analysis results in economic model}
+Informed by model fit criteria, we used treatment effect estimates obtained with the fixed and random effects, Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model.  When a 3-state economic model is used, the 1L NMA is used to directly simulate disease progression. However, if a 4-state model is used, then both 1L and 2L estimates are incorporated. In particular, the 1L results are used to simulate the transition from $S_1$ to $P_1 \rightarrow S_2$ and the 2L results are used to simulate the transition from $P_1 \rightarrow S_2$ to $P_2$, $P_2$ to $D$, and $P_1 \rightarrow S_2$ to $D$ (see \autoref{fig:model-structure-4-states}). 
+
+\FloatBarrier
+
+
 \subsection{Adverse events}\label{subsec:data-aes}
-Since adverse events in nearly all clinical trials were reported as the number of patients experiencing the event, the NMA was performed on the proportion of patients experiencing the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}. \hl{Add details about pooling and the priors...}
+The identified RCTs also provided the evidence base to estimate treatment specific adverse eent probabilities. Since adverse events in nearly all RCTs were reported as the number of patients experiencing the event, the NMA was performed on the proportion of patients experiencing the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}. \hl{Add details about pooling and the priors...}
 
 \subsection{Utilities}\label{subsec:data-utility}
 
@@ -742,7 +808,7 @@ Reduction in hours worked due to permanent disability = $\HoursReductionEst$ (ra
 \subsection{Value of hope}\label{subsec:data-voh}
 To be added.
 
-\FloatBarrier
+
 
 \section{Simulation and uncertainty analysis}\label{sec:uncertainty-analysis}
 \subsection{Parameter uncertainty} \label{subsec:psa}
@@ -810,8 +876,8 @@ The individual-level CTSTM was implemented using the R package \href{https://inn
 
 \section{Systematic Literature Review}\label{app:slr}
 
-\subsection{Treatment effects}
-The systematic literature reviews of treatment effects focused on randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of metastatic EGFR+ non-squamous NSCLC by line of treatment, i.e. 1L, 2L, and 2L+. Primary outcomes of interest were OS, PFS and time to progression (TTP). Details regarding eligibility criteria defining the scope of the studies considered relevant are outlined in \autoref{tbl:picos-tx-effects-1L}, \autoref{tbl:picos-tx-effects-2L}, and \autoref{tbl:picos-tx-effects-2LP}. The identified evidence was used to estimate the relative treatment effects for each intervention versus a defined intervention of reference by line of treatment conditional upon the prior treatment (class), as well as to estimate the absolute treatment effects with the corresponding reference treatments.
+\subsection{Treatment effects for transition rates}
+Details regarding eligibility criteria defining the scope of the studies considered relevant are outlined in \autoref{tbl:picos-tx-effects-1L}, \autoref{tbl:picos-tx-effects-2L}, and \autoref{tbl:picos-tx-effects-2LP}. 
 
 
 \begin{table}[!ht]

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  10 DEC 2018 23:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 DEC 2018 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -794,20 +794,20 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
  (./model-doc.toc
 [1
 
-{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2])
 \tf@toc=\write4
 \openout4 = `model-doc.toc'.
 
-
-(./model-doc.lof [2])
+ (./model-doc.lof)
 \tf@lof=\write5
 \openout5 = `model-doc.lof'.
 
- (./model-doc.lot)
+ (./model-doc.lot [3])
 \tf@lot=\write6
 \openout6 = `model-doc.lot'.
 
- [3]
+ [4]
 
 ! Package inputenc Error: Keyboard character used is undefined
 (inputenc)                in inputencoding `latin1'.
@@ -836,26 +836,26 @@ l.241 ...nt in the context of the United Statesâ€™
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
 
-[4
+[5
 
 ]
 
-Package natbib Warning: Citation `jemal2011global' on page 5 undefined on input
+Package natbib Warning: Citation `jemal2011global' on page 6 undefined on input
  line 250.
 
 
-Package natbib Warning: Citation `d2010metastatic' on page 5 undefined on input
+Package natbib Warning: Citation `d2010metastatic' on page 6 undefined on input
  line 250.
 
 
-Package natbib Warning: Citation `cetin2011survival' on page 5 undefined on inp
+Package natbib Warning: Citation `cetin2011survival' on page 6 undefined on inp
 ut line 250.
 
 
-Package natbib Warning: Citation `lynch2004activating' on page 5 undefined on i
+Package natbib Warning: Citation `lynch2004activating' on page 6 undefined on i
 nput line 250.
 
-<figs/treatment-strategies.png, id=326, 720.6925pt x 522.95375pt>
+<figs/treatment-strategies.png, id=371, 720.6925pt x 522.95375pt>
 File: figs/treatment-strategies.png Graphic file (type png)
 <use figs/treatment-strategies.png>
 Package pdftex.def Info: figs/treatment-strategies.png  used on input line 261.
@@ -865,47 +865,47 @@ Package pdftex.def Info: figs/treatment-strategies.png  used on input line 261.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Package natbib Warning: Citation `keeney1993decisions' on page 5 undefined on i
+Package natbib Warning: Citation `keeney1993decisions' on page 6 undefined on i
 nput line 267.
 
 
-Package natbib Warning: Citation `thokala2016multiple' on page 5 undefined on i
+Package natbib Warning: Citation `thokala2016multiple' on page 6 undefined on i
 nput line 269.
 
-[5]
+[6]
 
-Package natbib Warning: Citation `garrison2017toward' on page 6 undefined on in
+Package natbib Warning: Citation `garrison2017toward' on page 7 undefined on in
 put line 271.
 
-[6 <./figs/treatment-strategies.png>] [7]
-<figs/model-structure-4-states.png, id=345, 755.82375pt x 499.8675pt>
+[7 <./figs/treatment-strategies.png>] [8]
+<figs/model-structure-4-states.png, id=389, 755.82375pt x 499.8675pt>
 File: figs/model-structure-4-states.png Graphic file (type png)
 <use figs/model-structure-4-states.png>
 Package pdftex.def Info: figs/model-structure-4-states.png  used on input line 
 318.
 (pdftex.def)             Requested size: 755.8219pt x 499.86627pt.
-<figs/model-structure-3-states.png, id=346, 739.76375pt x 382.42876pt>
+<figs/model-structure-3-states.png, id=390, 739.76375pt x 382.42876pt>
 File: figs/model-structure-3-states.png Graphic file (type png)
 <use figs/model-structure-3-states.png>
 Package pdftex.def Info: figs/model-structure-3-states.png  used on input line 
 324.
 (pdftex.def)             Requested size: 739.76193pt x 382.42781pt.
- [8] [9 <./figs/model-structure-4-states.png>] [10 <./figs/model-structure-3-st
-ates.png>]
+ [9] [10 <./figs/model-structure-4-states.png>] [11 <./figs/model-structure-3-s
+tates.png>]
 
-Package natbib Warning: Citation `aalen1978empirical' on page 11 undefined on i
+Package natbib Warning: Citation `aalen1978empirical' on page 12 undefined on i
 nput line 344.
 
 
-Package natbib Warning: Citation `putter2007tutorial' on page 11 undefined on i
+Package natbib Warning: Citation `putter2007tutorial' on page 12 undefined on i
 nput line 344.
 
 
-Package natbib Warning: Citation `de2011mstate' on page 11 undefined on input l
+Package natbib Warning: Citation `de2011mstate' on page 12 undefined on input l
 ine 344.
 
 
-Package natbib Warning: Citation `jackson2016flexsurv' on page 11 undefined on 
+Package natbib Warning: Citation `jackson2016flexsurv' on page 12 undefined on 
 input line 344.
 
 
@@ -913,278 +913,368 @@ Overfull \hbox (23.99998pt too wide) in paragraph at lines 353--371
  [] 
  []
 
-[11]
-
-Package natbib Warning: Citation `sanders2016recommendations' on page 12 undefi
-ned on input line 381.
-
 [12]
 
-Package natbib Warning: Citation `dias2018network' on page 13 undefined on inpu
-t line 393.
+Package natbib Warning: Citation `sanders2016recommendations' on page 13 undefi
+ned on input line 381.
 
 [13]
-<figs/multistate-nma.png, id=390, 527.9725pt x 242.9075pt>
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 ...ubset of the interventions of interest â€
+                                                  “ it may be possible to re...
+
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.398 ...bset of the interventions of interest â€“
+                                                   it may be possible to rep...
+
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+[14]
+
+Package natbib Warning: Citation `dias2018network' on page 15 undefined on inpu
+t line 405.
+
+<figs/multistate-nma.png, id=427, 527.9725pt x 242.9075pt>
 File: figs/multistate-nma.png Graphic file (type png)
 <use figs/multistate-nma.png>
-Package pdftex.def Info: figs/multistate-nma.png  used on input line 466.
+Package pdftex.def Info: figs/multistate-nma.png  used on input line 413.
 (pdftex.def)             Requested size: 527.9712pt x 242.90689pt.
+[15]
+! Missing } inserted.
+<inserted text> 
+                }
+l.471 ...ion. When ${(p_1, p_2) = (0, 0), (0,1)\}$
+                                                   and $\alpha_{3ik}\neq0$, ...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Misplaced alignment tab character &.
+l.473 ...s obtained by replacing $\lambda_{1,ik} &
+                                                  \sim N(d_{1, t_{ik}} - d_{...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.473 ...t_{i1}}, \sigma^2)$ with $lambda_{1,ik} &
+                                                  = d_{1, t_{ik}} - d_{1, t_...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Missing { inserted.
+<inserted text> 
+                {
+l.485 \end{aligned}
+                   
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+[16 <./figs/multistate-nma.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 488--490
+
+ []
 
 
-Package natbib Warning: Citation `jansen2013multivariate' on page 14 undefined 
-on input line 470.
+Package natbib Warning: Citation `jansen2013multivariate' on page 17 undefined 
+on input line 493.
 
-[14 <./figs/multistate-nma.png>]
-<figs/surv-1L.pdf, id=399, 578.16pt x 578.16pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--504
+
+ []
+
+[17]
+<figs/surv-1L.pdf, id=452, 578.16pt x 578.16pt>
 File: figs/surv-1L.pdf Graphic file (type pdf)
 <use figs/surv-1L.pdf>
-Package pdftex.def Info: figs/surv-1L.pdf  used on input line 540.
+Package pdftex.def Info: figs/surv-1L.pdf  used on input line 592.
 (pdftex.def)             Requested size: 578.15858pt x 578.15858pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figs/surv-2L-pbdc.pdf, id=402, 505.89pt x 361.35pt>
+[18] [19 <./figs/surv-1L.pdf>]
+<figs/surv-2L-pbdc.pdf, id=469, 505.89pt x 361.35pt>
 File: figs/surv-2L-pbdc.pdf Graphic file (type pdf)
 <use figs/surv-2L-pbdc.pdf>
-Package pdftex.def Info: figs/surv-2L-pbdc.pdf  used on input line 554.
+Package pdftex.def Info: figs/surv-2L-pbdc.pdf  used on input line 612.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
-<figs/surv-2L-t790m-osi.pdf, id=403, 505.89pt x 361.35pt>
+<figs/surv-2L-t790m-osi.pdf, id=470, 505.89pt x 361.35pt>
 File: figs/surv-2L-t790m-osi.pdf Graphic file (type pdf)
 <use figs/surv-2L-t790m-osi.pdf>
-Package pdftex.def Info: figs/surv-2L-t790m-osi.pdf  used on input line 559.
+Package pdftex.def Info: figs/surv-2L-t790m-osi.pdf  used on input line 617.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
 
-LaTeX Warning: Float too large for page by 26.59186pt on input line 567.
 
+LaTeX Warning: Float too large for page by 26.59186pt on input line 625.
 
-Package natbib Warning: Citation `dias2018network' on page 15 undefined on inpu
-t line 570.
+[20
+
+] [21 <./figs/surv-2L-pbdc.pdf> <./figs/surv-2L-t790m-osi.pdf>]
+
+Package natbib Warning: Citation `dias2018network' on page 22 undefined on inpu
+t line 636.
 
 (./tables/state-utility.txt) (./tables/state-utility.txt
 
-Package natbib Warning: Citation `nafees2017health' on page 15 undefined on inp
+Package natbib Warning: Citation `nafees2017health' on page 22 undefined on inp
 ut line 4.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 15 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 5.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 15 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 6.
 
-) [15] (./tables/ae-disutility.txt) (./tables/ae-disutility.txt
+) (./tables/ae-disutility.txt) (./tables/ae-disutility.txt
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 4.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 5.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 6.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 7.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 8.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 9.
 
 
-Package natbib Warning: Citation `doyle2008health' on page 16 undefined on inpu
+Package natbib Warning: Citation `doyle2008health' on page 22 undefined on inpu
 t line 10.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 11.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 12.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 16 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 13.
 
-) (./tables/dosage.txt) (./tables/dosage.txt) [16] (./tables/acq_costs.txt)
+) (./tables/dosage.txt) (./tables/dosage.txt) [22] (./tables/acq_costs.txt)
 (./tables/acq_costs.txt) (./tables/admin_costs.txt) (./tables/admin_costs.txt)
 (./tables/inpt_costs.txt) (./tables/inpt_costs.txt
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 17 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 23 undefined o
 n input line 5.
 
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 17 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 23 undefined o
 n input line 6.
 
-) [17] (./tables/op_costs.txt) (./tables/op_costs.txt
+) (./tables/op_costs.txt) (./tables/op_costs.txt
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 18 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 23 undefined o
 n input line 5.
 
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 18 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 23 undefined o
 n input line 6.
 
 ) (./tables/ae_costs.txt) (./tables/ae_costs.txt
 
-Package natbib Warning: Citation `wong2018assessment' on page 18 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 23 undefined on i
 nput line 5.
 
 
-Package natbib Warning: Citation `latremouille2017economic' on page 18 undefine
+Package natbib Warning: Citation `latremouille2017economic' on page 23 undefine
 d on input line 6.
 
 
-Package natbib Warning: Citation `latremouille2017economic' on page 18 undefine
+Package natbib Warning: Citation `latremouille2017economic' on page 23 undefine
 d on input line 7.
 
 
-Package natbib Warning: Citation `wong2018assessment' on page 18 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 23 undefined on i
 nput line 8.
 
 
-Package natbib Warning: Citation `wong2018assessment' on page 18 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 23 undefined on i
 nput line 11.
 
 
-Package natbib Warning: Citation `wong2018assessment' on page 18 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 23 undefined on i
 nput line 12.
 
-) (./tables/wages.txt) (./tables/wages.txt) [18] [19] [20 <./figs/surv-1L.pdf>]
-[21 <./figs/surv-2L-pbdc.pdf> <./figs/surv-2L-t790m-osi.pdf>]
+) (./tables/wages.txt) (./tables/wages.txt) [23] [24] [25]
 
-Package natbib Warning: Citation `baio2015probabilistic' on page 22 undefined o
-n input line 749.
-
-
-Package natbib Warning: Citation `claxton2005probabilistic' on page 22 undefine
-d on input line 749.
+Package natbib Warning: Citation `baio2015probabilistic' on page 26 undefined o
+n input line 815.
 
 
-Package natbib Warning: Citation `black1990plane' on page 22 undefined on input
- line 749.
+Package natbib Warning: Citation `claxton2005probabilistic' on page 26 undefine
+d on input line 815.
 
 
-Package natbib Warning: Citation `van1994costs' on page 22 undefined on input l
-ine 749.
+Package natbib Warning: Citation `black1990plane' on page 26 undefined on input
+ line 815.
 
 
-Package natbib Warning: Citation `briggs1999bayesian' on page 22 undefined on i
-nput line 749.
+Package natbib Warning: Citation `van1994costs' on page 26 undefined on input l
+ine 815.
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 754--792
+Package natbib Warning: Citation `briggs1999bayesian' on page 26 undefined on i
+nput line 815.
+
+
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 820--858
  [] 
  []
 
-[22
+
+LaTeX Warning: Reference `subsec:data-transprobs' on page 26 undefined on input
+ line 862.
+
+[26
 
 ]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 829.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 895.
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 820--855
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 886--921
  [] 
  []
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 867--869
+Underfull \hbox (badness 1231) in paragraph at lines 933--935
 []|\T1/cmr/m/n/10.95 Adult pa-tients with metastatic non-squamous NSCLC who are
 
  []
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 862--903
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 928--969
  [] 
  []
 
 
-LaTeX Warning: Float too large for page by 30.70818pt on input line 904.
+LaTeX Warning: Float too large for page by 30.70818pt on input line 970.
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 914--916
+Underfull \hbox (badness 1231) in paragraph at lines 980--982
 []|\T1/cmr/m/n/10.95 Adult pa-tients with metastatic non-squamous NSCLC who are
 
  []
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 909--945
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 975--1011
  [] 
  []
 
-[23] [24] [25] [26] [27] [28]
+[27] [28] [29] [30] [31] [32]
 
-Package natbib Warning: Citation `jansen2014indirect' on page 29 undefined on i
-nput line 976.
-
-
-Package natbib Warning: Citation `dias2018network' on page 29 undefined on inpu
-t line 976.
+Package natbib Warning: Citation `jansen2014indirect' on page 33 undefined on i
+nput line 1042.
 
 
-Package natbib Warning: Citation `jansen2012directed' on page 29 undefined on i
-nput line 978.
+Package natbib Warning: Citation `dias2018network' on page 33 undefined on inpu
+t line 1042.
 
 
-Package natbib Warning: Citation `jansen2013multivariate' on page 29 undefined 
-on input line 978.
+Package natbib Warning: Citation `jansen2012directed' on page 33 undefined on i
+nput line 1044.
 
 
-Package natbib Warning: Citation `dias2018network' on page 29 undefined on inpu
-t line 983.
+Package natbib Warning: Citation `jansen2013multivariate' on page 33 undefined 
+on input line 1044.
 
 
-Package natbib Warning: Citation `dias2018network' on page 29 undefined on inpu
-t line 986.
+Package natbib Warning: Citation `dias2018network' on page 33 undefined on inpu
+t line 1049.
 
 
-Package natbib Warning: Citation `dias2018network' on page 29 undefined on inpu
-t line 989.
+Package natbib Warning: Citation `dias2018network' on page 33 undefined on inpu
+t line 1052.
 
-[29
+
+Package natbib Warning: Citation `dias2018network' on page 33 undefined on inpu
+t line 1055.
+
+[33
 
 ]
 
-Package natbib Warning: Citation `team2014r' on page 30 undefined on input line
- 992.
+Package natbib Warning: Citation `team2014r' on page 34 undefined on input line
+ 1058.
 
 No file model-doc.bbl.
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1000.
-[30]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1000.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1066.
+[34]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1066.
  (./model-doc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1000.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1000.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1066.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1066.
 
 Package rerunfilecheck Info: File `model-doc.out' has not changed.
-(rerunfilecheck)             Checksum: 898901F403FD5FA935875561B723F751;3282.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1000.
+(rerunfilecheck)             Checksum: D0A90D1BCBDB39834720EB78C4E4B101;4062.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1066.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 244 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 12432 strings out of 492649
- 180922 string characters out of 6129622
- 409776 words of memory out of 5000000
- 15839 multiletter control sequences out of 15000+600000
+ 12459 strings out of 492649
+ 181453 string characters out of 6129622
+ 408840 words of memory out of 5000000
+ 15852 multiletter control sequences out of 15000+600000
  31369 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,17n,79p,1611b,845s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,17n,79p,1611b,881s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/cm-super/cm
 -super-t1.enc}</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm
@@ -1208,10 +1298,10 @@ ve/2018/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive
 8/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2018/
 texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2018/te
 xmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on model-doc.pdf (30 pages, 754124 bytes).
+Output written on model-doc.pdf (34 pages, 767075 bytes).
 PDF statistics:
- 621 PDF objects out of 1000 (max. 8388607)
- 547 compressed objects within 6 object streams
- 118 named destinations out of 1000 (max. 500000)
- 420 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 680 PDF objects out of 1000 (max. 8388607)
+ 601 compressed objects within 7 object streams
+ 132 named destinations out of 1000 (max. 500000)
+ 484 words of extra memory for PDF output out of 10000 (max. 10000000)
 
