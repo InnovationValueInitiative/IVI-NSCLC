@@ -393,7 +393,8 @@ With MCDA, the value of each treatment strategy is based on a "total value" scor
 Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. 
 
 \subsection{Treatment effects for transition rates}
-Relevant evidence to estimate treatment effects in terms of transitions between the health states was obtained with a systematic literature review of randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria that defined the scope of the studies considered relevant are outlined in the Appendix. The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
+Relevant evidence to estimate treatment effects in terms of transitions between the health states was obtained with a systematic literature review of randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \hl{(Appendix X)}. 
+The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
 
 \subsubsection{Relative treatment effects with 1L therapy}
 Relative treatment effects between the competing interventions for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
@@ -407,7 +408,7 @@ The RCTs that were part of one evidence network and were deemed sufficiently sim
 \subsubsubsection{Network meta-analysis model}
 Traditionally, NMAs in oncology are based on separate analyses for OS and PFS, with relative treatment effects estimated using reported hazard ratios (HR). There are two limitations of this approach. First, HR estimates rely on the proportional hazard assumption, which is implausible if the hazard functions of the competing interventions cross \citep{dias2018network}. Second, separate analyses of OS and PFS ignore the structural relationship between stable disease, progression, and death and implicitly assume that transition probabilities for stable to death and progression to death are equal.
 
-We overcome these limitations by introducing a multi-state NMA that explicitly estimates each possible transition in a 3-state model---stable to progression, stable to death, and progression to death--and modeling time-varying hazard rates and relative treatment effects with known parametric survival functions or fractional polynomials. Our approach is illustrated in \autoref{fig:multistate-nma} and expressed mathematically in \autoref{eqn:multistate-nma}.
+We overcome these limitations by introducing a multi-state NMA that explicitly estimates each possible transition in a 3-state model---stable to progression, stable to death, and progression to death--and modeling time-varying hazard rates and relative treatment effects with known parametric survival functions or fractional polynomials. Our approach is illustrated in \autoref{fig:multistate-nma} and expressed mathematically as follows:
 
 \FloatBarrier
 
@@ -480,7 +481,7 @@ If it is assumed that treatment has only a direct effect on the transitions from
 
 
 \subsubsubsection{Likelihood}
-The model parameters were estimated based on the number of patients $r$ in each of the three health states (stable, progression and death) at time $u$ for each arm $k$ of each trial $i$ obtained from the published Kaplan-Meier (KM) curves for time points for which both PFS and OS were reported. Accordingly, a multinomial likelihood was used for the proportion of patients in each of the three health states at any time point for each arm of each trial ($S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$) according to \autoref{eqn:multinomial_likelihood}. 
+The model parameters were estimated based on the number of patients $r$ in each of the three health states (stable, progression and death) at time $u$ for each arm $k$ of each trial $i$ obtained from the published Kaplan-Meier (KM) curves for time points for which both PFS and OS were reported. Accordingly, a multinomial likelihood was used for the proportion of patients in each of the three health states at any time point for each arm of each trial ($S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$) according to: 
 
 \begin{equation} \label{eqn:multinomial_likelihood}
 \begin{aligned}
@@ -494,7 +495,7 @@ where $n_{ik}(u)=r_{ik}^{S}(u)+r_{ik}^{P}(u)+r_{ik}^{D}(u)$ and $S_{ik}(u)+P_{ik
 
 Arbitrary hazard rate functions can be approximated with a set of discontinuous constant hazard rates over successive time intervals. The total follow-up time can be partitioned into $M$ successive non-overlapping intervals indexed by $m= 1, ..., M$. We refer to interval $m$ as $U_{m}$ and write $u \in U_{m}$ to denote $u_{m}\leq u<  u_{m+1}$. The length of $U_{m}$ is $\Delta u_{m} =u_{m+1}-u_{m}$. 
 
-For each interval $m$, the proportions  $S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$ are related to the time-varying hazards $\ h_{ik}^{SP} (u) $,$\ h_{ik}^{SD} (u) $, $\ h_{ik}^{PD} (u)$ according to a set of differential equations \citep{jansen2013multivariate} expressed in  \autoref{eqn:diff_equations}. 
+For each interval $m$, the proportions  $S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$ are related to the time-varying hazards $\ h_{ik}^{SP} (u) $,$\ h_{ik}^{SD} (u) $, $\ h_{ik}^{PD} (u)$ according to the following set of differential equations \citep{jansen2013multivariate}: 
 
 \begin{equation} \label{eqn:diff_equations}
 \begin{aligned}
@@ -509,7 +510,7 @@ D_{ik}(u) &= 1-S_{ik}(u) - P_{ik}(u) \\
 In order to estimate $h_{ikm}^{SP}$, $h_{ikm}^{SD}$, and $h_{ikm}^{PD}$ for each interval $m$,  data at three time points were used: $u_{m}$, $u_{m+\frac{1}{2}}$, and $u_{m+1}$. The obtained estimates of the hazards for interval $m$ were assigned to the time point corresponding to the mid point of the interval when used in the NMA.
 \\
 
-For time points of a trial for which only OS data was reported (and no PFS), the number of patients that survived time interval $m$ ($r_{ikm}^{OS}$) out of the number of patients alive at the beginning of interval ($n_{ikm}^{OS}$) were used for the model parameter estimation. A binomial likelihood was used for the conditional survival probability ($p_{ikm}^{OS}$) according to \autoref{eqn:binomial_likelihood}.
+For time points of a trial for which only OS data was reported (and no PFS), the number of patients that survived time interval $m$ ($r_{ikm}^{OS}$) out of the number of patients alive at the beginning of interval ($n_{ikm}^{OS}$) were used for the model parameter estimation. A binomial likelihood was used for the conditional survival probability ($p_{ikm}^{OS}$):
 
 
 \begin{equation} \label{eqn:binomial_likelihood}
@@ -519,7 +520,7 @@ r_{ikm}^{OS} \sim binomial(p_{ikm}^{OS},n_{ikm}^{OS})
 \end{aligned}
 \end{equation}
 \\
-The conditional survival probabilities inform $h_{ik}^{SD}(u)$ and $h_{ik}^{PD}(u)$ according to \autoref{eqn:diff_equations_OS}.
+The conditional survival probabilities inform $h_{ik}^{SD}(u)$ and $h_{ik}^{PD}(u)$ according to:
 
 \begin{equation} \label{eqn:diff_equations_OS}
 \begin{aligned}
@@ -531,7 +532,7 @@ where the obtained estimates of the hazards for interval $m$ assigned to the tim
 \\
 
 \subsubsubsection{Prior distributions}
-The prior distributions for the parameters of the model expressed with \autoref{eqn:multistate-nma} are displayed in \autoref{eqn:multistate-nma-priors}.
+The following prior distributions for the parameters of the model expressed with \autoref{eqn:multistate-nma} were used:
 
 \begin{equation} \label{eqn:multistate-nma-priors}
 \begin{aligned}
@@ -596,7 +597,7 @@ T_d =
 \end{aligned}
 \end{equation}
 
-The prior distribution for the probabilities at the beginning of each interval, $u_{m}$, is presented in \autoref{eqn:multinomial-prior}. 
+The prior distribution for the probabilities at the beginning of each interval, $u_{m}$ was: 
 
 \begin{equation} \label{eqn:multinomial-prior}
 \begin{aligned}
@@ -607,8 +608,10 @@ The prior distribution for the probabilities at the beginning of each interval, 
 
 
 \subsubsubsection{Model selection}
-The residual deviance and the deviance information criterion (DIC) wereused to compare the goodness-of-fit of the competing NMA models \citep{dias2018network}. DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points was considered meaningful. 
+The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \hl{(Appendix X)}).\citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
 
+\subsubsubsection{Estimated time-varying hazard ratios}
+To be added
 
 \begin{figure}[h]
 \centering
@@ -617,9 +620,8 @@ The residual deviance and the deviance information criterion (DIC) wereused to c
 \end{figure}
 
 
-
 \subsubsection{Absolute effects with 1L reference treatment}
-Absolute effects at 1L, the $\mu_{\cdot i}$, were estimated with a multi-state meta-analysis of gefitinib and the relative treatment effects, the ${d_{\cdot,1t}}$, were estimated using \autoref{eqn:multistate-nma}. The simulated posterior distribution of the parameter estimates were then used to simulate a posterior distribution for PFS and OS. \autoref{fig:surv-1L} reports mean estimates of PFS and OS by month for each 1L treatment and each fitted model. 
+Absolute effects with 1L therapy, the $\mu_{\cdot i}$, were estimated with a multi-state meta-analysis of gefitinib and the relative treatment effects, the ${d_{\cdot,1t}}$, were estimated using \autoref{eqn:multistate-nma}. The simulated posterior distribution of the parameter estimates were then used to simulate a posterior distribution for PFS and OS. \autoref{fig:surv-1L} reports mean estimates of PFS and OS by month for each 1L treatment and each fitted model. 
 
 \begin{figure}[h]
 \centering
@@ -641,7 +643,7 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 \FloatBarrier
 
 
-\subsubsection{Absolute effects in 2L}
+\subsubsection{Absolute effects with 2L therapy}
 Recall that second line treatment depend on whether a patient has a T790M mutation. Separate 2L multi-state meta-analyses were consequently conducted to parameterize transitions among T790M positive and T790M negative patients. For T790M positive patients, we performed a meta-analysis of osimertinib. Among possible treatments for T790M negative patients, there was only trial data available for PBDC, so we performed a meta-analysis of PBDC (estimates for other 2L treatment options including PBDC + anti-VEGF therapy and 1st/2nd genration TKIs are assumed to be equivalent to PBDC in the economic model). Since T790M mutation status was not a prognostic factor or an effect modifier, the PBDC meta-analysis was conducted using an all-comer population. Mean estimates of PFS and OS by month for the 2L treatments are displayed in \autoref{subfig:surv-2L-pbdc}.
 
 

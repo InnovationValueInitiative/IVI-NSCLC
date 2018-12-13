@@ -23,8 +23,9 @@
 \contentsline {subsubsubsection}{\numberline {8.1.1.2}Likelihood}{16}{subsubsubsection.8.1.1.2}
 \contentsline {subsubsubsection}{\numberline {8.1.1.3}Prior distributions}{18}{subsubsubsection.8.1.1.3}
 \contentsline {subsubsubsection}{\numberline {8.1.1.4}Model selection}{18}{subsubsubsection.8.1.1.4}
+\contentsline {subsubsubsection}{\numberline {8.1.1.5}Estimated time-varying hazard ratios}{18}{subsubsubsection.8.1.1.5}
 \contentsline {subsubsection}{\numberline {8.1.2}Absolute effects with 1L reference treatment}{18}{subsubsection.8.1.2}
-\contentsline {subsubsection}{\numberline {8.1.3}Absolute effects in 2L}{21}{subsubsection.8.1.3}
+\contentsline {subsubsection}{\numberline {8.1.3}Absolute effects with 2L therapy}{21}{subsubsection.8.1.3}
 \contentsline {subsubsection}{\numberline {8.1.4}Use of meta-analysis results in economic model}{21}{subsubsection.8.1.4}
 \contentsline {subsection}{\numberline {8.2}Adverse events}{23}{subsection.8.2}
 \contentsline {subsection}{\numberline {8.3}Utilities}{23}{subsection.8.3}
