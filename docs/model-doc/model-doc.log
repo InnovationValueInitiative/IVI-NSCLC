@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  12 DEC 2018 23:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  13 DEC 2018 12:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1036,36 +1036,61 @@ Package natbib Warning: Citation `dias2018network' on page 18 undefined on inpu
 t line 611.
 
 [18]
-<figs/surv-1L.pdf, id=459, 578.16pt x 578.16pt>
+Underfull \hbox (badness 10000) in paragraph at lines 644--646
+
+ []
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.647 ...ion. When ${(p_1, p_2) = (0, 0), (0,1)\}$
+                                                   and $M_{3}\neq0$, the log...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.651 ...each TKI relative to gefitinib ($d_{1, t$
+                                                  ), were used to simulate a...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+<figs/surv-1L.pdf, id=465, 578.16pt x 578.16pt>
 File: figs/surv-1L.pdf Graphic file (type pdf)
 <use figs/surv-1L.pdf>
-Package pdftex.def Info: figs/surv-1L.pdf  used on input line 635.
+Package pdftex.def Info: figs/surv-1L.pdf  used on input line 663.
 (pdftex.def)             Requested size: 578.15858pt x 578.15858pt.
-
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [19] [20 <./figs/surv-1L.pdf>]
-<figs/surv-2L-pbdc.pdf, id=475, 505.89pt x 361.35pt>
+<figs/surv-2L-pbdc.pdf, id=481, 505.89pt x 361.35pt>
 File: figs/surv-2L-pbdc.pdf Graphic file (type pdf)
 <use figs/surv-2L-pbdc.pdf>
-Package pdftex.def Info: figs/surv-2L-pbdc.pdf  used on input line 655.
+Package pdftex.def Info: figs/surv-2L-pbdc.pdf  used on input line 683.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
-<figs/surv-2L-t790m-osi.pdf, id=476, 505.89pt x 361.35pt>
+<figs/surv-2L-t790m-osi.pdf, id=482, 505.89pt x 361.35pt>
 File: figs/surv-2L-t790m-osi.pdf Graphic file (type pdf)
 <use figs/surv-2L-t790m-osi.pdf>
-Package pdftex.def Info: figs/surv-2L-t790m-osi.pdf  used on input line 660.
+Package pdftex.def Info: figs/surv-2L-t790m-osi.pdf  used on input line 688.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
 
 
-LaTeX Warning: Float too large for page by 26.59186pt on input line 668.
+LaTeX Warning: Float too large for page by 26.59186pt on input line 696.
 
 [21
 
 ] [22 <./figs/surv-2L-pbdc.pdf> <./figs/surv-2L-t790m-osi.pdf>]
 
 Package natbib Warning: Citation `dias2018network' on page 23 undefined on inpu
-t line 679.
+t line 707.
 
 (./tables/state-utility.txt) (./tables/state-utility.txt
 
@@ -1169,96 +1194,96 @@ nput line 12.
 ) (./tables/wages.txt) (./tables/wages.txt) [24] [25] [26]
 
 Package natbib Warning: Citation `baio2015probabilistic' on page 27 undefined o
-n input line 858.
+n input line 886.
 
 
 Package natbib Warning: Citation `claxton2005probabilistic' on page 27 undefine
-d on input line 858.
+d on input line 886.
 
 
 Package natbib Warning: Citation `black1990plane' on page 27 undefined on input
- line 858.
+ line 886.
 
 
 Package natbib Warning: Citation `van1994costs' on page 27 undefined on input l
-ine 858.
+ine 886.
 
 
 Package natbib Warning: Citation `briggs1999bayesian' on page 27 undefined on i
-nput line 858.
+nput line 886.
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 863--901
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 891--929
  [] 
  []
 
 
 LaTeX Warning: Reference `subsec:data-transprobs' on page 27 undefined on input
- line 905.
+ line 933.
 
 [27
 
 ]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 938.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 966.
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 929--964
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 957--992
  [] 
  []
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 976--978
+Underfull \hbox (badness 1231) in paragraph at lines 1004--1006
 []|\T1/cmr/m/n/10.95 Adult pa-tients with metastatic non-squamous NSCLC who are
 
  []
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 971--1012
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 999--1040
  [] 
  []
 
 
-LaTeX Warning: Float too large for page by 30.70818pt on input line 1013.
+LaTeX Warning: Float too large for page by 30.70818pt on input line 1041.
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 1023--1025
+Underfull \hbox (badness 1231) in paragraph at lines 1051--1053
 []|\T1/cmr/m/n/10.95 Adult pa-tients with metastatic non-squamous NSCLC who are
 
  []
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 1018--1054
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 1046--1082
  [] 
  []
 
 [28] [29] [30] [31] [32] [33]
 
 Package natbib Warning: Citation `jansen2014indirect' on page 34 undefined on i
-nput line 1085.
+nput line 1113.
 
 
 Package natbib Warning: Citation `dias2018network' on page 34 undefined on inpu
-t line 1085.
+t line 1113.
 
 
 Package natbib Warning: Citation `jansen2012directed' on page 34 undefined on i
-nput line 1087.
+nput line 1115.
 
 
 Package natbib Warning: Citation `jansen2013multivariate' on page 34 undefined 
-on input line 1087.
+on input line 1115.
 
 
 Package natbib Warning: Citation `dias2018network' on page 34 undefined on inpu
-t line 1092.
+t line 1120.
 
 
 Package natbib Warning: Citation `dias2018network' on page 34 undefined on inpu
-t line 1095.
+t line 1123.
 
 
 Package natbib Warning: Citation `team2014r' on page 34 undefined on input line
- 1101.
+ 1129.
 
 [34
 
@@ -1267,12 +1292,12 @@ No file model-doc.bbl.
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1109.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1137.
 [35]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1109.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1137.
  (./model-doc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1109.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1109.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1137.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1137.
 
 Package rerunfilecheck Info: File `model-doc.out' has not changed.
 (rerunfilecheck)             Checksum: 468FB689329256394E832FD897572E5C;4108.
@@ -1280,17 +1305,20 @@ Package rerunfilecheck Info: File `model-doc.out' has not changed.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1109.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1137.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 244 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 12467 strings out of 492649
- 181609 string characters out of 6129622
- 408951 words of memory out of 5000000
- 15856 multiletter control sequences out of 15000+600000
+ 12469 strings out of 492649
+ 181640 string characters out of 6129622
+ 409037 words of memory out of 5000000
+ 15857 multiletter control sequences out of 15000+600000
  31369 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,17n,79p,1611b,885s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1317,10 +1345,10 @@ ve/2018/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive
 8/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2018/
 texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2018/te
 xmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on model-doc.pdf (35 pages, 1120272 bytes).
+Output written on model-doc.pdf (35 pages, 1122543 bytes).
 PDF statistics:
- 687 PDF objects out of 1000 (max. 8388607)
- 607 compressed objects within 7 object streams
- 136 named destinations out of 1000 (max. 500000)
+ 693 PDF objects out of 1000 (max. 8388607)
+ 613 compressed objects within 7 object streams
+ 137 named destinations out of 1000 (max. 500000)
  484 words of extra memory for PDF output out of 10000 (max. 10000000)
 

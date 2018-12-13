@@ -393,11 +393,11 @@ With MCDA, the value of each treatment strategy is based on a "total value" scor
 Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. 
 
 \subsection{Treatment effects for transition rates}
-Relevant evidence to estimate treatment effects in terms of transitions between the health states was obtained with a systematic literature review of randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \hl{(Appendix X)}. 
+Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \hl{(Appendix X)}. 
 The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
 
 \subsubsection{Relative treatment effects with 1L therapy}
-Relative treatment effects between the competing interventions for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
+Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
 
 RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest – it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \hl{(add reference)}. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
 
@@ -471,9 +471,9 @@ d_{3, t_{ik}} - d_{3, t_{i1}} \\
 where $u^0= \ln(u)$ and ${d_{1,1}}=0$, ${d_{2,1}}=0$, and ${d_{3,1}}=0$
 \\
 
-$h_{ik}^{SD}(u)$, $h_{ik}^{PD}(u)$, and $h_{ik}^{SD}(u)$ are the the hazard rate for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ for treatment arm $k$ at time $u$. The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1, ${d_{1,1t}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $.  ${d_{2,1t}}$ are the treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression relative to reference treatment 1. To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. ${d_{3,1t}}$ are the treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death relative to reference treatment 1. 
+$h_{ik}^{SD}(u)$, $h_{ik}^{PD}(u)$, and $h_{ik}^{SD}(u)$ are the the hazard rate for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ for treatment arm $k$ at time $u$. The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1, ${d_{1,1t}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $.  ${d_{2,1t}}$ are the treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression relative to the reference treatment 1 (i.e. gefitinib). To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. ${d_{3,1t}}$ are the treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death relative to reference treatment 1 (i.e. gefitinib). 
 
-When $p_{1}=0$ and $\alpha_{3ik}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When ${(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to for allow arc- and bathtub shaped log-hazard functions. 
+When $p_{1}=0$ and $\alpha_{3ik}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When ${(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to allow for arc- and bathtub shaped log-hazard functions. 
 
 A fixed effects model is obtained by replacing $\delta_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $\delta_{1,ik} &= d_{1, t_{ik}} - d_{1, t_{i1}}$. 
 
@@ -510,7 +510,7 @@ D_{ik}(u) &= 1-S_{ik}(u) - P_{ik}(u) \\
 In order to estimate $h_{ikm}^{SP}$, $h_{ikm}^{SD}$, and $h_{ikm}^{PD}$ for each interval $m$,  data at three time points were used: $u_{m}$, $u_{m+\frac{1}{2}}$, and $u_{m+1}$. The obtained estimates of the hazards for interval $m$ were assigned to the time point corresponding to the mid point of the interval when used in the NMA.
 \\
 
-For time points of a trial for which only OS data was reported (and no PFS), the number of patients that survived time interval $m$ ($r_{ikm}^{OS}$) out of the number of patients alive at the beginning of interval ($n_{ikm}^{OS}$) were used for the model parameter estimation. A binomial likelihood was used for the conditional survival probability ($p_{ikm}^{OS}$):
+For time points of a trial for which only OS data was reported (and no PFS), the number of patients that survived time interval $m$ ($r_{ikm}^{OS}$) out of the number of patients alive at the beginning of interval ($n_{ikm}^{OS}$) were used for the model parameter estimation. A binomial likelihood was used for the conditional survival probabilities ($p_{ikm}^{OS}$):
 
 
 \begin{equation} \label{eqn:binomial_likelihood}
@@ -621,19 +621,47 @@ To be added
 
 
 \subsubsection{Absolute effects with 1L reference treatment}
-Absolute effects with 1L therapy, the $\mu_{\cdot i}$, were estimated with a multi-state meta-analysis of gefitinib and the relative treatment effects, the ${d_{\cdot,1t}}$, were estimated using \autoref{eqn:multistate-nma}. The simulated posterior distribution of the parameter estimates were then used to simulate a posterior distribution for PFS and OS. \autoref{fig:surv-1L} reports mean estimates of PFS and OS by month for each 1L treatment and each fitted model. 
+Absolute effects with 1L therapy with the reference intervention, i.e. gefitinib, were estimated with the multi-state meta-analysis model expressed in \autoref{eqn:multistate-ma} with likelihoods and transformations according to \autoref{eqn:multinomial_likelihood}, \autoref{eqn:diff_equations}, \autoref{eqn:binomial_likelihood}, and \autoref{eqn:diff_equations_OS} based on the reported KM curves of all the gefitinib treatment arms of the available RCTs.
+
+\begin{equation}\label{eqn:multistate-ma}
+\begin{aligned} 
+% SP transition
+\ln\left(h_{i}^{SP}(u)\right) &= 
+\begin{cases}
+M_{1} + M_{2}u^{p_1} + M_{3}u^{p_2} & \text{if } p_1 \neq p_2 \\ 
+M_{1} + M_{2}u^{p} + M_{3}u^{p}\ln(u) & \text{if } p_1 = p_2 = p \\ 
+\end{cases}\\ 
+% SD transition 
+\ln\left(h_{i}^{SD}(u)\right) &=
+M_{4}\\
+% PD transition
+\ln\left(h_{i}^{PD}(u)\right) &=
+M_{5} + M_{6}u^{p_1}\\ 
+\\
+\end{aligned}
+\end{equation}
+
+where $u^0= \ln(u)$
+\\
+
+$h_{i}^{SD}(u)$, $h_{i}^{PD}(u)$, and $h_{i}^{SD}(u)$ are the underlying hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ at time $u$. The $M_{\cdot}$ represent the pooled scale and shape parameters describing the log hazard functions over time. As before, when $p_{1}=0$ and $M_{3}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $M_{3}=0$ these log-hazard functions follow a Gompertz distribution. When ${(p_1, p_2) = (0, 0), (0,1)\}$ and $M_{3}\neq0$, the log-hazard functions follow a second order fractional polynomial to allow for arc- and bathtub shaped log-hazard functions. 
+
+\autoref{fig:hazards-gef-1L} shows the hazard functions for the transitions between stable, progression, and death with gefitinib for each fitted model.
+
+The posterior distributions of $M_{\cdot}$ along with the parameters representing the relative treatment effects of each TKI relative to gefitinib ($d_{1, t$), were used to simulate a posterior distribution for PFS and OS as displayed in \autoref{fig:surv-1L} for each 1L treatment and each fitted model. 
+
 
 \begin{figure}[h]
 \centering
 %\includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
-\caption{First line estimates of progression-free survival and overall survival with gefitinib from multi-state meta-analyses}\label{fig:abs-effects-1L}
+\caption{First line estimates of hazard rates over time for transitions between S, P and D with gefitinib from the multi-state meta-analysis}\label{fig:hazards-gef-1L}
 \end{figure}
 
 
 \begin{figure}[h]
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/surv-1L.pdf} 
-\caption{First line estimates of progression-free survival and overall survival for the competing interventions obtained with the multi-state network meta-analysis}\label{fig:surv-1L}
+\caption{First line estimates of progression-free survival and overall survival for the competing interventions obtained with the multi-state (network) meta-analysis}\label{fig:surv-1L}
 \begin{minipage}{\linewidth}
 \footnotesize
 Notes: The simulated posterior distribution of the parameters of the Bayesian multi-state NMA was used to simulate a distribution of progression-free survival and overall survival curves. The curves in the figure are posterior means. Curves with credible intervals are shown in the appendix.
