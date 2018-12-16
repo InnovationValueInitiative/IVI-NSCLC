@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  13 DEC 2018 12:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  15 DEC 2018 19:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -806,16 +806,16 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
  (./model-doc.toc
 [1
 
-{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2])
+{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
 \tf@toc=\write4
 \openout4 = `model-doc.toc'.
 
- (./model-doc.lof)
+
+[2] (./model-doc.lof)
 \tf@lof=\write5
 \openout5 = `model-doc.lof'.
 
- (./model-doc.lot [3])
+ [3] (./model-doc.lot)
 \tf@lot=\write6
 \openout6 = `model-doc.lot'.
 
@@ -867,7 +867,7 @@ ut line 250.
 Package natbib Warning: Citation `lynch2004activating' on page 6 undefined on i
 nput line 250.
 
-<figs/treatment-strategies.png, id=371, 720.6925pt x 522.95375pt>
+<figs/treatment-strategies.png, id=390, 720.6925pt x 522.95375pt>
 File: figs/treatment-strategies.png Graphic file (type png)
 <use figs/treatment-strategies.png>
 Package pdftex.def Info: figs/treatment-strategies.png  used on input line 261.
@@ -890,13 +890,13 @@ Package natbib Warning: Citation `garrison2017toward' on page 7 undefined on in
 put line 271.
 
 [7 <./figs/treatment-strategies.png>] [8]
-<figs/model-structure-4-states.png, id=389, 624.8946pt x 410.4936pt>
+<figs/model-structure-4-states.png, id=408, 624.8946pt x 410.4936pt>
 File: figs/model-structure-4-states.png Graphic file (type png)
 <use figs/model-structure-4-states.png>
 Package pdftex.def Info: figs/model-structure-4-states.png  used on input line 
 318.
 (pdftex.def)             Requested size: 624.89307pt x 410.4926pt.
-<figs/model-structure-3-states.png, id=390, 619.113pt x 311.7246pt>
+<figs/model-structure-3-states.png, id=409, 619.113pt x 311.7246pt>
 File: figs/model-structure-3-states.png Graphic file (type png)
 <use figs/model-structure-3-states.png>
 Package pdftex.def Info: figs/model-structure-3-states.png  used on input line 
@@ -960,25 +960,32 @@ You need to provide a definition with \DeclareInputText
 or \DeclareInputMath before using this key.
 
 [14]
+<figs/RCT-network-1L.png, id=445, 421.0932pt x 390.258pt>
+File: figs/RCT-network-1L.png Graphic file (type png)
+<use figs/RCT-network-1L.png>
+Package pdftex.def Info: figs/RCT-network-1L.png  used on input line 410.
+(pdftex.def)             Requested size: 421.09216pt x 390.25703pt.
+
 
 Package natbib Warning: Citation `dias2018network' on page 15 undefined on inpu
-t line 409.
+t line 417.
 
-<figs/multistate-nma.png, id=426, 617.1858pt x 225.4824pt>
+[15 <./figs/RCT-network-1L.png>]
+<figs/multistate-nma.png, id=452, 617.1858pt x 225.4824pt>
 File: figs/multistate-nma.png Graphic file (type png)
 <use figs/multistate-nma.png>
-Package pdftex.def Info: figs/multistate-nma.png  used on input line 418.
+Package pdftex.def Info: figs/multistate-nma.png  used on input line 426.
 (pdftex.def)             Requested size: 617.1843pt x 225.48184pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--473
+Underfull \hbox (badness 10000) in paragraph at lines 479--481
 
  []
 
-[15]
+[16]
 ! Missing } inserted.
 <inserted text> 
                 }
-l.476 ...ion. When ${(p_1, p_2) = (0, 0), (0,1)\}$
+l.484 ...ion. When ${(p_1, p_2) = (0, 0), (0,1)\}$
                                                    and $\alpha_{3ik}\neq0$, ...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -987,7 +994,7 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 ! Misplaced alignment tab character &.
-l.478 ...is obtained by replacing $\delta_{1,ik} &
+l.486 ...is obtained by replacing $\delta_{1,ik} &
                                                   \sim N(d_{1, t_{ik}} - d_{...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -997,7 +1004,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Misplaced alignment tab character &.
-l.478 ...t_{i1}}, \sigma^2)$ with $\delta_{1,ik} &
+l.486 ...t_{i1}}, \sigma^2)$ with $\delta_{1,ik} &
                                                   = d_{1, t_{ik}} - d_{1, t_...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -1006,44 +1013,45 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-[16 <./figs/multistate-nma.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 493--495
+
+Underfull \hbox (badness 10000) in paragraph at lines 501--503
+
+ []
+
+[17 <./figs/multistate-nma.png>]
+
+Package natbib Warning: Citation `jansen2013multivariate' on page 18 undefined 
+on input line 506.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 515--517
 
  []
 
 
-Package natbib Warning: Citation `jansen2013multivariate' on page 17 undefined 
-on input line 498.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 507--509
+Underfull \hbox (badness 10000) in paragraph at lines 518--520
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 510--512
+Underfull \hbox (badness 10000) in paragraph at lines 538--541
 
  []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 530--533
-
- []
-
-[17]
-
-Package natbib Warning: Citation `dias2018network' on page 18 undefined on inpu
-t line 611.
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 644--646
+
+Package natbib Warning: Citation `dias2018network' on page 19 undefined on inpu
+t line 619.
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 653--655
 
  []
 
 ! Missing } inserted.
 <inserted text> 
                 }
-l.647 ...ion. When ${(p_1, p_2) = (0, 0), (0,1)\}$
+l.656 ...ion. When ${(p_1, p_2) = (0, 0), (0,1)\}$
                                                    and $M_{3}\neq0$, the log...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1054,7 +1062,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.651 ...each TKI relative to gefitinib ($d_{1, t$
+l.660 ...each TKI relative to gefitinib ($d_{1, t$
                                                   ), were used to simulate a...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1062,266 +1070,488 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-<figs/surv-1L.pdf, id=465, 578.16pt x 578.16pt>
+<figs/surv-1L.pdf, id=492, 578.16pt x 578.16pt>
 File: figs/surv-1L.pdf Graphic file (type pdf)
 <use figs/surv-1L.pdf>
-Package pdftex.def Info: figs/surv-1L.pdf  used on input line 663.
+Package pdftex.def Info: figs/surv-1L.pdf  used on input line 672.
 (pdftex.def)             Requested size: 578.15858pt x 578.15858pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[19] [20 <./figs/surv-1L.pdf>]
-<figs/surv-2L-pbdc.pdf, id=481, 505.89pt x 361.35pt>
+[20] [21 <./figs/surv-1L.pdf>]
+<figs/surv-2L-pbdc.pdf, id=511, 505.89pt x 361.35pt>
 File: figs/surv-2L-pbdc.pdf Graphic file (type pdf)
 <use figs/surv-2L-pbdc.pdf>
-Package pdftex.def Info: figs/surv-2L-pbdc.pdf  used on input line 683.
+Package pdftex.def Info: figs/surv-2L-pbdc.pdf  used on input line 702.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
-<figs/surv-2L-t790m-osi.pdf, id=482, 505.89pt x 361.35pt>
+<figs/surv-2L-t790m-osi.pdf, id=512, 505.89pt x 361.35pt>
 File: figs/surv-2L-t790m-osi.pdf Graphic file (type pdf)
 <use figs/surv-2L-t790m-osi.pdf>
-Package pdftex.def Info: figs/surv-2L-t790m-osi.pdf  used on input line 688.
+Package pdftex.def Info: figs/surv-2L-t790m-osi.pdf  used on input line 707.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
 
 
-LaTeX Warning: Float too large for page by 26.59186pt on input line 696.
+LaTeX Warning: Float too large for page by 26.59186pt on input line 715.
 
-[21
 
-] [22 <./figs/surv-2L-pbdc.pdf> <./figs/surv-2L-t790m-osi.pdf>]
+Package natbib Warning: Citation `team2014r' on page 22 undefined on input line
+ 718.
 
-Package natbib Warning: Citation `dias2018network' on page 23 undefined on inpu
-t line 707.
+
+Package natbib Warning: Citation `dias2018network' on page 22 undefined on inpu
+t line 727.
 
 (./tables/state-utility.txt) (./tables/state-utility.txt
 
-Package natbib Warning: Citation `nafees2017health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2017health' on page 22 undefined on inp
 ut line 4.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 5.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 6.
 
 ) (./tables/ae-disutility.txt) (./tables/ae-disutility.txt
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 4.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 5.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 6.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 7.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 8.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 9.
 
 
-Package natbib Warning: Citation `doyle2008health' on page 23 undefined on inpu
+Package natbib Warning: Citation `doyle2008health' on page 22 undefined on inpu
 t line 10.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 11.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 12.
 
 
-Package natbib Warning: Citation `nafees2008health' on page 23 undefined on inp
+Package natbib Warning: Citation `nafees2008health' on page 22 undefined on inp
 ut line 13.
 
-) (./tables/dosage.txt) (./tables/dosage.txt) [23] (./tables/acq_costs.txt)
+) [22
+
+] [23 <./figs/surv-2L-pbdc.pdf> <./figs/surv-2L-t790m-osi.pdf>]
+(./tables/dosage.txt) (./tables/dosage.txt) [24] (./tables/acq_costs.txt)
 (./tables/acq_costs.txt) (./tables/admin_costs.txt) (./tables/admin_costs.txt)
 (./tables/inpt_costs.txt) (./tables/inpt_costs.txt
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 24 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 25 undefined o
 n input line 5.
 
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 24 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 25 undefined o
 n input line 6.
 
 ) (./tables/op_costs.txt) (./tables/op_costs.txt
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 24 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 25 undefined o
 n input line 5.
 
 
-Package natbib Warning: Citation `skinner2018healthcare' on page 24 undefined o
+Package natbib Warning: Citation `skinner2018healthcare' on page 25 undefined o
 n input line 6.
 
 ) (./tables/ae_costs.txt) (./tables/ae_costs.txt
 
-Package natbib Warning: Citation `wong2018assessment' on page 24 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 25 undefined on i
 nput line 5.
 
 
-Package natbib Warning: Citation `latremouille2017economic' on page 24 undefine
+Package natbib Warning: Citation `latremouille2017economic' on page 25 undefine
 d on input line 6.
 
 
-Package natbib Warning: Citation `latremouille2017economic' on page 24 undefine
+Package natbib Warning: Citation `latremouille2017economic' on page 25 undefine
 d on input line 7.
 
 
-Package natbib Warning: Citation `wong2018assessment' on page 24 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 25 undefined on i
 nput line 8.
 
 
-Package natbib Warning: Citation `wong2018assessment' on page 24 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 25 undefined on i
 nput line 11.
 
 
-Package natbib Warning: Citation `wong2018assessment' on page 24 undefined on i
+Package natbib Warning: Citation `wong2018assessment' on page 25 undefined on i
 nput line 12.
 
-) (./tables/wages.txt) (./tables/wages.txt) [24] [25] [26]
+) (./tables/wages.txt) (./tables/wages.txt) [25]
+
+LaTeX Warning: Text page 26 contains only floats.
+
+[26]
 
 Package natbib Warning: Citation `baio2015probabilistic' on page 27 undefined o
-n input line 886.
+n input line 906.
 
 
 Package natbib Warning: Citation `claxton2005probabilistic' on page 27 undefine
-d on input line 886.
+d on input line 906.
 
 
 Package natbib Warning: Citation `black1990plane' on page 27 undefined on input
- line 886.
+ line 906.
 
 
 Package natbib Warning: Citation `van1994costs' on page 27 undefined on input l
-ine 886.
+ine 906.
 
 
 Package natbib Warning: Citation `briggs1999bayesian' on page 27 undefined on i
-nput line 886.
+nput line 906.
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 891--929
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 911--949
  [] 
  []
 
 
 LaTeX Warning: Reference `subsec:data-transprobs' on page 27 undefined on input
- line 933.
+ line 953.
 
-[27
-
-]
+[27]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 966.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 986.
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 957--992
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 977--1012
  [] 
  []
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 1004--1006
+Underfull \hbox (badness 1231) in paragraph at lines 1024--1026
 []|\T1/cmr/m/n/10.95 Adult pa-tients with metastatic non-squamous NSCLC who are
 
  []
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 999--1040
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 1019--1060
  [] 
  []
 
 
-LaTeX Warning: Float too large for page by 30.70818pt on input line 1041.
+LaTeX Warning: Float too large for page by 30.70818pt on input line 1061.
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 1051--1053
+Underfull \hbox (badness 1231) in paragraph at lines 1071--1073
 []|\T1/cmr/m/n/10.95 Adult pa-tients with metastatic non-squamous NSCLC who are
 
  []
 
 
-Overfull \hbox (23.99998pt too wide) in paragraph at lines 1046--1082
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 1066--1102
  [] 
  []
 
-[28] [29] [30] [31] [32] [33]
+[28] [29] [30]
+<figs/KM plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png, id=594, 11
+56.32pt x 650.43pt>
+File: figs/KM plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png Graphi
+c file (type png)
+<use figs/KM plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kapl
+an Meier.png  used on input line 1137.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png, id=595, 1156.32pt x 65
+0.43pt>
+File: figs/KM plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png Graphic file (type
+ png)
+<use figs/KM plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png
+  used on input line 1140.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png, id=596, 1156.32
+pt x 650.43pt>
+File: figs/KM plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png Graphic fil
+e (type png)
+<use figs/KM plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Me
+ier.png  used on input line 1151.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png, id=597, 1156.32pt x 
+650.43pt>
+File: figs/KM plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png Graphic file (ty
+pe png)
+<use figs/KM plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.p
+ng  used on input line 1154.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png, id=598, 115
+6.32pt x 650.43pt>
+File: figs/KM plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png Graphic
+ file (type png)
+<use figs/KM plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kapla
+n Meier.png  used on input line 1165.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png, id=599, 1156.32pt
+ x 650.43pt>
+File: figs/KM plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png Graphic file 
+(type png)
+<use figs/KM plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meie
+r.png  used on input line 1168.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png, id=600, 11
+56.32pt x 650.43pt>
+File: figs/KM plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png Graphi
+c file (type png)
+<use figs/KM plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kapl
+an Meier.png  used on input line 1179.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png, id=601, 1156.3
+2pt x 650.43pt>
+File: figs/KM plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png Graphic fi
+le (type png)
+<use figs/KM plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan M
+eier.png  used on input line 1182.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan Meier.png, id=602, 1156
+.32pt x 650.43pt>
+File: figs/KM plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan Meier.png Graphic 
+file (type png)
+<use figs/KM plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan
+ Meier.png  used on input line 1193.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meier.png, id=603, 1156.32pt
+ x 650.43pt>
+File: figs/KM plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meier.png Graphic file 
+(type png)
+<use figs/KM plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meie
+r.png  used on input line 1196.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png, id=604, 1156.32p
+t x 650.43pt>
+File: figs/KM plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png Graphic file
+ (type png)
+<use figs/KM plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Mei
+er.png  used on input line 1207.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png, id=605, 1156.32pt
+ x 650.43pt>
+File: figs/KM plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png Graphic file 
+(type png)
+<use figs/KM plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meie
+r.png  used on input line 1210.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png, id=606, 1156.32
+pt x 650.43pt>
+File: figs/KM plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png Graphic fil
+e (type png)
+<use figs/KM plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Me
+ier.png  used on input line 1221.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png, id=607, 1156.32p
+t x 650.43pt>
+File: figs/KM plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png Graphic file
+ (type png)
+<use figs/KM plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Mei
+er.png  used on input line 1224.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) Kaplan Meier.png, id=608,
+ 1156.32pt x 650.43pt>
+File: figs/KM plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) Kaplan Meier.png Gra
+phic file (type png)
+<use figs/KM plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) K
+aplan Meier.png  used on input line 1235.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Meier.png, id=609, 1156.32
+pt x 650.43pt>
+File: figs/KM plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Meier.png Graphic fil
+e (type png)
+<use figs/KM plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Me
+ier.png  used on input line 1238.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan Meier.png, id=610, 1156
+.32pt x 650.43pt>
+File: figs/KM plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan Meier.png Graphic 
+file (type png)
+<use figs/KM plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan
+ Meier.png  used on input line 1249.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Meier.png, id=611, 1156.32
+pt x 650.43pt>
+File: figs/KM plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Meier.png Graphic fil
+e (type png)
+<use figs/KM plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Me
+ier.png  used on input line 1252.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png, id=612
+, 1156.32pt x 650.43pt>
+File: figs/KM plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png Gr
+aphic file (type png)
+<use figs/KM plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) 
+Kaplan Meier.png  used on input line 1263.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png, id=613, 115
+6.32pt x 650.43pt>
+File: figs/KM plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png Graphic
+ file (type png)
+<use figs/KM plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kapla
+n Meier.png  used on input line 1266.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png, id=614, 1
+156.32pt x 650.43pt>
+File: figs/KM plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png Graph
+ic file (type png)
+<use figs/KM plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kap
+lan Meier.png  used on input line 1277.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png, id=615, 1156.32pt
+ x 650.43pt>
+File: figs/KM plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png Graphic file 
+(type png)
+<use figs/KM plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meie
+r.png  used on input line 1280.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/OPTIMAL Zhou 2011 PFS (EGFR+_IA) Kaplan Meier.png, id=616, 1156.
+32pt x 650.43pt>
+File: figs/KM plots/OPTIMAL Zhou 2011 PFS (EGFR+_IA) Kaplan Meier.png Graphic f
+ile (type png)
+<use figs/KM plots/OPTIMAL Zhou 2011 PFS (EGFR+_IA) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/OPTIMAL Zhou 2011 PFS (EGFR+_IA) Kaplan 
+Meier.png  used on input line 1291.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/OPTIMAL Zhou 2015 OS (EGFR+) Kaplan Meier.png, id=617, 1156.32pt
+ x 650.43pt>
+File: figs/KM plots/OPTIMAL Zhou 2015 OS (EGFR+) Kaplan Meier.png Graphic file 
+(type png)
+<use figs/KM plots/OPTIMAL Zhou 2015 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/OPTIMAL Zhou 2015 OS (EGFR+) Kaplan Meie
+r.png  used on input line 1294.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png, id=618, 1
+156.32pt x 650.43pt>
+File: figs/KM plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png Graph
+ic file (type png)
+<use figs/KM plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kap
+lan Meier.png  used on input line 1305.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kaplan Meier.png, id=619, 11
+56.32pt x 650.43pt>
+File: figs/KM plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kaplan Meier.png Graphi
+c file (type png)
+<use figs/KM plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kapl
+an Meier.png  used on input line 1308.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan Meier.png, id=620, 1156.3
+2pt x 650.43pt>
+File: figs/KM plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan Meier.png Graphic fi
+le (type png)
+<use figs/KM plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan M
+eier.png  used on input line 1319.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
+<figs/KM plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Meier.png, id=621, 1156.32
+pt x 650.43pt>
+File: figs/KM plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Meier.png Graphic fil
+e (type png)
+<use figs/KM plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Meier.png>
+Package pdftex.def Info: figs/KM plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Me
+ier.png  used on input line 1322.
+(pdftex.def)             Requested size: 1156.31718pt x 650.4284pt.
 
-Package natbib Warning: Citation `jansen2014indirect' on page 34 undefined on i
-nput line 1113.
-
-
-Package natbib Warning: Citation `dias2018network' on page 34 undefined on inpu
-t line 1113.
-
-
-Package natbib Warning: Citation `jansen2012directed' on page 34 undefined on i
-nput line 1115.
-
-
-Package natbib Warning: Citation `jansen2013multivariate' on page 34 undefined 
-on input line 1115.
-
-
-Package natbib Warning: Citation `dias2018network' on page 34 undefined on inpu
-t line 1120.
-
-
-Package natbib Warning: Citation `dias2018network' on page 34 undefined on inpu
-t line 1123.
-
-
-Package natbib Warning: Citation `team2014r' on page 34 undefined on input line
- 1129.
-
-[34
-
-]
 No file model-doc.bbl.
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1137.
-[35]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1137.
- (./model-doc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1137.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1137.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1336.
+[31] [32 <./figs/KM plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png>
+ <./figs/KM plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png>] [33 <./figs/KM plo
+ts/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png> <./figs/KM plots/ENSURE Wu 
+2015 OS (EGFR+) Kaplan Meier.png>] [34 <./figs/KM plots/EURTAC De_Marinis 2015 
+PFS (EGFR+) Kaplan Meier.png> <./figs/KM plots/EURTAC Costa 2014 OS (EGFR+) Kap
+lan Meier.png>] [35 <./figs/KM plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan
+ Meier.png> <./figs/KM plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png>]
+[36 <./figs/KM plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan Meier.png> <./fig
+s/KM plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meier.png>] [37 <./figs/KM plots
+/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png> <./figs/KM plots/Han_2017 Han 
+2017 OS (EGFR+) Kaplan Meier.png>] [38 <./figs/KM plots/IPASS Mok 2009 PFS (EGF
+R+_IRC) Kaplan Meier.png> <./figs/KM plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan
+ Meier.png>] [39 <./figs/KM plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) Kaplan
+ Meier.png> <./figs/KM plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Meier.png>]
+[40 <./figs/KM plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan Meier.png> <./fig
+s/KM plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Meier.png>] [41 <./figs/KM plo
+ts/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png> <./figs/KM plots/L
+UXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png>] [42 <./figs/KM plots/NEJ00
+2 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png> <./figs/KM plots/NEJ002 Inoue
+ 2013 OS (EGFR+) Kaplan Meier.png>] [43 <./figs/KM plots/OPTIMAL Zhou 2011 PFS 
+(EGFR+_IA) Kaplan Meier.png> <./figs/KM plots/OPTIMAL Zhou 2015 OS (EGFR+) Kapl
+an Meier.png>] [44 <./figs/KM plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan
+ Meier.png> <./figs/KM plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kaplan Meier.p
+ng>] [45 <./figs/KM plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan Meier.png> <./
+figs/KM plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Meier.png>] [46] [47]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1336.
+
+(./model-doc.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1336.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1336.
 
 Package rerunfilecheck Info: File `model-doc.out' has not changed.
-(rerunfilecheck)             Checksum: 468FB689329256394E832FD897572E5C;4108.
+(rerunfilecheck)             Checksum: 2DAB2CFF1CE2BB75FA0DE273C0528DDF;3795.
 
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1137.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1336.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 244 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 12469 strings out of 492649
- 181640 string characters out of 6129622
- 409037 words of memory out of 5000000
- 15857 multiletter control sequences out of 15000+600000
+ 12622 strings out of 492649
+ 189877 string characters out of 6129622
+ 414537 words of memory out of 5000000
+ 15985 multiletter control sequences out of 15000+600000
  31369 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,17n,79p,1611b,885s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,17n,79p,1611b,889s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/cm-super/cm
 -super-t1.enc}</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm
@@ -1345,10 +1575,10 @@ ve/2018/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive
 8/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2018/
 texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2018/te
 xmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on model-doc.pdf (35 pages, 1122543 bytes).
+Output written on model-doc.pdf (47 pages, 5223700 bytes).
 PDF statistics:
- 693 PDF objects out of 1000 (max. 8388607)
- 613 compressed objects within 7 object streams
- 137 named destinations out of 1000 (max. 500000)
- 484 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 832 PDF objects out of 1000 (max. 8388607)
+ 682 compressed objects within 7 object streams
+ 162 named destinations out of 1000 (max. 500000)
+ 605 words of extra memory for PDF output out of 10000 (max. 10000000)
 

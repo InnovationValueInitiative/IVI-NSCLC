@@ -26,31 +26,28 @@
 \BOOKMARK [4][-]{subsubsubsection.8.1.1.5}{Estimated time-varying hazard ratios}{subsubsection.8.1.1}% 26
 \BOOKMARK [3][-]{subsubsection.8.1.2}{Absolute effects with 1L reference treatment}{subsection.8.1}% 27
 \BOOKMARK [3][-]{subsubsection.8.1.3}{Absolute effects with 2L therapy}{subsection.8.1}% 28
-\BOOKMARK [3][-]{subsubsection.8.1.4}{Use of meta-analysis results in economic model}{subsection.8.1}% 29
-\BOOKMARK [2][-]{subsection.8.2}{Adverse events}{section.8}% 30
-\BOOKMARK [2][-]{subsection.8.3}{Utilities}{section.8}% 31
-\BOOKMARK [2][-]{subsection.8.4}{Health care sector costs}{section.8}% 32
-\BOOKMARK [3][-]{subsubsection.8.4.1}{Treatment costs}{subsection.8.4}% 33
-\BOOKMARK [3][-]{subsubsection.8.4.2}{Inpatient and outpatient costs}{subsection.8.4}% 34
-\BOOKMARK [3][-]{subsubsection.8.4.3}{Adverse event costs}{subsection.8.4}% 35
-\BOOKMARK [2][-]{subsection.8.5}{Productivity}{section.8}% 36
-\BOOKMARK [2][-]{subsection.8.6}{Value of hope}{section.8}% 37
-\BOOKMARK [1][-]{section.9}{Simulation and uncertainty analysis}{}% 38
-\BOOKMARK [2][-]{subsection.9.1}{Parameter uncertainty}{section.9}% 39
-\BOOKMARK [2][-]{subsection.9.2}{Structural uncertainty}{section.9}% 40
-\BOOKMARK [2][-]{subsection.9.3}{Implementation}{section.9}% 41
-\BOOKMARK [1][-]{section*.32}{Appendices}{}% 42
-\BOOKMARK [1][-]{Appendix.1.A}{Systematic Literature Review}{}% 43
-\BOOKMARK [2][-]{subsection.1.A.1}{Treatment effects for transition rates}{Appendix.1.A}% 44
-\BOOKMARK [2][-]{subsection.1.A.2}{Utilities}{Appendix.1.A}% 45
-\BOOKMARK [2][-]{subsection.1.A.3}{Resource use, productivity, and cost}{Appendix.1.A}% 46
-\BOOKMARK [2][-]{subsection.1.A.4}{Study identification}{Appendix.1.A}% 47
-\BOOKMARK [2][-]{subsection.1.A.5}{Study selection}{Appendix.1.A}% 48
-\BOOKMARK [2][-]{subsection.1.A.6}{Data collection}{Appendix.1.A}% 49
-\BOOKMARK [2][-]{subsection.1.A.7}{Limitations}{Appendix.1.A}% 50
-\BOOKMARK [1][-]{Appendix.1.B}{Network meta-analysis}{}% 51
-\BOOKMARK [2][-]{subsection.1.B.1}{Feasibility assessment}{Appendix.1.B}% 52
-\BOOKMARK [2][-]{subsection.1.B.2}{Evaluation of consistency between direct and indirect comparisons}{Appendix.1.B}% 53
-\BOOKMARK [2][-]{subsection.1.B.3}{Estimation of the relative treatment effects under the assumption of consistency}{Appendix.1.B}% 54
-\BOOKMARK [2][-]{subsection.1.B.4}{Software}{Appendix.1.B}% 55
-\BOOKMARK [1][-]{References.1}{References}{}% 56
+\BOOKMARK [3][-]{subsubsection.8.1.4}{Software}{subsection.8.1}% 29
+\BOOKMARK [3][-]{subsubsection.8.1.5}{Use of meta-analysis results in economic model}{subsection.8.1}% 30
+\BOOKMARK [2][-]{subsection.8.2}{Adverse events}{section.8}% 31
+\BOOKMARK [2][-]{subsection.8.3}{Utilities}{section.8}% 32
+\BOOKMARK [2][-]{subsection.8.4}{Health care sector costs}{section.8}% 33
+\BOOKMARK [3][-]{subsubsection.8.4.1}{Treatment costs}{subsection.8.4}% 34
+\BOOKMARK [3][-]{subsubsection.8.4.2}{Inpatient and outpatient costs}{subsection.8.4}% 35
+\BOOKMARK [3][-]{subsubsection.8.4.3}{Adverse event costs}{subsection.8.4}% 36
+\BOOKMARK [2][-]{subsection.8.5}{Productivity}{section.8}% 37
+\BOOKMARK [2][-]{subsection.8.6}{Value of hope}{section.8}% 38
+\BOOKMARK [1][-]{section.9}{Simulation and uncertainty analysis}{}% 39
+\BOOKMARK [2][-]{subsection.9.1}{Parameter uncertainty}{section.9}% 40
+\BOOKMARK [2][-]{subsection.9.2}{Structural uncertainty}{section.9}% 41
+\BOOKMARK [2][-]{subsection.9.3}{Implementation}{section.9}% 42
+\BOOKMARK [1][-]{section*.34}{Appendices}{}% 43
+\BOOKMARK [1][-]{Appendix.1.A}{Systematic Literature Review}{}% 44
+\BOOKMARK [2][-]{subsection.1.A.1}{Treatment effects for transition rates}{Appendix.1.A}% 45
+\BOOKMARK [2][-]{subsection.1.A.2}{Utilities}{Appendix.1.A}% 46
+\BOOKMARK [2][-]{subsection.1.A.3}{Resource use, productivity, and cost}{Appendix.1.A}% 47
+\BOOKMARK [2][-]{subsection.1.A.4}{Study identification}{Appendix.1.A}% 48
+\BOOKMARK [2][-]{subsection.1.A.5}{Study selection}{Appendix.1.A}% 49
+\BOOKMARK [2][-]{subsection.1.A.6}{Data collection}{Appendix.1.A}% 50
+\BOOKMARK [2][-]{subsection.1.A.7}{Limitations}{Appendix.1.A}% 51
+\BOOKMARK [2][-]{subsection.1.A.8}{Kaplan-Meier curves}{Appendix.1.A}% 52
+\BOOKMARK [1][-]{References.1}{References}{}% 53

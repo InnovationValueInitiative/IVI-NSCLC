@@ -1,8 +1,24 @@
 \contentsline {figure}{\numberline {1}{\ignorespaces Sequential treatment strategies of interest to be compared with the model\relax }}{7}{figure.caption.2}
 \contentsline {figure}{\numberline {2}{\ignorespaces Model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state\relax }}{10}{figure.caption.3}
 \contentsline {figure}{\numberline {3}{\ignorespaces Alternative model structure with 3 states describing development of disease over time for a treatment sequence starting with 1L until death; 2L and 2L+ treatment is captured with the progression state\relax }}{11}{figure.caption.4}
-\contentsline {figure}{\numberline {4}{\ignorespaces Relationship between stable disease (S), progression (P) and death (D) as used in the multi-state network meta-analysis model\relax }}{16}{figure.caption.7}
-\contentsline {figure}{\numberline {5}{\ignorespaces First line estimates of hazard ratios from stable to progression relative to gefitinib from the multi-state network meta-analysis\relax }}{18}{figure.caption.8}
-\contentsline {figure}{\numberline {6}{\ignorespaces First line estimates of hazard rates over time for transitions between S, P and D with gefitinib from the multi-state meta-analysis\relax }}{19}{figure.caption.9}
-\contentsline {figure}{\numberline {7}{\ignorespaces First line estimates of progression-free survival and overall survival for the competing interventions obtained with the multi-state (network) meta-analysis\relax }}{20}{figure.caption.10}
-\contentsline {figure}{\numberline {8}{\ignorespaces Second line estimates of progression-free survival and overall survival from the multi-state meta-analysis\relax }}{22}{figure.caption.11}
+\contentsline {figure}{\numberline {4}{\ignorespaces Network of RCTs to estimate relative treatment effects regarding PFS and OS with 1L therapies\relax }}{15}{figure.caption.7}
+\contentsline {figure}{\numberline {5}{\ignorespaces Relationship between stable disease (S), progression (P) and death (D) as used in the multi-state network meta-analysis model\relax }}{17}{figure.caption.8}
+\contentsline {figure}{\numberline {6}{\ignorespaces First line estimates of hazard ratios from stable to progression relative to gefitinib from the multi-state network meta-analysis\relax }}{19}{figure.caption.9}
+\contentsline {figure}{\numberline {7}{\ignorespaces First line estimates of hazard rates over time for transitions between S, P and D with gefitinib from the multi-state meta-analysis\relax }}{20}{figure.caption.10}
+\contentsline {figure}{\numberline {8}{\ignorespaces First line estimates of progression-free survival and overall survival for the competing interventions obtained with the multi-state (network) meta-analysis\relax }}{21}{figure.caption.11}
+\contentsline {figure}{\numberline {9}{\ignorespaces Second line estimates of hazard rates over time for transitions between S, P and D from the multi-state meta-analysis\relax }}{22}{figure.caption.12}
+\contentsline {figure}{\numberline {10}{\ignorespaces Second line estimates of progression-free survival and overall survival from the multi-state meta-analysis\relax }}{23}{figure.caption.13}
+\contentsline {figure}{\numberline {A1}{\ignorespaces ARCHER-1050, progression-free survival and overall survival\relax }}{32}{figure.caption.41}
+\contentsline {figure}{\numberline {A2}{\ignorespaces ENSURE, progression-free survival and overall survival\relax }}{33}{figure.caption.42}
+\contentsline {figure}{\numberline {A3}{\ignorespaces EURTAC, progression-free survival and overall survival\relax }}{34}{figure.caption.43}
+\contentsline {figure}{\numberline {A4}{\ignorespaces FirstSIGNAL, progression-free survival and overall survival\relax }}{35}{figure.caption.44}
+\contentsline {figure}{\numberline {A5}{\ignorespaces FLAURA, progression-free survival and overall survival\relax }}{36}{figure.caption.45}
+\contentsline {figure}{\numberline {A6}{\ignorespaces Han 2017, progression-free survival and overall survival\relax }}{37}{figure.caption.46}
+\contentsline {figure}{\numberline {A7}{\ignorespaces IPASS, progression-free survival and overall survival\relax }}{38}{figure.caption.47}
+\contentsline {figure}{\numberline {A8}{\ignorespaces LUX-LUNG 3, progression-free survival and overall survival\relax }}{39}{figure.caption.48}
+\contentsline {figure}{\numberline {A9}{\ignorespaces LUX-LUNG 6, progression-free survival and overall survival\relax }}{40}{figure.caption.49}
+\contentsline {figure}{\numberline {A10}{\ignorespaces LUX-LUNG 7, progression-free survival and overall survival\relax }}{41}{figure.caption.50}
+\contentsline {figure}{\numberline {A11}{\ignorespaces NEJ002, progression-free survival and overall survival\relax }}{42}{figure.caption.51}
+\contentsline {figure}{\numberline {A12}{\ignorespaces OPTIMAL, progression-free survival and overall survival\relax }}{43}{figure.caption.52}
+\contentsline {figure}{\numberline {A13}{\ignorespaces WJTOG3405, progression-free survival and overall survival\relax }}{44}{figure.caption.53}
+\contentsline {figure}{\numberline {A14}{\ignorespaces Yang 2014, progression-free survival and overall survival\relax }}{45}{figure.caption.54}

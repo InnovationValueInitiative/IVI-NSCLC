@@ -254,12 +254,12 @@ Lung cancer is the leading cause of cancer related death worldwide \citep{jemal2
 The aim was to develop a flexible open-source simulation model that can be used to estimate the value of alternative sequential treatment strategies for patients with metastatic EGFR+ NSCLC. The IVI-NSCLC(egfr+) model is accessible to both technical and non-technical end-users and allows them evaluating the impact of uncertainty in clinical evidence, alternative model structures, the decision framework of choice (i.e. cost-effectiveness analysis [CEA)] or multi-criteria decision analysis [MCDA]), novel concepts of value, and perspective (healthcare or limited societal) on the estimates of value.
 
 \subsection{Value assessment}
-The IVI-NSCLC(egfr+) model is designed to assess the value of multiple competing sequential treatment strategies for patients with metastatic EGFR+ NSCLC starting with 1st line treatment (1L), followed by 2nd line treatment (2L), and treatment beyond 2nd line (2L+) as outlined in \autoref{fig:reatment-strategies}. Sequences that can be evaluated with version 1 of the model were informed by the available evidence base, guidelines, and clinician input.
+The IVI-NSCLC(egfr+) model is designed to assess the value of multiple competing sequential treatment strategies for patients with metastatic EGFR+ NSCLC starting with 1st line treatment (1L), followed by 2nd line treatment (2L), and treatment beyond 2nd line (2L+) as outlined in \autoref{fig:treatment-strategies}. Sequences that can be evaluated with version 1 of the model were informed by the available evidence base, guidelines, and clinician input.
 
 \begin{figure}[h]
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
-\caption{Sequential treatment strategies of interest to be compared with the model}\label{fig:reatment-strategies}
+\caption{Sequential treatment strategies of interest to be compared with the model}\label{fig:treatment-strategies}
 \end{figure}
 
 The IVI-NSCLC(egfr+) model is suitable for informing decisions for specific (sub)populations, but is not suitable for making predictions at the individual level, nor should it replace the patient-physician shared decision-making process.  Local decision makers can modify the model to perform analysis of value that reflect the local setting while accounting for all scientific uncertainty and help them understand the confidence with which they make decisions. 
@@ -403,7 +403,15 @@ RCTs are considered the gold standard to assess treatment effects of medical int
 
 Patients are randomized only within trials, not across trials, so there is a risk that patients participating in different trials differ with respect to demographic, disease or other characteristics. In addition, features of the trials themselves may differ. If these trial or patient characteristics are effect modifiers, i.e. they affect the treatment effects of an intervention versus a control, then there are systematic differences in treatment effects across trials. Systematic differences in known and unknown effect-modifiers among studies comparing the same interventions in direct fashion result in between-study heterogeneity. An imbalance in the distribution of effect modifiers between studies comparing different interventions will result in transitivity or consistency violations and therefore biased indirect comparisons.
 
-The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \hl{(Appendix X)}, along with information on the distribution of patients characteristics across the studies in the network. 
+The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \autoref{fig:RCT network-1L}. Information regarding the distribution of patients characteristics across the studies in the network  are presented in \hl{(Appendix X)}. 
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/RCT-network-1L.png}
+\caption{Network of RCTs to estimate relative treatment effects regarding PFS and OS with 1L therapies}\label{fig:RCT network-1L}
+\end{figure}
+
+\FloatBarrier
 
 \subsubsubsection{Network meta-analysis model}
 Traditionally, NMAs in oncology are based on separate analyses for OS and PFS, with relative treatment effects estimated using reported hazard ratios (HR). There are two limitations of this approach. First, HR estimates rely on the proportional hazard assumption, which is implausible if the hazard functions of the competing interventions cross \citep{dias2018network}. Second, separate analyses of OS and PFS ignore the structural relationship between stable disease, progression, and death and implicitly assume that transition probabilities for stable to death and progression to death are equal.
@@ -610,6 +618,7 @@ The prior distribution for the probabilities at the beginning of each interval, 
 \subsubsubsection{Model selection}
 The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \hl{(Appendix X)}).\citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
 
+
 \subsubsubsection{Estimated time-varying hazard ratios}
 To be added
 
@@ -672,7 +681,17 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 
 
 \subsubsection{Absolute effects with 2L therapy}
-Recall that second line treatment depend on whether a patient has a T790M mutation. Separate 2L multi-state meta-analyses were consequently conducted to parameterize transitions among T790M positive and T790M negative patients. For T790M positive patients, we performed a meta-analysis of osimertinib. Among possible treatments for T790M negative patients, there was only trial data available for PBDC, so we performed a meta-analysis of PBDC (estimates for other 2L treatment options including PBDC + anti-VEGF therapy and 1st/2nd genration TKIs are assumed to be equivalent to PBDC in the economic model). Since T790M mutation status was not a prognostic factor or an effect modifier, the PBDC meta-analysis was conducted using an all-comer population. Mean estimates of PFS and OS by month for the 2L treatments are displayed in \autoref{subfig:surv-2L-pbdc}.
+For the 2L treatment options, the available number of RCTs among patients who progressed on 1L TKI were limited. For T790M positive patients, the transition rates with osimertinib were estimated based on data from two RCTs according to \autoref{eqn:multistate-ma}.  Regarding other possible treatments, there was only data available for PBDC from three RCTs, which were used to estimate transition rates according to \autoref{eqn:multistate-ma} as well. In the absence of RCT evidence, these estimates were assumed to be representative of the other 2L treatment regimens presented in \autoref{fig:treatment-strategies} for both an all-comer population and a T790M mutation negative population. \autoref{fig:hazards-2L} shows the hazard functions for the transitions between stable, progression, and death for each fitted model and \autoref{fig:surv-2L} shows the corresponding PFS and OS curves.
+
+\FloatBarrier
+
+
+
+\begin{figure}[h]
+\centering
+%\includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
+\caption{Second line estimates of hazard rates over time for transitions between S, P and D from the multi-state meta-analysis}\label{fig:hazards-2L}
+\end{figure}
 
 
 
@@ -695,12 +714,13 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 \end{minipage}
 \end{figure}
 
-
+\subsubsection{Software}
+The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using R statistical software \citep{team2014r}.
 
 \subsubsection{Use of meta-analysis results in economic model}
 Informed by model fit criteria, we used treatment effect estimates obtained with the fixed and random effects, Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model.  When a 3-state economic model is used, the 1L NMA is used to directly simulate disease progression. However, if a 4-state model is used, then both 1L and 2L estimates are incorporated. In particular, the 1L results are used to simulate the transition from $S_1$ to $P_1 \rightarrow S_2$ and the 2L results are used to simulate the transition from $P_1 \rightarrow S_2$ to $P_2$, $P_2$ to $D$, and $P_1 \rightarrow S_2$ to $D$ (see \autoref{fig:model-structure-4-states}). 
 
-\FloatBarrier
+
 
 
 \subsection{Adverse events}\label{subsec:data-aes}
@@ -1083,6 +1103,7 @@ Other & English language\\
 \end{table}
 
 
+
 \subsection{Utilities}
 Health state utility values (EQ-5d, HUI2, HUI-3, SF-6D) for the different health states were used in the model as well as disutility estimates associated with adverse events identified by focusing on review or overview studies. Furthermore, published mapping algorithms that allow a non-preference-based measure (generic or disease-specific measure) to be mapped onto a generic preference-based measure are of interest, as well as mapping algorithms between different generic preference-based health state utility values (e.g. between SF-6D and EQ5D) will be searched for. See Appendix Table 4 for study selection criteria.
 
@@ -1107,26 +1128,204 @@ For utility and cost-effectiveness studies, relevant information for the model w
 \subsection{Limitations}
 Despite the strengths of the proposed SLR, some limitations are applicable to all SLRs that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. Further, any trials that are published close to the search date but are not yet indexed in the databases at the time of the search will not be captured by the search of MEDLINE, EMBASE, and Cochrane Central Register of Controlled Trials. As with any literature review, this SLR is limited by the use of published data. There is a risk of publication bias as some clinical studies fail to be published while others are published only in abstract form, which presents limited information. Finally, the search and selection were restricted to trials published in English.
 
-\section{Network meta-analysis} \label{app:nma}
 
-\subsection{Feasibility assessment}
-With an NMA, interest centers on the comparison of the treatment effects of interventions that have not been studied in a head-to-head fashion. In order to ensure that these indirect comparisons of interventions are not affected by differences in study effects (i.e. known and unknown prognostic factors) between studies, we only considered the treatment effects of each trial. This consideration implied that all interventions indirectly compared have to be part of one network of trials where each trial has at least one intervention (active or placebo) in common with another trial. For interventions of interest that were not part of the same network, then it was not possible to perform an indirect comparison of treatment effects of these interventions without a substantial risk of bias \citep{jansen2014indirect, dias2018network}.
-
-In combining direct and indirect evidence in an NMA, trials must be reasonably similar. Patients are randomized only within trials, not across trials, so there is a risk that patients participating in different trials differ with respect to demographic, disease or other characteristics. In addition, features of the trials themselves may differ. If these trial or patient characteristics are effect modifiers, i.e. they affect the treatment effects of an intervention versus a control, then there are systematic differences in treatment effects across trials. Systematic differences in known and unknown effect-modifiers among studies comparing the same interventions in direct fashion result in between-study heterogeneity. An imbalance in the distribution of effect modifiers between studies comparing different interventions will result in transitivity or consistency violations and therefore biased indirect comparisons \citep{jansen2012directed, jansen2013multivariate}.
-
-In order to gauge the appropriateness of proceeding with an NMA, IVI's feasibility assessment included: (i) an assessment of whether the RCT evidence for the interventions of interest formed one evidence network for each outcome by line of treatment conditional upon prior treatment (class); and (ii) an assessment of the distribution of study and patient characteristics that may have had relative treatment effects across the direct comparisons of the evidence networks.
-
-\subsection{Evaluation of consistency between direct and indirect comparisons}
-Prior to the actual NMA, the consistency between direct and indirect comparisons were evaluated for networks that include closed loops. For comparisons (i.e., contrasts) that are part of a closed loop made up of more than 1 RCT connecting different interventions, we assessed the consistency by comparing the relative treatment effect for one contrast of this loop based on direct information with the corresponding estimates based on indirect information \citep{dias2018network}.
-
-\subsection{Estimation of the relative treatment effects under the assumption of consistency}
-Based on the findings of the feasibility assessment, the results of the RCTs that are part of one evidence network and deemed sufficiently similar were synthesized by means of NMAs by outcome of interest. Under the assumption of consistency, the NMA model relates the data from the individual studies to basic parameters reflecting the (pooled) relative treatment effect of each intervention compared to an overall treatment of reference. The NMA models were extended by incorporating covariates (i.e., meta-regression analysis) only if there was an imbalance in treatment potential effect modifiers across trials in the network \citep{dias2018network}. 
-
-
+\subsection{Kaplan-Meier curves}
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{ARCHER-1050, progression-free survival and overall survival}\label{fig:ARCHER-1050}
+\end{figure}
 
 
-\subsection{Software}
-The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using R statistical software \citep{team2014r}.
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{ENSURE, progression-free survival and overall survival}\label{fig:ENSURE}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{EURTAC, progression-free survival and overall survival}\label{fig:EURTAC}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{FirstSIGNAL, progression-free survival and overall survival}\label{fig:firstSIGNAL}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{FLAURA, progression-free survival and overall survival}\label{fig:FLAURA}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{Han 2017, progression-free survival and overall survival}\label{fig:Han-2017}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{IPASS, progression-free survival and overall survival}\label{fig:IPASS}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{LUX-LUNG 3, progression-free survival and overall survival}\label{fig:LUX-LUNG 3}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{LUX-LUNG 6, progression-free survival and overall survival}\label{fig:LUX-LUNG 6}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{LUX-LUNG 7, progression-free survival and overall survival}\label{fig:LUX-LUNG 7}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{NEJ002, progression-free survival and overall survival}\label{fig:NEJ002}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/OPTIMAL Zhou 2011 PFS (EGFR+_IA) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/OPTIMAL Zhou 2015 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{OPTIMAL, progression-free survival and overall survival}\label{fig:OPTIMAL}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{WJTOG3405, progression-free survival and overall survival}\label{fig:WJTOG3405}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{Yang 2014, progression-free survival and overall survival}\label{fig:Yang 2014}
+\end{figure}
+
+
 
 
 \end{appendices}
