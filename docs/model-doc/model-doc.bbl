@@ -1,0 +1,163 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\astroncite{Aalen and Johansen}{1978}]{aalen1978empirical}
+Aalen, O.~O. and Johansen, S. (1978).
+\newblock An empirical transition matrix for non-homogeneous markov chains
+  based on censored observations.
+\newblock {\em Scandinavian Journal of Statistics}, pages 141--150.
+
+\bibitem[\protect\astroncite{Baio and Dawid}{2015}]{baio2015probabilistic}
+Baio, G. and Dawid, A.~P. (2015).
+\newblock Probabilistic sensitivity analysis in health economics.
+\newblock {\em Statistical methods in medical research}, 24(6):615--634.
+
+\bibitem[\protect\astroncite{Black}{1990}]{black1990plane}
+Black, W.~C. (1990).
+\newblock The ce plane: a graphic representation of cost-effectiveness.
+\newblock {\em Medical decision making}, 10(3):212--214.
+
+\bibitem[\protect\astroncite{Briggs}{1999}]{briggs1999bayesian}
+Briggs, A.~H. (1999).
+\newblock A bayesian approach to stochastic cost-effectiveness analysis.
+\newblock {\em Health Economics}, 8(3):257--261.
+
+\bibitem[\protect\astroncite{Cetin et~al.}{2011}]{cetin2011survival}
+Cetin, K., Ettinger, D.~S., Hei, Y.-j., and D~O'Malley, C. (2011).
+\newblock Survival by histologic subtype in stage iv nonsmall cell lung cancer
+  based on data from the surveillance, epidemiology and end results program.
+\newblock {\em Clinical epidemiology}, 3:139.
+
+\bibitem[\protect\astroncite{Claxton et~al.}{2005}]{claxton2005probabilistic}
+Claxton, K., Sculpher, M., McCabe, C., Briggs, A., Akehurst, R., Buxton, M.,
+  Brazier, J., and O'Hagan, T. (2005).
+\newblock Probabilistic sensitivity analysis for nice technology assessment:
+  not an optional extra.
+\newblock {\em Health economics}, 14(4):339--347.
+
+\bibitem[\protect\astroncite{D'addario et~al.}{2010}]{d2010metastatic}
+D'addario, G., Fr{\"u}h, M., Reck, M., Baumann, P., Klepetko, W., Felip, E.,
+  and Group, E. G.~W. (2010).
+\newblock Metastatic non-small-cell lung cancer: Esmo clinical practice
+  guidelines for diagnosis, treatment and follow-up.
+\newblock {\em Annals of oncology}, 21(suppl\_5):v116--v119.
+
+\bibitem[\protect\astroncite{de~Wreede et~al.}{2011}]{de2011mstate}
+de~Wreede, L.~C., Fiocco, M., Putter, H., et~al. (2011).
+\newblock mstate: an r package for the analysis of competing risks and
+  multi-state models.
+\newblock {\em Journal of Statistical Software}, 38(7):1--30.
+
+\bibitem[\protect\astroncite{Dias et~al.}{2018}]{dias2018network}
+Dias, S., Ades, A., Welton, N.~J., Jansen, J.~P., and Sutton, A.~J. (2018).
+\newblock {\em Network meta-analysis for decision-making}.
+\newblock John Wiley \& Sons.
+
+\bibitem[\protect\astroncite{Doyle et~al.}{2008}]{doyle2008health}
+Doyle, S., Lloyd, A., and Walker, M. (2008).
+\newblock Health state utility scores in advanced non-small cell lung cancer.
+\newblock {\em Lung Cancer}, 62(3):374--380.
+
+\bibitem[\protect\astroncite{Garrison et~al.}{2017}]{garrison2017toward}
+Garrison, L.~P., Kamal-Bahl, S., and Towse, A. (2017).
+\newblock Toward a broader concept of value: identifying and defining elements
+  for an expanded cost-effectiveness analysis.
+\newblock {\em Value in Health}, 20(2):213--216.
+
+\bibitem[\protect\astroncite{Jackson}{2016}]{jackson2016flexsurv}
+Jackson, C.~H. (2016).
+\newblock flexsurv: a platform for parametric survival modeling in r.
+\newblock {\em Journal of Statistical Software}, 70.
+
+\bibitem[\protect\astroncite{Jansen and
+  Trikalinos}{2013}]{jansen2013multivariate}
+Jansen, J. and Trikalinos, T. (2013).
+\newblock Multivariate network meta-analysis of progression free survival and
+  overall survival.
+\newblock {\em Value in Health}, 16(7):A617.
+
+\bibitem[\protect\astroncite{Jemal et~al.}{2011}]{jemal2011global}
+Jemal, A., Bray, F., Center, M.~M., Ferlay, J., Ward, E., and Forman, D.
+  (2011).
+\newblock Global cancer statistics.
+\newblock {\em CA: a cancer journal for clinicians}, 61(2):69--90.
+
+\bibitem[\protect\astroncite{Keeney and Raiffa}{1993}]{keeney1993decisions}
+Keeney, R.~L. and Raiffa, H. (1993).
+\newblock {\em Decisions with multiple objectives: preferences and value
+  trade-offs}.
+\newblock Cambridge university press.
+
+\bibitem[\protect\astroncite{Latremouille-Viau
+  et~al.}{2017}]{latremouille2017economic}
+Latremouille-Viau, D., Chang, J., Guerin, A., Shi, S., Wang, E., Yu, J., and
+  Ngai, C. (2017).
+\newblock The economic burden of common adverse events associated with
+  metastatic colorectal cancer treatment in the united states.
+\newblock {\em Journal of medical economics}, 20(1):54--62.
+
+\bibitem[\protect\astroncite{Lynch et~al.}{2004}]{lynch2004activating}
+Lynch, T.~J., Bell, D.~W., Sordella, R., Gurubhagavatula, S., Okimoto, R.~A.,
+  Brannigan, B.~W., Harris, P.~L., Haserlat, S.~M., Supko, J.~G., Haluska,
+  F.~G., et~al. (2004).
+\newblock Activating mutations in the epidermal growth factor receptor
+  underlying responsiveness of non--small-cell lung cancer to gefitinib.
+\newblock {\em New England Journal of Medicine}, 350(21):2129--2139.
+
+\bibitem[\protect\astroncite{Nafees et~al.}{2017}]{nafees2017health}
+Nafees, B., Lloyd, A.~J., Dewilde, S., Rajan, N., and Lorenzo, M. (2017).
+\newblock Health state utilities in non--small cell lung cancer: An
+  international study.
+\newblock {\em Asia-Pacific Journal of Clinical Oncology}, 13(5):e195--e203.
+
+\bibitem[\protect\astroncite{Nafees et~al.}{2008}]{nafees2008health}
+Nafees, B., Stafford, M., Gavriel, S., Bhalla, S., and Watkins, J. (2008).
+\newblock Health state utilities for non small cell lung cancer.
+\newblock {\em Health and quality of life outcomes}, 6(1):84.
+
+\bibitem[\protect\astroncite{Putter et~al.}{2007}]{putter2007tutorial}
+Putter, H., Fiocco, M., and Geskus, R.~B. (2007).
+\newblock Tutorial in biostatistics: competing risks and multi-state models.
+\newblock {\em Statistics in medicine}, 26(11):2389--2430.
+
+\bibitem[\protect\astroncite{{R Core Team}}{2014}]{team2014r}
+{R Core Team} (2014).
+\newblock R: A language and environment for statistical computing. r foundation
+  for statistical computing, vienna, austria. 2013.
+
+\bibitem[\protect\astroncite{Sanders et~al.}{2016}]{sanders2016recommendations}
+Sanders, G.~D., Neumann, P.~J., Basu, A., Brock, D.~W., Feeny, D., Krahn, M.,
+  Kuntz, K.~M., Meltzer, D.~O., Owens, D.~K., Prosser, L.~A., et~al. (2016).
+\newblock Recommendations for conduct, methodological practices, and reporting
+  of cost-effectiveness analyses: second panel on cost-effectiveness in health
+  and medicine.
+\newblock {\em Jama}, 316(10):1093--1103.
+
+\bibitem[\protect\astroncite{Skinner et~al.}{2018}]{skinner2018healthcare}
+Skinner, K.~E., Fernandes, A.~W., Walker, M.~S., Pavilack, M., and VanderWalde,
+  A. (2018).
+\newblock Healthcare costs in patients with advanced non-small cell lung cancer
+  and disease progression during targeted therapy: a real-world observational
+  study.
+\newblock {\em Journal of medical economics}, 21(2):192--200.
+
+\bibitem[\protect\astroncite{Thokala et~al.}{2016}]{thokala2016multiple}
+Thokala, P., Devlin, N., Marsh, K., Baltussen, R., Boysen, M., Kalo, Z.,
+  Longrenn, T., Mussen, F., Peacock, S., Watkins, J., et~al. (2016).
+\newblock Multiple criteria decision analysis for health care decision
+  making-an introduction: report 1 of the ispor mcda emerging good practices
+  task force.
+\newblock {\em Value in health}, 19(1):1--13.
+
+\bibitem[\protect\astroncite{Van~Hout et~al.}{1994}]{van1994costs}
+Van~Hout, B.~A., Al, M.~J., Gordon, G.~S., and Rutten, F.~F. (1994).
+\newblock Costs, effects and c/e-ratios alongside a clinical trial.
+\newblock {\em Health economics}, 3(5):309--319.
+
+\bibitem[\protect\astroncite{Wong et~al.}{2018}]{wong2018assessment}
+Wong, W., Yim, Y.~M., Kim, A., Cloutier, M., Gauthier-Loiselle, M.,
+  Gagnon-Sanschagrin, P., and Guerin, A. (2018).
+\newblock Assessment of costs associated with adverse events in patients with
+  cancer.
+\newblock {\em PloS one}, 13(4):e0196007.
+
+\end{thebibliography}

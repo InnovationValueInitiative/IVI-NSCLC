@@ -4,7 +4,7 @@
 \contentsline {subsection}{\numberline {3.1}Value assessment}{6}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Evaluation of scientific uncertainty}{8}{subsection.3.2}
 \contentsline {section}{\numberline {4}Iterative process}{8}{section.4}
-\contentsline {section}{\numberline {5}Components}{8}{section.5}
+\contentsline {section}{\numberline {5}Components}{9}{section.5}
 \contentsline {section}{\numberline {6}Model structure}{9}{section.6}
 \contentsline {subsection}{\numberline {6.1}Disease model}{9}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}Adverse events}{11}{subsection.6.2}
@@ -24,7 +24,7 @@
 \contentsline {subsubsubsection}{\numberline {8.1.1.3}Prior distributions}{19}{subsubsubsection.8.1.1.3}
 \contentsline {subsubsubsection}{\numberline {8.1.1.4}Model selection}{19}{subsubsubsection.8.1.1.4}
 \contentsline {subsubsubsection}{\numberline {8.1.1.5}Estimated time-varying hazard ratios}{19}{subsubsubsection.8.1.1.5}
-\contentsline {subsubsection}{\numberline {8.1.2}Absolute effects with 1L reference treatment}{19}{subsubsection.8.1.2}
+\contentsline {subsubsection}{\numberline {8.1.2}Absolute effects with 1L reference treatment}{20}{subsubsection.8.1.2}
 \contentsline {subsubsection}{\numberline {8.1.3}Absolute effects with 2L therapy}{22}{subsubsection.8.1.3}
 \contentsline {subsubsection}{\numberline {8.1.4}Software}{22}{subsubsection.8.1.4}
 \contentsline {subsubsection}{\numberline {8.1.5}Use of meta-analysis results in economic model}{22}{subsubsection.8.1.5}
