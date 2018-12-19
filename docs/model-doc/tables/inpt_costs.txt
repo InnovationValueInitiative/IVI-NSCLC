@@ -1,5 +1,5 @@
 % latex table generated in R 3.5.0 by xtable 1.8-2 package
-% Tue Dec 11 21:07:36 2018
+% Wed Dec 19 13:47:05 2018
   \hline
 S1 & 7,699 & 0 & None \\ 
   P1/S2 & 7,699 & 0 & \citet{skinner2018healthcare} \\ 
