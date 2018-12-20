@@ -1,2 +1,3 @@
 load("/Users/jeroenjansen/Egnyte/Shared/RW GENERAL (MANAGEMENT)/Jeroen only access/IVI/GitHub/IVI-NSCLC/data/params_costs_inpt.rda")
+load("/Users/jeroenjansen/Egnyte/Shared/RW GENERAL (MANAGEMENT)/Jeroen only access/IVI/GitHub/IVI-NSCLC/data/params_costs_op.rda")
 load("/Users/jeroenjansen/Egnyte/Shared/RW GENERAL (MANAGEMENT)/Jeroen only access/IVI/GitHub/IVI-NSCLC/data/params_costs_inpt.rda")
