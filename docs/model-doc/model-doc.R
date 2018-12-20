@@ -165,7 +165,7 @@ print(xtable(admin_costs),
 ## Inpatient
 inpt_costs = copy(params_costs_inpt)
 inpt_costs[, ref := paste0("\\citet{", ref, "}")]
-inpt_costs[state_name == "S1", ref := "None"]
+#inpt_costs[state_name == "S1", ref := "None"]
 inpt_costs[, mean := formatC(mean, format = "d", big.mark = ",")]
 inpt_costs[, se := formatC(se, format = "d", big.mark = ",")]
 print(xtable(inpt_costs), 
@@ -176,7 +176,7 @@ print(xtable(inpt_costs),
 ## Outpatient
 op_costs = copy(params_costs_op)
 op_costs[, ref := paste0("\\citet{", ref, "}")]
-op_costs[state_name == "S1", ref := "None"]
+#op_costs[state_name == "S1", ref := "None"]
 op_costs[, mean := formatC(mean, format = "d", big.mark = ",")]
 op_costs[, se := formatC(se, format = "d", big.mark = ",")]
 print(xtable(op_costs), 

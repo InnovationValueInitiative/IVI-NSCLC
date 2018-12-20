@@ -1,14 +1,14 @@
 % latex table generated in R 3.5.0 by xtable 1.8-2 package
-% Wed Dec 19 19:07:29 2018
+% Wed Dec 19 22:38:07 2018
   \hline
-Elevated alanine transaminase & 0.0735 & 0.0185 & \citet{nafees2008health} \\ 
-  Elevated aspartate transaminase & 0.0735 & 0.0185 & \citet{nafees2008health} \\ 
-  Diarrhea & 0.0468 & 0.0155 & \citet{nafees2008health} \\ 
-  Dry skin & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
-  Eye problems & 0.0449 & 0.0148 & \citet{nafees2008health} \\ 
-  Paronychia & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
-  Pneumonitis & 0.0500 & 0.0120 & \citet{doyle2008health} \\ 
-  Pruritus & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
-  Rash & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
-  Stomatitis & 0.0325 & 0.0117 & \citet{nafees2008health} \\ 
+Elevated alanine transaminase & 0.2940 & 0.0970 & \citet{nafees2017health} \\ 
+  Elevated aspartate transaminase & 0.2940 & 0.0970 & \citet{nafees2017health} \\ 
+  Diarrhea & 0.2220 & 0.0730 & \citet{nafees2017health} \\ 
+  Dry skin & 0.1510 & 0.0500 & \citet{nafees2017health} \\ 
+  Eye problems & 0.1380 & 0.0460 & \citet{nafees2017health} \\ 
+  Paronychia & 0.1510 & 0.0500 & \citet{nafees2017health} \\ 
+  Pneumonitis & 0.1650 & 0.0540 & \citet{doyle2008health} \\ 
+  Pruritus & 0.1510 & 0.0500 & \citet{nafees2017health} \\ 
+  Rash & 0.1510 & 0.0500 & \citet{nafees2017health} \\ 
+  Stomatitis & 0.1510 & 0.0500 & \citet{nafees2017health} \\ 
    \hline
