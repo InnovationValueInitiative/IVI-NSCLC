@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2018-12-02</h4>
+            <h4 class="date">2018-12-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -237,7 +237,7 @@ tmat_3_2L &lt;-<span class="st"> </span><span class="kw"><a href="../reference/c
 <h2 class="hasAnchor">
 <a href="#constructing-the-model" class="anchor"></a><span class="header-section-number">3.2</span> Constructing the model</h2>
 <p>We construct the economic model by combining the separate models for the health state transitions, utility, and costs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_samples &lt;-<span class="st"> </span><span class="dv">100</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_samples &lt;-<span class="st"> </span><span class="dv">1000</span></code></pre></div>
 <div id="health-state-transition-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#health-state-transition-model" class="anchor"></a><span class="header-section-number">3.2.1</span> Health state transition model</h3>
@@ -248,11 +248,11 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      1 71.78166        1    gef
-## 2:           1          1             2      1 71.78166        1    gef
-## 3:           1          1             3      1 71.78166        1    gef
-## 4:           1          2             1      0 76.04444        0    gef
-## 5:           1          2             2      0 76.04444        0    gef
+## 1:           1          1             1      0 71.29506        1    gef
+## 2:           1          1             2      0 71.29506        1    gef
+## 3:           1          1             3      0 71.29506        1    gef
+## 4:           1          2             1      1 99.98211        1    gef
+## 5:           1          2             2      1 99.98211        1    gef
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:      NA           1          0
 ## 2:      NA           0          1
@@ -265,11 +265,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 d_erl_p1d_a0 gef_s1p1_a0
-## [1,]    0.07207523            0  0.002938007   -3.861773
-## [2,]   -0.13506322            0 -0.070306356   -3.565563
-## [3,]    0.71015446            0  0.166539568   -3.804967
-## [4,]   -0.35735663            0  0.119142598   -3.549524
-## [5,]    0.44007755            0  0.443100954   -3.935924</code></pre>
+## [1,]     0.2986270            0    0.2805289   -3.890694
+## [2,]    -0.3636329            0    0.4860480   -3.834058
+## [3,]    -0.9435711            0    0.2284253   -3.494240
+## [4,]    -0.6882378            0    0.4932394   -3.764138
+## [5,]    -0.9982084            0    0.4455455   -3.607147</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -528,27 +528,27 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.48 (-0.35, 2.71)</td>
+<td align="left">0.39 (-0.45, 1.88)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">36,273 (-48,202, 247,376)</td>
+<td align="left">55,784 (-175,116, 435,615)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">11,273 (-8,274, 32,641)</td>
+<td align="left">-17,237 (-249,874, 137,279)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">76,291</td>
+<td align="left">144,717</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
 <td align="left">-</td>
-<td align="left">Cost-effective</td>
+<td align="left">Not cost-effective</td>
 </tr>
 </tbody>
 </table>
@@ -565,11 +565,11 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">100000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceplane-1.png" width="672"></p>
-<p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. More precisely, the CEAC plots the proportion of simulations from the PSA that a treatment sequence is cost-effective relative to the comparator (y-axis) against different willingness to pay thresholds (x-axis).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strategy_factor</span>(icea_pw<span class="op">$</span>ceac)
-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(icea_pw<span class="op">$</span>ceac, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> prob, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. Here, we plot the proportion of simulations from the PSA that each treatment sequence is the most cost-effective option (y-axis) against different willingness to pay thresholds (x-axis).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strategy_factor</span>(icea<span class="op">$</span>mce)
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(icea<span class="op">$</span>mce, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> prob, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability cost-effective"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability most cost-effective"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceac-1.png" width="672"></p>
@@ -635,38 +635,38 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.99 (0.90, 1.07)</td>
-<td align="left">1.93 (0.76, 5.01)</td>
+<td align="left">0.99 (0.90, 1.10)</td>
+<td align="left">1.82 (0.88, 4.02)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">1.78 (1.57, 2.02)</td>
-<td align="left">1.39 (0.96, 1.92)</td>
+<td align="left">1.79 (1.57, 2.05)</td>
+<td align="left">1.42 (0.96, 1.98)</td>
 </tr>
 <tr class="odd">
 <td>Health care sector costs</td>
-<td align="left">233,484 (209,857, 260,925)</td>
-<td align="left">269,757 (176,736, 475,965)</td>
+<td align="left">643,472 (546,591, 757,688)</td>
+<td align="left">699,256 (468,005, 1,114,471)</td>
 </tr>
 <tr class="even">
 <td>Productivity costs</td>
-<td align="left">71,263 (66,788, 75,551)</td>
-<td align="left">67,631 (52,251, 76,650)</td>
+<td align="left">72,775 (67,950, 77,167)</td>
+<td align="left">69,217 (54,121, 79,741)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
-<td align="left">0.73 (0.71, 0.75)</td>
-<td align="left">0.79 (0.72, 0.87)</td>
+<td align="left">0.69 (0.67, 0.71)</td>
+<td align="left">0.76 (0.69, 0.84)</td>
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">5.95 (5.77, 6.15)</td>
-<td align="left">11.50 (10.60, 12.42)</td>
+<td align="left">6.39 (6.18, 6.60)</td>
+<td align="left">11.84 (11.27, 12.54)</td>
 </tr>
 <tr class="odd">
 <td>Diarrhea</td>
 <td align="left">0.02 (0.01, 0.03)</td>
-<td align="left">0.02 (0.00, 0.06)</td>
+<td align="left">0.02 (0.00, 0.07)</td>
 </tr>
 </tbody>
 </table>
@@ -698,38 +698,38 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">4.49 (3.16, 5.65)</td>
-<td align="left">17.85 (1.20, 61.99)</td>
+<td align="left">5.97 (4.85, 7.25)</td>
+<td align="left">16.32 (4.52, 43.78)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">75.30 (59.22, 94.02)</td>
-<td align="left">45.10 (11.50, 86.53)</td>
+<td align="left">57.72 (45.44, 72.38)</td>
+<td align="left">37.16 (11.21, 68.35)</td>
 </tr>
 <tr class="odd">
 <td>Health care sector costs</td>
-<td align="left">85.24 (79.91, 89.83)</td>
-<td align="left">78.19 (38.09, 96.28)</td>
+<td align="left">82.92 (75.14, 89.51)</td>
+<td align="left">79.12 (50.86, 94.86)</td>
 </tr>
 <tr class="even">
 <td>Productivity costs</td>
-<td align="left">17.96 (7.27, 29.10)</td>
-<td align="left">27.00 (4.53, 65.32)</td>
+<td align="left">24.39 (15.62, 34.03)</td>
+<td align="left">31.50 (10.47, 61.66)</td>
 </tr>
 <tr class="odd">
 <td>Route of administration</td>
-<td align="left">18.27 (8.77, 26.72)</td>
-<td align="left">50.20 (13.78, 90.65)</td>
+<td align="left">17.25 (9.54, 25.18)</td>
+<td align="left">44.43 (15.88, 76.09)</td>
 </tr>
 <tr class="even">
 <td>Years since FDA approval</td>
-<td align="left">3.28 (0.72, 6.15)</td>
-<td align="left">82.90 (69.95, 96.08)</td>
+<td align="left">4.98 (1.91, 7.96)</td>
+<td align="left">83.72 (75.46, 93.80)</td>
 </tr>
 <tr class="odd">
 <td>Diarrhea</td>
-<td align="left">92.54 (84.84, 97.88)</td>
-<td align="left">91.32 (68.18, 99.75)</td>
+<td align="left">90.52 (81.28, 96.98)</td>
+<td align="left">89.48 (61.95, 99.19)</td>
 </tr>
 </tbody>
 </table>

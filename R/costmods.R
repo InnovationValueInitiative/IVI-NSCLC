@@ -47,14 +47,18 @@ create_costmods <- function(n = 100, struct, patients,
                             params_costs_inpt = iviNSCLC::params_costs_inpt,
                             params_costs_ae = iviNSCLC::params_costs_ae
                             ){
+
+  # Create cost models
   costmods <- list()
   costmods_tx <- create_costmod_tx(n, struct, patients, params_costs_tx)
   costmods$tx_ac <- costmods_tx$tx_ac
   costmods$tx_admin <- costmods_tx$tx_admin
   costmods$op <- create_costmod_default(n, struct, patients,
-                                        params_costs_op)
+                                        params_costs_op,
+                                        mult = 12)
   costmods$inpt <- create_costmod_default(n, struct, patients,
-                                          params_costs_inpt)
+                                          params_costs_inpt,
+                                          mult = 12)
   costmods$ae <- create_costmod_ae(n, struct, patients,
                                    ae_probs,
                                    params_costs_ae)
@@ -62,15 +66,19 @@ create_costmods <- function(n = 100, struct, patients,
 }
 
 create_costmod_default <- function(n = 100, 
-                                    struct, patients, 
-                                    params){
+                                   struct, patients, 
+                                   params, 
+                                   mult = 1 # Multiplier for mean/se depending on time unit
+                                   ){
   
   strategies <- data.table(strategy_id = 1:length(struct$txseqs))
   hesim_dat <- hesim::hesim_data(strategies = strategies,
                                   patients = patients)
   
   states <- create_states(struct)[get("state_name") != "D"]
-  tbl <- merge(states, params, by = "state_name")  
+  tbl <- merge(states, params, by = "state_name") 
+  tbl[, mean := mean * mult]
+  tbl[, se := se * mult]
   tbl <- hesim::stateval_tbl(tbl, dist = "gamma", hesim_data = hesim_dat)
   
   mod <- hesim::create_StateVals(tbl, n = n)

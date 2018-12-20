@@ -185,7 +185,7 @@ state_factor <- function(x, rev = FALSE){
 We construct the economic model by combining the separate models for the health state transitions, utility, and costs.
 
 ```{r}
-n_samples <- 100
+n_samples <- 1000
 ```
 
 ### Health state transition model
@@ -494,13 +494,13 @@ ggplot(icea_pw$delta, aes(x = ie, y = ic, col = strategy_name)) +
   geom_hline(yintercept = 0) + geom_vline(xintercept = 0)
 ```
 
-A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. More precisely, the CEAC plots the proportion of simulations from the PSA that a treatment sequence is cost-effective relative to the comparator (y-axis) against different willingness to pay thresholds (x-axis).
+A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. Here, we plot the proportion of simulations from the PSA that each treatment sequence is the most cost-effective option (y-axis) against different willingness to pay thresholds (x-axis).
 
 ```{r ceac}
-strategy_factor(icea_pw$ceac)
-ggplot(icea_pw$ceac, aes(x = k, y = prob, col = strategy_name)) +
+strategy_factor(icea$mce)
+ggplot(icea$mce, aes(x = k, y = prob, col = strategy_name)) +
   geom_line() + xlab("Willingness to pay") +
-  ylab("Probability cost-effective") +
+  ylab("Probability most cost-effective") +
   scale_x_continuous(label = scales::dollar) +
   scale_colour_discrete(name = "")
 ```
