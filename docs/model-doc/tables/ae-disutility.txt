@@ -1,5 +1,5 @@
 % latex table generated in R 3.5.0 by xtable 1.8-2 package
-% Wed Dec 19 22:38:07 2018
+% Thu Dec 20 11:40:37 2018
   \hline
 Elevated alanine transaminase & 0.2940 & 0.0970 & \citet{nafees2017health} \\ 
   Elevated aspartate transaminase & 0.2940 & 0.0970 & \citet{nafees2017health} \\ 
