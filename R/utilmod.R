@@ -74,15 +74,13 @@ create_utilmod <- function(n = 100, struct, patients,
   tbl1 <- tbl2 <- vector(mode = "list", length = nrow(strategies))
   for (i in 1:nrow(strategies)){
     tbl1[[i]] <- data.table(strategy_id = i,
-                            state_id = rep(states$state_id, each = n),
-                            sample = rep(1:n, times = nrow(states)),
-                            value = c(state_utility_dist) - expected_disutility[, i],
-                            time_start = 0)
+                            state_id = rep(1, each = n), # State S1
+                            sample = 1:n,
+                            value = state_utility_dist[, 1] - expected_disutility[, i])
     tbl2[[i]] <- data.table(strategy_id = i,
-                            state_id = rep(states$state_id, each = n),
-                            sample = rep(1:n, times = nrow(states)),
-                            value = c(state_utility_dist),
-                            time_start = 1/12)    
+                            state_id = rep(states$state_id[-1], each = n),
+                            sample = rep(1:n, times = nrow(states[-1])),
+                            value = c(state_utility_dist[, -1]))    
   }
   tbl1 <- rbindlist(tbl1)
   tbl2 <- rbindlist(tbl2)
