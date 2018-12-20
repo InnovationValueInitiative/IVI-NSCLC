@@ -94,7 +94,6 @@
 \renewcommand*{\sectionautorefname}{Section}
 \renewcommand*{\subsectionautorefname}{Section}
 \renewcommand*{\subsubsectionautorefname}{Section}
-\renewcommand*{\subsubsubsectionautorefname}{Section}
 \newcommand{\subfigureautorefname}{\figureautorefname}
 \newcommand{\aref}[1]{\hyperref[#1]{Appendix~\ref{#1}}}
 \newcommand{\algorithmautorefname}{Algorithm}
@@ -238,7 +237,7 @@ The continuing increase in U.S. healthcare costs has stimulated the introduction
 
 A thorough evidence-based analysis of the value of medical technology is resource intensive and complex.  Typically, there is no empirical study with sufficient long-term follow-up that compares all treatments for a particular disease regarding relevant clinical outcomes and costs. Thus, cost-effectiveness analyses generally rely on mathematical models that integrate evidence on the course of disease, treatment effects, and the relationship between clinical outcomes and costs, from a variety of studies. The nature of these evaluations can lead to disputes in the scientific literature and community. Models are typically difficult to understand. Even modeling experts may not be able to fully understand a model-based cost-effectiveness analysis without public source code and detailed model documentation. This lack of transparency also poses problems for users whose perspective, local context, or patient population varies from that of the reported analysis. In the absence of public access to the actual model, updating the evaluation is cumbersome, if not impossible, for someone other than the original model developer. As a result, published cost-effectiveness findings risk immediate irrelevance to some stakeholders and growing irrelevance to all stakeholders as new clinical evidence emerges. Value assessment only has relevance for decision-making when it reflects the totality of the latest evidence, is transparent, deemed credible by different stakeholders, representative of the local context and patient population, and can be easily updated without duplication of effort. 
 
-With the Open-Source Value Project (OSVP), the Innovation and Value Initiative (IVI) aims to maximize both the relevance and credibility of value assessment in the context of the United States’ decentralized decision-making environment by developing and providing access to flexible open-source decision models for value assessment. These interactive models have two primary objectives: (i) to enable a more constructive dialogue regarding value assessment between stakeholders (e.g. patients, payers, providers, and manufacturers) with different beliefs about relevant clinical data, modeling approaches, and value perspectives; and (ii) to provide local decision-makers with means to credible value assessment that reflects the local setting and is based on the latest evidence while accounting for all scientific uncertainty (due to patient heterogeneity, gaps in evidence, and different modeling beliefs). 
+With the Open-Source Value Project (OSVP), the Innovation and Value Initiative (IVI) aims to maximize both the relevance and credibility of value assessment in the context of the United States' decentralized decision-making environment by developing and providing access to flexible open-source decision models for value assessment. These interactive models have two primary objectives: (i) to enable a more constructive dialogue regarding value assessment between stakeholders (e.g. patients, payers, providers, and manufacturers) with different beliefs about relevant clinical data, modeling approaches, and value perspectives; and (ii) to provide local decision-makers with means to credible value assessment that reflects the local setting and is based on the latest evidence while accounting for all scientific uncertainty (due to patient heterogeneity, gaps in evidence, and different modeling beliefs). 
 
 In order for a decision model to remain relevant over time it needs to evolve along with the clinical evidence and scientific insights. OSVP facilitates iterative development and collaboration between multiple clinical and methodological experts.
 Refer to the IVI website {\href{https://www.thevalueinitiative.org/open-source-value-project/}{here} for additional information about the OSVP. 
@@ -392,14 +391,14 @@ With MCDA, the value of each treatment strategy is based on a "total value" scor
 \section{Source data and parameter estimation}\label{sec:data}
 Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. 
 
-\subsection{Treatment effects for transition rates}
+\subsection{Treatment effects for transition rates} \label{subsec:data-transprobs}
 Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of randomized controlled trials (RCTs) evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \hl{(Appendix X)}. 
 The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
 
 \subsubsection{Relative treatment effects with 1L therapy}
 Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
 
-RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest – it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \hl{(add reference)}. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
+RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \hl{(add reference)}. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
 
 Patients are randomized only within trials, not across trials, so there is a risk that patients participating in different trials differ with respect to demographic, disease or other characteristics. In addition, features of the trials themselves may differ. If these trial or patient characteristics are effect modifiers, i.e. they affect the treatment effects of an intervention versus a control, then there are systematic differences in treatment effects across trials. Systematic differences in known and unknown effect-modifiers among studies comparing the same interventions in direct fashion result in between-study heterogeneity. An imbalance in the distribution of effect modifiers between studies comparing different interventions will result in transitivity or consistency violations and therefore biased indirect comparisons.
 
@@ -481,9 +480,9 @@ where $u^0= \ln(u)$ and ${d_{1,1}}=0$, ${d_{2,1}}=0$, and ${d_{3,1}}=0$
 
 $h_{ik}^{SD}(u)$, $h_{ik}^{PD}(u)$, and $h_{ik}^{SD}(u)$ are the the hazard rate for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ for treatment arm $k$ at time $u$. The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1, ${d_{1,1t}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $.  ${d_{2,1t}}$ are the treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression relative to the reference treatment 1 (i.e. gefitinib). To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. ${d_{3,1t}}$ are the treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death relative to reference treatment 1 (i.e. gefitinib). 
 
-When $p_{1}=0$ and $\alpha_{3ik}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When ${(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to allow for arc- and bathtub shaped log-hazard functions. 
+When $p_{1}=0$ and $\alpha_{3ik}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When $\{(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to allow for arc- and bathtub shaped log-hazard functions. 
 
-A fixed effects model is obtained by replacing $\delta_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $\delta_{1,ik} &= d_{1, t_{ik}} - d_{1, t_{i1}}$. 
+A fixed effects model is obtained by replacing $\delta_{1,ik} \sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $\delta_{1,ik} = d_{1, t_{ik}} - d_{1, t_{i1}}$. 
 
 If it is assumed that treatment has only a direct effect on the transitions from stable to progression, which can be reasonably defended when a particular treatment upon disease progression is discontinued, the model can be simplified by setting $d_{3, t_{i1}}=0$.
 
@@ -653,11 +652,11 @@ M_{5} + M_{6}u^{p_1}\\
 where $u^0= \ln(u)$
 \\
 
-$h_{i}^{SD}(u)$, $h_{i}^{PD}(u)$, and $h_{i}^{SD}(u)$ are the underlying hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ at time $u$. The $M_{\cdot}$ represent the pooled scale and shape parameters describing the log hazard functions over time. As before, when $p_{1}=0$ and $M_{3}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $M_{3}=0$ these log-hazard functions follow a Gompertz distribution. When ${(p_1, p_2) = (0, 0), (0,1)\}$ and $M_{3}\neq0$, the log-hazard functions follow a second order fractional polynomial to allow for arc- and bathtub shaped log-hazard functions. 
+$h_{i}^{SD}(u)$, $h_{i}^{PD}(u)$, and $h_{i}^{SD}(u)$ are the underlying hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ at time $u$. The $M_{\cdot}$ represent the pooled scale and shape parameters describing the log hazard functions over time. As before, when $p_{1}=0$ and $M_{3}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $M_{3}=0$ these log-hazard functions follow a Gompertz distribution. When $\{(p_1, p_2) = (0, 0), (0,1)\}$ and $M_{3}\neq0$, the log-hazard functions follow a second order fractional polynomial to allow for arc- and bathtub shaped log-hazard functions. 
 
 \autoref{fig:hazards-gef-1L} shows the hazard functions for the transitions between stable, progression, and death with gefitinib for each fitted model.
 
-The posterior distributions of $M_{\cdot}$ along with the parameters representing the relative treatment effects of each TKI relative to gefitinib ($d_{1, t$), were used to simulate a posterior distribution for PFS and OS as displayed in \autoref{fig:surv-1L} for each 1L treatment and each fitted model. 
+The posterior distributions of $M_{\cdot}$ along with the parameters representing the relative treatment effects of each TKI relative to gefitinib ($d_{1, t}$), were used to simulate a posterior distribution for PFS and OS as displayed in \autoref{fig:surv-1L} for each 1L treatment and each fitted model. 
 
 
 \begin{figure}[h]
@@ -1130,14 +1129,15 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 
 
 \subsection{Kaplan-Meier curves}
+%\iffalse
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{ARCHER-1050, progression-free survival and overall survival}\label{fig:ARCHER-1050}
@@ -1148,10 +1148,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{ENSURE, progression-free survival and overall survival}\label{fig:ENSURE}
@@ -1162,10 +1162,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{EURTAC, progression-free survival and overall survival}\label{fig:EURTAC}
@@ -1176,10 +1176,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{FirstSIGNAL, progression-free survival and overall survival}\label{fig:firstSIGNAL}
@@ -1190,10 +1190,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FLAURA Soria 2018 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FLAURA Soria 2018 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{FLAURA, progression-free survival and overall survival}\label{fig:FLAURA}
@@ -1204,10 +1204,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{Han 2017, progression-free survival and overall survival}\label{fig:Han-2017}
@@ -1218,10 +1218,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{IPASS, progression-free survival and overall survival}\label{fig:IPASS}
@@ -1232,10 +1232,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_3 Sequist 2013 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_3 Yang 2015 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{LUX-LUNG 3, progression-free survival and overall survival}\label{fig:LUX-LUNG 3}
@@ -1246,10 +1246,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_6 Wu 2014 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_6 Yang 2015 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{LUX-LUNG 6, progression-free survival and overall survival}\label{fig:LUX-LUNG 6}
@@ -1260,10 +1260,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{LUX-LUNG 7, progression-free survival and overall survival}\label{fig:LUX-LUNG 7}
@@ -1274,10 +1274,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{NEJ002, progression-free survival and overall survival}\label{fig:NEJ002}
@@ -1288,10 +1288,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/OPTIMAL Zhou 2011 PFS (EGFR+_IA) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/OPTIMAL Zhou 2011 PFS (EGFR+_IA) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/OPTIMAL Zhou 2015 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/OPTIMAL Zhou 2015 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{OPTIMAL, progression-free survival and overall survival}\label{fig:OPTIMAL}
@@ -1302,10 +1302,10 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/WJTOG3405 Mitsudomi 2010 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{WJTOG3405, progression-free survival and overall survival}\label{fig:WJTOG3405}
@@ -1316,17 +1316,15 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Yang_2014 Yang 2014 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/KM plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Yang_2014 Yang 2016 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
 \caption{Yang 2014, progression-free survival and overall survival}\label{fig:Yang 2014}
 \end{figure}
-
-
-
+%\fi
 
 \end{appendices}
 \pdfbookmark[1]{References}{References}
