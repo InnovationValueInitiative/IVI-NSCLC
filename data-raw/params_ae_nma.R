@@ -11,9 +11,9 @@ n_aes <- length(aes)
 
 ## Check that files exist
 for (i in 1:n_aes){
-  file <- paste0("ae_nma/", aes[i], ".csv")
+  file <- paste0("ae-nma/", aes[i], ".csv")
   if (!file.exists(file)){
-    stop("The file ", paste0("ae_nma/", aes[i], ".csv"), " does not exist. ",
+    stop("The file ", paste0("ae-nma/", aes[i], ".csv"), " does not exist. ",
          "You must conduct a NMA and produce the required file.")
   }
 }
