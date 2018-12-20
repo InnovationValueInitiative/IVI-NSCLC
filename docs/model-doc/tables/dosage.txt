@@ -1,5 +1,5 @@
 % latex table generated in R 3.5.0 by xtable 1.8-2 package
-% Wed Dec 19 16:30:01 2018
+% Wed Dec 19 19:07:29 2018
   \hline
 erlotinib & 150 mg orally, once daily \\ 
   gefitinib & 250 mg orally, daily \\ 
