@@ -1,8 +1,8 @@
 % latex table generated in R 3.5.0 by xtable 1.8-2 package
-% Thu Dec 20 16:35:57 2018
+% Thu Dec 20 19:10:28 2018
   \hline
-Elevated alanine transaminase & 0.2940 & 0.0970 & \citet{nafees2017health} \\ 
-  Elevated aspartate transaminase & 0.2940 & 0.0970 & \citet{nafees2017health} \\ 
+Elevated alanine transaminase & 0.0000 & 0.0500 & \citet{NA} \\ 
+  Elevated aspartate transaminase & 0.0000 & 0.0500 & \citet{NA} \\ 
   Diarrhea & 0.2220 & 0.0730 & \citet{nafees2017health} \\ 
   Dry skin & 0.1510 & 0.0500 & \citet{nafees2017health} \\ 
   Eye problems & 0.1380 & 0.0460 & \citet{nafees2017health} \\ 
