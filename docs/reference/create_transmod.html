@@ -150,58 +150,58 @@ continuous time state transition model (CTSTM).</p>
 <span class='co'># Data for state transition model</span>
 <span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_transmod_data.html'>create_transmod_data</a></span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>)
 <span class='fu'>head</span>(<span class='no'>transmod_data</span>)</div><div class='output co'>#&gt;    strategy_id patient_id transition_id female      age mutation tx_abb tx_hist
-#&gt; 1:           1          1             1      1 72.40108        0    erl    &lt;NA&gt;
-#&gt; 2:           1          1             2      1 72.40108        0    erl    &lt;NA&gt;
-#&gt; 3:           1          1             3      1 72.40108        0   pbdc     erl
-#&gt; 4:           1          1             4      1 72.40108        0   pbdc     erl
-#&gt; 5:           1          1             5      1 72.40108        0   pbdc     erl
-#&gt; 6:           1          2             1      1 69.33498        0    erl    &lt;NA&gt;
+#&gt; 1:           1          1             1      0 53.73830        1    erl    &lt;NA&gt;
+#&gt; 2:           1          1             2      0 53.73830        1    erl    &lt;NA&gt;
+#&gt; 3:           1          1             3      0 53.73830        1    osi     erl
+#&gt; 4:           1          1             4      0 53.73830        1    osi     erl
+#&gt; 5:           1          1             5      0 53.73830        1    osi     erl
+#&gt; 6:           1          2             1      1 55.83448        0    erl    &lt;NA&gt;
 #&gt;    gef_s1p1_a0 gef_s1d_a0 d_erl_s1p1_a0 d_erl_s1d_a0 osi_s2p2_a0 osi_s2d_a0
 #&gt; 1:           1          0             1            0           0          0
 #&gt; 2:           0          1             0            1           0          0
-#&gt; 3:           0          0             0            0           0          0
-#&gt; 4:           0          0             0            0           0          0
+#&gt; 3:           0          0             0            0           1          0
+#&gt; 4:           0          0             0            0           0          1
 #&gt; 5:           0          0             0            0           0          0
 #&gt; 6:           1          0             1            0           0          0
 #&gt;    osi_p2d_a0 pbdc_s2p2_a0 pbdc_s2d_a0 pbdc_p2d_a0 gef_s1p1_a1 gef_s1d_a1
 #&gt; 1:          0            0           0           0           1          0
 #&gt; 2:          0            0           0           0           0          1
-#&gt; 3:          0            1           0           0           0          0
-#&gt; 4:          0            0           1           0           0          0
-#&gt; 5:          0            0           0           1           0          0
+#&gt; 3:          0            0           0           0           0          0
+#&gt; 4:          0            0           0           0           0          0
+#&gt; 5:          1            0           0           0           0          0
 #&gt; 6:          0            0           0           0           1          0
 #&gt;    d_erl_s1p1_a1 d_erl_s1d_a1 osi_s2p2_a1 osi_s2d_a1 osi_p2d_a1 pbdc_s2p2_a1
 #&gt; 1:             1            0           0          0          0            0
 #&gt; 2:             0            1           0          0          0            0
-#&gt; 3:             0            0           0          0          0            1
-#&gt; 4:             0            0           0          0          0            0
-#&gt; 5:             0            0           0          0          0            0
+#&gt; 3:             0            0           1          0          0            0
+#&gt; 4:             0            0           0          1          0            0
+#&gt; 5:             0            0           0          0          1            0
 #&gt; 6:             1            0           0          0          0            0
 #&gt;    pbdc_s2d_a1 pbdc_p2d_a1
 #&gt; 1:           0           0
 #&gt; 2:           0           0
 #&gt; 3:           0           0
-#&gt; 4:           1           0
-#&gt; 5:           0           1
+#&gt; 4:           0           0
+#&gt; 5:           0           0
 #&gt; 6:           0           0</div><div class='input'>
 <span class='co'># Parameters for state transition model</span>
 <span class='no'>transmod_params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_transmod_params.html'>create_transmod_params</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>transmod_data</span>)
 <span class='fu'>print</span>(<span class='no'>transmod_params</span>)</div><div class='output co'>#&gt; $coefs
 #&gt; $coefs$a0
 #&gt;      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0 osi_s2p2_a0 osi_s2d_a0
-#&gt; [1,]    -0.6120604            0   -3.718925  -9.074612   -2.460440  -5.620247
-#&gt; [2,]     0.1557767            0   -3.903314  -5.604638   -2.795038  -7.731571
+#&gt; [1,]    -0.0912667            0   -3.648530  -10.55446   -3.110703  -9.765389
+#&gt; [2,]    -0.6483487            0   -3.722753  -17.74184   -2.903898  -5.693312
 #&gt;      osi_p2d_a0 pbdc_s2p2_a0 pbdc_s2d_a0 pbdc_p2d_a0
-#&gt; [1,]  -4.857657    -2.219854   -11.55128   -2.294517
-#&gt; [2,]  -4.402594    -2.465521   -15.90065   -2.842789
+#&gt; [1,]  -4.384285    -2.296611   -6.673030   -2.361115
+#&gt; [2,]  -5.035345    -2.456223   -8.778964   -2.616264
 #&gt; 
 #&gt; $coefs$a1
 #&gt;      d_erl_s1p1_a1 d_erl_s1d_a1 gef_s1p1_a1 gef_s1d_a1 osi_s2p2_a1 osi_s2d_a1
-#&gt; [1,]    -0.1263855            0   0.5611043          0  -0.0785614          0
-#&gt; [2,]    -0.4486804            0   0.6446269          0   0.1483024          0
+#&gt; [1,]    -0.4070088            0   0.6034228          0   0.3565097          0
+#&gt; [2,]     0.2219618            0   0.6167823          0   0.1837313          0
 #&gt;      osi_p2d_a1 pbdc_s2p2_a1 pbdc_s2d_a1 pbdc_p2d_a1
-#&gt; [1,]  0.4241452    0.2847994           0 -0.27333993
-#&gt; [2,]  0.3320690    0.5244241           0 -0.03153745
+#&gt; [1,]  0.3347292    0.4317851           0 -0.20121546
+#&gt; [2,]  0.5006529    0.4663444           0 -0.09572371
 #&gt; 
 #&gt; 
 #&gt; $dist

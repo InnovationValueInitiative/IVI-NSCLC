@@ -96,7 +96,8 @@ txseq1 <- txseq(first = "gefitinib",
 txseq2 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
-txseqs <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = "first",
+txseqs <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2,
+                     start_line = "first",
                      mutation = "unknown")
 ```
 
@@ -130,7 +131,7 @@ txseqs_2L_neg <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_
 In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
 
 ```{r}
-struct <- model_structure(txseqs, dist = "weibull", n_states = "three")
+struct <- model_structure(txseqs, dist = "weibull", n_states = "four")
 
 # Health states
 states <- create_states(struct)
@@ -363,7 +364,7 @@ Mean health care sector costs for each randomly sampled parameter set are simula
 
 ```{r costs, fig.width = 4}
 # Simulate
-econmod$sim_costs(dr = .03)
+econmod$sim_costs(dr = 0.03)
 ce_sim <- econmod$summarize()
 
 # Plot

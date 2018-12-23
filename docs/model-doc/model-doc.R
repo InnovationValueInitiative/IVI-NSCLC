@@ -131,7 +131,9 @@ print(xtable(state_utility),
 ae_disutility <- params_utility$ae_disutility[ , .(ae_name, mean, se, ref)]
 ae_disutility[, mean := formatC(mean, format = "f", digits = 4)]
 ae_disutility[, se := formatC(se, format = "f", digits = 4)]
-ae_disutility[, ref := paste0("\\citet{", ref, "}")]
+ae_disutility[, ref := ifelse(is.na(ref),
+                              "N/A",
+                              paste0("\\citet{", ref, "}"))]
 print(xtable(ae_disutility), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,

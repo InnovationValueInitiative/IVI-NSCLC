@@ -147,30 +147,30 @@ attribute "tx_abb" denoting the treatment used to estimate adverse events for
 <span class='no'>struct</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_structure.html'>model_structure</a></span>(<span class='no'>txseqs</span>)
 <span class='no'>ae_probs</span> <span class='kw'>&lt;-</span> <span class='fu'>ae_probs</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>struct</span> <span class='kw'>=</span> <span class='no'>struct</span>)
 <span class='fu'>print</span>(<span class='no'>ae_probs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; $alt
-#&gt;             seq1        seq2
-#&gt; [1,] 0.012947067 0.016231877
-#&gt; [2,] 0.089132361 0.009316503
-#&gt; [3,] 0.008448773 0.003577583
+#&gt;            seq1       seq2
+#&gt; [1,] 0.04947135 0.11533762
+#&gt; [2,] 0.02617712 0.08485151
+#&gt; [3,] 0.02156232 0.09119395
 #&gt; 
 #&gt; $ast
 #&gt;            seq1       seq2
-#&gt; [1,] 0.09934940 0.09934940
-#&gt; [2,] 0.22637680 0.22637680
-#&gt; [3,] 0.07337532 0.07337532
+#&gt; [1,] 0.10312491 0.10312491
+#&gt; [2,] 0.07267753 0.07267753
+#&gt; [3,] 0.10509515 0.10509515
 #&gt; 
 #&gt; $diarrhea
-#&gt;           seq1        seq2
-#&gt; [1,] 0.8922514 0.102916202
-#&gt; [2,] 0.9230540 0.216278503
-#&gt; [3,] 0.1337323 0.003259509
+#&gt;             seq1        seq2
+#&gt; [1,] 0.007514118 0.008037219
+#&gt; [2,] 0.013627760 0.018529599
+#&gt; [3,] 0.002408500 0.017021846
 #&gt; </div><div class='input'><span class='no'>tidy_ae_probs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tidy.html'>tidy</a></span>(<span class='no'>ae_probs</span>)
-<span class='fu'>head</span>(<span class='no'>tidy_ae_probs</span>)</div><div class='output co'>#&gt;    strategy_id                       ae_name        prob
-#&gt; 1:           1 Elevated alanine transaminase 0.012947067
-#&gt; 2:           1 Elevated alanine transaminase 0.089132361
-#&gt; 3:           1 Elevated alanine transaminase 0.008448773
-#&gt; 4:           2 Elevated alanine transaminase 0.016231877
-#&gt; 5:           2 Elevated alanine transaminase 0.009316503
-#&gt; 6:           2 Elevated alanine transaminase 0.003577583</div></pre>
+<span class='fu'>head</span>(<span class='no'>tidy_ae_probs</span>)</div><div class='output co'>#&gt;    strategy_id                       ae_name       prob
+#&gt; 1:           1 Elevated alanine transaminase 0.04947135
+#&gt; 2:           1 Elevated alanine transaminase 0.02617712
+#&gt; 3:           1 Elevated alanine transaminase 0.02156232
+#&gt; 4:           2 Elevated alanine transaminase 0.11533762
+#&gt; 5:           2 Elevated alanine transaminase 0.08485151
+#&gt; 6:           2 Elevated alanine transaminase 0.09119395</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
