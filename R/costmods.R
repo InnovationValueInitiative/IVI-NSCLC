@@ -70,6 +70,7 @@ create_costmod_default <- function(n = 100,
                                    params, 
                                    mult = 1 # Multiplier for mean/se depending on time unit
                                    ){
+  mean <- se <- NULL
   
   strategies <- data.table(strategy_id = 1:length(struct$txseqs))
   hesim_dat <- hesim::hesim_data(strategies = strategies,
