@@ -15,7 +15,7 @@
 params_costs_op
 }
 \description{
-Mean outpatient costs by health state.
+Mean monthly outpatient costs by health state.
 }
 \examples{
 print(params_costs_op)

@@ -15,7 +15,7 @@
 params_costs_inpt
 }
 \description{
-Mean inpatient costs by health state.
+Mean monthly inpatient costs by health state.
 }
 \examples{
 print(params_costs_inpt)
