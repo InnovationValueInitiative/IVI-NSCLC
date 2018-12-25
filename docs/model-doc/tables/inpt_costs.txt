@@ -1,7 +1,7 @@
-% latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Sat Dec 22 22:14:33 2018
+% latex table generated in R 3.5.0 by xtable 1.8-2 package
+% Tue Dec 25 09:49:44 2018
   \hline
-S1 & 7,699 & 1,206 & \citet{skinner2018healthcare} \\ 
-  P1/S2 & 7,710 & 805 & \citet{skinner2018healthcare} \\ 
+S1 & 0 & 0 & \citet{NA} \\ 
+  P1/S2 & 5,805 & 606 & \citet{skinner2018healthcare} \\ 
   P2 & 7,710 & 805 & \citet{skinner2018healthcare} \\ 
    \hline
