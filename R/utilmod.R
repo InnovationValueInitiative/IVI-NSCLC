@@ -8,6 +8,11 @@
 #' @param ae_probs An "ae_probs" object as returned by \code{\link{ae_probs}}.
 #' @param params_utility Parameter estimates for health state utilities and
 #' adverse event disutilities in the same format as \code{\link{params_utility}}.
+#' @param ae_duration Duration of time over with disutility from adverse events 
+#' should accrue. If \code{"month"}, then disutility accrues over the first
+#' month of treatment; if \code{progression} then disutility accrues until
+#' disease progression (i.e., over the entire duration of time spent in 
+#' stable disease).
 #' @return An object of class "StateVals" from the 
 #' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
 #' @examples
@@ -34,7 +39,10 @@
 #' @export
 create_utilmod <- function(n = 100, struct, patients,
                            ae_probs,
-                           params_utility = iviNSCLC::params_utility){
+                           params_utility = iviNSCLC::params_utility,
+                           ae_duration = c("month", "progression")){
+  
+  ae_duration <- match.arg(ae_duration)
   
   # hesim data
   strategies <- data.table(strategy_id = 1:length(struct$txseqs))
@@ -73,14 +81,27 @@ create_utilmod <- function(n = 100, struct, patients,
   # Create utility model
   tbl1 <- tbl2 <- vector(mode = "list", length = nrow(strategies))
   for (i in 1:nrow(strategies)){
-    tbl1[[i]] <- data.table(strategy_id = i,
-                            state_id = rep(1, each = n), # State S1
-                            sample = 1:n,
-                            value = state_utility_dist[, 1] - expected_disutility[, i])
-    tbl2[[i]] <- data.table(strategy_id = i,
-                            state_id = rep(states$state_id[-1], each = n),
-                            sample = rep(1:n, times = nrow(states[-1])),
-                            value = c(state_utility_dist[, -1]))    
+    if (ae_duration == "month"){
+      tbl1[[i]] <- data.table(strategy_id = i,
+                            state_id = rep(states$state_id, each = n),
+                            sample = rep(1:n, times = nrow(states)),
+                            value = c(state_utility_dist) - expected_disutility[, i],
+                            time_start = 0)
+      tbl2[[i]] <- data.table(strategy_id = i,
+                            state_id = rep(states$state_id, each = n),
+                            sample = rep(1:n, times = nrow(states)),
+                            value = c(state_utility_dist),
+                            time_start = 1/12)   
+    } else {
+      tbl1[[i]] <- data.table(strategy_id = i,
+                              state_id = rep(1, each = n), # State S1
+                              sample = 1:n,
+                              value = state_utility_dist[, 1] - expected_disutility[, i])
+      tbl2[[i]] <- data.table(strategy_id = i,
+                              state_id = rep(states$state_id[-1], each = n),
+                              sample = rep(1:n, times = nrow(states[-1])),
+                              value = c(state_utility_dist[, -1]))    
+    }
   }
   tbl1 <- rbindlist(tbl1)
   tbl2 <- rbindlist(tbl2)

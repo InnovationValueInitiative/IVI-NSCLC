@@ -22,6 +22,12 @@ test_that("create_utilmod first line,  4 health states", {
   utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats,
                             ae_probs = ae_probs)
   expect_true(inherits(utilmod, "StateVals"))
+  expect_equal(nrow(utilmod$input_mats$time_intervals), 2)
+  
+  # disutility until progression
+  utilmod <- create_utilmod(n = n_samples, struct = struct, patients = pats,
+                            ae_probs = ae_probs, ae_duration = "progression")
+  expect_true(is.null(utilmod$input_mats$time_intervals))
 })
 
 test_that("create_utilmod first line,  3 health states", {

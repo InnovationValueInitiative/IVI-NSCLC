@@ -5,7 +5,8 @@
 \title{Create utility model}
 \usage{
 create_utilmod(n = 100, struct, patients, ae_probs,
-  params_utility = iviNSCLC::params_utility)
+  params_utility = iviNSCLC::params_utility, ae_duration = c("month",
+  "progression"))
 }
 \arguments{
 \item{n}{The number of random observations of the parameters to draw.}
@@ -18,6 +19,12 @@ create_utilmod(n = 100, struct, patients, ae_probs,
 
 \item{params_utility}{Parameter estimates for health state utilities and
 adverse event disutilities in the same format as \code{\link{params_utility}}.}
+
+\item{ae_duration}{Duration of time over with disutility from adverse events 
+should accrue. If \code{"month"}, then disutility accrues over the first
+month of treatment; if \code{progression} then disutility accrues until
+disease progression (i.e., over the entire duration of time spent in 
+stable disease).}
 }
 \value{
 An object of class "StateVals" from the 
