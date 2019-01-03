@@ -108,7 +108,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>create_utilmod</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>struct</span>, <span class='no'>patients</span>, <span class='no'>ae_probs</span>,
-  <span class='kw'>params_utility</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_utility'>params_utility</a></span>)</pre>
+  <span class='kw'>params_utility</span> <span class='kw'>=</span> <span class='kw pkg'>iviNSCLC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/iviNSCLC/topics/params_utility'>params_utility</a></span>, <span class='kw'>ae_duration</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"month"</span>,
+  <span class='st'>"progression"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +134,14 @@
       <th>params_utility</th>
       <td><p>Parameter estimates for health state utilities and
 adverse event disutilities in the same format as <code><a href='params_utility.html'>params_utility</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>ae_duration</th>
+      <td><p>Duration of time over with disutility from adverse events 
+should accrue. If <code>"month"</code>, then disutility accrues over the first
+month of treatment; if <code>progression</code> then disutility accrues until
+disease progression (i.e., over the entire duration of time spent in 
+stable disease).</p></td>
     </tr>
     </table>
     
