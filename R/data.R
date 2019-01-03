@@ -206,7 +206,7 @@
 
 #' Outpatient cost parameters
 #'
-#' Mean outpatient costs by health state.
+#' Mean monthly outpatient costs by health state.
 #'
 #' @format A data table with the following columns:
 #' \describe{
@@ -221,7 +221,7 @@
 
 #' Inpatient cost parameters
 #'
-#' Mean inpatient costs by health state.
+#' Mean monthly inpatient costs by health state.
 #'
 #' @format A data table with the following columns:
 #' \describe{

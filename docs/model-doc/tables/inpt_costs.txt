@@ -1,7 +1,7 @@
-% latex table generated in R 3.5.0 by xtable 1.8-2 package
-% Wed Dec 26 10:30:48 2018
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Thu Jan  3 12:54:40 2019
   \hline
-S1 & 1,909 & 469 & \citet{Graham2018BIA} \\ 
+S1 & 1,909 & 469 & \citet{graham2018budget} \\ 
   P1/S2 & 5,805 & 606 & \citet{skinner2018healthcare} \\ 
   P2 & 7,710 & 805 & \citet{skinner2018healthcare} \\ 
    \hline

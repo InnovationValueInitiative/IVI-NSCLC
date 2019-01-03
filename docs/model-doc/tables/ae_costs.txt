@@ -1,10 +1,10 @@
-% latex table generated in R 3.5.0 by xtable 1.8-2 package
-% Wed Dec 26 10:30:48 2018
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Thu Jan  3 12:54:40 2019
   \hline
 Diarrhea & 16,510 & 14,090 & 18,791 & \citet{wong2018assessment} \\ 
   Dry skin & 940 & 106 & 1,844 & \citet{wong2018assessment} \\ 
-  Elevated alanine transaminase & 19,122 & 7,915 & 30,328 & \citet{PinarBilir2016economic} \\ 
-  Elevated aspartate transaminase & 19,122 & 7,915 & 30,328 & \citet{PinarBilir2016economic} \\ 
+  Elevated alanine transaminase & 19,122 & 7,915 & 30,328 & \citet{bilir2016economic} \\ 
+  Elevated aspartate transaminase & 19,122 & 7,915 & 30,328 & \citet{bilir2016economic} \\ 
   Eye problems & 31,975 & 21,923 & 49,448 & \citet{wong2018assessment} \\ 
   Paronychia & 7,788 & 6,230 & 9,345 & DRG 602 \\ 
   Pneumonitis & 21,929 & 20,697 & 23,425 & \citet{wong2018assessment} \\ 
