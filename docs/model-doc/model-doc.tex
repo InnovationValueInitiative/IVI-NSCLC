@@ -874,16 +874,24 @@ Wholesale acquisition costs (WACs) are shown in \autoref{tbl:acq-costs}. Drug ac
 
 
 \subsection{Productivity}\label{subsec:data-productivity}
+Productivity costs are currently estimated using the human capital approach (HCA), which measures lost productivity using work time lost. The approach is rooted in economic theory as time away from work is valued at the market wage, which, in a competitive market, reflects the societal value of work. The HCA contrasts with the friction cost approach (FCA), which only measures productivity losses during the time (i.e., the friction period) required to replace workers leaving employment due to illness. A practical limitation of the FCA is that it is difficult to reliably estimate the friction period, which depends on the unemployment rate and consequently varies considerably across individuals and over time. In general, the HCA tends to overestimate productivity losses while the FCA may underestimate them. 
+
+Similar to \citet{hanly2012breast}, time lost from work in the model stems from three sources: temporary disability, permanent disability, and premature death. Temporary disability is measured using the mean duration of absence from work due to sick leave. A central estimate from the literature of the number of missed work days due to cancer is $\MissedDaysEst$ \citep{mehnert2011employment}, which we, by default, vary by 20\% in either direction in the PSA. Permanent disability is measured as the average reduction in work hours among cancer survivors. \citet{short2008long} estimate an average reduction of $\HoursReductionLower$ to $\HoursReductionUpper$ hours per week, which is inclusive of survivors who stopped working completely and similar across males and females. Work lost from premature mortality is the time from death (within the simulation) until retirement age (age 65). 
+
+Wages stratified by gender and employment status are reported in \autoref{tbl:wages}. Estimates of both the weekly wage and the proportion of individuals by employment status are from the U.S. Bureau of Labor Statistics. Productivity costs are computed by multiplying time lost from work (in weeks) by the weekly wage. 
 
 \begin{table}[!ht]
 \begin{center}
 \begin{threeparttable}
 \caption{Weekly wages by gender and employment status} \label{tbl:wages}
-\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}llrrl}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}lrr}
 \hline
-\multicolumn{1}{c}{Gender} & \multicolumn{1}{l}{Employment status} & \multicolumn{1}{l}{Percentage} &  \multicolumn{1}{l}{Weekly wage} \\
+ \multicolumn{1}{l}{Employment status} & \multicolumn{1}{l}{Percentage} &  \multicolumn{1}{l}{Weekly wage} \\
 \hline
-\ExpandableInput{tables/wages.txt}
+ \multicolumn{3}{c}{\textit{Women}}\\
+\ExpandableInput{tables/wages_female.txt} \\
+ \multicolumn{3}{c}{\textit{Men}}\\
+\ExpandableInput{tables/wages_male.txt}
 \hline
 \end{tabularx}
 \scriptsize
@@ -891,9 +899,6 @@ Wholesale acquisition costs (WACs) are shown in \autoref{tbl:acq-costs}. Drug ac
 \end{center}
 \end{table}
 
-Missed days of work to temporary disability = $\MissedDaysEst$ (range = $\MissedDaysLower$ - $\MissedDaysUpper$)
-
-Reduction in hours worked due to permanent disability = $\HoursReductionEst$ (range = $\HoursReductionLower$ - $\HoursReductionUpper$)
 
 \subsection{Value of hope}\label{subsec:data-voh}
 To be added.
@@ -1129,7 +1134,7 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 
 
 \subsection{Kaplan-Meier curves}
-%\iffalse
+\iffalse
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
@@ -1324,7 +1329,7 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \caption{Yang 2014, progression-free survival and overall survival}\label{fig:Yang 2014}
 \end{figure}
-%\fi
+\fi
 
 \end{appendices}
 \pdfbookmark[1]{References}{References}

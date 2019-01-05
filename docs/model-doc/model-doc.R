@@ -212,10 +212,17 @@ wages[, percent := paste0(formatC(100 * percent, format = "f", digits = 1),
                           "\\%")]
 wages[, weekly_wage := paste0("\\$",
                               formatC(weekly_wage, format = "d", big.mark = ","))]
-print(xtable(wages), 
+cols <- colnames(wages)[colnames(wages) != "gender"]
+print(xtable(wages[gender == "Male", cols, with = FALSE]), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,
-      file = "tables/wages.txt")
+      hline.after = NULL,
+      file = "tables/wages_male.txt")
+print(xtable(wages[gender == "Female", cols, with = FALSE]), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      hline.after = NULL,
+      file = "tables/wages_female.txt")
 
 # Temporary disability
 tmp_disability <- params_costs_prod$temporary_disability
