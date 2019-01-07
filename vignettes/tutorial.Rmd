@@ -264,7 +264,7 @@ stprobs <- econmod$stateprobs_[, .(prob_mean = mean(prob),
                                  by = c("strategy_id", "state_id", "t")]
 state_factor(stprobs)
 strategy_factor(stprobs)
-ggplot(stprobs[t < 2], aes(x = t, y = prob_mean, col = strategy_name)) +
+ggplot(stprobs[t < 15], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~state_name) + 
   xlab("Years") + ylab("Probability in health state") +
   scale_color_discrete(name = "") +
@@ -285,7 +285,7 @@ curves <- curves[, .(prob_mean = mean(prob),
                             prob_upper = quantile(prob, .975)),
                           by = c("strategy_id", "lab", "t")]
 strategy_factor(curves)
-ggplot(curves[t < 5], aes(x = t, y = prob_mean, col = strategy_name)) +
+ggplot(curves[t < 15], aes(x = t, y = prob_mean, col = strategy_name)) +
   geom_line() + facet_wrap(~lab, scales = "free_x") + 
   xlab("Years") + ylab("Survival probability") +
   scale_color_discrete(name = "") + 
@@ -459,18 +459,18 @@ Plots of undecomposed or incremental costs could be recreated in a similar fashi
 Decision analysis can be performed using either a cost-effectiveness analysis (CEA) or a multi criteria decision analysis (MCDA) framework.
 
 ## Cost-effectiveness analysis
-CEA can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$100,000.  
+CEA can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$150,000.  
 
 ```{r icea}
 icea <- hesim::icea(ce_sim, dr = .03)
 icea_pw <- hesim::icea_pw(ce_sim, comparator = 1, dr = .03)
 ```
 
-We report [incremental cost-effective ratios (ICERs)](https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio)---a commonly used measure for summarizing the cost-effectiveness of interventions---as well as the incremental net monetary benefit (NMB). The incremental NMB is defined as incremental QALYs multiplied by a willingness to pay threshold (\$100,000 in this example) less incremental costs.
+We report [incremental cost-effective ratios (ICERs)](https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio)---a commonly used measure for summarizing the cost-effectiveness of interventions---as well as the incremental net monetary benefit (NMB). The incremental NMB is defined as incremental QALYs multiplied by a willingness to pay threshold (\$150,000 in this example) less incremental costs.
 
 ```{r icer}
 icer <- hesim::icer_tbl(icea_pw,
-                        k = 100000, # WTP per QALY 
+                        k = 150000, # WTP per QALY 
                         cri = TRUE,
                         rownames = c("Incremental QALYs", "Incremental costs ($)", 
                                      "Incremental NMB ($)", "ICER ($ per QALY)", 
@@ -479,7 +479,7 @@ icer <- hesim::icer_tbl(icea_pw,
 knitr::kable(icer)
 ```
 
-We can also visualize the degree of uncertainty in our simulated cost and QALY values with a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 given our willingness to pay threshold of \$100,000.
+We can also visualize the degree of uncertainty in our simulated cost and QALY values with a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 given our willingness to pay threshold of \$150,000.
 
 ```{r ceplane}
 ylim <- max(abs(icea_pw$delta[, ic])) * 1.1
@@ -491,7 +491,7 @@ ggplot(icea_pw$delta, aes(x = ie, y = ic, col = strategy_name)) +
   scale_y_continuous(label = dollar, limits = c(-ylim, ylim)) +
   scale_x_continuous(limits = c(-xlim, xlim)) +
  scale_colour_discrete(name = "") +
-  geom_abline(slope = 100000, linetype = "dashed") +
+  geom_abline(slope = 150000, linetype = "dashed") +
   geom_hline(yintercept = 0) + geom_vline(xintercept = 0)
 ```
 
@@ -692,9 +692,9 @@ ggplot(plot_data,
   xlab("") + ylab("Incremental QALYs")
 ```
 
-Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB (again using a willingness to pay of \$100,000) with and without the value of hope.
+Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB (again using a willingness to pay of \$150,000) with and without the value of hope.
 ```{r voh-plot-nmb}
-k <- 100000
+k <- 150000
 incr_costs_mean <- incr_costs[[1]][category == "total" & dr == .03, 
                                    .(strategy_id, icosts_mean)]
 plot_data[, icosts := incr_costs_mean$icosts_mean[match(strategy_id,
