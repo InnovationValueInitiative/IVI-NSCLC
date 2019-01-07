@@ -123,6 +123,10 @@
 \usepackage[section]{placeins}
 \usepackage[export]{adjustbox}
 
+% pacakges for code
+\usepackage{listings}
+
+
 % theorem package
 \usepackage{theorem}
 \theoremstyle{plain}
@@ -250,7 +254,7 @@ Lung cancer is the leading cause of cancer related death worldwide \citep{jemal2
 
 
 \section{Purpose}\label{sec:purpose}
-The aim was to develop a flexible open-source simulation model that can be used to estimate the value of alternative sequential treatment strategies for patients with metastatic EGFR+ NSCLC. The IVI-NSCLC(egfr+) model is accessible to both technical and non-technical end-users and allows them evaluating the impact of uncertainty in clinical evidence, alternative model structures, the decision framework of choice (i.e. cost-effectiveness analysis [CEA)] or multi-criteria decision analysis [MCDA]), novel concepts of value, and perspective (healthcare or limited societal) on the estimates of value.
+The aim was to develop a flexible open-source simulation model that can be used to estimate the value of alternative sequential treatment strategies for patients with metastatic EGFR+ NSCLC. The IVI-NSCLC(egfr+) model is accessible to both technical and non-technical end-users and allows them evaluating the impact of uncertainty in clinical evidence, alternative model structures, the decision framework of choice (i.e. cost-effectiveness analysis (CEA)) or multi-criteria decision analysis (MCDA)), novel concepts of value, and perspective (healthcare or limited societal) on the estimates of value.
 
 \subsection{Value assessment}
 The IVI-NSCLC(egfr+) model is designed to assess the value of multiple competing sequential treatment strategies for patients with metastatic EGFR+ NSCLC starting with 1st line treatment (1L), followed by 2nd line treatment (2L), and treatment beyond 2nd line (2L+) as outlined in \autoref{fig:treatment-strategies}. Sequences that can be evaluated with version 1 of the model were informed by the available evidence base, guidelines, and clinician input.
@@ -1132,6 +1136,7 @@ For utility and cost-effectiveness studies, relevant information for the model w
 \subsection{Limitations}
 Despite the strengths of the proposed SLR, some limitations are applicable to all SLRs that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. Further, any trials that are published close to the search date but are not yet indexed in the databases at the time of the search will not be captured by the search of MEDLINE, EMBASE, and Cochrane Central Register of Controlled Trials. As with any literature review, this SLR is limited by the use of published data. There is a risk of publication bias as some clinical studies fail to be published while others are published only in abstract form, which presents limited information. Finally, the search and selection were restricted to trials published in English.
 
+\section{Network meta-analyiss for transition rates}
 
 \subsection{Kaplan-Meier curves}
 \iffalse
@@ -1330,6 +1335,31 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \caption{Yang 2014, progression-free survival and overall survival}\label{fig:Yang 2014}
 \end{figure}
 \fi
+
+\section{Value of hope}
+The value of hope measures the value patients place on tail-of-the-curve survival gains above and beyond what they place on increases in expected survival. It is computed for a given treatment strategy $k$ relative to a reference treatment $1$ by first estimating the certainty equivalent, or the life-years a patient would need to obtain to be indifference between treatment $k$ and the reference treatment (treatment $1$). To facilitate CEA, we work with QALYs rather than life-years. We assume a constant relative risk aversion (CRRA) utility function for QALYs $x$ of the form,
+
+\begin{equation}\label{eqn:value-of-hope}
+u(x) = x^\eta,
+\end{equation}
+
+where $\eta$ is a measure of risks aversion with $\eta > 1$ implying that a patient is risk loving and $\eta < 1$ that a patient is risk averse. Using survey data from patients, \citet{shafrin2017patient} estimate $\eta = 1.39$ for NSCLC patients. The certainty equivalent, $\alpha_{k1}$, for treatment $k$ relative to the reference treatment is computed by solving,
+
+\begin{equation}
+\int u(x + \alpha_{k1}) f_k(x) = V_1,
+\end{equation}    
+
+where $f_k(x)$ is the distribution of QALYs for treatment $k$ and $V_1 = u(x)f_1(x)$ is expected utility for the reference treatment. In the model, $f_k(x)$ and $f_1(x)$ are estimated using the distribution of QALYs from the individual-level simulation. We solve for $\alpha_{k1}$ using the \R{} root finding algorithm $\lstinline[columns=fixed]{uniroot}$. 
+
+The value of hope, $\theta$, is the difference between the certainty equivalent and differences in expected survival,
+
+\begin{equation}
+\theta = \alpha_{k1} - \left[E_k(x) - E_1(x) \right]
+\end{equation}     
+
+where $E_k(x)$ and $E_1(x)$ are mean QALYs for treatment $k$ and the reference arm, respectively. 
+
+Note that since the algorithm is computationally intensive, we do not currently use the PSA to compute a distribution for $\theta$. Instead, we estimate a point estimate using the distribution of QALYs across all PSA iterations. Future work could speed up the algorithm so that it is fast enough for PSA by rewriting it in a compiled language such as \CPP{}.  
 
 \end{appendices}
 \pdfbookmark[1]{References}{References}
