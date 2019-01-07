@@ -1346,15 +1346,15 @@ u(x) = x^\eta,
 where $\eta$ is a measure of risks aversion with $\eta > 1$ implying that a patient is risk loving and $\eta < 1$ that a patient is risk averse. Using survey data from patients, \citet{shafrin2017patient} estimate $\eta = 1.39$ for NSCLC patients. The certainty equivalent, $\alpha_{k1}$, for treatment $k$ relative to the reference treatment is computed by solving,
 
 \begin{equation}
-\int u(x + \alpha_{k1}) f_k(x) = V_1,
+\int u(x + \alpha_{k1}) f_k(x) dx = V_1,
 \end{equation}    
 
-where $f_k(x)$ is the distribution of QALYs for treatment $k$ and $V_1 = u(x)f_1(x)$ is expected utility for the reference treatment. In the model, $f_k(x)$ and $f_1(x)$ are estimated using the distribution of QALYs from the individual-level simulation. We solve for $\alpha_{k1}$ using the \R{} root finding algorithm $\lstinline[columns=fixed]{uniroot}$. 
+where $f_k(x)$ is the distribution of QALYs for treatment $k$ and $V_1 = \int u(x)f_1(x) dx$ is expected utility for the reference treatment. In the model, $f_k(x)$ and $f_1(x)$ are estimated using the distribution of QALYs from the individual-level simulation. We solve for $\alpha_{k1}$ using the \R{} root finding algorithm $\lstinline[columns=fixed]{uniroot}$. 
 
 The value of hope, $\theta$, is the difference between the certainty equivalent and differences in expected survival,
 
 \begin{equation}
-\theta = \alpha_{k1} - \left[E_k(x) - E_1(x) \right]
+\theta = \alpha_{k1} - \left[E_k(x) - E_1(x) \right],
 \end{equation}     
 
 where $E_k(x)$ and $E_1(x)$ are mean QALYs for treatment $k$ and the reference arm, respectively. 
