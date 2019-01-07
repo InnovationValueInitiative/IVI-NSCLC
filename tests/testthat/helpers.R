@@ -44,8 +44,9 @@ example_IndivCtstm <- function(n_samples = 2, n_patients = 3){
   ## Construct economic model
   ### Transitions
   transmod_data <- expand(hesim_dat)  
-  transmod <- create_IndivCtstmTrans(flexsurvreg_list(fits), data = transmod_data, trans_mat = tmat,
-                                    n = n_samples)  
+  transmod <- create_IndivCtstmTrans(flexsurvreg_list(fits), input_data = transmod_data,
+                                     trans_mat = tmat,
+                                     n = n_samples)  
   
   ### Utility 
   utilitymod <- create_StateVals(utility_tbl, n = n_samples)
