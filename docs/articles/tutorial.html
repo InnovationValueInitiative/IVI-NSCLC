@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2019-01-03</h4>
+            <h4 class="date">2019-01-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -251,11 +251,11 @@ transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
 <pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      1 75.61536        1    gef
-## 2:           1          1             2      1 75.61536        1    gef
-## 3:           1          1             3      1 75.61536        1    osi
-## 4:           1          1             4      1 75.61536        1    osi
-## 5:           1          1             5      1 75.61536        1    osi
+## 1:           1          1             1      0 74.08919        1    gef
+## 2:           1          1             2      0 74.08919        1    gef
+## 3:           1          1             3      0 74.08919        1    osi
+## 4:           1          1             4      0 74.08919        1    osi
+## 5:           1          1             5      0 74.08919        1    osi
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:    &lt;NA&gt;           1          0
 ## 2:    &lt;NA&gt;           0          1
@@ -268,11 +268,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
-## [1,]     0.2649197            0   -3.804982  -9.453808
-## [2,]     0.1620189            0   -4.001676  -9.375093
-## [3,]    -0.6210844            0   -3.855079  -6.283549
-## [4,]    -0.5985879            0   -3.575938  -9.924192
-## [5,]    -1.0200214            0   -3.915959 -13.433204</code></pre>
+## [1,]    -0.1512379            0   -3.484254 -11.422517
+## [2,]     1.1115757            0   -3.806288 -28.092245
+## [3,]     0.1760203            0   -3.990185 -11.071866
+## [4,]     0.2406994            0   -3.810798  -7.215331
+## [5,]    -0.4666728            0   -3.765114  -9.305367</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -323,7 +323,7 @@ stprobs &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs
                                  by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>, <span class="st">"t"</span>)]
 <span class="kw">state_factor</span>(stprobs)
 <span class="kw">strategy_factor</span>(stprobs)
-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(stprobs[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(stprobs[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
@@ -341,7 +341,7 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
                             <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
                           by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>, <span class="st">"t"</span>)]
 <span class="kw">strategy_factor</span>(curves)
-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">scales =</span> <span class="st">"free_x"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span><span class="st"> </span>
@@ -509,12 +509,12 @@ costs2[, category_name <span class="op">:</span><span class="er">=</span><span c
 <div id="cost-effectiveness-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cost-effectiveness-analysis" class="anchor"></a><span class="header-section-number">4.1</span> Cost-effectiveness analysis</h2>
-<p>CEA can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of $100,000.</p>
+<p>CEA can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of $150,000.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icea &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea</a></span>(ce_sim, <span class="dt">dr =</span> .<span class="dv">03</span>)
 icea_pw &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw</a></span>(ce_sim, <span class="dt">comparator =</span> <span class="dv">1</span>, <span class="dt">dr =</span> .<span class="dv">03</span>)</code></pre></div>
-<p>We report <a href="https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio">incremental cost-effective ratios (ICERs)</a>—a commonly used measure for summarizing the cost-effectiveness of interventions—as well as the incremental net monetary benefit (NMB). The incremental NMB is defined as incremental QALYs multiplied by a willingness to pay threshold ($100,000 in this example) less incremental costs.</p>
+<p>We report <a href="https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio">incremental cost-effective ratios (ICERs)</a>—a commonly used measure for summarizing the cost-effectiveness of interventions—as well as the incremental net monetary benefit (NMB). The incremental NMB is defined as incremental QALYs multiplied by a willingness to pay threshold ($150,000 in this example) less incremental costs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icer &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icer_tbl">icer_tbl</a></span>(icea_pw,
-                        <span class="dt">k =</span> <span class="dv">100000</span>, <span class="co"># WTP per QALY </span>
+                        <span class="dt">k =</span> <span class="dv">150000</span>, <span class="co"># WTP per QALY </span>
                         <span class="dt">cri =</span> <span class="ot">TRUE</span>,
                         <span class="dt">rownames =</span> <span class="kw">c</span>(<span class="st">"Incremental QALYs"</span>, <span class="st">"Incremental costs ($)"</span>, 
                                      <span class="st">"Incremental NMB ($)"</span>, <span class="st">"ICER ($ per QALY)"</span>, 
@@ -531,31 +531,31 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.63 (-0.11, 2.45)</td>
+<td align="left">0.65 (-0.15, 2.68)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">83,820 (-11,165, 291,731)</td>
+<td align="left">86,165 (-12,201, 317,744)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">-20,815 (-63,459, 9,430)</td>
+<td align="left">11,108 (-23,313, 90,816)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">133,038</td>
+<td align="left">132,871</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
 <td align="left">-</td>
-<td align="left">Not cost-effective</td>
+<td align="left">Cost-effective</td>
 </tr>
 </tbody>
 </table>
-<p>We can also visualize the degree of uncertainty in our simulated cost and QALY values with a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 given our willingness to pay threshold of $100,000.</p>
+<p>We can also visualize the degree of uncertainty in our simulated cost and QALY values with a cost-effectiveness plane. Simulated points for a given treatment sequence to the right of the dotted line are cost-effective relative to treatment sequence 1 given our willingness to pay threshold of $150,000.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ylim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(icea_pw<span class="op">$</span>delta[, ic])) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
 xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(icea_pw<span class="op">$</span>delta[, ie])) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
 <span class="kw">strategy_factor</span>(icea_pw<span class="op">$</span>delta)
@@ -565,7 +565,7 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> dollar, <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span>ylim, ylim)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span>xlim, xlim)) <span class="op">+</span>
 <span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">100000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">150000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceplane-1.png" width="672"></p>
 <p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. Here, we plot the proportion of simulations from the PSA that each treatment sequence is the most cost-effective option (y-axis) against different willingness to pay thresholds (x-axis).</p>
@@ -638,43 +638,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">1.00 (0.90, 1.11)</td>
-<td align="left">1.90 (0.84, 4.77)</td>
+<td align="left">0.99 (0.90, 1.11)</td>
+<td align="left">1.93 (0.80, 4.97)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.67 (0.59, 0.76)</td>
-<td align="left">0.64 (0.52, 0.74)</td>
+<td align="left">0.66 (0.59, 0.76)</td>
+<td align="left">0.64 (0.52, 0.75)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">1.91 (1.60, 2.44)</td>
-<td align="left">1.84 (1.41, 2.36)</td>
+<td align="left">1.89 (1.57, 2.37)</td>
+<td align="left">1.82 (1.39, 2.35)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">526,433 (461,523, 626,489)</td>
-<td align="left">610,253 (488,566, 836,207)</td>
+<td align="left">523,611 (459,200, 609,410)</td>
+<td align="left">609,776 (490,411, 870,155)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">56,664 (51,837, 60,992)</td>
-<td align="left">51,862 (40,874, 59,298)</td>
+<td align="left">57,373 (52,912, 61,769)</td>
+<td align="left">52,490 (39,716, 60,274)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.41 (0.37, 0.45)</td>
-<td align="left">0.49 (0.38, 0.65)</td>
+<td align="left">0.42 (0.38, 0.45)</td>
+<td align="left">0.50 (0.39, 0.67)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">8.53 (8.18, 8.89)</td>
-<td align="left">12.37 (11.94, 12.90)</td>
+<td align="left">8.49 (8.16, 8.87)</td>
+<td align="left">12.35 (11.91, 12.93)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
 <td align="left">0.02 (0.01, 0.03)</td>
-<td align="left">0.02 (0.00, 0.07)</td>
+<td align="left">0.02 (0.00, 0.06)</td>
 </tr>
 </tbody>
 </table>
@@ -706,43 +706,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">5.50 (4.48, 6.68)</td>
-<td align="left">14.75 (3.89, 43.95)</td>
+<td align="left">4.91 (3.93, 6.08)</td>
+<td align="left">14.62 (2.85, 46.32)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">67.99 (56.91, 81.37)</td>
-<td align="left">64.29 (45.85, 79.07)</td>
+<td align="left">73.10 (62.22, 87.86)</td>
+<td align="left">69.11 (50.67, 85.56)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">45.27 (35.52, 61.59)</td>
-<td align="left">42.96 (29.71, 59.19)</td>
+<td align="left">43.04 (33.07, 58.10)</td>
+<td align="left">40.67 (27.28, 57.21)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">88.15 (75.33, 96.47)</td>
-<td align="left">77.41 (48.47, 93.00)</td>
+<td align="left">85.18 (73.95, 93.61)</td>
+<td align="left">73.90 (39.82, 89.52)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">18.78 (5.93, 33.11)</td>
-<td align="left">33.04 (10.96, 65.66)</td>
+<td align="left">15.62 (4.63, 26.77)</td>
+<td align="left">27.82 (8.37, 59.74)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">23.10 (16.44, 29.60)</td>
-<td align="left">36.64 (18.18, 62.75)</td>
+<td align="left">22.39 (15.48, 28.75)</td>
+<td align="left">36.38 (17.06, 65.32)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">11.12 (4.92, 17.37)</td>
-<td align="left">78.91 (71.41, 88.32)</td>
+<td align="left">10.11 (4.16, 16.77)</td>
+<td align="left">78.59 (70.72, 88.81)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">91.76 (84.18, 97.51)</td>
-<td align="left">90.48 (66.37, 99.30)</td>
+<td align="left">87.75 (76.95, 96.23)</td>
+<td align="left">87.11 (55.42, 98.86)</td>
 </tr>
 </tbody>
 </table>
@@ -827,8 +827,8 @@ plot_data[, variable <span class="op">:</span><span class="er">=</span><span cla
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Incremental QALYs"</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/voh-plot-qalys-1.png" width="672"></p>
-<p>Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB (again using a willingness to pay of $100,000) with and without the value of hope.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span><span class="dv">100000</span>
+<p>Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB (again using a willingness to pay of $150,000) with and without the value of hope.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span><span class="dv">150000</span>
 incr_costs_mean &lt;-<span class="st"> </span>incr_costs[[<span class="dv">1</span>]][category <span class="op">==</span><span class="st"> "total"</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span>.<span class="dv">03</span>, 
                                    .(strategy_id, icosts_mean)]
 plot_data[, icosts <span class="op">:</span><span class="er">=</span><span class="st"> </span>incr_costs_mean<span class="op">$</span>icosts_mean[<span class="kw">match</span>(strategy_id,
