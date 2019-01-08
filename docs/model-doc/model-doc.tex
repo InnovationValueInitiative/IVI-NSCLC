@@ -964,7 +964,7 @@ Furthermore, both  4-state (\autoref{fig:model-structure-4-states}) and 3-state 
 
 
 \subsection{Implementation} 
-The individual-level CTSTM was implemented using the R package \href{https://innovationvalueinitiative.github.io/hesim/}{\pkg{hesim}} developed by IVI. The package provides a general framework for integrating parameter estimates from a statistical model with different types of simulation models for economic evaluation. Parameter uncertainty is propagated throughout \textit{hesim} models using PSA. Specifically, we randomly drew all input parameters as described in \autoref{subsec:psa} and simulated the CTSTM for each randomly sampled parameter set. All computationally intensive steps in \pkg{hesim} simulation models are written in C++ so the simulations are fast enough to be run with a PSA in web applications.
+The individual-level CTSTM was implemented using the R package \href{https://innovationvalueinitiative.github.io/hesim/}{\pkg{hesim}} developed by IVI. The package provides a general framework for integrating parameter estimates from a statistical model with different types of simulation models for economic evaluation. Parameter uncertainty is propagated throughout \pkg{hesim} models using PSA. Specifically, we randomly drew all input parameters as described in \autoref{subsec:psa} and simulated the CTSTM for each randomly sampled parameter set. All computationally intensive steps in \pkg{hesim} simulation models are written in C++ so the simulations are fast enough to be run with a PSA in web applications.
 
 \begin{appendices}
 \setcounter{table}{0}
