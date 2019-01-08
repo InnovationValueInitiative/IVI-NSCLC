@@ -718,7 +718,7 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 \end{figure}
 
 \subsubsection{Software}
-The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using R statistical software \citep{team2014r}.
+The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using \R{} statistical software \citep{team2014r}.
 
 \subsubsection{Use of meta-analysis results in economic model}
 Informed by model fit criteria, we used treatment effect estimates obtained with the fixed and random effects, Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model.  When a 3-state economic model is used, the 1L NMA is used to directly simulate disease progression. However, if a 4-state model is used, then both 1L and 2L estimates are incorporated. In particular, the 1L results are used to simulate the transition from $S_1$ to $P_1 \rightarrow S_2$ and the 2L results are used to simulate the transition from $P_1 \rightarrow S_2$ to $P_2$, $P_2$ to $D$, and $P_1 \rightarrow S_2$ to $D$ (see \autoref{fig:model-structure-4-states}). 
@@ -730,6 +730,7 @@ Informed by model fit criteria, we used treatment effect estimates obtained with
 The identified RCTs also provided the evidence base to estimate treatment specific adverse eent probabilities. Since adverse events in nearly all RCTs were reported as the number of patients experiencing the event, the NMA was performed on the proportion of patients experiencing the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}. \hl{Add details about pooling and the priors...}
 
 \subsection{Utilities}\label{subsec:data-utility}
+Health state utilities based on public literature are reported in \autoref{tbl:state-utility}. We assume that utilities do not vary across treatment strategies. We use estimates from \citet{nafees2017health}, a global study of patients with metastatic NSCLC that used health states representative of 1L treatment to derive utility values. Estimates are based on the "global" analysis that pooled estimates across 6 countries (Australia, China, France, Korea, Taiwan, and the UK) for patients with stable disease and no side effects. Utilities for patients with progressed disease are based on \citet{nafees2008health}, a study representative of metastatic NSCLC patients on 2L treatment. Estimates are from predictions using the mixed model among patients with no adverse events. Utility in the P1/S2 state is estimated using patients that have not yet progressed while on 2L, while estimates in the P2 state are among the progressed 2L patients. 
 
 \begin{table}[!ht]
 \begin{center}
@@ -746,6 +747,8 @@ The identified RCTs also provided the evidence base to estimate treatment specif
 \end{threeparttable}
 \end{center}
 \end{table}
+
+Adverse even disutilities are displayed in \autoref{tbl:ae-disutility}. When we cannot identify a disutility for an adverse event, we assume that the disutility is equivalent to the disutility from the "most similar" adverse event. Elevated alanine transaminase and elevated aspartate transaminase are assumed to have no effect on utility since they are based on test results and are not medical conditions.      
 
 \begin{table}[!ht]
 \begin{center}
@@ -1134,7 +1137,7 @@ For utility and cost-effectiveness studies, relevant information for the model w
 \subsection{Limitations}
 Despite the strengths of the proposed SLR, some limitations are applicable to all SLRs that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. Further, any trials that are published close to the search date but are not yet indexed in the databases at the time of the search will not be captured by the search of MEDLINE, EMBASE, and Cochrane Central Register of Controlled Trials. As with any literature review, this SLR is limited by the use of published data. There is a risk of publication bias as some clinical studies fail to be published while others are published only in abstract form, which presents limited information. Finally, the search and selection were restricted to trials published in English.
 
-\section{Network meta-analyiss for transition rates}
+\section{Network meta-analysis for transition rates}
 
 \subsection{Kaplan-Meier curves}
 \iffalse
