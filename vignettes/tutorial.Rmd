@@ -45,8 +45,6 @@ knitr::include_graphics("modstruct3_1L.png")
 <br>
 <br>
 
-If the model begins at second line, then a three-state model nearly identical to the figure above must be used. In the 2L case, patients begin in stable disease (S2) and transition to progression (P2) or death (D).
-
 The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis (PSA) is used to propagate uncertainty in the model input parameters throughout the model.
 
 Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/), [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html), and [scales](https://scales.r-lib.org/) for plotting, [knitr](https://rmarkdown.rstudio.com/lesson-7.html) to create tables, and [data.table](https://github.com/Rdatatable/data.table/wiki) to manipulate data and simulation output.
