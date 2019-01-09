@@ -112,12 +112,14 @@ ggplot2<span class="op">::</span><span class="kw"><a href="https://ggplot2.tidyv
 <a href="../reference/params_costs_op.html"><code>params_costs_op</code></a>: Outpatient medical costs by health state (S1, P1, and P2).</li>
 <li>
 <a href="../reference/params_costs_ae.html"><code>params_costs_ae</code></a>: The costs associated with each of the adverse events from the NMA.</li>
+<li>
+<a href="../reference/params_costs_prod.html"><code>params_costs_prod</code></a>: Productivity costs including costs from temporary disability, permanent disability, and premature mortality.</li>
 </ul>
 </div>
 <div id="economic-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#economic-model" class="anchor"></a><span class="header-section-number">3</span> Economic model</h1>
-<p>We provide an example a four-state model for 1L treatment, while also showing how a three-state model could be specified. Importantly, different modeling approaches should be used for the three-state and four-state approaches. Since a “clock-forward” multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and “clock-reset” models. In the clock-reset approach, time <span class="math inline">\(u\)</span> in <span class="math inline">\(h^{rs}(u)\)</span> resets after each transition whereas in the clock-forward approach time <span class="math inline">\(u\)</span> refers to time since the start of the model (see the tutorial <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712">here</a> for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used.</p>
+<p>We provide an example a four-state model for 1L treatment, while also showing how a three-state model could be specified. Importantly, different modeling approaches are used for the three-state and four-state approaches. Since a “clock-forward” multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and “clock-reset” models. In the clock-reset approach, time <span class="math inline">\(u\)</span> in <span class="math inline">\(h^{rs}(u)\)</span> resets after each transition whereas in the clock-forward approach time <span class="math inline">\(u\)</span> refers to time since the start of the model (see the tutorial <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712">here</a> for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used.</p>
 <p>An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the <code>IndivCtstm</code> class from the <a href="https://innovationvalueinitiative.github.io/hesim/">hesim</a> package.</p>
 <div id="set-up" class="section level2">
 <h2 class="hasAnchor">
@@ -131,7 +133,7 @@ ggplot2<span class="op">::</span><span class="kw"><a href="https://ggplot2.tidyv
 <div id="treatment-sequences" class="section level3">
 <h3 class="hasAnchor">
 <a href="#treatment-sequences" class="anchor"></a><span class="header-section-number">3.1.2</span> Treatment sequences</h3>
-<p>Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a “txseq_list” object using <code><a href="../reference/txseq_list.html">txseq_list()</a></code>. We specify that the model begins at first line treatment with the argument <code>start_line = "first"</code>.</p>
+<p>Since T790M mutation status is unknown in the 1L four-state case, a treatment sequence consists of a 1L treatment and treatment options for both the T790M+ and T790M- cases at 2L and 2L+. Multiple treatment sequences are combined into a “txseq_list” object using <code><a href="../reference/txseq_list.html">txseq_list()</a></code>. We specify that the model begins at first line treatment with the argument <code>start_line = "first"</code> at which time the T790M mutation status is unknown; however, note that the evidence base is currently too limited to reliably simulate disease progression when starting at second line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txseq1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/txseq.html">txseq</a></span>(<span class="dt">first =</span> <span class="st">"gefitinib"</span>,
                 <span class="dt">second =</span> <span class="kw">c</span>(<span class="st">"osimertinib"</span>, <span class="st">"PBDC"</span>),
                 <span class="dt">second_plus =</span> <span class="kw">c</span>(<span class="st">"PBDC + bevacizumab"</span>, <span class="st">"PBDC + bevacizumab"</span>))
@@ -158,7 +160,7 @@ strategy_factor &lt;-<span class="st"> </span><span class="cf">function</span>(x
 <div id="model-structure" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model-structure" class="anchor"></a><span class="header-section-number">3.1.3</span> Model structure</h3>
-<p>In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with <code><a href="../reference/model_structure.html">model_structure()</a></code>. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the <code>dist</code> argument. A description of the relevant health states can be generated using <code><a href="../reference/create_states.html">create_states()</a></code> and possible health state transitions are stored in a transition matrix generated using <code><a href="../reference/create_trans_mat.html">create_trans_mat()</a></code>.</p>
+<p>A model structure is specified with <code><a href="../reference/model_structure.html">model_structure()</a></code>. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the <code>dist</code> argument. A description of the relevant health states can be generated using <code><a href="../reference/create_states.html">create_states()</a></code> and possible health state transitions are stored in a transition matrix generated using <code><a href="../reference/create_trans_mat.html">create_trans_mat()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">struct &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_structure.html">model_structure</a></span>(txseqs, <span class="dt">dist =</span> <span class="st">"weibull"</span>, <span class="dt">n_states =</span> <span class="st">"four"</span>)
 
 <span class="co"># Health states</span>
@@ -218,18 +220,18 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 <div id="health-state-transition-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#health-state-transition-model" class="anchor"></a><span class="header-section-number">3.2.1</span> Health state transition model</h3>
-<p>Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with <code><a href="../reference/create_transmod_data.html">create_transmod_data()</a></code> and stored below in a data table named <code>transmod_data</code>. A fraction of patients are T790M mutation positive (and this fraction can vary across treatments). Coefficients from the multi-state NMA that are contained in <code>transmod_data</code> are extracted using <code>transmod_params()</code>.</p>
+<p>Health state transitions are simulated as a function of input data (which contains the covariates from the multi-state model describing differences in transition rates across treatments) and parameters (the coefficients from the multi-state NMA). These are automatically created as a function of the model structure, transition matrix, and patient population with <code><a href="../reference/create_transmod_data.html">create_transmod_data()</a></code> and stored below in a data table named <code>transmod_data</code>. A fraction of patients are T790M mutation positive. Coefficients from the multi-state NMA that are contained in <code>transmod_data</code> are extracted using <code>transmod_params()</code>.</p>
 <p>Recall from the discussion above that an individual-level model is required to simulate a CTSTM that that is a mixture of clock-reset and clock-forward approaches. The <code><a href="../reference/create_transmod.html">create_transmod()</a></code> function constructs an individual-level CTSTM (iCTSTM) to model health state transitions (i.e., it returns a <code>hesim</code> object of class <code>IndivCtstmTrans</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Input data</span>
 transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
-<pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      0 48.15228        1    gef
-## 2:           1          1             2      0 48.15228        1    gef
-## 3:           1          1             3      0 48.15228        1    osi
-## 4:           1          1             4      0 48.15228        1    osi
-## 5:           1          1             5      0 48.15228        1    osi
+<pre><code>##    strategy_id patient_id transition_id female     age mutation tx_abb
+## 1:           1          1             1      0 70.3586        0    gef
+## 2:           1          1             2      0 70.3586        0    gef
+## 3:           1          1             3      0 70.3586        0   pbdc
+## 4:           1          1             4      0 70.3586        0   pbdc
+## 5:           1          1             5      0 70.3586        0   pbdc
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:    &lt;NA&gt;           1          0
 ## 2:    &lt;NA&gt;           0          1
@@ -242,11 +244,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
-## [1,]     0.2909657            0   -3.767061 -15.995285
-## [2,]    -0.4288891            0   -3.789207 -29.456689
-## [3,]    -1.1032906            0   -3.651758 -10.732582
-## [4,]    -0.6129411            0   -3.944962  -8.146708
-## [5,]    -1.0142208            0   -3.768042 -21.243038</code></pre>
+## [1,]   0.037220247            0   -3.696091  -6.964869
+## [2,]  -0.496832113            0   -3.518658 -21.564717
+## [3,]  -0.438276938            0   -3.600952 -15.912690
+## [4,]   0.007174253            0   -3.670499  -8.365475
+## [5,]  -0.217958785            0   -3.617846  -6.795269</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -255,7 +257,7 @@ transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cr
 <div id="adverse-events" class="section level3">
 <h3 class="hasAnchor">
 <a href="#adverse-events" class="anchor"></a><span class="header-section-number">3.2.2</span> Adverse events</h3>
-<p>Adverse events are assumed to occur during the first month of treatment and cause a decrease in utility and an increase in costs. Adverse event probabilities in the model are consequently based on the first treatment in a treatment sequence (i.e., the 1L treatment for a model starting at 1L and the 2L treatment for a model starting at 2L). We obtain these probabilities from the posterior distributions stored in <code>params_ae_nma</code> using the <code><a href="../reference/ae_probs.html">ae_probs()</a></code> function.</p>
+<p>Adverse events are assumed to occur during the first month of treatment and cause a decrease in utility and an increase in costs. Adverse event probabilities in the model are consequently based on the first treatment in a treatment sequence. We obtain these probabilities from the posterior distributions stored in <code>params_ae_nma</code> using the <code><a href="../reference/ae_probs.html">ae_probs()</a></code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ae_probs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ae_probs.html">ae_probs</a></span>(n_samples, struct)</code></pre></div>
 </div>
 <div id="utility-and-cost-models" class="section level3">
@@ -368,13 +370,13 @@ plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span clas
 <div id="qalys" class="section level3">
 <h3 class="hasAnchor">
 <a href="#qalys" class="anchor"></a><span class="header-section-number">3.3.3</span> QALYs</h3>
-<p>QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate and summarize by computing means by treatment strategy and health state.</p>
+<p>QALYs and life-years can be simulated for each randomly sampled parameter set by treatment strategy and health state. We simulate values without a discount rate and using a 3 percent discount rate and summarize by computing means by treatment strategy and health state.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_qalys</span>(<span class="dt">dr =</span> <span class="kw">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>))
 mean_qalys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[, .(<span class="dt">mean_lys =</span> <span class="kw">mean</span>(lys),
                              <span class="dt">mean_qalys =</span> <span class="kw">mean</span>(qalys)),
                              by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>, <span class="st">"dr"</span>)]</code></pre></div>
-<p>First we plot undiscounted life-years by health state.</p>
+<p>We first plot undiscounted life-years by health state.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">state_factor</span>(mean_qalys, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
 <span class="kw">strategy_factor</span>(mean_qalys, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
 <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mean_qalys[dr <span class="op">==</span><span class="st"> </span><span class="dv">0</span>], 
@@ -385,7 +387,7 @@ mean_qalys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/mean_lys-1.png" width="672"></p>
-<p>We also plot discounted QALYs.</p>
+<p>We then plot discounted QALYs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mean_qalys[dr <span class="op">==</span><span class="st"> </span>.<span class="dv">03</span>],
        <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_qalys, <span class="dt">fill =</span> state_name)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
@@ -400,7 +402,7 @@ mean_qalys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[
 <div id="health-care-sector-costs" class="section level4">
 <h4 class="hasAnchor">
 <a href="#health-care-sector-costs" class="anchor"></a><span class="header-section-number">3.3.4.1</span> Health care sector costs</h4>
-<p>Mean health care sector costs for each randomly sampled parameter set are simulated by health state, treatment strategy, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e, compute mean costs and QALYs for each randomly sampled parameter set and treatment strategy). Here, we plot mean costs along with 95 percent credible intervals.</p>
+<p>Mean health care sector costs for each randomly sampled parameter set are simulated by treatment strategy, health state, and category assuming a 3 percent discount rate. Furthermore, now that both costs and QALYs have been simulated, we can summarize clinical benefits and costs (i.e, compute mean costs and QALYs for each treatment strategy by parameter set). Here, we plot mean costs along with 95 percent credible intervals.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate</span>
 econmod<span class="op">$</span><span class="kw">sim_costs</span>(<span class="dt">dr =</span> <span class="fl">0.03</span>)
 ce_sim &lt;-<span class="st"> </span>econmod<span class="op">$</span><span class="kw">summarize</span>()
@@ -463,7 +465,7 @@ incr_costs_i &lt;-<span class="st"> </span><span class="kw"><a href="http://www.
 <div id="productivity-costs" class="section level4">
 <h4 class="hasAnchor">
 <a href="#productivity-costs" class="anchor"></a><span class="header-section-number">3.3.4.2</span> Productivity costs</h4>
-<p>Simulated productivity costs are computed using the <code><a href="../reference/sim_prod_costs.html">sim_prod_costs()</a></code> function. They are, by default, computed using the human capital approach (HCA) and incorporate productivity losses from premature mortality, temporary leave of absence upon diagnosis, and reduced hours among survivors following a return to work.</p>
+<p>Simulated productivity costs are computed using the <code><a href="../reference/sim_prod_costs.html">sim_prod_costs()</a></code> function. They are currently computed using the human capital approach (HCA) and incorporate productivity losses from premature mortality, temporary leave of absence upon diagnosis, and reduced hours among survivors following a return to work.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prodcosts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sim_prod_costs.html">sim_prod_costs</a></span>(econmod, <span class="dt">patients =</span> pats)
 ce_sim2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/add_prod_costs.html">add_prod_costs</a></span>(ce_sim, <span class="dt">prod_costs =</span> prodcosts)</code></pre></div>
 <p>We will replot costs decomposed by category so that we can examine the magnitude of productivity costs.</p>
@@ -515,22 +517,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.59 (-0.11, 2.30)</td>
+<td align="left">0.57 (-0.13, 2.32)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">79,217 (-10,852, 291,969)</td>
+<td align="left">76,362 (-14,506, 291,608)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">9,796 (-22,339, 76,516)</td>
+<td align="left">9,307 (-19,866, 69,667)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">133,492</td>
+<td align="left">133,705</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -552,7 +554,7 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">150000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceplane-1.png" width="672"></p>
-<p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. Here, we plot the proportion of simulations from the PSA that each treatment sequence is the most cost-effective option (y-axis) against different willingness to pay thresholds (x-axis).</p>
+<p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. We plot the proportion of simulations from the PSA that each treatment sequence is the most cost-effective option (y-axis) against different willingness to pay thresholds (x-axis).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strategy_factor</span>(icea<span class="op">$</span>mce)
 <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(icea<span class="op">$</span>mce, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> prob, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
@@ -571,7 +573,7 @@ xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">
 <div id="multi-criteria-decision-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multi-criteria-decision-analysis" class="anchor"></a><span class="header-section-number">4.2</span> Multi criteria decision analysis</h2>
-<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. Here, we assess the treatment strategies on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, productivity costs, route of administration, years since FDA approval, and the probability of experiencing diarrhea. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). Performance for the two treatment attributes—route of administration and years since FDA approval—can be computed with <code><a href="../reference/txattr_performance.html">txattr_performance()</a></code>. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.</p>
+<p>We perform the MCDA using the approach described by the <a href="https://www.ncbi.nlm.nih.gov/pubmed/26797229">2016 ISPOR Task Force</a>. In this example, the treatment strategies are assessed on eight criteria: life-years with stable disease on 1L treatment, life-years with progressed disease on 1L treatment (or equivalently, life-years stable disease on 2L treatment), life-years with progressed disease on 2L treatment, health care sector costs, productivity costs, route of administration, years since FDA approval, and the probability of experiencing diarrhea. (Note that we restrict adverse events to only diarrhea for illustrative purposes, but that other adverse events could be included as well). Performance for the two treatment attributes—route of administration and years since FDA approval—can be computed with <code><a href="../reference/txattr_performance.html">txattr_performance()</a></code>. Both are a weighted averages of each treatment in a treatment sequence, with weights equal to the proportion of total life years with each treatment.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Outcomes by criteria</span>
 lys &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/data.table">data.table</a></span>(<span class="dt">lys_s1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys],
                   <span class="dt">lys_p1 =</span> econmod<span class="op">$</span>qalys_[state_id <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>dr <span class="op">==</span><span class="st"> </span><span class="fl">0.03</span>, lys])
@@ -622,53 +624,53 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.99 (0.89, 1.10)</td>
-<td align="left">1.85 (0.81, 4.31)</td>
+<td align="left">0.99 (0.90, 1.11)</td>
+<td align="left">1.82 (0.82, 4.45)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.67 (0.59, 0.76)</td>
-<td align="left">0.64 (0.53, 0.75)</td>
+<td align="left">0.67 (0.59, 0.77)</td>
+<td align="left">0.65 (0.55, 0.75)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">1.90 (1.59, 2.45)</td>
-<td align="left">1.82 (1.43, 2.37)</td>
+<td align="left">1.90 (1.59, 2.42)</td>
+<td align="left">1.83 (1.46, 2.35)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">524,691 (456,331, 623,841)</td>
-<td align="left">603,909 (488,784, 814,755)</td>
+<td align="left">525,943 (457,691, 629,064)</td>
+<td align="left">602,305 (489,882, 829,437)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">64,892 (59,982, 69,483)</td>
-<td align="left">59,556 (46,211, 67,927)</td>
+<td align="left">64,387 (58,916, 68,827)</td>
+<td align="left">59,116 (45,602, 67,216)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.42 (0.38, 0.45)</td>
-<td align="left">0.49 (0.38, 0.65)</td>
+<td align="left">0.41 (0.37, 0.45)</td>
+<td align="left">0.49 (0.38, 0.64)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">8.50 (8.16, 8.86)</td>
-<td align="left">12.34 (11.91, 12.87)</td>
+<td align="left">8.54 (8.21, 8.88)</td>
+<td align="left">12.37 (11.96, 12.89)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
 <td align="left">0.02 (0.01, 0.03)</td>
-<td align="left">0.02 (0.00, 0.06)</td>
+<td align="left">0.02 (0.00, 0.07)</td>
 </tr>
 </tbody>
 </table>
-<p>Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a “total value” is computed as weighted average of each criteria on this common scale. We’ll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.</p>
+<p>Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a “total value” is computed as a weighted average of each criteria on this common scale. We’ll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lpvf_plot_data.html">lpvf_plot_data</a></span>(outcomes<span class="op">$</span>hc_costs, <span class="dt">optimal =</span> <span class="st">"low"</span>)
 <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(plot_data, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Health care sector costs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Score"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/lpvf-1.png" width="672"></p>
-<p>We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we’ll use example weights for the analysis. We conduct the MCDA with function <code><a href="../reference/mcda.html">mcda()</a></code>, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a “total value” and the probability that each treatment strategy has a given rank.</p>
+<p>We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we’ll use example weights for the analysis. We conduct the MCDA with <code><a href="../reference/mcda.html">mcda()</a></code>, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a “total value” and the probability that each treatment strategy has a given rank.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights &lt;-<span class="st"> </span><span class="kw">c</span>(.<span class="dv">17</span>, .<span class="dv">17</span>, .<span class="dv">16</span>, .<span class="dv">2</span>, .<span class="dv">1</span>, .<span class="dv">05</span>, .<span class="dv">05</span>, .<span class="dv">1</span>)
 mcda &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcda.html">mcda</a></span>(outcomes, <span class="dt">sample =</span> <span class="st">"sample"</span>, <span class="dt">strategy =</span> <span class="st">"strategy_id"</span>,
              <span class="dt">criteria =</span> criteria_vars,
@@ -690,43 +692,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">4.84 (3.72, 6.01)</td>
-<td align="left">14.23 (2.88, 41.14)</td>
+<td align="left">3.94 (2.95, 5.15)</td>
+<td align="left">12.66 (2.05, 40.51)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">63.37 (51.53, 77.81)</td>
-<td align="left">59.51 (41.70, 75.87)</td>
+<td align="left">68.60 (55.97, 84.06)</td>
+<td align="left">64.89 (48.46, 80.88)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">47.05 (34.10, 70.68)</td>
-<td align="left">43.92 (27.27, 67.31)</td>
+<td align="left">42.64 (31.11, 61.67)</td>
+<td align="left">40.02 (26.56, 58.96)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">88.66 (76.12, 97.31)</td>
-<td align="left">78.64 (51.98, 93.20)</td>
+<td align="left">86.69 (72.32, 96.19)</td>
+<td align="left">76.05 (44.41, 91.71)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">17.21 (6.00, 29.21)</td>
-<td align="left">30.25 (9.80, 62.84)</td>
+<td align="left">15.75 (5.38, 28.54)</td>
+<td align="left">28.07 (9.14, 59.66)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">22.60 (14.80, 29.78)</td>
-<td align="left">37.56 (15.62, 68.65)</td>
+<td align="left">17.90 (10.27, 25.35)</td>
+<td align="left">33.03 (11.59, 63.63)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">10.44 (4.18, 17.12)</td>
-<td align="left">81.42 (73.54, 91.36)</td>
+<td align="left">10.18 (4.09, 16.51)</td>
+<td align="left">81.00 (73.41, 90.75)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">91.28 (83.37, 97.26)</td>
-<td align="left">90.70 (65.23, 99.24)</td>
+<td align="left">90.11 (81.17, 96.95)</td>
+<td align="left">89.43 (56.16, 99.19)</td>
 </tr>
 </tbody>
 </table>

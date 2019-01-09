@@ -12,7 +12,9 @@ txseq_list(..., start_line = c("first", "second"), mutation = c("unknown",
 
 \item{start_line}{The starting line of treatmnet that is being modeled. When
 modeling second line treatment, the first line must be specified
-in order to characterize a treatment history.}
+in order to characterize a treatment history; however, note that the 
+transition model cannot currently be estimated for models starting at second
+line because the evidence base is too limited.}
 
 \item{mutation}{T790M mutation status. If the model starts at first line, then
 this must be \code{"unknown"}; otherwise, if the model starts at second line,
