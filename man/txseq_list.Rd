@@ -22,7 +22,6 @@ then the mutation status must be specified as either \code{"positive"} or
 \value{
 An object of class "txseq_list", which is a list of objects of class. 
 \code{start_line} and \code{mutation} are stored as attributes.
-\code{\link{txseq}}.
 }
 \description{
 Create a list of objects of class "txseq".
@@ -38,4 +37,7 @@ txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
 class(txseqs)        
 print(txseqs$seq1)
 attributes(txseqs)
+}
+\seealso{
+\code{\link{txseq}}
 }

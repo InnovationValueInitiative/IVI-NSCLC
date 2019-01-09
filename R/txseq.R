@@ -118,6 +118,8 @@ tx_2LP_work <- function(second){
 #' model begins at second line and T790M status is therefore known. 
 #' @return An object of class "txseq", which is a list of treatments used at first line (\code{first}),
 #'  second line (\code{second}), and post second line (\code{second_plus}).
+#' @seealso
+#' \code{\link{txseq_list}}
 #' @export
 #' @examples
 #' txseq <- txseq(first = "erlotinib",
@@ -237,7 +239,8 @@ check.txseq <- function(x){
 #' \code{"negative"}, since it will be known.
 #' @return An object of class "txseq_list", which is a list of objects of class. 
 #' \code{start_line} and \code{mutation} are stored as attributes.
-#' \code{\link{txseq}}. 
+#' @seealso
+#' \code{\link{txseq}}
 #' @export
 #' @examples
 #' txseq1 <- txseq(first = "erlotinib",

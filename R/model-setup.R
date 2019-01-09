@@ -34,7 +34,6 @@ model_structure <- function(txseqs,
                             dist = c("weibull", "gompertz", "fracpoly1",
                                      "fracpoly2")) {
   dist <- match.arg(dist)
-  #if (dist %in% c("fracpoly1", "fracpoly2")) dist <- "weibull" # PLACEHOLDER WHILE WE TRY TO GET SAMPLING WITH FP WORKING !
   n_states <- match.arg(n_states)
   check_is_class(txseqs, "txseqs", "txseq_list")
   if (n_states == "four" & attributes(txseqs)$start_line == "second"){

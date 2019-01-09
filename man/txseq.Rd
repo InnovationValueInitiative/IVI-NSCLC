@@ -42,3 +42,6 @@ txseq$first
 txseq$second
 txseq$second_plus 
 }
+\seealso{
+\code{\link{txseq_list}}
+}
