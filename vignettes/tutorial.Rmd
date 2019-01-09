@@ -116,15 +116,6 @@ strategy_factor <- function(x, rev = FALSE){
 }
 ```
 
-Note that treatment sequences can also begin at second line, conditional on T790M mutation status.
-
-```{r}
-txseqs_2L_pos <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = "second",
-                              mutation = "positive")
-txseqs_2L_neg <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2, start_line = "second",
-                              mutation = "negative")
-```
-
 ### Model structure
 In the IVI-NSCLC model, the treatment sequences and model structure are closely connected: a four-state model is only possible when beginning at 1L and cannot be used to model outcomes with osimertinib. A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
 
@@ -140,29 +131,20 @@ tmat <- create_trans_mat(struct)
 print(tmat)
 ```
 
-We could have also specified a three-state model, starting at either first or second line.
+We could have also specified a three-state model.
 
 ```{r}
-# 1st line model
-struct_3_1L <- model_structure(txseqs, dist = "weibull",
+struct_3 <- model_structure(txseqs, dist = "weibull",
                             n_states = "three")
-print(create_states(struct_3_1L))
-print(create_trans_mat(struct_3_1L))
-
-# 2nd line model (T790M positive)
-struct_3_2L <- model_structure(txseqs_2L_pos, dist = "weibull",
-                              n_states = "three")
-print(create_states(struct_3_2L))
-print(create_trans_mat(struct_3_2L))
+print(create_states(struct_3))
+print(create_trans_mat(struct_3))
 ```
 
 Recall that the transition matrix depends on the model structure.
 
 ```{r}
-tmat_3_1L <- create_trans_mat(struct_3_1L)
-tmat_3_2L <- create_trans_mat(struct_3_2L)
-print(tmat_3_1L)
-print(tmat_3_2L)
+tmat_3 <- create_trans_mat(struct_3)
+print(tmat_3)
 ```
 
 As with treatment strategies, its useful to write a convenience function for generating informative names for health states for plotting.
@@ -338,21 +320,36 @@ ggplot(plot_data, aes(x = strategy_name, y = prob_mean)) +
 ```
 
 ### QALYs
-Mean QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate, and plot undiscounted life-years.
+QALYs and life-years can be simulated for each randomly sampled parameter set by treatment sequence and health state. We simulate values without a discount rate and using a 3 percent discount rate and summarize by computing means by treatment strategy and health state.
 
-```{r mean_lys, fig.height = 1.5}
+```{r sim_qalys}
 # Simulate
 econmod$sim_qalys(dr = c(0, .03))
+mean_qalys <- econmod$qalys_[, .(mean_lys = mean(lys),
+                             mean_qalys = mean(qalys)),
+                             by = c("strategy_id", "state_id", "dr")]
+```
 
-# Plot
-lys <- econmod$qalys_[dr == 0, .(mean_lys = mean(lys)),
-                            by = c("strategy_id", "state_id")]
-state_factor(lys, rev = TRUE)
-strategy_factor(lys, rev = TRUE)
-ggplot(lys, aes(x = strategy_name, y = mean_lys, fill = state_name)) + 
+First we plot undiscounted life-years by health state.
+```{r mean_lys, fig.height = 1.5}
+state_factor(mean_qalys, rev = TRUE)
+strategy_factor(mean_qalys, rev = TRUE)
+ggplot(mean_qalys[dr == 0], 
+       aes(x = strategy_name, y = mean_lys,
+                       fill = state_name)) + 
   geom_bar(stat = "identity") +
   scale_fill_discrete(name = "") +
   xlab("") + ylab("Mean life-years") +
+  coord_flip() 
+```
+
+We also plot discounted QALYs.
+```{r mean_qalys, fig.height = 1.5}
+ggplot(mean_qalys[dr == .03],
+       aes(x = strategy_name, y = mean_qalys, fill = state_name)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "") +
+  xlab("") + ylab("Mean QALYs") +
   coord_flip() 
 ```
 
