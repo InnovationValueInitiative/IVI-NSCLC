@@ -4,7 +4,7 @@ library("ggplot2")
 theme_set(theme_bw())
 
 # Age distribution table
-# Source: https://seer.cancer.gov/archive/csr/1975_2010/results_merged/topic_med_age.pdf
+# Source: https://seer.cancer.gov/csr/1975_2015/results_merged/topic_age_dist.pdf
 age_dist <- fread("age-distribution.csv")
 age_dist[, age_top := ifelse(is.infinite(age_top), 100, age_top)]
 age_dist[, age_cat := paste0(age_bot, " - ", age_top)]
@@ -41,7 +41,8 @@ p <- ggplot(sim_data, aes(x = age)) +
                 mapping = aes(x = age_mid),
                 fun = dnorm,
                 args = list(mean = age_mean, sd = age_sd),
-                col = "red")
+                col = "red") +
+  ylab("Density") + xlab("Age")
 ggsave("figs/age-density.pdf", p, width = 5, height = 7)
 
 

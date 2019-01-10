@@ -1,3 +1,5 @@
+\def \AgeMean{70.39}
+\def \AgeSd{11.68}
 \def \MissedDaysEst{151}
 \def \MissedDaysLower{120.8}
 \def \MissedDaysUpper{181.2}

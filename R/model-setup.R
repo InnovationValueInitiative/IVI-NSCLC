@@ -154,16 +154,20 @@ create_trans_mat <- function(object){
 #' 
 #' Create a data table of patients to model.
 #' @param n Number of patients to model.
-#' @param female_prop The proportion of patients that are female.
+#' @param female_prop The proportion of patients that are female. 
 #' @param age_mean Mean age. Based on sources cited in \code{\link{age_dist}}.
 #' @param age_sd Standard deviation of age. Based on sources cited in \code{\link{age_dist}}.
 #' @param mutation_prob The probability of a T790M mutation. The default value
 #' is based on Table 3 from the article by Ma et al. cited below.
 #' @examples
 #' create_patients(n = 10)
+#' @seealso
+#' \code{\link{age_dist}}
 #' @references 
 #' Ma C, Wei S, Song Y. T790M and acquired resistance of EGFR TKI: a literature 
 #' review of clinical reports. Journal of thoracic disease. 2011 Mar;3(1):10.
+#' 
+#' \url{https://seer.cancer.gov/csr/1975_2015/results_merged/topic_age_dist.pdf}
 #' @return An object of class "patients", which is a \code{data.table} 
 #' containing each modeled patient. Columns are:
 #' \describe{
@@ -173,7 +177,7 @@ create_trans_mat <- function(object){
 #' }
 #' 
 #' @export
-create_patients <- function(n, female_prop = .45, 
+create_patients <- function(n, female_prop = .48, 
                             age_mean = 70.39, age_sd = 11.68,
                             mutation_prob = .52){
   patient_id <- 1:n

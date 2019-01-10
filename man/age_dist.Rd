@@ -18,7 +18,7 @@ Also contains the attributes:
 \item{sd}{Standard deviation of age.}
 }}
 \source{
-{\url{https://seer.cancer.gov/archive/csr/1975_2010/results_merged/topic_med_age.pdf}}
+{\url{https://seer.cancer.gov/csr/1975_2015/results_merged/topic_age_dist.pdf}}
 }
 \usage{
 age_dist

@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Thu Jan  3 12:54:40 2019
+% Wed Jan  9 15:56:09 2019
   \hline
 Elevated alanine transaminase & 0.0000 & 0.0000 & N/A \\ 
   Elevated aspartate transaminase & 0.0000 & 0.0000 & N/A \\ 

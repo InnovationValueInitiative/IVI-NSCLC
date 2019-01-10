@@ -4,7 +4,7 @@
 \alias{create_patients}
 \title{Create patient data table}
 \usage{
-create_patients(n, female_prop = 0.45, age_mean = 70.39, age_sd = 11.68,
+create_patients(n, female_prop = 0.48, age_mean = 70.39, age_sd = 11.68,
   mutation_prob = 0.52)
 }
 \arguments{
@@ -37,4 +37,9 @@ create_patients(n = 10)
 \references{
 Ma C, Wei S, Song Y. T790M and acquired resistance of EGFR TKI: a literature 
 review of clinical reports. Journal of thoracic disease. 2011 Mar;3(1):10.
+
+\url{https://seer.cancer.gov/csr/1975_2015/results_merged/topic_age_dist.pdf}
+}
+\seealso{
+\code{\link{age_dist}}
 }

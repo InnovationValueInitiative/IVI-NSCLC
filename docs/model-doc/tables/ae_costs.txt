@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Thu Jan  3 12:54:40 2019
+% Wed Jan  9 15:56:09 2019
   \hline
 Diarrhea & 16,510 & 14,090 & 18,791 & \citet{wong2018assessment} \\ 
   Dry skin & 940 & 106 & 1,844 & \citet{wong2018assessment} \\ 

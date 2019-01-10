@@ -9,6 +9,10 @@ txt <- list() # List for storing numbers to use in text of model documentation
 # Run this script out of the docs/model-doc directory. 
 # setwd("docs/model-doc")
 
+# Population -------------------------------------------------------------------
+txt$AgeMean <- round(attr(age_dist, "mean"), 2)
+txt$AgeSd <- round(attr(age_dist, "sd"), 2)
+
 # Transition probabilities (i.e., multi-state NMA) -----------------------------
 surv_mean <- function(x){
   # Compute mean survival times from survival curves by model and treatment.
@@ -239,7 +243,6 @@ txt$HoursReductionUpper <- perm_disability["hours_reduction_upper"]
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame
 txtstats <- data.frame(do.call(rbind, txt))
-rownames(txtstats) <- gsub("txt.", "", rownames(txtstats))
 
 # output to text file to input into latex
 txtstats$def <-  "\\def"
