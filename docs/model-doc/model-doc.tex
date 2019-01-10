@@ -303,9 +303,9 @@ Version 1 of the IVI-NSCLC(egfr+) model is designed to provide a starting point 
 
 \textbf{Detailed model documentation:} This document provides extensive technical details on the model structure, statistical methods for parameter estimation, and source data.
 
-\textbf{Expert Model Interface:} For users not well-versed in the programming language, a web application for running the model online is provided. The web application is designed for custom analyses and allows users full control over the treatments, patient population, model structures, parameter values, and simulation settings.
+\textbf{Advanced Value Tool:} For users not well-versed in the programming language, a web application for running the model online is provided. The web application is designed for custom analyses and allows users full control over the treatments, patient population, model structures, parameter values, and simulation settings.
 
-\textbf{Value Tool:} An important aim of OSVP is to obtain feedback from as many relevant stakeholders as possible. A general audience web-application has been developed, allowing those who are not experts in modeling or health economics, to interact with the model.
+\textbf{Basic Value Tool:} An important aim of OSVP is to obtain feedback from as many relevant stakeholders as possible. A general audience web-application has been developed, allowing those who are not experts in modeling or health economics, to interact with the model.
 
 \section{Population}\label{sec:population}
 The model simulates outcomes for a population of patients, each with distinct characteristics. Three characteristics can currently be specified: T790M mutation status, age, and gender. The proportion of patients with a T790M mutation is based on \citet{ma2011t790m}, who report that 82 of 158 (52\%) patients tested positive for a mutation after TKI failure. The age distribution is based on the incidence of lung and bronchus cancer cases between 2011 - 2015 as reported by the Surveillance, Epidemiology, and End Results (SEER) Program, which is well approximated by a normal distribution with mean $\AgeMean$ and standard deviation $\AgeSd$ (\autoref{fig:age-distribution}) \citep{noone2018seer}. The same SEER review reports that women account for 123,650 (48\%) of 257,301 incident cases between 2011 and 2015. 
