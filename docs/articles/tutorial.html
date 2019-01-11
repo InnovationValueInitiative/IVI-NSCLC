@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2019-01-08</h4>
+            <h4 class="date">2019-01-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -78,7 +78,7 @@
 <p>The IVI-NSCLC model simulates disease progression for different sequential treatment strategies using a continuous time state transition model (CTSTM) for patients with epidermal growth factor receptor (EGFR) positive NSCLC. Treatment sequences that can be modeled are shown in the figure below. Tyrosine kinase inhibitors (TKIs) can be used at first line. Possible second line treatments (2L) and treatments beyond second line (2L+) depend on whether a patient acquired a T790M mutation.</p>
 <p><br><br><img src="treatment-strategies.png" width="800px"><br><br></p>
 <p>Sequential treatment can be incorporated into the CTSTM by expanding the number of health states according to the number of treatment lines. In general, one can define a health state for each treatment line, a health state after progression on the final line, and a death state, so a model with n treatment lines will have n+2 health states. A patient with stable disease moves to the second treatment in a sequence after progression on the first treatment, to the third treatment after progression on the second treatment, and so on. A patient can die at any time. Unfortunately, the evidence base is currently too limited to explicitly model the transition rates by line of treatment and a simplified model structure is needed. Two options are available with the IVI-NSCLC model: a four-state model and a three-state model. We prefer the four-state CTSTM because it explicitly models 2L treatments; however, there is no 2L evidence following some 1L treatments (i.e., osimertinib), so a three-state model may be preferred in these cases.</p>
-<p>In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span> and are denoted by <span class="math inline">\(h^{rs}(u)\)</span>.</p>
+<p>In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, patients move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span> and are denoted by <span class="math inline">\(h^{rs}(u)\)</span>.</p>
 <p><br><img src="modstruct4_1L.png" width="800px"><br><br></p>
 <p>In the three-state model, all hazard rates are based on 1L clinical trial evidence. Patients begin in stable disease (S1) and they can transition to the progression state (P1) or death (D).</p>
 <p><br><img src="modstruct3_1L.png" width="800px"><br><br></p>
@@ -226,12 +226,12 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
-<pre><code>##    strategy_id patient_id transition_id female     age mutation tx_abb
-## 1:           1          1             1      0 70.3586        0    gef
-## 2:           1          1             2      0 70.3586        0    gef
-## 3:           1          1             3      0 70.3586        0   pbdc
-## 4:           1          1             4      0 70.3586        0   pbdc
-## 5:           1          1             5      0 70.3586        0   pbdc
+<pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
+## 1:           1          1             1      0 55.78967        1    gef
+## 2:           1          1             2      0 55.78967        1    gef
+## 3:           1          1             3      0 55.78967        1    osi
+## 4:           1          1             4      0 55.78967        1    osi
+## 5:           1          1             5      0 55.78967        1    osi
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:    &lt;NA&gt;           1          0
 ## 2:    &lt;NA&gt;           0          1
@@ -244,11 +244,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
-## [1,]   0.037220247            0   -3.696091  -6.964869
-## [2,]  -0.496832113            0   -3.518658 -21.564717
-## [3,]  -0.438276938            0   -3.600952 -15.912690
-## [4,]   0.007174253            0   -3.670499  -8.365475
-## [5,]  -0.217958785            0   -3.617846  -6.795269</code></pre>
+## [1,]    -1.5538020            0   -3.949206 -12.375298
+## [2,]    -0.8586010            0   -3.907607  -9.573717
+## [3,]     0.1551964            0   -3.631727 -10.693650
+## [4,]    -0.8444641            0   -3.773555 -10.045693
+## [5,]     0.2949073            0   -3.501230  -9.570414</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -517,22 +517,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.57 (-0.13, 2.32)</td>
+<td align="left">0.61 (-0.13, 2.44)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">76,362 (-14,506, 291,608)</td>
+<td align="left">80,649 (-13,241, 292,118)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">9,307 (-19,866, 69,667)</td>
+<td align="left">10,309 (-22,125, 81,144)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">133,705</td>
+<td align="left">132,999</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -624,38 +624,38 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.99 (0.90, 1.11)</td>
-<td align="left">1.82 (0.82, 4.45)</td>
+<td align="left">0.99 (0.90, 1.10)</td>
+<td align="left">1.87 (0.83, 4.58)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.67 (0.59, 0.77)</td>
-<td align="left">0.65 (0.55, 0.75)</td>
+<td align="left">0.68 (0.60, 0.78)</td>
+<td align="left">0.65 (0.54, 0.76)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">1.90 (1.59, 2.42)</td>
-<td align="left">1.83 (1.46, 2.35)</td>
+<td align="left">1.91 (1.59, 2.38)</td>
+<td align="left">1.83 (1.38, 2.32)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">525,943 (457,691, 629,064)</td>
-<td align="left">602,305 (489,882, 829,437)</td>
+<td align="left">525,827 (463,079, 617,069)</td>
+<td align="left">606,476 (491,878, 838,292)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">64,387 (58,916, 68,827)</td>
-<td align="left">59,116 (45,602, 67,216)</td>
+<td align="left">64,259 (59,508, 68,964)</td>
+<td align="left">58,918 (45,390, 67,092)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.41 (0.37, 0.45)</td>
-<td align="left">0.49 (0.38, 0.64)</td>
+<td align="left">0.41 (0.37, 0.44)</td>
+<td align="left">0.49 (0.38, 0.65)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">8.54 (8.21, 8.88)</td>
-<td align="left">12.37 (11.96, 12.89)</td>
+<td align="left">8.60 (8.28, 8.91)</td>
+<td align="left">12.41 (12.01, 12.92)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
@@ -692,43 +692,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">3.94 (2.95, 5.15)</td>
-<td align="left">12.66 (2.05, 40.51)</td>
+<td align="left">6.10 (5.11, 7.24)</td>
+<td align="left">15.30 (4.44, 43.58)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">68.60 (55.97, 84.06)</td>
-<td align="left">64.89 (48.46, 80.88)</td>
+<td align="left">63.73 (52.02, 78.47)</td>
+<td align="left">59.92 (42.95, 76.58)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">42.64 (31.11, 61.67)</td>
-<td align="left">40.02 (26.56, 58.96)</td>
+<td align="left">50.57 (37.19, 70.40)</td>
+<td align="left">47.16 (28.35, 68.17)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">86.69 (72.32, 96.19)</td>
-<td align="left">76.05 (44.41, 91.71)</td>
+<td align="left">88.23 (77.57, 95.56)</td>
+<td align="left">78.81 (51.71, 92.20)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">15.75 (5.38, 28.54)</td>
-<td align="left">28.07 (9.14, 59.66)</td>
+<td align="left">19.23 (7.66, 30.91)</td>
+<td align="left">32.36 (12.27, 65.62)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">17.90 (10.27, 25.35)</td>
-<td align="left">33.03 (11.59, 63.63)</td>
+<td align="left">22.36 (15.93, 28.73)</td>
+<td align="left">37.00 (16.61, 65.86)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">10.18 (4.09, 16.51)</td>
-<td align="left">81.00 (73.41, 90.75)</td>
+<td align="left">9.46 (3.65, 15.36)</td>
+<td align="left">80.10 (72.72, 89.46)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">90.11 (81.17, 96.95)</td>
-<td align="left">89.43 (56.16, 99.19)</td>
+<td align="left">90.33 (80.94, 97.01)</td>
+<td align="left">89.47 (59.03, 99.04)</td>
 </tr>
 </tbody>
 </table>
