@@ -261,7 +261,7 @@ The IVI-NSCLC(egfr+) model is designed to assess the value of multiple competing
 
 The model is suitable for informing decisions for specific (sub)populations, but is not suitable for making predictions at the individual level, nor should it replace the patient-physician shared decision-making process. Local decision makers can modify the model to perform analyses based on populations or parameter values reflective of their local setting while accounting for scientific uncertainty that helps them understand the confidence with which they make decisions. 
  
-The IVI-NSCLC(egfr+) model is not a value assessment framework, but a model that simulates the health outcomes, risks, and costs associated with sequential treatment sequences for metastatic EGFR+ NSCLC. It can therefore be used with any value framework preferred by the user. Currently, two methodologies for decision analysis are supported by the model: CEA based on cost per quality adjusted life year (QALY) expressed as net-monetary benefit (NMB) and MCDA \citep{keeney1993decisions}. The MCDA is implemented according to the methodology described in \citet{thokala2016multiple} by weighting performance on different criteria (see \autoref{subsec:outcomes-value-assessment}). As described in as described in the \href{https://innovationvalueinitiative.github.io/IVI-RA/model-description/model-description.pdf}{documentation} to the IVI-RA model, a linear partial value function is used to translate performance on each criteria to a common scale and an additive model aggregates results. The assessment of value can be performed from a health care sector perspective by only incorporating health care sector costs, or from a (limited) societal perspective by also including productivity losses.
+The IVI-NSCLC(egfr+) model is not a value assessment framework, but a model that simulates the health outcomes, risks, and costs associated with sequential treatment sequences for metastatic EGFR+ NSCLC. It can therefore be used with any value framework preferred by the user. Currently, two methodologies for decision analysis are supported by the model: CEA based on cost per quality adjusted life year (QALY) expressed as net-monetary benefit (NMB) and MCDA \citep{keeney1993decisions}. The MCDA is implemented according to the methodology described in \citet{thokala2016multiple} by weighting performance on different criteria (see \autoref{subsec:outcomes-value-assessment}). As described in as described in the \href{https://innovationvalueinitiative.github.io/IVI-RA/model-description/model-description.pdf}{documentation} to the IVI-RA model, a linear partial value function is used to translate performance on each criteria to a common scale and an additive model aggregates results. The assessment of value can be performed from a health care sector perspective by only incorporating health care sector costs, or from a (limited) societal perspective by also including productivity costs.
 
 \citet{garrison2017toward} suggest five concepts of value that researchers should consider adding to the standard cost per QALY based CEA: (i) a reduction in uncertainty from a diagnostic test; (ii) insurance value for healthy individuals due to reduction against physical risk; (iii) the value of hope for individuals who become risk-loving and would rather pay for a therapy with a long right survival tail than a therapy with a shorter right survival tail but an equivalent (or shorter) expected life-expectancy; (iv) real option value when a therapy allows an individual to benefit from future medical innovations; and (v) scientific spillovers when the benefits of an innovation cannot be entirely appropriated by the innovator.
 
@@ -274,7 +274,7 @@ Decision models can be used to inform efficient use of health care resources, bu
 
 
 \section{Iterative process}\label{sec:process}
-In order for a decision model to remain relevant over time it needs to evolve along with the clinical evidence and scientific insights. An open-source approach facilitates iterative development and collaboration between multiple clinical and methodological experts. We will use a four-step process for the development of flexible decision or simulation models for value assessment:
+In order for a decision model to remain relevant over time it needs to evolve along with the clinical evidence and scientific insights. An open-source approach facilitates iterative development and collaboration between multiple clinical and methodological experts. We will use a 4-step process for the development of flexible decision or simulation models for value assessment:
 
 1.	Public release of the model. The initial release of an OSVP model must be flexible and allow users to choose from a large number of plausible model structures and approaches based on clinical practice and previous modeling efforts.
 
@@ -283,7 +283,7 @@ In order for a decision model to remain relevant over time it needs to evolve al
 3.	A panel of experts determines which of the evidence-based suggestions for improvement suggested in Step 2 should be implemented by means of a modified Delphi process.
 
 4.	Revise the model based on the feedback from the technical expert panel in Step 3.
-The four-step process is designed to be repeated many times so that the modeling approach and evidence considered can be refined over time. 
+The 4-step process is designed to be repeated many times so that the modeling approach and evidence considered can be refined over time. 
 
 
 \section{Components}\label{sec:components}
@@ -328,9 +328,9 @@ The specific treatments included in the model are:
 \subsection{Disease model}
 The IVI-NSCLC is an individual-level continuous-time state transition model (CTSTM) in which patients progress through multiple health states. Sequential treatment is modeled using the CTSTM by expanding the number of health states according to the number of treatment lines. In general, we define a health state for each treatment line, a health state after progression on the final line, and a death state, so a model with $n$ treatment lines will have $n+2$ health states. A patient with stable disease moves to the second treatment in a sequence after progression on the first treatment, to the third treatment after progression on the second treatment, and so on. A patient can die at any time. 
 
-Unfortunately, the evidence base is currently too limited to explicitly model the transition rates by line of treatment and a simplified model structure is needed. Two options are available with the IVI-NSCLC model: a four-state model (\autoref{fig:model-structure-4-states}) and a three-state model (\autoref{fig:model-structure-3-states}). The 3-state model is consistent with common methods for health economic modeling in oncology. In contrast, the 4-state model incorporates sequential treatment by explicitly modeling the effect of 2L treatment.  
+Unfortunately, the evidence base is currently too limited to explicitly model the transition rates by line of treatment and a simplified model structure is needed. Two options are available with the IVI-NSCLC model: a 4-state model (\autoref{fig:model-structure-4-states}) and a three-state model (\autoref{fig:model-structure-3-states}). The 3-state model is consistent with common methods for health economic modeling in oncology. In contrast, the 4-state model incorporates sequential treatment by explicitly modeling the effect of 2L treatment.  
 
-In the four-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, patients move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states $r$ and $s$ and are denoted by $h^{rs}(u)$.
+In the 4-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, patients move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states $r$ and $s$ and are denoted by $h^{rs}(u)$.
 
 \begin{figure}
 \centering
@@ -364,52 +364,50 @@ Utility depends on the health state and the probability of an adverse event. Adv
 Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), costs due to inpatient hospitalizations, outpatient costs, and adverse event costs. Inpatient and outpatient costs vary by health state and accrue until death. Adverse event costs---which accrue during the first month---are a weighted sum of the probability of each adverse event and the event's expected cost. Treatment costs at a given line in the sequence accrue until until disease progression or, if dosage depends on time, the duration of the treatment.
 
 \subsection{Productivity}
-Productivity costs are currently estimated using the human capital approach (HCA), which measures lost productivity using work time lost. The approach is rooted in economic theory as time away from work is valued at the market wage, which, in a competitive market, reflects the societal value of work. The HCA contrasts with the friction cost approach (FCA), which only measures productivity losses during the time (i.e., the friction period) required to replace workers leaving employment due to illness. A practical limitation of the FCA is that it is difficult to reliably estimate the friction period, which depends on the unemployment rate and consequently varies considerably across individuals and over time. In general, the HCA tends to overestimate productivity losses while the FCA may underestimate them. 
+Productivity costs are currently estimated using the human capital approach (HCA), which measures lost productivity using work time lost. The approach is rooted in economic theory as time away from work is valued at the market wage, which, in a competitive market, reflects the societal value of work. The HCA contrasts with the friction cost approach (FCA), which only measures productivity costs during the time (i.e., the friction period) required to replace workers leaving employment due to illness. A practical limitation of the FCA is that it is difficult to reliably estimate the friction period, which depends on the unemployment rate and consequently varies considerably across individuals and over time. In general, the HCA tends to overestimate productivity costs while the FCA may underestimate them. 
 
 Similar to \citet{hanly2012breast}, time lost from work in the model stems from three sources: temporary disability, permanent disability, and premature death. At cancer onset, patients miss days from work due to temporary disability which reflects work absence due to sick leave. Following sick leave, permanent survivors can then miss additional time from work due to permanent disability. Time lost due to premature death is the difference between the simulated age of death and the retirement age (age 65). Productivity costs are computed by valuing time lost from work at the market wage. 
 
 
 \section{Model outcomes}\label{sec:model-outcomes}
-The model simulates the health outcomes, risks, and costs associated with alternative treatment strategies in oncology. The model's time horizon can be selected by the user and will default to a lifetime horizon. The health outcomes, risks, and costs will be combined to assess value using two frameworks: CEA and MCDA. Both disaggregated model outcomes and value estimates will be based on mean values (i.e., averages across all simulated patients). An overview of all model outcomes is shown in \autoref{tbl:model-outcomes}. Additional details are provided in the text below.  
+The model simulates the health outcomes, adverse events, and costs associated with treatment strategies based on \autoref{fig:treatment-strategies}, which are combined for value assessment. The model's time horizon can be selected by the user and defaults to a lifetime horizon. The model outcomes are listed in \autoref{tbl:model-outcomes}.
 
 \begin{table}[!ht]
 \begin{center}
 \begin{threeparttable}
 \caption{Model outcomes} \label{tbl:model-outcomes}
-\begin{tabular}{p{0.3\linewidth}p{0.7\linewidth}}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}p{0.3\linewidth}p{0.60\linewidth}}
 \hline
 \multicolumn{1}{l}{Category} & \multicolumn{1}{l}{Outcomes}\\
 \hline
 Health outcomes & Health state probabilities; progression free survival \& overall survival; quality-adjusted life-years\\
 &\\
-Risks & Adverse events (diarrhea, dry skin, elevated alanine transaminase, elevated aspartate transaminase, eye problems, paronychia, pneumonitis, pruritus, rash, stomatitis)\\
+Adverse events & Diarrhea, dry skin, elevated alanine transaminase, elevated aspartate transaminase, eye problems, paronychia, pneumonitis, pruritus, rash, stomatitis)\\
 &\\
 Health care sector costs & Drug acquisition and administration costs; adverse event costs; costs from inpatient hospital stays; costs from hospital outpatient or doctor office visits\\
 &\\
-Non-health care sector costs & Productivity losses \\
+Non-health care sector costs & Productivity costs \\
 &\\
 Value assessment & Cost-effectiveness analysis; multi-criteria decision analysis\\
 \hline
-\end{tabular}
+\end{tabular*}
 \scriptsize
 \end{threeparttable}
 \end{center}
 \end{table}
 
-\iffalse
-Utility and costs within the model for treatment $k$ in state $l$ at time $t$ can be represented as state values, $z_{klt}$. QALYs and total costs are computed by integrating. 
+\subsection{Health outcomes, adverse events, and costs}
+The disease model simulates the times that patients transition to and from health states, which, in turn, is used to estimate the probability that a patient is in a given health state at a given point in time following treatment initiation. Progression free survival (PFS) with 1L treatment is defined as time in state $S_1$ while PFS with 2L is defined as time in state $P_1 \rightarrow S_2$. Overall survival is time until death. Adverse events are summarized using the probability of occurrence.  
 
-\begin{equation}
-\sum_{j = 1}^J \int_{t_j}^{t_j+1} z_je^{-rt}dt = \sum_{j = 1}^J z_j \left(\frac{\exp(-r{t_{j}} - \exp(-r{t_{j+1}})}{r}\right)
+Costs are computed for multiple categories and separated into health care sector and non-heath care sector costs as recommended by \citet{sanders2016recommendations}. Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), adverse event costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity costs.
+
+Discounted costs and QALYs over the model's time horizon are computed using the continuous time present value given a flow of state values (i.e., utility and annualized costs), which change as patients transition between health states or as costs vary as a function of time since treatment initiation. Denote the set of $M$ state values for a given patient in the simulation sorted by time as $z_1,\ldots, z_M$. Discounted costs and QALYs are then given by,  
+
+\begin{equation} \label{eqn:pv}
+\sum_{m = 1}^M \int_{u_m}^{u_m+1} z_me^{-ru}du = \sum_{m = 1}^M z_m \left(\frac{e^{-r{u_{m}}} - e^{-r{u_{m+1}}}}{r}\right),
 \end{equation}
-\fi
 
-\subsection{Health outcomes, risks, and costs}
-The primary health outcome is the probability that a patient is in a given health state at a given point in time following treatment initiation. A survival curve was generated from the health state probabilities as one minus the probability that a patient has died. Since the model is an individual patient simulation, life expectancy is just the average time of death across simulated patients. Life-years was calculated as age at death minus age at treatment initiation. QALYs are weighted life-years, with weights equal to the utility values assigned to states. Discounted QALYs were also calculated using a default discount rate of 3 percent.
-
-The model calculates the expected number of adverse events per patient as the mean number of adverse events experienced by patients during the simulation. To improve interpretability, this number is reported as the expected number of adverse events per 1,000 patients. Both the expected number of total adverse events and the expected number of adverse events by type are reported.
-
-Costs are calculated for multiple categories and separated into health care sector and non-heath care sector costs as recommended by \citet{sanders2016recommendations}. Health care sector cost categories included drug acquisition and administration costs, adverse events costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity losses. We used both human-capital approach to estimate productivity losses associated with the different treatment sequences. 
+where $r > 0$ is the discount rate and $u$ is time. If $r = 0$, then the present value simplifies to $\sum_{m = 1}^M z_m(u_{m+1} - u_{m})$. 
 
 \subsection{Value assessment} \label{subsec:outcomes-value-assessment}
 If CEA is used for value assessment, then the value of treatment is estimated using the NMB defined as discounted QALYs multiplied by willingness to pay per QALY less costs. Costs in analyses conducted from a limited societal perspective include both productivity costs and health care sector costs while costs in analyses conducted from a health care sector perspective only include health care sector costs. 
