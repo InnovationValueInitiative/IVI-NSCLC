@@ -67,9 +67,11 @@ mod_dists <- c("weibullNMA", "gompertz", "fracpoly", "fracpoly")
 mod_aux <- list(weibull = NULL,
                 gompertz = NULL,
                 fracpoly1 = list(powers = fp_powers$fracpoly1,
-                                 integrate_hazard = "riemann"),
+                                 cumhaz_method = "riemann",
+                                 step = .02),
                 fracpoly2 = list(powers = fp_powers$fracpoly1,
-                                 integrate_hazard = "riemann"))
+                                 cumhaz_method = "riemann",
+                                 step = .02))
 
 model_lookup <- function(powers){
   powers <- paste(as.character(powers), collapse = ", ")
