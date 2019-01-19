@@ -167,16 +167,20 @@
 
 % spacing 
 \usepackage[compact]{titlesec}
+\usepackage{etoolbox}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
-\setstretch{1}
+\setstretch{1.3}
 \setlength{\abovecaptionskip}{15pt plus 3pt minus 2pt} % Space between captiona and figure
+\BeforeBeginEnvironment{equation}{\begin{singlespace}}
+\AfterEndEnvironment{equation}{\end{singlespace}\noindent\ignorespaces}
+\BeforeBeginEnvironment{align}{\begin{singlespace}}
+\AfterEndEnvironment{align}{\end{singlespace}\noindent\ignorespaces}
 
 % appendix settings
 \usepackage[toc,page,header]{appendix}
 \renewcommand{\appendixpagename}{\centering Appendices}
 \usepackage{chngcntr}
-\usepackage{etoolbox}
 \usepackage{lipsum}
 
 % new commands
@@ -844,7 +848,11 @@ Wholesale acquisition costs (WACs) are shown in \autoref{tbl:acq-costs}. Drug ac
 \end{center}
 \end{table}
 
-\subsubsection{Inpatient and outpatient costs}
+\FloatBarrier
+
+\subsubsection{Inpatient costs}
+Inpatient costs with stable disease are based on the commercial cost estimates from \citet{graham2018budget}, who separate costs due to adverse events from costs due to adverse events. Monthly costs include those that accrue due to unscheduled hospital stays, intensive care unit visits, and emergency department visits. Inpatient costs with progressed disease are from the estimates reported in \citet{skinner2018healthcare}. Costs on 1L treatment are equal to the hospitalization costs during the post-progression period for patients on treatment. Costs on 2L treatment are based on "overall" hospitalization costs during the post-progression period, which are a mixture of costs for those treated and untreated.    
+
 \begin{table}[!ht]
 \begin{center}
 \begin{threeparttable}
@@ -860,6 +868,9 @@ Wholesale acquisition costs (WACs) are shown in \autoref{tbl:acq-costs}. Drug ac
 \end{threeparttable}
 \end{center}
 \end{table}
+
+
+\subsubsection{Outpatient costs}
 
 \begin{table}[!ht]
 \begin{center}
