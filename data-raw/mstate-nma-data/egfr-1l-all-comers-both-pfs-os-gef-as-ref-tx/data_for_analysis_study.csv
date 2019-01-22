@@ -1,0 +1,15 @@
+﻿t1,t2,na,label,,
+1,6,2,Yang-2014,Gefitinib,Pemetrexed+Cisplatin
+1,6,2,WJTOG3405,Gefitinib,Docetaxel+Cisplatin
+2,6,2,OPTIMAL,Erlotinib,Gemcitabine+Carboplatin
+1,6,2,NEJ002,Gefitinib,Paclitaxel+Carboplatin
+1,3,2,LUXlung_7,Gefitinib,Afatinib
+3,6,2,LUXlung_6,Afatinib,Gemcitabine+Cisplatin
+3,6,2,LUXlung_3,Afatinib,Pemetrexed+Cisplatin
+1,6,2,IPASS,Gefitinib,Carboplatin+Paclitaxel
+1,6,2,Han_2017,Gefitinib,Carboplatin+Pemetrexed
+1,5,2,FLAURA,TKI,Osimertinib
+1,6,2,FirstSIGNAL,Gefitinib,Gemcitabine+Cisplatin
+2,6,2,EURTAC,Erlotinib,chemotherapy
+2,6,2,ENSURE,Erlotinib,Gemcitabine+Cisplatin
+1,4,2,ARCHER_1050,Gefitinib,dacomitinib
