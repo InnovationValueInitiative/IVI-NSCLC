@@ -1,0 +1,12 @@
+﻿na,t1,t2,r1,r2,n1,n2,,id,,Name,Abbreviation,
+2,1,4,19,2,224,227,,ARCHER1050,,Osimertinib,OSI,5
+2,5,6,3,1,279,136,,AURA3,,Erlotinib,ERL,2
+2,1,2,0,0,128,128,,CTONG0901,,Gefitinib,GEF,1
+2,1,6,9,1,159,150,,First-SIGNAL,,Afatinib,AFA,3
+2,6,7,2,1,132,132,,IMPRESS,,Dacomitinib,DAC,4
+2,3,6,4,3,239,113,,LUX-lung 6,,PBDC,PBDC,6
+2,2,6,3,1,83,72,,OPTIMAL,,PBDC + Gefitinib,GEF+PBDC,7
+2,1,6,24,2,87,88,,WJTOG3405,,,,
+2,1,6,8,2,118,114,,Yang 2014,,,,
+2,6,7,0,1,59,58,,Yu 2014,,,,
+2,1 and 2,5,25,1,277,279,,FLAURA,,,,
