@@ -1,14 +1,14 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Mon Jan 21 18:29:31 2019
+% Mon Jan 21 21:04:50 2019
   \hline
-Diarrhea & 16,510 & 14,090 & 18,791 & \citet{wong2018assessment} \\ 
-  Dry skin & 940 & 106 & 1,844 & \citet{wong2018assessment} \\ 
-  Elevated alanine transaminase & 19,122 & 7,915 & 30,328 & \citet{bilir2016economic} \\ 
-  Elevated aspartate transaminase & 19,122 & 7,915 & 30,328 & \citet{bilir2016economic} \\ 
-  Eye problems & 31,975 & 21,923 & 49,448 & \citet{wong2018assessment} \\ 
-  Paronychia & 7,788 & 6,230 & 9,345 & DRG 602 \\ 
-  Pneumonitis & 21,929 & 20,697 & 23,425 & \citet{wong2018assessment} \\ 
-  Pruritus & 26,172 & 3,663 & 62,005 & \citet{wong2018assessment} \\ 
-  Rash & 15,709 & 11,315 & 21,373 & \citet{wong2018assessment} \\ 
-  Stomatitis & 18,151 & 15,111 & 22,542 & \citet{wong2018assessment} \\ 
+Diarrhea & 18,011 & 15,371 & 20,499 & \citet{wong2018assessment} \\ 
+  Dry skin & 1,025 & 115 & 2,011 & \citet{wong2018assessment} \\ 
+  Elevated alanine transaminase & 21,411 & 8,863 & 33,959 & \citet{bilir2016economic} \\ 
+  Elevated aspartate transaminase & 21,411 & 8,863 & 33,959 & \citet{bilir2016economic} \\ 
+  Eye problems & 34,882 & 23,916 & 53,943 & \citet{wong2018assessment} \\ 
+  Paronychia & 8,249 & 6,599 & 9,898 & DRG 602 \\ 
+  Pneumonitis & 23,922 & 22,578 & 25,554 & \citet{wong2018assessment} \\ 
+  Pruritus & 28,551 & 3,996 & 67,642 & \citet{wong2018assessment} \\ 
+  Rash & 17,137 & 12,343 & 23,316 & \citet{wong2018assessment} \\ 
+  Stomatitis & 19,801 & 16,484 & 24,591 & \citet{wong2018assessment} \\ 
    \hline
