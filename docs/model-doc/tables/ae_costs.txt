@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan  9 15:56:09 2019
+% Mon Jan 21 18:29:31 2019
   \hline
 Diarrhea & 16,510 & 14,090 & 18,791 & \citet{wong2018assessment} \\ 
   Dry skin & 940 & 106 & 1,844 & \citet{wong2018assessment} \\ 
@@ -10,5 +10,5 @@ Diarrhea & 16,510 & 14,090 & 18,791 & \citet{wong2018assessment} \\
   Pneumonitis & 21,929 & 20,697 & 23,425 & \citet{wong2018assessment} \\ 
   Pruritus & 26,172 & 3,663 & 62,005 & \citet{wong2018assessment} \\ 
   Rash & 15,709 & 11,315 & 21,373 & \citet{wong2018assessment} \\ 
-  Stomatitis & 8,101 & 6,480 & 9,721 & DRG 157 \\ 
+  Stomatitis & 18,151 & 15,111 & 22,542 & \citet{wong2018assessment} \\ 
    \hline

@@ -769,7 +769,7 @@ Health state utilities based on public literature are reported in \autoref{tbl:s
 \end{center}
 \end{table}
 
-Adverse even disutilities are displayed in \autoref{tbl:ae-disutility}. When we cannot identify a disutility for an adverse event, we assume that the disutility is equivalent to the disutility from the "most similar" adverse event. Elevated alanine transaminase and elevated aspartate transaminase are assumed to have no effect on utility since they are based on test results and are not medical conditions.      
+Adverse event disutilities are displayed in \autoref{tbl:ae-disutility}. When we cannot identify a disutility for an adverse event, we assume that the disutility is equivalent to the disutility from the "most similar" adverse event. Elevated alanine transaminase and elevated aspartate transaminase are assumed to have no effect on utility since they are based on test results rather than symptoms.      
 
 \begin{table}[!ht]
 \begin{center}
@@ -891,6 +891,8 @@ As with inpatient costs, outpatient costs with stable disease are based on \cite
 
 
 \subsubsection{Adverse event costs}
+Costs due to adverse events are taken from a variety of sources. First, we use results from \citet{wong2018assessment}, who estimated the incremental costs of severe (defined as requiring an inpatient stay) adverse events among patients from cancers of the breast, digestive organs and peritoneum, genitourinary organs, lung, lymphatic and hematopoietic tissue, and skin. The analysis used the Truven Health Analytics Market Scan database to estimate the difference in costs between treatment espidoes involving adverse events and matched treatment episodes without adverse events. Second, \citet{bilir2016economic} is used to estimate costs due to test results for elevated alanine transaminase or elevated aspartate transaminase. To remain consistent with our other estimates we only use inpatient costs that accrued during the hospitalization associated with the adverse event, which were based on an analysis of Optum claims data among patients with metastatic melanoma. Finally, Medicare-Severity Diagnosis Related Group (MS-DRG) was used for paronychia, which was not reported in the other studies. 
+
 \begin{table}[!ht]
 \begin{center}
 \begin{threeparttable}

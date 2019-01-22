@@ -123,39 +123,39 @@ of mean costs given lack of data for estimating standard errors.</p></dd>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>params_costs_ae</span>)</div><div class='output co'>#&gt;                             ae_name       ae_abb mean  lower  upper        se
-#&gt;  1:                        Diarrhea     diarrhea 6462 5169.6 7754.4 659.39987
-#&gt;  2:                        Dry skin     dry_skin  940  752.0 1128.0  95.92013
-#&gt;  3:   Elevated alanine transaminase          alt 3900 3120.0 4680.0 397.96650
-#&gt;  4: Elevated aspartate transaminase          ast 3900 3120.0 4680.0 397.96650
-#&gt;  5:                    Eye problems eye_problems 2737 2189.6 3284.4 279.29085
-#&gt;  6:                      Paronychia   paronychia 7788 6230.4 9345.6 794.70848
-#&gt;  7:                     Pneumonitis  pneumonitis 7728 6182.4 9273.6 788.58592
-#&gt;  8:                        Pruritus     pruritus 1184  947.2 1420.8 120.81855
-#&gt;  9:                            Rash         rash  940  752.0 1128.0  95.92013
-#&gt; 10:                      Stomatitis   stomatitis 8101 6480.8 9721.2 826.64784
-#&gt;                          ref
-#&gt;  1:                  DRG 391
-#&gt;  2:       wong2018assessment
-#&gt;  3: latremouille2017economic
-#&gt;  4: latremouille2017economic
-#&gt;  5:       wong2018assessment
-#&gt;  6:                  DRG 602
-#&gt;  7:                  DRG 193
-#&gt;  8:       wong2018assessment
-#&gt;  9:       wong2018assessment
-#&gt; 10:                  DRG 157
-#&gt;                                                                                                                                                      notes
-#&gt;  1:                                                                                                                                                   &lt;NA&gt;
-#&gt;  2:                                                                                                                  Used the cost estimate for dermatitis
-#&gt;  3: Used the adjusted monthly cost difference b/w individuals with hepatobiliary/pancreatic AEs and those without and multiplied by 12 for yearly estimate
-#&gt;  4: Used the adjusted monthly cost difference b/w individuals with hepatobiliary/pancreatic AEs and those without and multiplied by 12 for yearly estimate
-#&gt;  5:                                                                                                                                                   &lt;NA&gt;
-#&gt;  6:                                                                                                                                                   &lt;NA&gt;
-#&gt;  7:                                                                                                                                                   &lt;NA&gt;
-#&gt;  8:                                                                                                                                                   &lt;NA&gt;
-#&gt;  9:                                                                                                                                                   &lt;NA&gt;
-#&gt; 10:                                                                                                                                                   &lt;NA&gt;</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>params_costs_ae</span>)</div><div class='output co'>#&gt;                             ae_name       ae_abb  mean     lower    upper
+#&gt;  1:                        Diarrhea     diarrhea 16510 14090.000 18791.00
+#&gt;  2:                        Dry skin     dry_skin   940   106.000  1844.00
+#&gt;  3:   Elevated alanine transaminase          alt 19122  7915.762 30328.24
+#&gt;  4: Elevated aspartate transaminase          ast 19122  7915.762 30328.24
+#&gt;  5:                    Eye problems eye_problems 31975 21923.000 49448.00
+#&gt;  6:                      Paronychia   paronychia  7788  6230.400  9345.60
+#&gt;  7:                     Pneumonitis  pneumonitis 21929 20697.000 23425.00
+#&gt;  8:                        Pruritus     pruritus 26172  3663.000 62005.00
+#&gt;  9:                            Rash         rash 15709 11315.000 21373.00
+#&gt; 10:                      Stomatitis   stomatitis 18151 15111.000 22542.00
+#&gt;             se                ref
+#&gt;  1:  1199.2347 wong2018assessment
+#&gt;  2:   443.3673 wong2018assessment
+#&gt;  3:  5717.4686  bilir2016economic
+#&gt;  4:  5717.4686  bilir2016economic
+#&gt;  5:  7021.6837 wong2018assessment
+#&gt;  6:   794.6939            DRG 602
+#&gt;  7:   695.9184 wong2018assessment
+#&gt;  8: 14883.1633 wong2018assessment
+#&gt;  9:  2565.8163 wong2018assessment
+#&gt; 10:  1895.6633 wong2018assessment
+#&gt;                                                         notes
+#&gt;  1: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed
+#&gt;  2:              Used the cost estimate for dermatitis all AE
+#&gt;  3: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed
+#&gt;  4: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed
+#&gt;  5: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed
+#&gt;  6:                                                      &lt;NA&gt;
+#&gt;  7: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed
+#&gt;  8: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed
+#&gt;  9: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed
+#&gt; 10: Grade 3/4 from trials, severe AE (i.e. inpatient) assumed</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
