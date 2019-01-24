@@ -299,9 +299,9 @@ Version 1 of the IVI-NSCLC(egfr+) model is designed to provide a starting point 
 
 \textbf{Detailed model documentation:} This document provides extensive technical details on the model structure, statistical methods for parameter estimation, and source data.
 
-\textbf{Expert Model Interface:} For users not well-versed in the \R{} programming language, a web application for running the model online is provided. The web application is designed for custom analyses and allows users full control over the treatments, patient population, model structures, parameter values, and simulation settings.
+\textbf{Basic Value Tool:} An important aim of OSVP is to obtain feedback from as many relevant stakeholders as possible. A general audience web-application has been developed, allowing those who are not experts in modeling or health economics, to interact with the model.
 
-\textbf{Value Tool:} An important aim of OSVP is to obtain feedback from as many relevant stakeholders as possible. A general audience web-application has been developed, allowing those who are not experts in modeling or health economics, to interact with the model.
+\textbf{Advanced Value Tool:} For users not well-versed in the \R{} programming language, a web application for running the model online is provided. The web application is designed for custom analyses and allows users full control over the treatments, patient population, model structures, parameter values, and simulation settings.
 
 \section{Population}\label{sec:population}
 The model simulates outcomes for a population of patients, each with distinct characteristics. Three characteristics can currently be specified: T790M mutation status, age, and gender. The proportion of patients with a T790M mutation is based on \citet{ma2011t790m}, who report that 82 of 158 (52\%) patients tested positive for a mutation after TKI failure. The age distribution is based on the incidence of lung and bronchus cancer cases between 2011 - 2015 as reported by the Surveillance, Epidemiology, and End Results (SEER) Program, which is well approximated by a normal distribution with mean $\AgeMean$ and standard deviation $\AgeSd$ (\autoref{fig:age-distribution}) \citep{noone2018seer}. The same SEER review reports that women account for 123,650 (48\%) of 257,301 incident cases between 2011 and 2015. 
@@ -360,7 +360,7 @@ Our statistical approach for modeling transitions between health states also all
 \FloatBarrier
 
 \subsection{Adverse events}
-The model simulates the probability of a number of distinct adverse events based on a NMA of RCTs (see \autoref{subsec:data-aes}). Since the trials typically only report the number of proportion of patients experiencing an adverse event we were unable to model adverse events as a function of time on treatment and instead assume that adverse events occur during the first month of treatment as a function of the 1L treatment.
+The model simulates the probability of a number of distinct adverse events. Since the trials typically only report the number of proportion of patients experiencing an adverse event we were unable to model adverse events as a function of time on treatment and instead assume that adverse events occur during the first month of treatment as a function of the 1L treatment.
 
 \subsection{Utility and health care sector costs}
 Utility depends on the health state and the probability of an adverse event. Adverse events occur during the first month and cause utility decrements, which vary across treatments. After the first month, utility is only a function of the health state. 
@@ -419,10 +419,10 @@ If CEA is used for value assessment, then the value of treatment is estimated us
 Any combination of simulated model outcomes can be used for MCDA. If a 3-state model is selected, the MCDA in IVI's web applications is currently based on the following criteria: progression free survival (PFS) with 1L treatment, post-progression survival, total health care sector costs,oral administration (vs. intravenous administration), and years since FDA approval. If a 4-state model is selected, then PFS with 2L treatment is added as an additional criteria. Similarly, if the MCDA is conducted from limited societal perspective, then productivity costs are added as a criteria. Performance on the oral administration criteria is computed as the percentage of simulated life-years treated using oral therapies rather than intravenous therapies. Performance on the years since FDA approval criteria is the weighted time since FDA approval for each treatment in a treatment sequence, with weights equal to the number of life-years spent using a particular treatment with the sequence. In the web interfaces users can input their own weights for each of the criteria, but it is important to note that we have not conducted the surveys required to elicit weights for a representative sample of patients.
 
 \section{Source data and parameter estimation}\label{sec:data}
-Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. All costs are in 2018 U.S. dollars.
+Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. 
 
 \subsection{Treatment effects for transition rates} \label{subsec:data-trans-rates}
-Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \hl{(Appendix X)}. 
+Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \autoref{app:km-curves}. 
 The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
 
 \subsubsection{Relative treatment effects with 1L therapy}
@@ -1185,7 +1185,7 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 
 \section{Network meta-analysis for transition rates}
 
-\subsection{Kaplan-Meier curves}
+\subsection{Kaplan-Meier curves} \label{app:km-curves}
 \iffalse
 \begin{figure}
 \centering
