@@ -121,7 +121,7 @@ strategy_factor <- function(x, rev = FALSE){
 A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
 
 ```{r}
-struct <- model_structure(txseqs, dist = "weibull", n_states = "four")
+struct <- model_structure(txseqs, dist = "weibull", n_states = "three")
 
 # Health states
 states <- create_states(struct)
@@ -455,6 +455,15 @@ Plots of undecomposed or incremental costs could be recreated in a similar fashi
 Decision analysis can be performed using either a cost-effectiveness analysis (CEA) or a multi criteria decision analysis (MCDA) framework.
 
 ## Cost-effectiveness analysis
+Before performing the CEA, we will first summarize relevant health and economic outcomes.
+
+```{r summarize_outcomes}
+outcomes <- summarize_outcomes(econmod = econmod, prod_costs = prodcosts,
+                   dr_qalys = .03, dr_costs = .03, 
+                   strategy_names = names(txseqs))
+knitr::kable(outcomes)
+```
+
 CEA can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$150,000.  
 
 ```{r icea}

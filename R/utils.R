@@ -18,6 +18,153 @@ check_is_class <- function(object, name, class){
   }  
 }
 
+#' Summarize model outcomes
+#' 
+#' Summarize clinical and economic outcomes from the simulation.
+#' @param econmod An economic model of class "IndivCtstm" from the
+#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package. 
+#'  QALYs and costs must have been previously simulated (i.e., $qalys_ and 
+#'  $costs_ cannot be NULL).
+#' @param prod_costs An object of class "prod_costs" simulated using 
+#' \code{\link{sim_prod_costs}}.
+#' @param dr_qalys Discount rate for QALYs.
+#' @param dr_costs Discount rate for costs.
+#' @param wtp Willingness to pay for a QALY.
+#' @param digits_qalys Number of digits to use to report QALYs.
+#' @param digits_costs Number of digits to use to report costs.
+#' @param prob A numeric scalar in the interval \code{(0,1)} giving the credible interval.
+#' Default is 0.95 for a 95 percent credible interval. 
+#' @param strategy_names A character vector denoting names of treatment strategies.
+#' 
+#' @return A \code{data.table} summarizing model outcomes. 
+#' @seealso See the example in the \href{https://innovationvalueinitiative.github.io/IVI-NSCLC/articles/tutorial.html}{tutorial}.
+#' @export
+summarize_outcomes <- function (econmod, prod_costs = NULL,
+                                dr_qalys, dr_costs, 
+                                wtp = 150000, digits_qalys = 2, digits_costs = 0,
+                                prob = 0.95, strategy_names = NULL) {
+  
+  value <- dr <- lys <- qalys <- outcome <- costs <-  NULL
+ 
+  # Checks
+  check_is_class(econmod, "econmod", "IndivCtstm")
+  if (is.null(econmod$qalys_)){
+    stop("You must first simulate QALYs with 'econmod' using '$sim_qalys()'")
+    if (!"lys" %in% colnames(econmod$qalys_)){
+      stop("You must simulate life-years with '$sim_qalys()'.")
+    }
+  }
+  if (is.null(econmod$costs_)){
+    stop("You must first simulate costs with 'econmod' using '$sim_costs()'")
+  }  
+  if (!is.null(prod_costs)){
+    check_is_class(prod_costs, "prod_costs", "prod_costs")
+  }
+  if (prob > 1 | prob < 0){
+    stop("'prob' must be in the interval (0,1)",
+         call. = FALSE)
+  }
+
+  # Summarize outcomes
+  ## Health outcomes
+  qalys_summary <- econmod$qalys_[dr == dr_qalys, 
+                                   list(lys = sum(lys),
+                                    qalys = sum(qalys)),
+                                   by = c("sample", "strategy_id")]
+  health_summary <- melt(qalys_summary,
+                         id.vars = c("sample", "strategy_id"),
+                         variable.name = "outcome")
+  health_summary[, outcome := factor(outcome, 
+                                     levels = c("lys", "qalys"),
+                                     labels = c("Life-years", "QALYs"))]
+  
+  ## Health care sector costs
+  cost_summary <- econmod$costs_[dr == dr_costs, 
+                                  list(value = sum(costs)),
+                                   by = c("category", "sample", "strategy_id")] 
+  setnames(cost_summary, "category", "outcome")
+  cost_summary[, outcome := factor(outcome, 
+                                   levels = c("tx_ac", "tx_admin", "op", 
+                                              "inpt", "ae"),
+                                   labels = c("Drug acquisition costs",
+                                              "Drug administration costs",
+                                              "Outpatient medical costs",
+                                              "Inpatient medical costs",
+                                              "Adverse event costs"))]  
+  cost_summary_total <- cost_summary[, list(value = sum(value)),
+                                     by = c("sample", "strategy_id")]
+  cost_summary_total[, outcome := "Health care sector costs"]
+  cost_summary <- rbind(cost_summary, cost_summary_total)
+  
+  ## Productivity costs 
+  if (!is.null(prod_costs)){
+    prod_costs_summary <- prod_costs[, c("sample", "strategy_id", "costs", "category")]
+    setnames(prod_costs_summary, c("category", "costs"), c("outcome","value"))
+    prod_costs_summary[, outcome := "Productivity costs"] 
+    cost_summary <- rbind(cost_summary, prod_costs_summary) 
+    cost_societal_summary <- cost_summary[outcome == "Health care sector costs" |
+                                          outcome == "Productivity costs",
+                                          list(value = sum(value)),
+                                          by = c("sample", "strategy_id")]
+   cost_societal_summary[, outcome := "Societal costs"]
+   cost_summary <- rbind(cost_summary, cost_societal_summary)  
+  }
+
+  ## Net monetary benefit
+  if (!is.null(prod_costs)){
+    nmb <- qalys_summary$qalys * wtp - cost_summary[outcome == "Societal costs"]$value
+  } else {
+    nmb <- qalys_summary$qalys * wtp - cost_summary[outcome == "Health care sector costs"]$value
+  }
+  nmb <- cbind(qalys_summary[, c("sample", "strategy_id")], nmb)
+  nmb[, outcome := "Net monetary benefit"]
+  setnames(nmb, "nmb", "value")
+  cost_summary <- rbind(cost_summary, nmb)
+  
+  # Table
+  prob_lower <- (1 - prob)/2
+  prob_upper <- 1 - prob_lower
+  
+  format_costs <- function(x, digits){
+    formatC(x, format = "f", digits = digits, big.mark = ",")
+  }
+  
+  format_qalys <- function(x, digits){
+    formatC(x, format = "f", digits = digits)
+  }
+  
+  format_cri <- function(est, lower, upper, costs = TRUE, digits){
+    if (costs){
+      est <- format_costs(est, digits = digits)
+      lower <- format_costs(lower, digits = digits)
+      upper <- format_costs(upper, digits = digits)
+    } else{
+      est <- format_qalys(est, digits = digits)
+      lower <- format_qalys(lower, digits = digits)
+      upper <- format_qalys(upper, digits = digits)
+    }
+    paste0(est, " (",lower, ", ", upper, ")")
+  }  
+  
+  format_tbl <- function(x, costs = TRUE, digits){
+    res <- x[, list(mean = mean(value),
+                 lower = stats::quantile(value, prob_lower),
+                 upper = stats::quantile(value, prob_upper)),
+             by = c("outcome", "strategy_id")]
+    res$value <- format_cri(res$mean, res$lower, res$upper,
+                       costs = costs, digits = digits)
+    return(dcast(res, outcome ~strategy_id, value.var = "value"))
+  }
+  health_summary <- format_tbl(health_summary, costs = FALSE, digits = digits_qalys)
+  cost_summary <- format_tbl(cost_summary, costs = TRUE, digits = digits_costs)
+  summary_tbl <- rbind(health_summary, cost_summary)
+  colnames(summary_tbl)[1] <- "Outcome"
+  if (!is.null(strategy_names)){
+   colnames(summary_tbl)[-1] <- strategy_names 
+  }
+  return(summary_tbl)
+}
+
 #' Tidy data
 #' 
 #' A generic function for creating tidy data.
