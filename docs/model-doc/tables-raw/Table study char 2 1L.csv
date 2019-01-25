@@ -1,0 +1,418 @@
+﻿Trial ID,Inclusion criteria,,,,,,,,,,,,,Exclusion criteria,,,
+,Description,Age,Disease stage,Performance score,Life expectancy,Histology,Smoking status,Race/ethnicity,EGFR mutation status,Prior lines of treatment,Prior line of EGFR-TKI treatment,Prior line of chemotherapy,Prior chemo plat based?,Description,Prior treatment excluded,CNS metastases excluded,EGFR mutation
+ARCHER1050,"Eligible patients were aged at least
+18 years old (or ≥20 years in Japan and South Korea), with
+histologically or cytopathologically confirmed newly
+diagnosed stage IIIB/IV or recurrent NSCLC (minimum
+of 12 months disease-free interval between completion of
+adjuvant or neoadjuvant therapy and recurrence of
+NSCLC), with at least one target lesion that had not
+previously been irradiated and was measurable according
+to Response Evaluation Criteria in Solid Tumors (RECIST)
+version 1.1 criteria, and with the presence of at least one
+documented EGFR mutation (exon 19 deletion or the
+Leu858Arg mutation, with or without the Thr790Met
+mutation). Patients were tested for their EGFR mutation
+status before randomisation. EGFR mutation status in
+tumour specimens from patients enrolled outside China
+was ascertained at local laboratories and was retested and
+confirmed with the US Food and Drug Administration
+(FDA)-approved Qiagen therascreen EGFR RGQ PCR kit
+(version 2; Manchester, UK) at central laboratories. EGFR
+mutation status in tumour specimens from patients
+enrolled within China was determined at a central
+laboratory using version 1 of the Qiagen therascreen
+EGFR RGQ PCR kit and later retested and confirmed
+with the FDA-approved Qiagen therascreen EGFR RGQ
+PCR kit (version 2) at central laboratories in China. Other
+inclusion criteria included an Eastern Cooperative
+Oncology Group (ECOG) performance status of 0–1;
+adequate renal, hepatic, and haematological function;
+and availability of tumour specimens for central
+laboratory confirmation of an EGFR activating mutation.",≥18 years (>= 20 in Japan and South Korea),IIIb or IV,0-1 (ECOG),--,Adenocarcinoma,--,--,Mutation + (Exon 19 or L858R with or without Thr790Met mutation),No,No,No,No,"Patients were ineligible if they had any evidence of mixed
+histology, cytology, or both that included elements of
+small cell or carcinoid lung cancer; atypical EGFR
+mutations; history of brain or leptomeningeal metastases;
+history of, or currently suspected, diffuse non-infectious
+pneumonitis or interstitial lung disease; any previous
+anticancer systemic treatment of locally advanced or
+metastatic NSCLC; previous treatment with an EGFR TKI
+or other TKI; or uncontrolled or substantial cardiovascular
+disease.",Yes,Yes,"EGFR mutation status in tumour specimens from patients enrolled outside China
+was ascertained at local laboratories and was retested and
+confirmed with the US Food and Drug Administration
+(FDA)-approved Qiagen therascreen EGFR RGQ PCR kit
+(version 2; Manchester, UK) at central laboratories. EGFR
+mutation status in tumour specimens from patients
+enrolled within China was determined at a central
+laboratory using version 1 of the Qiagen therascreen
+EGFR RGQ PCR kit and later retested and confirmed
+with the FDA-approved Qiagen therascreen EGFR RGQ
+PCR kit (version 2) at central laboratories in China."
+ENSURE,"Patients ≥18 years old with histologically or cytologically confirmed stage
+IIIB/IV EGFR mutation-positive NSCLC (exon 19 deletion or exon 21
+L858R mutation from tissue assessed centrally by the cobas® EGFR Mutation
+Test, Roche Molecular Systems, Inc., Pleasanton, CA) and an Eastern
+Cooperative Oncology Group performance status (ECOG PS) of 0–2 were
+eligible.",≥18 years,IIIb or IV,0-2 (ECOG),--,--,--,Asian,Mutation+ (Exon 19 or 21),No,No,No,No,"Exclusion criteria included: patients with prior exposure to
+chemotherapy or agents targeting HER receptors; inability to take oral medication;
+≥grade 2 peripheral neuropathy; brain metastases; history of any malignancies
+within 5 years; or surgery within 4 weeks of the study.",Yes,Yes,"EGFR mutation-positive NSCLC (exon 19 deletion or exon 21
+L858R mutation from tissue assessed centrally by the cobas® EGFR Mutation
+Test, Roche Molecular Systems, Inc., Pleasanton, CA)"
+EURTAC,"Eligibility criteria included
+histological diagnosis of stage IIIB (with pleural eff usion)
+or stage IV NSCLC (based on the sixth TNM staging
+system), measurable or evaluable disease, presence of activating EGFR mutations (exon 19 deletion or L858R
+mutation in exon 21), age older than 18 years, and no history
+of chemotherapy for metastatic disease (neo adjuvant or
+adjuvant chemotherapy was allowed if it ended ≥6 months
+before entry to study). Patients with asymptomatic, stable
+brain metastases were eligible for inclusion.",>18 years,IIIb or IV,0-1 (ECOG),--,--,--,--,Mutation+ (Exon 19 or 21),No,No,No,No,"Exclusion criteria:
+Pregnant or lactating women.
+Women of child bearing potential having a positive pregnancy test in the basal visit or not accomplishing the test.
+Patients of both genders sexually active (at a fertile age) not following contraceptive measures during the study.
+Prior chemotherapy for metastatic disease. Both prior neoadjuvant and adjuvant chemotherapy allowed provided that completed â‰¥ 6 months before entering the study.
+Prior treatment with EGFR targeted therapies.
+Patients may have received radiotherapy, provided that the irradiated lesion is not the only evaluable lesion for response and completed before entering the study.
+Prior experimental pharmacological agent within the 3 weeks prior to the inclusion of the study.
+Any significant ophthalmologic impairment of the eye surface. Use of contact lenses is not recommended.
+Pre-existing motor or sensorial neurotoxicity grade > 2, according to the NCI-CTC criteria.
+Evidence of spinal cord compression.
+Inability to take oral medication and surgical procedures affecting the absorption or implying intravenous or parenteral feeding.
+Any other severe disease or clinical conditions, as, but not only:
+
+Unstable cardiopathy despite treatment, myocardial infarction within the 6 months before entering the study
+History of significant neurological or psychiatric disorders, including dementia and epileptic seizures.
+Uncontrolled active infection.
+Uncontrolled peptic ulcer.
+Unstable diabetes mellitus or any other contraindication for treatment with corticosteroids.
+AST and/or ALT > 1.5 x UNL associated to alkaline phosphatase > 2.5 x UNL.
+Any other underlying severe process affecting the ability to take part in the study.
+Absolute contraindication for steroids.
+Dementia or significant mental disorder interfering the understanding and giving the informed consent.
+History of other malignancy except adequately treated basal cell or squamous cell skin cancer, carcinoma in situ of the cervix, radically treated prostatic carcinoma with good prognostic (Gleason = 6). History of other curatively treated malignancy and no evidence of disease within the past 5 years.",Yes,"No. Patients with asymptomatic brain metastasis and stable with medical treatment will be eligible for the study. Patients having received radiotherapy for their brain metastasis prior to the systemic treatment for the NSCLC will be also eligible.
+","All tissue samples were analysed with Sanger
+sequencing (exons 19 and 21). Additionally, we confi rmed
+all participants had EGFR mutations with an independent
+technique: deletions in exon 19 were established by length
+analysis after PCR amplifi cation with a FAM-labelled
+primer in an ABI prism 3130 DNA analyser (Applied
+Biosystems, Foster City, CA, USA); L858R mutations in
+exon 21 were detected with a 5´ nuclease PCR assay
+(TaqMan assay, Applied Biosystems) with a FAM MGBlabelled
+probe for the wild-type and a VIC MGB-labelled probe for the mutant sequence. For serum samples, both
+length analysis after PCR amplifi cation for exon 19
+deletions and TaqMan assay for L858R mutations were
+done in the presence of a protein nucleic acid (PNA)
+clamp, which was designed to inhibit the amplifi cation of
+the wild-type allele."
+First-SIGNAL,"Eligible patients were chemotherapy-naive never-smokers older than age
+18 years with stage IIIB (ineligible for curative radiotherapy) or IV adenocarcinoma
+of the lung with measurable or nonmeasurable disease, Eastern Cooperative
+Oncology Group PS of 0 to 2, and adequate bone marrow, liver, and
+renal function.",>18 years,IIIb or IV,0-2 (ECOG),--,Adenocarcinoma,Never-smoker,Asian,--,No,No,No,No,"Exclusion criteria included known severe hypersensitivity to
+gefitinib or any constituents of this product; any evidence of clinically active
+interstitial lung disease; severe or uncontrolled systemic disease; concomitant
+use of phenytoin, carbamazepine, rifampin, barbiturate, or St John’s wort; and
+nonstable brain metastasis.",Yes,Nonstable brain metastases excluded,"Genomic DNA was extracted from paraffin-embedded tissues blocks or
+cell blocks of cytology specimens, whichever were available, by using the
+QIAamp DNA mini kit (Qiagen, Valencia, CA). To detect somatic mutations
+of EGFR genes, exons 19, 20, and 21 were amplified by polymerase chain
+reaction and directly sequenced according to the method previously reported
+by Lynch et al.3 All polymerase chain reaction direct sequencing reactions were
+repeated twice to confirm the results."
+FLAURA,"Patients had locally advanced or metastatic NSCLC,
+had not previously received treatment for advanced
+disease, and were eligible to receive firstline
+treatment with gefitinib or erlotinib. Local
+or central confirmation of the EGFR exon 19
+deletion (Ex19del) or p.Leu858Arg (L858R) EGFR
+mutation, alone or co-occurring with other EGFR
+mutations, was required. Patients with CNS metastases
+whose condition was neurologically stable
+were eligible. Any previous definitive treatment or
+glucocorticoid therapy had to be completed at least
+2 weeks before initiation of the trial treatment.
+Complete eligibility criteria are provided in the
+trial protocol, available with the full text of this
+article at NEJM.org.",≥18 years,IIIb or IV,0-1 (WHO),≥12 weeks,Adenocarcinoma,--,--,Mutation+ (Activating),No,No,No,No,"Exclusion Criteria:
+
+Treatment with any of the following:
+
+Prior treatment with any systemic anti-cancer therapy for locally advanced/metastatic NSCLC.
+Prior treatment with an EGFR-TKI.
+Major surgery within 4 weeks of the first dose of study drug.
+Radiotherapy treatment to more than 30% of the bone marrow or with a wide field of radiation within 4 weeks of the first dose of study drug.
+Patients currently receiving medications or herbal supplements known to be potent inducers of cytochrome P450 (CYP) 3A4.
+Alternative anti-cancer treatment
+Treatment with an investigational drug within five half-lives of the compound or any of its related material.
+Any concurrent and/or other active malignancy that has required treatment within 2 years of first dose of study drug.
+Spinal cord compression, symptomatic and unstable brain metastases, except for those patients who have completed definitive therapy, are not on steroids, have a stable neurologic status for at least 2 weeks after completion of the definitive therapy and steroids.
+Any evidence of severe or uncontrolled systemic diseases, including uncontrolled hypertension and active bleeding diatheses; or active infection including hepatitis B, hepatitis C and human immunodeficiency virus (HIV).
+Refractory nausea and vomiting, chronic gastrointestinal diseases, inability to swallow the formulated product, or previous significant bowel resection that would preclude adequate absorption of AZD9291.
+Any of the following cardiac criteria:
+
+Mean resting corrected QT interval (QTc) >470 msec, obtained from 3 ECGs, using the screening clinic ECG machine-derived QTcF value.
+Any clinically important abnormalities in rhythm, conduction, or morphology of resting ECG.
+Any patient with any factors that increase the risk of QTc prolongation or risk of arrhythmic events or unexplained sudden death under 40 years of age in first-degree relatives or any concomitant medication known to prolong the QT interval.
+Past medical history of ILD, drug-induced ILD, radiation pneumonitis which required steroid treatment, or any evidence of clinically active ILD.
+Involvement in the planning and/or conduct of the study",Yes,No. Stable were eligible.,Local or central confirmation
+Han 2017,"Patients
+were eligible for our study if they were 18 years of age or older,
+had a histologic or cytologic diagnosis of locally advanced or
+metastatic adenocarcinoma (Stage IIIB or IV) with a confirmed
+activating mutation of EGFR (an exon 19 deletion or an exon
+21 L858R point mutation). The staging was performed according
+to the 7th edition of the TNM classification. The highly sensitive
+method termed Amplification Refractory Mutation System
+(ARMS) was used to detect mutations in the EGFR gene according
+to the manufacturer’s protocol of the DxS EGFR mutation
+test kit (DxS).22 Patients required at least one measurable lesion
+meeting Response Evaluation Criteria in Solid Tumors (RECIST)
+guidelines and an Eastern Cooperative Oncology Group (ECOG)
+performance status (PS) of 0–1.",>18 years,IIIb or IV,0-1 (ECOG),--,Adenocarcinoma,--,Asian,Mutation+ (Sensitive),No,No,No,No,"Patients were excluded from the
+study if they had received systemic anticancer therapy for
+advanced disease; had symptomatic or untreated brain metastases
+or had unstable systemic disease, including active infection,
+uncontrolled hypertension, unstable angina or c registered with
+ClinicalTrials.gov, number NCT02148380",Yes,Yes,Amplification Refractory Mutation System (ARMS); DxS test kit 
+IPASS,"Patients were eligible for inclusion in the study
+if they were 18 years of age or older, had histologically
+or cytologically confirmed stage IIIB or IV
+non–small-cell lung cancer with histologic features
+of adenocarcinoma (including bronchoalveolar
+carcinoma), were nonsmokers (defined as patients
+who had smoked <100 cigarettes in their
+lifetime) or former light smokers (those who had
+stopped smoking at least 15 years previously and
+had a total of ≤10 pack-years of smoking), and had
+had no previous chemotherapy or biologic or immunologic
+therapy. World Health Organization performance status 0 to 2, measurable disease according
+to Response Evaluation Criteria in Solid Tumors (RECIST) criteria 18 with at least 1
+measurable lesion not previously irradiated, adjuvant chemotherapy permitted if not
+platinum-based and completed > 6 months previously, absolute neutrophil count > 2.0
+x 109/L, and adequate hepatic function.",≥18 years,IIIb or IV,0-2 (WHO),--,Adenocarcinoma,Never smoker or former light smoker,Asian,--,No,No,No,No,"Had prior chemotherapy, biological (including targeted therapies such as EGFR and vascular epidermal growth factor (VEGF) inhibitors) or immunological therapy.
+Pre-existing idiopathic pulmonary fibrosis evidence by CT scan at baseline.",Yes,--,Amplification Refractory Mutation System (ARMS); DxS EGFR29 mutation-detection kit. 
+LUX-lung 3,"Inclusion criteria:
+
+Pathologically confirmed diagnosis of Stage IIIB (with cytologically proven pleural effusion or pericardial effusion) or Stage IV adenocarcinoma of the lung. Patients with mixed histology are eligible if adenocarcinoma is the predominant histology.
+Epidermal Growth Factor Receptor mutation detected by central laboratory analysis of tumour biopsy material.
+Measurable disease according to RECIST 1.1.
+Eastern Cooperative Oncology Group score of 0 or 1.
+Age >/= 18 years.
+Life expectancy of at least three months.
+Written informed consent that is consistent with International Conference on Harmonisation-Good Clinical Practice guidelines.",≥18 years,IIIb or IV,0-1 (ECOG),≥12 weeks,Adenocarcinoma,--,--,Mutation+,No,No,No,No,"Exclusion criteria:
+
+Prior chemotherapy for relapsed and/or metastatic NSCLC. Neoadjuvant/adjuvant chemotherapy is permitted if at least 12 months has elapsed between the end of chemotherapy and randomisation.
+Prior treatment with Epidermal Growth Factor Receptor targeting small molecules or antibodies.
+Radiotherapy or surgery (other than biopsy) within 4 weeks prior to randomisation.
+Active brain metastases
+Any other current malignancy or malignancy diagnosed within the past five years
+Known pre-existing interstitial lung disease.
+Significant or recent acute gastrointestinal disorders with diarrhoea as a major symptom.
+History or presence of clinically relevant cardiovascular abnormalities.
+Any other concomitant serious illness or organ system dysfunction.
+Adequate absolute neutrophil count and platelet count
+Adequate liver and kidney function
+Active hepatitis B infection, active hepatitis C infection or known HIV carrier.",Yes,Yes if active.,"Standardized allele-specific quantitative real-time polymerase chain reaction
+kit (Therascreen EGFR 29; Qiagen, Manchester, United Kingdom)."
+LUX-lung 6,"Eligible
+patients had pathologically confi rmed and previously
+untreated stage IIIB (with pleural eff usion) or IV lung
+adenocarcinoma according to American Joint
+Committee on Cancer criteria,18 an Eastern Cooperative
+Oncology Group (ECOG) performance status of 0 or 1,
+measurable disease according to Response Evaluation
+Criteria in Solid Tumors version 1.1 (RECIST),19 and
+adequate organ function. Tumour tissue had to be
+EGFR mutation-positive at the screening stage, as
+assessed at a central laboratory with a validated test kit
+(Therascreen EGFR 29; Qiagen, Manchester, UK). The
+test enabled us to identify 29 mutations, including
+common (Leu858Arg, exon 19 deletions) and other
+mutations (see appendix for full eligibility criteria and
+EGFR mutations tested).",≥18 years,IIIb or IV,0-1 (ECOG),≥12 weeks,Adenocarcinoma,--,Asian,Mutation+,No,No,No,No,"Exclusion criteria:
+
+Prior chemotherapy for relapsed and/or metastatic NSCLC.
+Prior treatment with EGFR targeting small molecules or antibodies.
+Radiotherapy or surgery(other than biopsy) within 4 weeks prior to randomization
+Active brain metastases
+Any other current malignancy or malignancy diagnosed within the past 5 years
+Known pre-existing interstitial lung disease
+Significant or recent acute gastrointestinal disorders with diarrhoea as a a major symptoms.
+History or presence of clinically relevant cardiovascular abnormalities
+Cardiac left ventricular function with resting ejection fraction of less than 50%.
+Any other concomitant serious illness or organ system dysfunction which in the opinion of the investigator would either compromise patient safety or interfere with the evaluation of the safety of the test drug.
+Absolute neutrophil count(ANC)<1500/mm3
+Platelet count<100,000/mm3
+Creatinine clearance<60ml/min or serum creatinine>1.5 times ULN(upper limiter of number).
+Bilirubin>1.5 times ULN
+AST(Aspartate Amino Transferase) or ALT(Alanine Amino Transferase) > 3 times ULN
+Women of childbearing potential, or men who are able to father a child, unwilling to use a medically acceptable method of contraception during the trial
+Pregnancy of breast-feeding
+Patients unable to comply with the protocol
+Active hepatitis B infection, active hepatitis C infection or known HIV(Human Immunodeficiency Virus) carrier.
+Known or suspected active drug or alcohol abuse.
+requirement for treatment with any of the prohibited concomitant medications listed in section 4.2.2
+Any contraindications for therapy with gemcitabine/cisplatin
+Known hypersensitivity to BIBW2992 or the excipient of any of the trial drugs
+Use of any investigational drug within 4 weeks of randomization.",Yes,Yes,"Assessed at a central laboratory with a validated test kit (Therascreen EGFR 29; Qiagen, Manchester, UK)."
+LUX-lung 7,"Eligible patients were
+aged 18 years or older with treatment-naive
+pathologically confi rmed stage IIIB (ineligible for
+curative intent surgery or local radiotherapy) or IV
+(recurrent or metastatic) adenocarcinoma of the lung
+(American Joint Committee on Cancer version 7) with a
+documented, locally or centrally assessed, common
+activating EGFR mutation (exon 19 deletion or
+Leu858Arg). Locally identifi ed EGFR mutations were
+retested by a central laboratory upon the provision of
+mandatory tumour samples; patients could be enrolled
+on the basis of either central or local test. Locally tested
+patients could be included without waiting for central
+confi rmation (which was, however, obtained where
+possible, but at a later date). Patients had an Eastern
+Cooperative Oncology Group performance status
+(ECOG PS) of 0 or 1, at least one measurable lesion
+according to Response Evaluation Criteria in Solid
+Tumors (RECIST) version 1.1, and adequate organ
+function defi ned as: serum aspartate aminotransferase
+(AST) or alanine aminotransferase (ALT) less than or
+equal to three times the institutional upper limit of
+normal (ULN), or AST and ALT less than or equal to fi ve
+times the institutional ULN if liver function
+abnormalities were due to underlying malignancy; total
+bilirubin less than or equal to 1·5 times ULN; absolute
+neutrophil count greater than or equal to 1·5 cells
+x 10⁹/L; platelet count greater than or equal to
+75 cells x 10⁹/L; and creatinine clearance greater than
+45 mL/min.",≥18 years,IIIb or IV,0-1 (ECOG),--,Adenocarcinoma,--,--,Mutation+,No,No,No,No,"Key exclusion criteria were: previous systemic chemotherapy or EGFR-targeted drugs for
+advanced disease; major surgery within 4 weeks of study
+randomisation; active brain metastases (ie, symptomatic
+and/or requiring treatment at the time of screening);
+leptomeningeal disease; previous or concomitant
+malignancies at other sites; pre-existing interstitial lung
+disease; any history or presence of poorly controlled
+gastrointestinal disorders; clinically relevant cardiovascular
+abnormalities; cardiac left ventricular function
+with resting ejection fraction of less than institutional
+lower limit of normal; any history of or concomitant
+condition that, in the opinion of the investigator would
+compromise the patient’s ability to comply with the
+study or interfere with the evaluation of the effi cacy and
+safety of the test drug; active hepatitis B infection, active
+hepatitis C infection, and/or known HIV infection; any
+contraindications for therapy with gefi tinib; known
+hypersensitivity to afatinib or the excipients of any of
+the trial drugs; and use of any investigational drug
+within 4 weeks of randomisation.",Yes,Yes if active. Exception: asymptomatic. ,Central laboratory
+NEJ002,"1) First-stage registration: Cases that have been histologically or cytologically diagnosed as having
+non-small cell lung cancer or cases that are suspected of having non-small cell lung cancer.
+Second-stage registration: Cases that have been histologically or cytologically diagnosed as
+having non-small cell lung cancer.
+2) First-stage registration: Cases that have stage IIIB or stage IV non-small cell lung cancer, or
+cases that have recurrent disease after operation and are considered to lack an indication for
+operation or curative radiation therapy.
+Second-stage registration: Cases that have stage IIIB or stage IV non-small cell lung cancer, or
+cases that have recurrent disease after operation and are confirmed to lack an indication for
+operation or curative radiation therapy.
+3) First-stage registration: Cases in which lung cancer sample is available for the EGFR mutation
+test performed by the PNA-LNA PCR clamp method. Lung cancer samples include cytological
+samples that are considered to contain cancer cells and paraffin-embedded tissues.
+Second-stage registration: Cases in which lung cancer was confirmed to have sensitive EGFR
+mutations (exon 19 deletions, L858R, L861Q, G719A, G719C, or G719S).
+4) Cases that have lesions that can be evaluated by RECIST criteria. The lesions include those
+with a diameter of 20 mm or larger as measured using conventional CT images that are taken with
+a slice thickness of 10 mm or less, or lesions with a diameter of 10 mm or larger as measured
+using helical CT images that are reconstructed using an algorithm that provides images with a
+slice thickness of 5 mm or less.
+5) Chemotherapy-naive cases. Previous treatment with UFT or OK-432 is permitted.
+6) Cases aged between 20 years old and 75 years old.
+7) Cases with PS 0 or 1 according to the ECOG criteria
+8) Cases with normal bone marrow, liver, and renal function as judged by the laboratory data listed
+below.
+9) Cases with prognosis more than 3 months
+10) Cases with written informed consent",20-75 years,IIIb or IV,0-1 (ECOG),≥12 weeks,--,--,Asian,Mutation+ (Sensitive),No,No,No,No,"1) Cases that have interstitial pneumonia or pulmonary fibrosis as revealed by chest CT that is
+suspected to cause a serious clinical problem during the treatment.
+2) Second-stage registration process: cases in which lung cancer is positive for the resistant EGFR
+mutation, T790M.
+3) Cases with symptomatic brain metastasis. Cases in which symptoms are resolved by radiation
+therapy are eligible.
+4) Cases that have received radiation therapy for primary lesions. Cases that received palliative
+radiation therapy for their brain/or bone metastases more than two weeks previously are eligible.
+5) Cases with severe complications such as uncontrolled heart, lung, liver, or kidney diseases or
+diabetes mellitus.
+6) Pregnant or lactating women, and women who are likely to be or want to become pregnant
+7) Cases with severe malabsorption syndrome or with diseases affecting digestive function, as
+exemplified by post-total gastrectomy and active inflammatory bowel disease.
+8) Cases that have received systemic administration of steroids for 4 weeks or longer
+9) Cases with pleural effusion, pericardial effusion and/or peritoneal effusion requiring tube
+drainage. Cases that have been clinically stable after drainage at least for 2 weeks are eligible.
+10) Cases that are considered to be contra-indicated for gefitinib, carboplatin, or paclitaxel.
+11) Cases with active double cancers. Intramucosal carcinomas are not considered to be an
+independent cancer.
+12) Cases judged by attending physicians to be inappropriate for enrollment.",Yes,Yes if symptomatic. No if resolved.,PNA-LNA PCR clamp method
+OPTIMAL,"Eligible patients were
+more than 18 years of age and had histologically
+confi rmed advanced or recurrent stage IIIB or IV NSCLC
+(Union for International Cancer Control classifi cation
+version 6) with a confi rmed activating mutation of
+EGFR—ie, an exon 19 deletion or an exon 21 L858R point
+mutation. They also had measurable disease according to
+Response Evaluation Criteria In Solid Tumors (RECIST
+version 1.0), an Eastern Cooperative Oncology Group
+performance status of 0–2, and adequate haematological,
+biochemical, and organ function.",≥18 years,IIIb or IV,0-2 (ECOG),≥12 weeks,--,--,Asian,Mutation+,No,No,No,No,"Patients were excluded
+from the study if they had uncontrolled brain metastases
+or had received previous systemic anticancer therapy for
+advanced disease (although adjuvant or neoadjuvant
+therapy was allowed for non-metastatic disease in which
+relapse had occurred ≥6 months after fi nal treatment).",Yes,Yes,PCRbased direct sequencing at a central laboratory
+WJTOG3405,"Initially, only patients with postoperative recurrence
+were eligible, because these surgical specimens were
+expected to ensure good sample quality. However,
+because of the initial slow accrual, the protocol was
+amended on July 10, 2006, to include patients with stage
+IIIB/IV disease. Patients were eligible if they had
+histologically or cytologically confi rmed NSCLC,
+harbouring activating EGFR mutations (either exon 19
+deletion or L858R in exon 21), were aged 75 years or
+younger, had WHO performance status 0–1, had
+measurable or non-measurable disease according to the
+Response Evaluation Criteria in Solid Tumours (RECIST),
+and had adequate organ function. Patients with
+postoperative recurrence, treated with adjuvant therapy
+other than cisplatin plus docetaxel, were included when
+the interval between the end of adjuvant chemotherapy
+and registration exceeded 6 months for platinum-doublet therapy and more than 1 month for oral tegafur plus
+uracil therapy.",20-75 years,IIIb or IV,0-1 (WHO),--,--,--,Asian,Mutation + (Exon 19 or L858R),No,No,No,No,"Patients were not eligible if they had
+received previous drug therapy that had targeted EGFR,
+had a history of interstitial lung disease, severe drug
+allergy, active infection or other serious disease condition,
+symptomatic brain metastases, poorly controlled pleural
+eff usion, pericardial eff usion or ascites necessitating
+drainage, active double cancer, or severe hypersensitivity
+to drugs containing polysolvate 80. Patients in pregnancy
+or lactation, or whose participation in the trial was judged
+to be inappropriate by the attending doctor, were not
+eligible.",Yes,Yes,"The exon 19 deletion mutation was screened by fragment
+analysis and the L858R point mutation was screened by
+the Cycleave method, as described previously,19 followed by
+confi rmation by direct sequencing."
+Yang 2014,"Chemonaive patients of East Asian ethnicity and unknown
+tumor EGFR mutation status with stage IIIB (T4
+malignant pleural effusion) or stage IV nonsquamous
+NSCLC13,14 were eligible for inclusion in this study. Other
+eligibility criteria included the following: age 18 years or older, a never-smoker (<100 cigarettes in one’s lifetime)
+or light ex-smoker (had ceased smoking for at least 5
+years and had not exceeded 10 pack-years), disease
+measurable by Response Evaluation Criteria in Solid
+Tumors version 1.0, and Eastern Cooperative Oncology
+Group (ECOG) performance status (PS) of 0 or 1.",≥18 years,IIIb or IV,0-1 (ECOG),--,Non-squamous,Never-smoker or former light smoker,Asian,Mutation+,No,No,No,No,"Exclusion Criteria:
+
+Presence of clinically significant (by physical exam) third-space fluid collections, for example, ascites or pleural effusions that cannot be controlled by drainage or other procedures prior to study entry.
+Any evidence of clinically active interstitial lung disease. Asymptomatic participants with chronic, stable, radiographic changes are eligible.
+Participants whose Epidermal Growth Factor Receptor (EGFR) mutation status is known prior to study entry will be excluded. Participants in which EGFR mutation testing has not been performed, or whose EGFR mutation status is unknown or inconclusive at study entry are eligible.",Yes,Yes,"Standardized Scorpions ARMS
+EGFR mutation assay using an EGFR polymerase chain
+reaction test kit (Qiagen, Valencia, CA)"

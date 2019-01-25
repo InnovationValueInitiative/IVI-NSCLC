@@ -428,11 +428,11 @@ The identified evidence base was used to 1) estimate the relative treatment effe
 \subsubsection{Relative treatment effects with 1L therapy}
 Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
 
-RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \hl{(add reference)}. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
+RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \citep[Chapter~1]{dias2018network}.. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
 
 Patients are randomized only within trials, not across trials, so there is a risk that patients participating in different trials differ with respect to demographic, disease or other characteristics. In addition, features of the trials themselves may differ. If these trial or patient characteristics are effect modifiers, i.e. they affect the treatment effects of an intervention versus a control, then there are systematic differences in treatment effects across trials. Systematic differences in known and unknown effect-modifiers among studies comparing the same interventions in direct fashion result in between-study heterogeneity. An imbalance in the distribution of effect modifiers between studies comparing different interventions will result in transitivity or consistency violations and therefore biased indirect comparisons.
 
-The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \autoref{fig:RCT network-1L}. Information regarding the distribution of patients characteristics across the studies in the network  are presented in \hl{(Appendix X)}. 
+The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \autoref{fig:RCT network-1L}. Information regarding the distribution of patients characteristics across the studies in the network  are presented in \ \autoref{app:patient-characteristics}. 
 
 \begin{figure}
 \centering
@@ -742,7 +742,7 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using \R{} statistical software \citep{team2014r}.
 
 \subsubsection{Model selection}
-The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \hl{(Appendix X)}) \citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
+The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \autoref{app:DIC-nma-1l}, \autoref{app:DIC-1l}, \autoref{app:DIC-2l}) \citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
 
 Informed by model fit criteria, we used treatment effect estimates obtained with the fixed and random effects, Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model. 
 
@@ -1184,65 +1184,83 @@ For utility and cost-effectiveness studies, relevant information for the model w
 Despite the strengths of the proposed SLR, some limitations are applicable to all SLRs that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. Further, any trials that are published close to the search date but are not yet indexed in the databases at the time of the search will not be captured by the search of MEDLINE, EMBASE, and Cochrane Central Register of Controlled Trials. As with any literature review, this SLR is limited by the use of published data. There is a risk of publication bias as some clinical studies fail to be published while others are published only in abstract form, which presents limited information. Finally, the search and selection were restricted to trials published in English.
 
 \section{Evidence base, efficacy and safety}
+\subsection{Study identification and selection} \label{app:study-selection}
+
+
+
+\subsection{Study characteristics} \label{app:study-characteristics}
+
+
+
+\subsection{Treatment characteristics} \label{app:treatment-characteristics}
+
+
+
+\subsection{Patient characteristics} \label{app:patient-characteristics}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/female 1L.jpg}
+\caption{Proportion of women in 1L studies}\label{fig:female-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/age 1L.jpg}
+\caption{Median age in 1L studies}\label{fig:age-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop asian 1L.jpg}
+\caption{Proportion of Asian patients in 1L studies}\label{fig:asian-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop white 1L.jpg}
+\caption{Proportion of Caucasian patients in 1L studies}\label{fig:white-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop adenocarcinoma 1L.jpg}
+\caption{Proportion of patient with adenocarcinoma in 1L studies}\label{fig:adeno-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IIIb 1L.jpg}
+\caption{Proportion of patients with stage 3b disease in 1L studies}\label{fig:stageiiib-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IV 1L.jpg}
+\caption{Proportion of patients with stage 4 disease in 1L studies}\label{fig:stageiv-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop PS 0 or 1 1L.jpg}
+\caption{Proportion of patients with performance status 0 or 1 in 1L studies}\label{fig:ps01-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/never smoker 1L.jpg}
+\caption{Proportion of never smokers in 1L studies}\label{fig:neversmoker-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/current former smoker 1L.jpg}
+\caption{Proportion of current or former smokers in 1L studies}\label{fig:currentformermoker-1l}
+\end{figure}
+
 
 \subsection{Kaplan-Meier curves} \label{app:km-curves}
 \subsubsection{1L treatment}
-\iffalse
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{ARCHER-1050, progression-free survival and overall survival}\label{fig:ARCHER-1050}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{ENSURE, progression-free survival and overall survival}\label{fig:ENSURE}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{EURTAC, progression-free survival and overall survival}\label{fig:EURTAC}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{FirstSIGNAL, progression-free survival and overall survival}\label{fig:firstSIGNAL}
-\end{figure}
-
 
 \begin{figure}
 \centering
@@ -1262,27 +1280,28 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{Han 2017, progression-free survival and overall survival}\label{fig:Han-2017}
+\caption{ARCHER-1050, progression-free survival and overall survival}\label{fig:ARCHER-1050}
 \end{figure}
+
 
 
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{IPASS, progression-free survival and overall survival}\label{fig:IPASS}
+\caption{LUX-LUNG 7, progression-free survival and overall survival}\label{fig:LUX-LUNG 7}
 \end{figure}
 
 
@@ -1313,18 +1332,17 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \caption{LUX-LUNG 6, progression-free survival and overall survival}\label{fig:LUX-LUNG 6}
 \end{figure}
 
-
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{LUX-LUNG 7, progression-free survival and overall survival}\label{fig:LUX-LUNG 7}
+\caption{EURTAC, progression-free survival and overall survival}\label{fig:EURTAC}
 \end{figure}
 
 
@@ -1332,14 +1350,15 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{NEJ002, progression-free survival and overall survival}\label{fig:NEJ002}
+\caption{ENSURE, progression-free survival and overall survival}\label{fig:ENSURE}
 \end{figure}
+
 
 
 \begin{figure}
@@ -1360,6 +1379,20 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \begin{subfigure}{\textwidth}
 \centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{FirstSIGNAL, progression-free survival and overall survival}\label{fig:firstSIGNAL}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
@@ -1368,6 +1401,51 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \caption{WJTOG3405, progression-free survival and overall survival}\label{fig:WJTOG3405}
 \end{figure}
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{IPASS, progression-free survival and overall survival}\label{fig:IPASS}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{NEJ002, progression-free survival and overall survival}\label{fig:NEJ002}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{Han 2017, progression-free survival and overall survival}\label{fig:Han-2017}
+\end{figure}
+
 
 
 \begin{figure}
@@ -1382,9 +1460,45 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 \centering
 \caption{Yang 2014, progression-free survival and overall survival}\label{fig:Yang 2014}
 \end{figure}
-\fi
+
 
 \subsubsection{2L treatment}
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/AURA3 Mok 2017 PFS (EGFR+_T790M+) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/.....png}
+\end{subfigure}
+\centering
+\caption{AURA-3 and AURA-2, progression-free survival and overall survival with osimertinib (T790+)}\label{fig:osimertinib-2l}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IMPRESS Soria 2015 PFS (EGFR+_IA) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IMPRESS Mok 2017 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{IMPRESS, progression-free survival and overall survival with PBDC}\label{fig:Impress}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/AURA3 Mok 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\centering
+\caption{AURA-3, progression-free survival with PBDC}\label{fig:Impress}
+\end{figure}
+
 
 
 \subsection{Adverse events}
@@ -2298,6 +2412,8 @@ model{
 
 \subsection{Model parameter estimates}
 
+\subsection{Model fit}\label{app:DIC-nma-1l}
+
 \section{Meta-analysis for absolute effects with 1L reference treatment}
 \subsection{JAGS code}
 
@@ -2400,6 +2516,8 @@ model{
 \end{verbatim}
 
 \subsection{Model parameter estimates}
+
+\subsection{Model fit}\label{app:DIC-1l}
 
 
 \section{Analysis of absolute effects with 2L therapy}
@@ -2598,6 +2716,11 @@ model{
 \end{verbatim}
 
 \subsection{Model parameter estimates}
+
+
+
+
+\subsection{Model fit}\label{app:DIC-2l}
 
 
 
