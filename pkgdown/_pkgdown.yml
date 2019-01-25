@@ -46,6 +46,7 @@ reference:
       - ae_probs
       - tidy.ae_probs
       - sim_prod_costs
+      - summarize_outcomes
   - title: "Multi criteria decision analysis"
     contents:
       - txattr_performance
