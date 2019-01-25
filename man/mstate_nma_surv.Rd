@@ -8,6 +8,9 @@
 \title{Progression-free survival and overall survival from network meta-analysis}
 \format{A data.table with the following columns:
 \describe{
+  \item{line}{Line of treatment. Either first or second.}
+  \item{mutation}{At 2nd line, equal to 1 if there is a T790M mutation and 
+  0 otherwise.}
   \item{model}{The statistical model.} 
   \item{tx_name}{Name of the treatment.}
   \item{month}{Trial month.}
@@ -29,5 +32,8 @@ progression and OS is the duration of a time a patient is alive.
 \examples{
 head(mstate_nma_pfs)
 head(mstate_nma_os)
+}
+\seealso{
+\code{\link{mstate_nma_hazard}}
 }
 \keyword{datasets}

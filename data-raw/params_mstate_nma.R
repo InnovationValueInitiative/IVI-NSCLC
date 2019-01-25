@@ -38,22 +38,25 @@ time_vec <- function(t, powers) {
 
 # Function to compute probability in stable and progressed states...and PFS/OS
 state_probs <- function(gamma, powers, t, n_sims){
-  p_s <- p_p <- matrix(NA, nrow = length(t), ncol = n_sims)
+  p_s <- p_p <- haz_sp <- haz_sd <- haz_pd <- matrix(NA, nrow = length(t), ncol = n_sims)
   p_s[1, ] <- 1 # PFS is 1 in first time period
+  haz_sp[1, ] <- haz_sd[1, ] <- haz_pd[1, ] <- 0 # Hazard is 0 in first period
   p_p[1, ] <- 0 # Proportion in the progressed state is 0 in first time period
   for (j in 2:length(t)){
     tvec <- time_vec(t[j], powers)
-    haz_sp <- exp(gamma[[1]] %*% t(tvec))
-    haz_sd <- exp(gamma[[2]] %*% t(tvec))
-    haz_pd <- exp(gamma[[3]] %*% t(tvec))
-    p_s[j, ] <- p_s[j - 1, ] * exp(-(haz_sp + haz_sd))
-    term2_num <- p_s[j - 1, ] * haz_sp * (exp(-(haz_sp + haz_sd)) - exp(-haz_pd))
-    term2_denom <- haz_pd - haz_sp - haz_sd
-    p_p[j, ] <- p_p[j - 1, ] * exp(-haz_pd) + term2_num/term2_denom
+    haz_sp[j, ] <- exp(gamma[[1]] %*% t(tvec))
+    haz_sd[j, ] <- exp(gamma[[2]] %*% t(tvec))
+    haz_pd[j, ] <- exp(gamma[[3]] %*% t(tvec))
+    p_s[j, ] <- p_s[j - 1, ] * exp(-(haz_sp[j, ] + haz_sd[j, ]))
+    term2_num <- p_s[j - 1, ] * haz_sp[j, ] * 
+                 (exp(-(haz_sp[j, ] + haz_sd[j, ])) - exp(-haz_pd[j, ]))
+    term2_denom <- haz_pd[j, ] - haz_sp[j, ] - haz_sd[j, ]
+    p_p[j, ] <- p_p[j - 1, ] * exp(-haz_pd[j, ]) + term2_num/term2_denom
   } # End loop over time periods
   pfs <- p_s
   os <- p_s + p_p  
-  return(list(pfs = pfs, os = os))
+  return(list(haz_sp = haz_sp, haz_sd = haz_sd, haz_pd = haz_pd,
+              pfs = pfs, os = os))
 }
 
 # Models types -----------------------------------------------------------------
@@ -112,10 +115,10 @@ read_nma_1L <- function(filename){
   dat <- as.matrix(dat)
   return(dat)
 }
-nma_1L <- list(weibull = read_nma_1L("mstate-nma/nma-1L-re-fp-p0.csv"),
-               gompertz = read_nma_1L("mstate-nma/nma-1L-re-fp-p1.csv"), 
-               fracpoly1 = read_nma_1L("mstate-nma/nma-1L-re-fp-p00.csv"), # (p1 = 0, p2 = 0)
-               fracpoly2 = read_nma_1L("mstate-nma/nma-1L-re-fp-p01.csv")) # (p1 = 0, p2 = 1)
+nma_1L <- list(weibull = read_nma_1L("mstate-nma/nma-1L-fe-fp-p0.csv"),
+               gompertz = read_nma_1L("mstate-nma/nma-1L-fe-fp-p1.csv"), 
+               fracpoly1 = read_nma_1L("mstate-nma/nma-1L-fe-fp-p00.csv"), # (p1 = 0, p2 = 0)
+               fracpoly2 = read_nma_1L("mstate-nma/nma-1L-fe-fp-p01.csv")) # (p1 = 0, p2 = 1)
 ma_1L <- list(weibull = as.matrix(fread("mstate-nma/ma-1L-fe-gef-fp-p0.csv")),
               gompertz = as.matrix(fread("mstate-nma/ma-1L-fe-gef-fp-p1.csv")), 
               fracpoly1 = as.matrix(fread("mstate-nma/ma-1L-fe-gef-fp-p00.csv")), # (p1 = 0, p2 = 0)
@@ -436,7 +439,7 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
       } # End loop over parameters
     } # End loop over transitions
     
-    # Compute PFS/OS give parameter estimates
+    # Compute PFS/OS given parameter estimates
     stprobs <- state_probs(gamma, powers, t, n_sims)
     surv[[i]] <- data.table(line = 1,
                            mutation = NA,
@@ -444,6 +447,9 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
                            tx_name = econmod_tx_lookup$name[i],
                            sample = rep(1:n_sims, each = length(t)),
                            month = rep(t, n_sims),
+                           haz_sp = c(stprobs$haz_sp),
+                           haz_sd = c(stprobs$haz_sp),
+                           haz_pd = c(stprobs$haz_pd),
                            pfs = c(stprobs$pfs),
                            os = c(stprobs$os))
   } # End loop over treatments
@@ -517,6 +523,9 @@ surv_2L <- function(n_months, ma_post,
                      tx_name = tx_name,
                      sample = rep(1:n_sims, each = length(t)),
                      month = rep(t, n_sims),
+                     haz_sp = c(stprobs$haz_sp),
+                     haz_sd = c(stprobs$haz_sp),
+                     haz_pd = c(stprobs$haz_pd),                     
                      pfs = c(stprobs$pfs),
                      os = c(stprobs$os))
   return(surv)
@@ -584,7 +593,7 @@ surv_2L_pbdc_est$fracpoly2 <- surv_2L(n_months = 72,
                                       mutation = 0)
 surv_2L_pbdc_est <- rbindlist(surv_2L_pbdc_est)
 
-# Combine PFS/OS ---------------------------------------------------------------
+# Combine hazards, PFS, and OS -------------------------------------------------
 surv_est <- rbind(surv_1L_est,
                   surv_2L_t790m_osi_est,
                   surv_2L_pbdc_est)
@@ -596,11 +605,28 @@ mstate_nma_os <- surv_est[, .(mean = mean(os),
                           l95 = quantile(os, .025),
                           u95 = quantile(os, .975)),
                           by = c("line", "mutation", "model", "tx_name", "month")]
+hazard_est <- melt(surv_est, 
+                 id.vars = c("line", "mutation", "model", "tx_name", 
+                             "sample", "month"),
+                 measure.vars = c("haz_sp", "haz_sd", "haz_pd"),
+                 variable.name = "transition",
+                 value.name = "hazard")
+hazard_est[, transition := factor(transition,
+                                  levels = c("haz_sp", "haz_sd", "haz_pd"),
+                                  labels = c("Stable to progression",
+                                             "Stable to death",
+                                             "Progression to death"))]
+mstate_nma_hazard <- hazard_est[, .(mean = mean(hazard),
+                                    l95 = quantile(hazard, .025),
+                                    u95 = quantile(hazard, .975)),
+                                 by = c("line", "mutation", "model", "tx_name",
+                                        "month", "transition")]
 
 # Save -------------------------------------------------------------------------
 save(params_mstate_nma, file = "../data/params_mstate_nma.rda", compress = "bzip2")
 save(mstate_nma_pfs, file = "../data/mstate_nma_pfs.rda", compress = "bzip2")
 save(mstate_nma_os, file = "../data/mstate_nma_os.rda", compress = "bzip2")
+save(mstate_nma_hazard, file = "../data/mstate_nma_hazard.rda", compress = "bzip2")
 
 # Check PFS against JAGS code --------------------------------------------------
 # The mu's

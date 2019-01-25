@@ -10,6 +10,7 @@ reference:
     contents:
       - params_mstate_nma
       - mstate_nma_pfs
+      - mstate_nma_hazard
       - adverse_events
       - params_ae_nma
       - params_utility
