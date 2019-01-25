@@ -419,7 +419,7 @@ If CEA is used for value assessment, then the value of treatment is estimated us
 Any combination of simulated model outcomes can be used for MCDA. If a 3-state model is selected, the MCDA in IVI's web applications is currently based on the following criteria: progression free survival (PFS) with 1L treatment, post-progression survival, total health care sector costs,oral administration (vs. intravenous administration), and years since FDA approval. If a 4-state model is selected, then PFS with 2L treatment is added as an additional criteria. Similarly, if the MCDA is conducted from limited societal perspective, then productivity costs are added as a criteria. Performance on the oral administration criteria is computed as the percentage of simulated life-years treated using oral therapies rather than intravenous therapies. Performance on the years since FDA approval criteria is the weighted time since FDA approval for each treatment in a treatment sequence, with weights equal to the number of life-years spent using a particular treatment with the sequence. In the web interfaces users can input their own weights for each of the criteria, but it is important to note that we have not conducted the surveys required to elicit weights for a representative sample of patients.
 
 \section{Source data and parameter estimation}\label{sec:data}
-Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. 
+Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. To inform relevant decision-making at the local level, it is recommended to use resource use and cost estimates reflective of that setting. 
 
 \subsection{Treatment effects for transition rates} \label{subsec:data-trans-rates}
 Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \autoref{app:km-curves}. 
@@ -1160,10 +1160,10 @@ Other & English language\\
 
 
 \subsection{Utilities}
-Health state utility values (EQ-5d, HUI2, HUI-3, SF-6D) for the different health states were used in the model as well as disutility estimates associated with adverse events identified by focusing on review or overview studies. Furthermore, published mapping algorithms that allow a non-preference-based measure (generic or disease-specific measure) to be mapped onto a generic preference-based measure are of interest, as well as mapping algorithms between different generic preference-based health state utility values (e.g. between SF-6D and EQ5D) will be searched for. See Appendix Table 4 for study selection criteria.
+Health state utility values (EQ-5d, HUI2, HUI-3, SF-6D) for the different health states were used in the model as well as disutility estimates associated with adverse events identified by focusing on review or overview studies. Furthermore, published mapping algorithms that allow a non-preference-based measure (generic or disease-specific measure) to be mapped onto a generic preference-based measure are of interest, as well as mapping algorithms between different generic preference-based health state utility values (e.g. between SF-6D and EQ5D) were searched for.
 
 \subsection{Resource use, productivity, and cost}
-Relevant evidence regarding resource use, productivity and cost estimates were identified by means of a review of published CEA modelling studies in NSCLC relevant for the US setting.  See Appendix Table 5 for study selection criteria.
+Relevant evidence regarding resource use, productivity and cost estimates were identified by means of a review of published CEA modelling studies in NSCLC relevant for the US setting.
 
 \subsection{Study identification}
 Relevant studies were identified by searching the following databases using predefined search strategies: Medical Literature Analysis and Retrieval System Online (MEDLINE), Excerpta Medica database (EMBASE), and Cochrane Central Register of Controlled Trials. The study design filters recommended by the Scottish Intercollegiate Guidelines Network (SIGN) for MEDLINE and EMBASE were used to identify clinical trials. The search included terms related to the generic and brand name of the interventions of interest. The US National Institutes of Health Clinical Trial Registry and EU Clinical Trials Registry were also searched to identify completed clinical trials not yet published to identify any completed or ongoing trials that meet the criteria with results available.
@@ -1176,7 +1176,7 @@ Where there were gaps in the identified evidence, the search was expanded to inc
 Two reviewers, working independently, reviewed all abstracts and proceedings identified in each of the searches according to the selection criteria, with the exception of outcome criteria in the efficacy and safety searches, which were only applied during the screening of full-text publications. All studies identified as eligible studies during abstract screening were then screened at a full-text stage by the same two reviewers. The full-text studies identified at this stage were included for data extraction. Following reconciliation between the two investigators, a third reviewer was included to reach consensus for any remaining discrepancies. The process of study identification and selection is summarized with Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) flow diagrams (including reasons for exclusion at both the abstract and full text screening stage). 
 
 \subsection{Data collection}
-For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. Data collected included number and percent of patients with: any grade 3 or 4 adverse event, any grade 3 or 4 treatment related adverse event, any serious adverse event, any treatment related serious adverse event, and death within 30 days of last treatment. The duration over which safety outcomes were reported were also captured. Discontinuation due to adverse events were also examined. 
+For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. Data collected included number and percent of patients with: any grade 3 or 4 adverse event, any grade 3 or 4 treatment related adverse event, any serious adverse event, any treatment related serious adverse event, and death within 30 days of last treatment. The duration over which safety outcomes were reported were also captured. 
 
 For utility and cost-effectiveness studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. 
 
@@ -1185,18 +1185,26 @@ Despite the strengths of the proposed SLR, some limitations are applicable to al
 
 \section{Evidence base, efficacy and safety}
 \subsection{Study identification and selection} \label{app:study-selection}
+The identification and selection of relevant studies used to estimate treatment effects is summarized with \autoref{fig:slr-flow}.
 
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/flow diagram SLR.png}
+\caption{Study identification and selection}\label{fig:slr-flow}
+\end{figure}
 
 
 \subsection{Study characteristics} \label{app:study-characteristics}
-
-
+In .... information regarding study design characteristics is provided for the studies used to estimate PFS and OS. 
 
 \subsection{Treatment characteristics} \label{app:treatment-characteristics}
-
+In .... information regarding characteristics of the interventions evaluated in the studies used to estimate PFS and OS is provided.
 
 
 \subsection{Patient characteristics} \label{app:patient-characteristics}
+
+... provides information on the study populations of the different studies used to estimate PFS and OS. \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l} shows the distribution of key characteristics across the studies. 
 
 \begin{figure}
 \centering
