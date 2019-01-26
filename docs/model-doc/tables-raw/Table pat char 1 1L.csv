@@ -1,33 +1,33 @@
-﻿Trial ID and References,Population,Treatment,Sample size,Age,,,Gender,Race and Ethnicity,,Smoking status,,,
-Trial ID,,,,Estimate - Median,"Range, min","Range, max","Females, %, reported","Caucasian, %, reported","Asian, %, reported","Current/former smoker, %, reported","Current smoker, %, reported","Former smoker, %, reported","Never smoker, %, reported"
-ARCHER1050,All,Dacomitinib,227,62,--,--,64.0%,25.0%,75.0%,--,7.0%,29.0%,65.0%
-ARCHER1050,All,Gefitinib,225,61,--,--,56.0%,22.0%,78.0%,--,8.0%,28.0%,64.0%
-ENSURE,ITT,Erlotinib,110,57.5,33,79,61.8%,--,100.0%,--,24.5%,3.6%,71.8%
-ENSURE,ITT,Cisplatin + Gemcitabine,107,56,30,78,60.7%,--,100.0%,--,29.0%,1.9%,69.2%
-EURTAC,ITT,Erlotinib,86,65,24,82,67.0%,98.0%,--,--,8.0%,26.0%,66.0%
-EURTAC,ITT,Carboplatin/Cisplatin + Docetaxel/Gemcitabine,87,65,29,82,78.0%,98.0%,--,--,14.0%,14.0%,72.0%
-First-SIGNAL,ITT,Gefitinib,159,57,32,74,88.0%,--,100.0%,--,--,--,100.0%
-First-SIGNAL,ITT,Cisplatin + Gemcitabine,150,56.5,19,74,89.3%,--,100.0%,--,--,--,100.0%
-FLAURA,ITT,Osimertinib,279,64,26,85,64.0%,36.0%,62.0%,--,3.0%,32.0%,65.0%
-FLAURA,ITT,Gefitinib (66%) /Erlotinib (34%),277,64,35,93,62.0%,36.0%,62.0%,--,3.0%,34.0%,63.0%
-Han 2017,ITT,Carboplatin + Pemetrexed + Gefitinib,40,--,--,--,62.5%,--,100.0%,32.5%,--,--,67.5%
-Han 2017,ITT,Carboplatin + Pemetrexed,40,--,--,--,57.5%,--,100.0%,27.5%,--,--,72.5%
-Han 2017,ITT,Gefitinib,41,--,--,--,56.1%,--,100.0%,34.1%,--,--,65.9%
-IPASS,ITT,Gefitinib,609,57,24,84,79.5%,--,99.7%,--,--,6.3%,93.8%
-IPASS,ITT,Carboplatin + Paclitaxel,608,57,25,84,79.1%,--,99.8%,--,--,6.4%,93.6%
-IPASS,EGFR+,Gefitinib,132,--,--,--,81.8%,--,--,--,--,--,93.9%
-IPASS,EGFR+,Carboplatin + Paclitaxel,129,--,--,--,79.8%,--,--,--,--,--,94.6%
-LUX-LUNG 3,All,Afatinib,230,61.5,28,86,63.9%,26.5%,71.7%,--,2.2%,30.4%,67.4%
-LUX-LUNG 3,All,Cisplatin + Pemetrexed,115,61,31,83,67.0%,26.1%,72.2%,--,1.7%,27.8%,70.4%
-LUX-LUNG 6,All,Afatinib,242,58,--,--,64.0%,0.0%,100.0%,21.9%,--,--,74.8%
-LUX-LUNG 6,All,Cisplatin + Gemcitabine,122,58,--,--,68.0%,0.0%,100.0%,15.6%,--,--,81.1%
-LUX-LUNG 7,ITT,Afatinib,160,63,30,86,57.0%,30.0%,59.0%,34.0%,--,--,66.0%
-LUX-LUNG 7,ITT,Gefitinib,159,63,32,89,67.0%,34.0%,55.0%,33.0%,--,--,67.0%
-NEJ002,ITT,Gefitinib,114,--,43,75,63.2%,--,100.0%,34.2%,--,--,65.8%
-NEJ002,ITT,Carboplatin + Paclitaxel,114,--,35,75,64.0%,--,100.0%,42.1%,--,--,57.9%
-OPTIMAL,All,Erlotinib,82,57,31,74,59.0%,--,100.0%,28.0%,--,--,72.0%
-OPTIMAL,All,Carboplatin + Gemcitabine,72,59,36,78,60.0%,--,100.0%,31.0%,--,--,69.0%
-WJTOG3405,ITT,Gefitinib,86,64,34,74,68.6%,--,100.0%,29.1%,--,--,--
-WJTOG3405,ITT,Docetaxel + Cisplatin,86,64,41,75,69.8%,--,100.0%,33.7%,--,--,--
-Yang 2014,ITT,Cisplatin + Pemetrexed followed by Gefitinib maintenance,118,59,24,81,75.0%,--,100.0%,--,--,8.0%,92.0%
-Yang 2014,ITT,Gefitinib,118,59,31,79,75.0%,--,100.0%,--,--,8.0%,92.0%
+﻿Trial ID and References,Population,Treatment,Age,,,Gender,Race and Ethnicity,,Smoking status,,,
+Trial ID,,,Estimate - Median,"Range, min","Range, max","Females, %, reported","Caucasian, %, reported","Asian, %, reported","Current/former smoker, %, reported","Current smoker, %, reported","Former smoker, %, reported","Never smoker, %, reported"
+ARCHER1050,All,Dacomitinib,62,--,--,64.00%,25.00%,75.00%,--,7.00%,29.00%,65.00%
+ARCHER1050,All,Gefitinib,61,--,--,56.00%,22.00%,78.00%,--,8.00%,28.00%,64.00%
+ENSURE,ITT,Erlotinib,57.5,33,79,61.80%,--,100.00%,--,24.50%,3.60%,71.80%
+ENSURE,ITT,Cisplatin + Gemcitabine,56,30,78,60.70%,--,100.00%,--,29.00%,1.90%,69.20%
+EURTAC,ITT,Erlotinib,65,24,82,67.00%,98.00%,--,--,8.00%,26.00%,66.00%
+EURTAC,ITT,Carboplatin/Cisplatin + Docetaxel/Gemcitabine,65,29,82,78.00%,98.00%,--,--,14.00%,14.00%,72.00%
+First-SIGNAL,ITT,Gefitinib,57,32,74,88.00%,--,100.00%,--,--,--,100.00%
+First-SIGNAL,ITT,Cisplatin + Gemcitabine,56.5,19,74,89.30%,--,100.00%,--,--,--,100.00%
+FLAURA,ITT,Osimertinib,64,26,85,64.00%,36.00%,62.00%,--,3.00%,32.00%,65.00%
+FLAURA,ITT,Gefitinib (66%) /Erlotinib (34%),64,35,93,62.00%,36.00%,62.00%,--,3.00%,34.00%,63.00%
+Han 2017,ITT,Carboplatin + Pemetrexed + Gefitinib,--,--,--,62.50%,--,100.00%,32.50%,--,--,67.50%
+Han 2017,ITT,Carboplatin + Pemetrexed,--,--,--,57.50%,--,100.00%,27.50%,--,--,72.50%
+Han 2017,ITT,Gefitinib,--,--,--,56.10%,--,100.00%,34.10%,--,--,65.90%
+IPASS,ITT,Gefitinib,57,24,84,79.50%,--,99.70%,--,--,6.30%,93.80%
+IPASS,ITT,Carboplatin + Paclitaxel,57,25,84,79.10%,--,99.80%,--,--,6.40%,93.60%
+IPASS,EGFR+,Gefitinib,--,--,--,81.80%,--,--,--,--,--,93.90%
+IPASS,EGFR+,Carboplatin + Paclitaxel,--,--,--,79.80%,--,--,--,--,--,94.60%
+LUX-LUNG 3,All,Afatinib,61.5,28,86,63.90%,26.50%,71.70%,--,2.20%,30.40%,67.40%
+LUX-LUNG 3,All,Cisplatin + Pemetrexed,61,31,83,67.00%,26.10%,72.20%,--,1.70%,27.80%,70.40%
+LUX-LUNG 6,All,Afatinib,58,--,--,64.00%,0.00%,100.00%,21.90%,--,--,74.80%
+LUX-LUNG 6,All,Cisplatin + Gemcitabine,58,--,--,68.00%,0.00%,100.00%,15.60%,--,--,81.10%
+LUX-LUNG 7,ITT,Afatinib,63,30,86,57.00%,30.00%,59.00%,34.00%,--,--,66.00%
+LUX-LUNG 7,ITT,Gefitinib,63,32,89,67.00%,34.00%,55.00%,33.00%,--,--,67.00%
+NEJ002,ITT,Gefitinib,--,43,75,63.20%,--,100.00%,34.20%,--,--,65.80%
+NEJ002,ITT,Carboplatin + Paclitaxel,--,35,75,64.00%,--,100.00%,42.10%,--,--,57.90%
+OPTIMAL,All,Erlotinib,57,31,74,59.00%,--,100.00%,28.00%,--,--,72.00%
+OPTIMAL,All,Carboplatin + Gemcitabine,59,36,78,60.00%,--,100.00%,31.00%,--,--,69.00%
+WJTOG3405,ITT,Gefitinib,64,34,74,68.60%,--,100.00%,29.10%,--,--,--
+WJTOG3405,ITT,Docetaxel + Cisplatin,64,41,75,69.80%,--,100.00%,33.70%,--,--,--
+Yang 2014,ITT,Cisplatin + Pemetrexed followed by Gefitinib maintenance,59,24,81,75.00%,--,100.00%,--,--,8.00%,92.00%
+Yang 2014,ITT,Gefitinib,59,31,79,75.00%,--,100.00%,--,--,8.00%,92.00%
