@@ -310,14 +310,14 @@
 #'   \item{model}{The statistical model.} 
 #'   \item{tx_name}{Name of the treatment.}
 #'   \item{month}{Trial month.}
-#'   \item{mean}{Mean PFS from the posterior distribution.}
+#'   \item{mean}{Mean PFS/OS from the posterior distribution.}
 #'   \item{l95}{Lower limit of 95 percent credible interval from posterior distribution.}
 #'   \item{u95}{Upper limit of the 95 percent credible interval from the posterior distribution.}
 #' }
 #' @examples 
 #' head(mstate_nma_pfs)
 #' head(mstate_nma_os)
-#' @seealso \code{\link{mstate_nma_hazard}}
+#' @seealso \code{\link{mstate_nma_hazard}},  \code{\link{mstate_nma_hr}}
 #' @name mstate_nma_surv
 NULL
 
@@ -341,11 +341,34 @@ NULL
 #'   \item{tx_name}{Name of the treatment.}
 #'   \item{month}{Trial month.}
 #'   \item{transition}{The health state transition.}
-#'   \item{mean}{Mean PFS from the posterior distribution.}
+#'   \item{mean}{Mean hazard from the posterior distribution.}
 #'   \item{l95}{Lower limit of 95 percent credible interval from posterior distribution.}
 #'   \item{u95}{Upper limit of the 95 percent credible interval from the posterior distribution.}
 #' }
 #' @examples 
 #' head(mstate_nma_hazard)
-#' @seealso \code{\link{mstate_nma_surv}}
+#' @seealso \code{\link{mstate_nma_surv}},  \code{\link{mstate_nma_hr}}
 "mstate_nma_hazard"
+
+#' Hazard ratios from network meta-analysis
+#'
+#' Hazard ratios for first line treatments relative to gefitinib
+#' estimated using a Bayesian multi-state network meta-analyis (NMA).
+#'
+#' @format A data.table with the following columns:
+#' \describe{
+#'   \item{line}{Line of treatment. Either first or second.}
+#'   \item{mutation}{At 2nd line, equal to 1 if there is a T790M mutation and 
+#'   0 otherwise.}
+#'   \item{model}{The statistical model.} 
+#'   \item{tx_name}{Name of the treatment.}
+#'   \item{month}{Trial month.}
+#'   \item{transition}{The health state transition.}
+#'   \item{mean}{Mean hazard ratio from the posterior distribution.}
+#'   \item{l95}{Lower limit of 95 percent credible interval from posterior distribution.}
+#'   \item{u95}{Upper limit of the 95 percent credible interval from the posterior distribution.}
+#' }
+#' @examples 
+#' head(mstate_nma_hr)
+#' @seealso \code{\link{mstate_nma_surv}}, \code{\link{mstate_nma_hazard}}
+"mstate_nma_hr"

@@ -36,7 +36,8 @@ time_vec <- function(t, powers) {
   return(cbind(1, X))
 }
 
-# Function to compute probability in stable and progressed states...and PFS/OS
+# Function to compute probability in stable and progressed states and PFS/OS
+# by first computing transition specific hazard functions
 state_probs <- function(gamma, powers, t, n_sims){
   p_s <- p_p <- haz_sp <- haz_sd <- haz_pd <- matrix(NA, nrow = length(t), ncol = n_sims)
   p_s[1, ] <- 1 # PFS is 1 in first time period
@@ -57,6 +58,19 @@ state_probs <- function(gamma, powers, t, n_sims){
   os <- p_s + p_p  
   return(list(haz_sp = haz_sp, haz_sd = haz_sd, haz_pd = haz_pd,
               pfs = pfs, os = os))
+}
+
+# Function to compute hazard ratios
+hazard_ratios <- function(dvec, powers, t, n_sims){
+  hr_sp <- hr_sd <- hr_pd <- matrix(NA, nrow = length(t), ncol = n_sims)
+  hr_sp[1, ] <- hr_sd[1, ] <- hr_pd[1, ] <- 1 # HR is 1 first period
+  for (j in 2:length(t)){
+    tvec <- time_vec(t[j], powers)
+    hr_sp[j, ] <- exp(dvec[[1]] %*% t(tvec))
+    hr_sd[j, ] <- exp(dvec[[2]] %*% t(tvec))
+    hr_pd[j, ] <- exp(dvec[[3]] %*% t(tvec))
+  } # End loop over time periods
+  return(list(hr_sp = hr_sp, hr_sd = hr_sd, hr_pd = hr_pd))  
 }
 
 # Models types -----------------------------------------------------------------
@@ -418,10 +432,11 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
     
     # Parameter estimates for treatment i (i.e., "gamma")
     tx_num <- econmod_tx_lookup$num[i]
-    gamma <- vector(mode = "list", length = n_trans)
+    gamma <- dvec <- vector(mode = "list", length = n_trans)
     for (j in 1:n_trans){
       nma_params_lookup_j <- nma_params_lookup[transition_id == j]
       gamma[[j]] <- matrix(NA, nrow = n_sims, ncol = nrow(nma_params_lookup_j))
+      dvec[[j]] <- matrix(0, nrow = n_sims, ncol = nrow(nma_params_lookup_j))
       for (k in 1:nrow(nma_params_lookup_j)){
         d_num <- nma_params_lookup_j$d_num[k]
         if (!is.na(d_num)){
@@ -429,6 +444,7 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
         } else{
           d <- rep(0, n_sims)
         }
+        dvec[[j]][, k] <- d
         mu_num <- nma_params_lookup_j$mu_num[k]
         if (!is.na(mu_num)){
           mu <- ma_gef_post[, mu_col(mu_num)]
@@ -440,6 +456,7 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
     } # End loop over transitions
     
     # Compute PFS/OS given parameter estimates
+    hr <- hazard_ratios(dvec, powers, t, n_sims)
     stprobs <- state_probs(gamma, powers, t, n_sims)
     surv[[i]] <- data.table(line = 1,
                            mutation = NA,
@@ -447,6 +464,9 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
                            tx_name = econmod_tx_lookup$name[i],
                            sample = rep(1:n_sims, each = length(t)),
                            month = rep(t, n_sims),
+                           hr_sp = c(hr$hr_sp),
+                           hr_sd = c(hr$hr_sd),
+                           hr_pd = c(hr$hr_pd),
                            haz_sp = c(stprobs$haz_sp),
                            haz_sd = c(stprobs$haz_sp),
                            haz_pd = c(stprobs$haz_pd),
@@ -596,15 +616,22 @@ surv_2L_pbdc_est <- rbindlist(surv_2L_pbdc_est)
 # Combine hazards, PFS, and OS -------------------------------------------------
 surv_est <- rbind(surv_1L_est,
                   surv_2L_t790m_osi_est,
-                  surv_2L_pbdc_est)
+                  surv_2L_pbdc_est,
+                  fill = TRUE)
+
+# PFS
 mstate_nma_pfs <- surv_est[, .(mean = mean(pfs),
                           l95 = quantile(pfs, .025),
                           u95 = quantile(pfs, .975)),
                           by = c("line", "mutation", "model", "tx_name", "month")]
+
+# OS
 mstate_nma_os <- surv_est[, .(mean = mean(os),
                           l95 = quantile(os, .025),
                           u95 = quantile(os, .975)),
                           by = c("line", "mutation", "model", "tx_name", "month")]
+
+# Hazards
 hazard_est <- melt(surv_est, 
                  id.vars = c("line", "mutation", "model", "tx_name", 
                              "sample", "month"),
@@ -622,11 +649,31 @@ mstate_nma_hazard <- hazard_est[, .(mean = mean(hazard),
                                  by = c("line", "mutation", "model", "tx_name",
                                         "month", "transition")]
 
+# Hazard ratios
+hr_est <- melt(surv_est, 
+                id.vars = c("line", "mutation", "model", "tx_name", 
+                             "sample", "month"),
+                 measure.vars = c("hr_sp", "hr_sd", "hr_pd"),
+                 variable.name = "transition",
+                 value.name = "hr")
+hr_est[, transition := factor(transition,
+                              levels = c("hr_sp", "hr_sd", "hr_pd"),
+                               labels = c("Stable to progression",
+                                          "Stable to death",
+                                           "Progression to death"))]
+mstate_nma_hr <- hr_est[line == 1 & tx_name != "gefitinib",
+                        .(mean = mean(hr),
+                          l95 = quantile(hr, .025),
+                          u95 = quantile(hr, .975)),
+                        by = c("line", "mutation", "model", "tx_name",
+                                "month", "transition")]
+
 # Save -------------------------------------------------------------------------
 save(params_mstate_nma, file = "../data/params_mstate_nma.rda", compress = "bzip2")
 save(mstate_nma_pfs, file = "../data/mstate_nma_pfs.rda", compress = "bzip2")
 save(mstate_nma_os, file = "../data/mstate_nma_os.rda", compress = "bzip2")
 save(mstate_nma_hazard, file = "../data/mstate_nma_hazard.rda", compress = "bzip2")
+save(mstate_nma_hr, file = "../data/mstate_nma_hr.rda", compress = "bzip2")
 
 # Check PFS against JAGS code --------------------------------------------------
 # The mu's
