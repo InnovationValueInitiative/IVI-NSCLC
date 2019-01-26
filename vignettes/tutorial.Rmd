@@ -121,7 +121,7 @@ strategy_factor <- function(x, rev = FALSE){
 A model structure is specified with `model_structure()`. The survival distribution used to estimate the multi-state NMA and model transitions between health states is specified using the `dist` argument. A description of the relevant health states can be generated using `create_states()` and possible health state transitions are stored in a transition matrix generated using `create_trans_mat()`.
 
 ```{r}
-struct <- model_structure(txseqs, dist = "weibull", n_states = "three")
+struct <- model_structure(txseqs, dist = "weibull", n_states = "four")
 
 # Health states
 states <- create_states(struct)
