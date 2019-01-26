@@ -29,6 +29,55 @@ surv_mean <- function(x){
   return(res)
 }
 
+# Hazards
+## Hazard ratios 1L
+p <- ggplot(mstate_nma_hr[transition == "Stable to progression" &
+                            model != "Gompertz"], 
+            aes(x = month, y = mean, col = tx_name)) +
+     geom_line() +
+     facet_wrap(~model, scales = "free_y", ncol = 2) +
+     xlab("Month") + ylab("Hazard ratio") +
+     scale_colour_discrete(name = "") +
+     theme(legend.position = "bottom")
+ggsave("figs/hr-1L.pdf", p, width = 8, height = 8)
+
+## Gefitinib hazard 1L
+p <- ggplot(mstate_nma_hazard[line == 1 & tx_name == "gefitinib" &
+                                model != "Gompertz" &
+                                month > 0],
+            aes(x = month, y = mean, col = model)) +
+     geom_line() +
+     # geom_line(aes(y = l95), linetype = "dashed") +
+     # geom_line(aes(y = u95), linetype = "dashed") +
+     facet_wrap(~transition, scales = "free_y", ncol = 2) +
+     xlab("Month") + ylab("Hazard") +
+     scale_colour_discrete(name = "") +
+     theme(legend.position = "bottom")
+ggsave("figs/hazard-1L.pdf", p, width = 8, height = 8)
+
+## Hazards 2L (osimertinib)
+p <- ggplot(mstate_nma_hazard[line == 2 & tx_name == "osimertinib" & 
+                              model != "Gompertz" &
+                              month > 0],
+            aes(x = month, y = mean, col = model)) +
+     geom_line() +
+     facet_wrap(~transition, scales = "free_y", ncol = 2) +
+     xlab("Month") + ylab("Hazard") +
+     scale_colour_discrete(name = "") +
+     theme(legend.position = "bottom")
+ggsave("figs/hazard-2L-t790m-osi.pdf", p, width = 7, height = 5)
+
+## Hazards 2L (PBDC)
+p <- ggplot(mstate_nma_hazard[line == 2 & tx_name == "PBDC" & 
+                              model != "Gompertz" & month > 0],
+            aes(x = month, y = mean, col = model)) +
+     geom_line() +
+     facet_wrap(~transition, scales = "free_y", ncol = 2) +
+     xlab("Month") + ylab("Hazard") +
+     scale_colour_discrete(name = "") +
+     theme(legend.position = "bottom")
+ggsave("figs/hazard-2L-pbdc.pdf", p, width = 7, height = 5)
+
 # PFS/OS curves
 mstate_nma <- rbind(data.table(mstate_nma_pfs, outcome = "PFS"),
                     data.table(mstate_nma_os, outcome = "OS")) 
@@ -56,7 +105,7 @@ p <- ggplot(mstate_nma[line == 2 & mutation == 0],
      theme(legend.position = "bottom")
 ggsave("figs/surv-2L-pbdc.pdf", p, width = 7, height = 5)
 
-## Second line (Osimertinib)
+## Second line (osimertinib)
 p <- ggplot(mstate_nma[line == 2 & mutation == 1], 
             aes(x = month, y = mean, linetype = outcome)) +
      geom_line() +
