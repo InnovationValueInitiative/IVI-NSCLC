@@ -1,0 +1,7 @@
+﻿Trial ID and References,Population,Treatment,Age,,,Gender,Race and Ethnicity,,Smoking status,,,
+Trial ID,,,Estimate - Median,"Range, min","Range, max","Females, %, reported","Caucasian, %, reported","Asian, %, reported","Current/former smoker, %, reported","Current smoker, %, reported","Former smoker, %, reported","Never smoker, %, reported"
+AURA2,All,Osimitinib,133,35,89,68.00%,36.00%,60.00%,28.00%,--,--,72.00%
+AURA3,ITT,Osimertinib,62,25,85,62.00%,32.00%,65.00%,--,5.00%,27.00%,68.00%
+AURA3,ITT,Pemetrexed + Carboplatin/Cisplatin,63,20,90,69.00%,32.00%,66.00%,--,6.00%,27.00%,67.00%
+IMPRESS,ITT,Gefitinib + Cisplatin + Pemetrexed,60,33,79,65.00%,--,--,--,--,--,66.00%
+IMPRESS,ITT,Placebo + Cisplatin + Pemetrexed,58,35,79,64.00%,--,--,--,--,--,69.00%

@@ -1,0 +1,89 @@
+﻿Trial ID,Inclusion criteria,,,,,,,,,,,,,Exclusion criteria,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,Description,Age,Disease stage,Performance score,Life expectancy,Histology,Smoking status,Race/ethnicity,EGFR mutation status,Prior lines of treatment,Prior line of EGFR-TKI treatment,Prior line of chemotherapy,Prior chemo plat based?,Description,Prior treatment excluded,CNS metastases excluded,EGFR mutation,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+AURA2,"Inclusion:
+
+Aged at least 18 years. Japan patients aged at least 20 years.
+Locally advanced/metastatic NSCLC not amenable to curative surgery or radiotherapy
+Radiological documentation of disease progression:
+following 1st line EGFR TKI treatment but who have not received further treatment OR following prior therapy with an EGFR TKI and a platinum-based doublet chemotherapy. Patients who received prior EGFR TKI and platinum-based doublet chemotherapy may have also received additional lines of treatment. All patients must have documented radiological progression on the last treatment administered prior to enrolling in the study.
+
+Disease progression following 1st line EGFR TKI treatment or following prior EGFR TKI and platinum-containing doublet chemotherapy.
+Confirmation that the tumour harbours an EGFR mutation known to be associated with EGFR TKI sensitivity (including G719X, exon 19 deletion, L858R, L861Q). Patients must have central confirmation of tumour T790M mutation positive status from a biopsy sample taken after confirmation of disease progression on the most recent treatment regimen.
+World Health Organisation (WHO) performance status 0-1 with no deterioration over the previous 2 weeks and a minimum life expectancy of 12 weeks.
+At least one lesion, not previously irradiated and not chosen for biopsy during the study screening period, that can be accurately measured at baseline as ≥ 10mm in the longest diameter (except lymph nodes which must have short axis ≥ 15mm) with computerised tomography (CT) or magnetic resonance imaging (MRI) which is suitable for accurate repeated measurements.
+Females of child-bearing potential using contraception; negative pregnancy test.",≥18 years (>= 20 in Japan),IIIb or IV,0-1 (WHO),≥12 weeks,Adenocarcinoma,--,--,Mutation +,Yes,Yes,--,--,"Exclusion:
+
+Treatment with an EGFR-TKI within 8 days of study entry; any cytotoxic chemotherapy, investigational agents or other anticancer drugs within 14 days of study entry; previous treatment with AZD9291 (or 3rd generation TKIs); major surgery within 4 weeks; radiotherapy treatment to more than 30% of the bone marrow or with a wide field of radiation within 4 weeks; current treatment with potent inhibitors of CYP2C8 and potent inhibitors/inducers of CYP3A4.
+Unresolved toxicities from prior therapy.
+Unstable spinal cord compression/brain metastases.
+Severe/uncontrolled systemic diseases, including uncontrolled hypertension, bleeding diatheses or infection.
+Refractory nausea/vomiting, chronic gastrointestinal diseases or bowel resection.
+Cardiac disease.
+Past history of ILD, drug-induced ILD, radiation pneumonitis which required steroid treatment, or any evidence of clinically active interstitial lung disease.
+Inadequate bone marrow reserve or organ function.",No,Yes if unstable.,--,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+AURA3,"Eligible patients who were screened at 126 trial centers
+from August 2014 through September 2015
+had histologic or cytologic evidence of locally
+advanced or metastatic non–small-cell lung can cancer
+and of disease progression after first-line
+EGFR-TKI therapy. The documented presence of
+an EGFR mutation and central confirmation of the
+T790M variant on the cobas EGFR Mutation Test
+(Roche Molecular Systems) after first-line EGFRTKI
+treatment was required. All patients were required
+to provide a blood sample at screening to
+test for T790M in plasma circulating tumor DNA
+(ctDNA) on the cobas EGFR Mutation Test, version
+2. Patients with stable, asymptomatic CNS
+metastases that had not been treated with glucocorticoids
+for at least 4 weeks before the first
+dose of a trial drug were eligible for inclusion.",≥18 years,IIIb or IV,0-1 (WHO),--,--,--,--,Mutation + (Exon 19 or L858R),Yes,Yes,No,No,"1. Treatment with any of the following:
+• Treatment with more than one prior line of treatment for advanced NSCLC
+• Treatment with an EGFR-TKI (e.g., erlotinib, gefitinib or afatinib) within 8 days or
+approximately 5x half-life, whichever is the longer, of the first dose of study
+treatment. (If sufficient washout time has not occurred due to schedule or PK
+properties, an alternative appropriate washout time based on known duration and
+time to reversibility of drug related adverse events could be agreed upon by
+AstraZeneca and the Investigator)
+• Any cytotoxic chemotherapy, investigational agents or other anticancer drugs from
+a previous treatment regimen or clinical study within 14 days of randomization
+• Previous treatment with AZD9291, or a 3rd generation EGFR TKI
+• Major surgery (excluding placement of vascular access) within 4 weeks of
+randomization
+• Radiotherapy treatment to more than 30% of the bone marrow or with a wide field
+of radiation within 4 weeks of randomization
+• Subjects currently receiving (or unable to stop use at least 1 week prior to
+receiving the first dose of AZD9291) medications or herbal supplements known to
+be potent inhibitors or inducers of CYP3A4 (Appendix F)
+• Treatment with an investigational drug within five half-lives of the compound
+2. Any unresolved toxicities from prior therapy greater than CTCAE grade 1 (with the
+exception of alopecia grade 2) at the time of starting study treatment.
+3. Spinal cord compression or brain metastases unless asymptomatic, stable and not requiring
+steroids for at least 4 weeks prior to start of study treatment.
+4. Any evidence of severe or uncontrolled systemic diseases, including uncontrolled
+hypertension and active bleeding diatheses, which in the investigator’s opinion makes it
+undesirable for the subject to participate in the trial or which would jeopardise compliance
+with the protocol, or active infection including hepatitis B, hepatitis C and human
+immunodeficiency virus (HIV). Screening for chronic conditions is not required.
+5. Refractory nausea and vomiting, chronic gastrointestinal diseases, inability to swallow the
+formulated product or previous significant bowel resection that would preclude adequate
+absorption of AZD9291.",No,"Yes unless asymptomatic, stable and not requiring steroids. ",Cobas EGFR Mutation Test (Roche) version 2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+IMPRESS,"Eligible patients were aged at least 18 years (≥20 years
+in Japan), with cytologically or histologically confi rmed
+chemotherapy-naive advanced NSCLC and an activating
+EGFR mutation as confi rmed by local testing, who had
+achieved a complete or partial response for longer than
+4 months or durable stable disease for at least 6 months
+on fi rst-line gefi tinib treatment and had subsequently
+developed radiological disease progression (ie, acquired
+resistance), as per RECIST version 1.1,13 within 4 weeks
+before random allocation. Patients were also required to
+have a life expectancy of at least 12 weeks and a WHO
+performance status of 0 or 1.",≥18 years (20 in Japan),IIIb or IV,0-1 (WHO),≥12 weeks,Adenocarcinoma,--,--,Mutation+ (Activating),Yes,Yes,No,No,"Patient exclusion criteria
+included NSCLC of predominantly squamous cell
+histology, a history of interstitial lung disease, any other
+coexisting malignancies diagnosed within the past
+5 years (excluding basal cell carcinoma, cervical cancer
+in situ, or completely resected intramucosal gastric
+cancer), or treatment with another investigational drug
+4 weeks or less before random allocation (appendix).",Yes,Yes if symptomatic. No if resolved.,Local testing,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

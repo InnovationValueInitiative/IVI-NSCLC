@@ -1,0 +1,6 @@
+﻿Trial ID and Reference,,,,,,,,Randomized,,Trial Characteristics,,,,,,,
+Trial ID,"NCT Code 
+",Author,Year,Study design,Phase of Trial,Arm 1,Arm 2,Arm 1,Arm 2,"Month, Year of trial Initiation",Estimated study completion date,Study completion date,Masking,Region,Multicenter,Planned Treatment Duration,Crossover permitted
+AURA2,NCT02094261,Mitsudomi,2017,Single-arm,II,Osimertinib (80mg),--,411,--,"May, 2014",43830,--,Open-label,"Canada, Hong Kong, Italy, Japan, South Korea, Spain, Taiwan, United States",Yes,--,
+AURA3,NCT02151981,Mok,2017,RCT,III,Osimertinib,Pemetrexed + Carboplatin/Cisplatin,279,140,"August, 2014","November 30, 2018",--,Open-label,"Australia, Canada, China, France, Germany, Hong Kong, Hungary, Italy, Japan, Mexico, South Korea, Netherlands, Russian Federation, Spain, Sweden, Taiwan, United Kingdom, United States",Yes,"UDP, unacceptable side effects, or discontinue request by patient/physician. ",
+IMPRESS,NCT01544179,Soria,2015,RCT,III,Gefitinib + Cisplatin + Pemetrexed,Cisplatin + Pemetrexed,133,132,"March, 2012","December 31, 2018",--,Quadruple-blind,"China, France, Germany, Hong Kong, Hungary, Italy, Japan, Russia, South Korea, Spain, Taiwan",Yes,UDP or another discontinuation criteria was met,
