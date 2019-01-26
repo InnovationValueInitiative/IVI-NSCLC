@@ -419,7 +419,7 @@ If CEA is used for value assessment, then the value of treatment is estimated us
 Any combination of simulated model outcomes can be used for MCDA. If a 3-state model is selected, the MCDA in IVI's web applications is currently based on the following criteria: progression free survival (PFS) with 1L treatment, post-progression survival, total health care sector costs,oral administration (vs. intravenous administration), and years since FDA approval. If a 4-state model is selected, then PFS with 2L treatment is added as an additional criteria. Similarly, if the MCDA is conducted from limited societal perspective, then productivity costs are added as a criteria. Performance on the oral administration criteria is computed as the percentage of simulated life-years treated using oral therapies rather than intravenous therapies. Performance on the years since FDA approval criteria is the weighted time since FDA approval for each treatment in a treatment sequence, with weights equal to the number of life-years spent using a particular treatment with the sequence. In the web interfaces users can input their own weights for each of the criteria, but it is important to note that we have not conducted the surveys required to elicit weights for a representative sample of patients.
 
 \section{Source data and parameter estimation}\label{sec:data}
-Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. To inform relevant decision-making at the local level, it is recommended to use resource use and cost estimates reflective of that setting. 
+Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. 
 
 \subsection{Treatment effects for transition rates} \label{subsec:data-trans-rates}
 Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \autoref{app:km-curves}. 
@@ -428,11 +428,11 @@ The identified evidence base was used to 1) estimate the relative treatment effe
 \subsubsection{Relative treatment effects with 1L therapy}
 Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
 
-RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \citep[Chapter~1]{dias2018network}.. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
+RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \hl{(add reference)}. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
 
 Patients are randomized only within trials, not across trials, so there is a risk that patients participating in different trials differ with respect to demographic, disease or other characteristics. In addition, features of the trials themselves may differ. If these trial or patient characteristics are effect modifiers, i.e. they affect the treatment effects of an intervention versus a control, then there are systematic differences in treatment effects across trials. Systematic differences in known and unknown effect-modifiers among studies comparing the same interventions in direct fashion result in between-study heterogeneity. An imbalance in the distribution of effect modifiers between studies comparing different interventions will result in transitivity or consistency violations and therefore biased indirect comparisons.
 
-The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \autoref{fig:RCT network-1L}. Information regarding the distribution of patients characteristics across the studies in the network  are presented in \ \autoref{app:patient-characteristics}. 
+The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \autoref{fig:RCT network-1L}. Information regarding the distribution of patients characteristics across the studies in the network  are presented in \hl{(Appendix X)}. 
 
 \begin{figure}
 \centering
@@ -648,7 +648,7 @@ To be added
 
 \begin{figure}[h]
 \centering
-%\includegraphics[max size={\textwidth}{\textheight}]{figs/treatment-strategies.png} 
+\includegraphics[max size={\textwidth}{\textheight}]{figs/hr-1L.pdf} 
 \caption{First line estimates of hazard ratios from stable to progression relative to gefitinib from the multi-state network meta-analysis}\label{fig:hr-1L}
 \end{figure}
 
@@ -742,7 +742,7 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using \R{} statistical software \citep{team2014r}.
 
 \subsubsection{Model selection}
-The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \autoref{app:DIC-nma-1l}, \autoref{app:DIC-1l}, \autoref{app:DIC-2l}) \citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
+The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \hl{(Appendix X)}) \citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
 
 Informed by model fit criteria, we used treatment effect estimates obtained with the fixed and random effects, Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model. 
 
@@ -1160,10 +1160,10 @@ Other & English language\\
 
 
 \subsection{Utilities}
-Health state utility values (EQ-5d, HUI2, HUI-3, SF-6D) for the different health states were used in the model as well as disutility estimates associated with adverse events identified by focusing on review or overview studies. Furthermore, published mapping algorithms that allow a non-preference-based measure (generic or disease-specific measure) to be mapped onto a generic preference-based measure are of interest, as well as mapping algorithms between different generic preference-based health state utility values (e.g. between SF-6D and EQ5D) were searched for.
+Health state utility values (EQ-5d, HUI2, HUI-3, SF-6D) for the different health states were used in the model as well as disutility estimates associated with adverse events identified by focusing on review or overview studies. Furthermore, published mapping algorithms that allow a non-preference-based measure (generic or disease-specific measure) to be mapped onto a generic preference-based measure are of interest, as well as mapping algorithms between different generic preference-based health state utility values (e.g. between SF-6D and EQ5D) will be searched for. See Appendix Table 4 for study selection criteria.
 
 \subsection{Resource use, productivity, and cost}
-Relevant evidence regarding resource use, productivity and cost estimates were identified by means of a review of published CEA modelling studies in NSCLC relevant for the US setting.
+Relevant evidence regarding resource use, productivity and cost estimates were identified by means of a review of published CEA modelling studies in NSCLC relevant for the US setting.  See Appendix Table 5 for study selection criteria.
 
 \subsection{Study identification}
 Relevant studies were identified by searching the following databases using predefined search strategies: Medical Literature Analysis and Retrieval System Online (MEDLINE), Excerpta Medica database (EMBASE), and Cochrane Central Register of Controlled Trials. The study design filters recommended by the Scottish Intercollegiate Guidelines Network (SIGN) for MEDLINE and EMBASE were used to identify clinical trials. The search included terms related to the generic and brand name of the interventions of interest. The US National Institutes of Health Clinical Trial Registry and EU Clinical Trials Registry were also searched to identify completed clinical trials not yet published to identify any completed or ongoing trials that meet the criteria with results available.
@@ -1176,7 +1176,7 @@ Where there were gaps in the identified evidence, the search was expanded to inc
 Two reviewers, working independently, reviewed all abstracts and proceedings identified in each of the searches according to the selection criteria, with the exception of outcome criteria in the efficacy and safety searches, which were only applied during the screening of full-text publications. All studies identified as eligible studies during abstract screening were then screened at a full-text stage by the same two reviewers. The full-text studies identified at this stage were included for data extraction. Following reconciliation between the two investigators, a third reviewer was included to reach consensus for any remaining discrepancies. The process of study identification and selection is summarized with Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) flow diagrams (including reasons for exclusion at both the abstract and full text screening stage). 
 
 \subsection{Data collection}
-For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. Data collected included number and percent of patients with: any grade 3 or 4 adverse event, any grade 3 or 4 treatment related adverse event, any serious adverse event, any treatment related serious adverse event, and death within 30 days of last treatment. The duration over which safety outcomes were reported were also captured. 
+For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. Data collected included number and percent of patients with: any grade 3 or 4 adverse event, any grade 3 or 4 treatment related adverse event, any serious adverse event, any treatment related serious adverse event, and death within 30 days of last treatment. The duration over which safety outcomes were reported were also captured. Discontinuation due to adverse events were also examined. 
 
 For utility and cost-effectiveness studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. 
 
@@ -1184,91 +1184,65 @@ For utility and cost-effectiveness studies, relevant information for the model w
 Despite the strengths of the proposed SLR, some limitations are applicable to all SLRs that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. Further, any trials that are published close to the search date but are not yet indexed in the databases at the time of the search will not be captured by the search of MEDLINE, EMBASE, and Cochrane Central Register of Controlled Trials. As with any literature review, this SLR is limited by the use of published data. There is a risk of publication bias as some clinical studies fail to be published while others are published only in abstract form, which presents limited information. Finally, the search and selection were restricted to trials published in English.
 
 \section{Evidence base, efficacy and safety}
-\subsection{Study identification and selection} \label{app:study-selection}
-The identification and selection of relevant studies used to estimate treatment effects is summarized with \autoref{fig:slr-flow}.
-
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/flow diagram SLR.png}
-\caption{Study identification and selection}\label{fig:slr-flow}
-\end{figure}
-
-
-\subsection{Study characteristics} \label{app:study-characteristics}
-In .... information regarding study design characteristics is provided for the studies used to estimate PFS and OS. 
-
-\subsection{Treatment characteristics} \label{app:treatment-characteristics}
-In .... information regarding characteristics of the interventions evaluated in the studies used to estimate PFS and OS is provided.
-
-
-\subsection{Patient characteristics} \label{app:patient-characteristics}
-
-... provides information on the study populations of the different studies used to estimate PFS and OS. \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l} shows the distribution of key characteristics across the studies. 
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/female 1L.jpg}
-\caption{Proportion of women in 1L studies}\label{fig:female-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/age 1L.jpg}
-\caption{Median age in 1L studies}\label{fig:age-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop asian 1L.jpg}
-\caption{Proportion of Asian patients in 1L studies}\label{fig:asian-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop white 1L.jpg}
-\caption{Proportion of Caucasian patients in 1L studies}\label{fig:white-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop adenocarcinoma 1L.jpg}
-\caption{Proportion of patient with adenocarcinoma in 1L studies}\label{fig:adeno-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IIIb 1L.jpg}
-\caption{Proportion of patients with stage 3b disease in 1L studies}\label{fig:stageiiib-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IV 1L.jpg}
-\caption{Proportion of patients with stage 4 disease in 1L studies}\label{fig:stageiv-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop PS 0 or 1 1L.jpg}
-\caption{Proportion of patients with performance status 0 or 1 in 1L studies}\label{fig:ps01-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/never smoker 1L.jpg}
-\caption{Proportion of never smokers in 1L studies}\label{fig:neversmoker-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/current former smoker 1L.jpg}
-\caption{Proportion of current or former smokers in 1L studies}\label{fig:currentformermoker-1l}
-\end{figure}
-
 
 \subsection{Kaplan-Meier curves} \label{app:km-curves}
 \subsubsection{1L treatment}
+\iffalse
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{ARCHER-1050, progression-free survival and overall survival}\label{fig:ARCHER-1050}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{ENSURE, progression-free survival and overall survival}\label{fig:ENSURE}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{EURTAC, progression-free survival and overall survival}\label{fig:EURTAC}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png}
+\end{subfigure}
+\centering
+\caption{FirstSIGNAL, progression-free survival and overall survival}\label{fig:firstSIGNAL}
+\end{figure}
+
 
 \begin{figure}
 \centering
@@ -1288,28 +1262,27 @@ In .... information regarding characteristics of the interventions evaluated in 
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Wu 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ARCHER_1050 Mok 2018 OS Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{ARCHER-1050, progression-free survival and overall survival}\label{fig:ARCHER-1050}
+\caption{Han 2017, progression-free survival and overall survival}\label{fig:Han-2017}
 \end{figure}
-
 
 
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{LUX-LUNG 7, progression-free survival and overall survival}\label{fig:LUX-LUNG 7}
+\caption{IPASS, progression-free survival and overall survival}\label{fig:IPASS}
 \end{figure}
 
 
@@ -1340,17 +1313,18 @@ In .... information regarding characteristics of the interventions evaluated in 
 \caption{LUX-LUNG 6, progression-free survival and overall survival}\label{fig:LUX-LUNG 6}
 \end{figure}
 
+
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC De_Marinis 2015 PFS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/EURTAC Costa 2014 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/LUXlung_7 Paz_Ares 2017 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{EURTAC, progression-free survival and overall survival}\label{fig:EURTAC}
+\caption{LUX-LUNG 7, progression-free survival and overall survival}\label{fig:LUX-LUNG 7}
 \end{figure}
 
 
@@ -1358,15 +1332,14 @@ In .... information regarding characteristics of the interventions evaluated in 
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/ENSURE Wu 2015 OS (EGFR+) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \centering
-\caption{ENSURE, progression-free survival and overall survival}\label{fig:ENSURE}
+\caption{NEJ002, progression-free survival and overall survival}\label{fig:NEJ002}
 \end{figure}
-
 
 
 \begin{figure}
@@ -1387,20 +1360,6 @@ In .... information regarding characteristics of the interventions evaluated in 
 \centering
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 PFS (EGFR+_IA) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/FirstSIGNAL Han 2012 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{FirstSIGNAL, progression-free survival and overall survival}\label{fig:firstSIGNAL}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/WJTOG3405 Mitsudomi 2010 PFS (EGFR+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
@@ -1409,51 +1368,6 @@ In .... information regarding characteristics of the interventions evaluated in 
 \centering
 \caption{WJTOG3405, progression-free survival and overall survival}\label{fig:WJTOG3405}
 \end{figure}
-
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Mok 2009 PFS (EGFR+_IRC) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IPASS Fukuoka 2011 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{IPASS, progression-free survival and overall survival}\label{fig:IPASS}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Maemondo 2010 PFS (EGFR+_IRC) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/NEJ002 Inoue 2013 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{NEJ002, progression-free survival and overall survival}\label{fig:NEJ002}
-\end{figure}
-
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 PFS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/Han_2017 Han 2017 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{Han 2017, progression-free survival and overall survival}\label{fig:Han-2017}
-\end{figure}
-
 
 
 \begin{figure}
@@ -1468,45 +1382,9 @@ In .... information regarding characteristics of the interventions evaluated in 
 \centering
 \caption{Yang 2014, progression-free survival and overall survival}\label{fig:Yang 2014}
 \end{figure}
-
+\fi
 
 \subsubsection{2L treatment}
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/AURA3 Mok 2017 PFS (EGFR+_T790M+) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/.....png}
-\end{subfigure}
-\centering
-\caption{AURA-3 and AURA-2, progression-free survival and overall survival with osimertinib (T790+)}\label{fig:osimertinib-2l}
-\end{figure}
-
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IMPRESS Soria 2015 PFS (EGFR+_IA) Kaplan Meier.png}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/IMPRESS Mok 2017 OS (EGFR+) Kaplan Meier.png}
-\end{subfigure}
-\centering
-\caption{IMPRESS, progression-free survival and overall survival with PBDC}\label{fig:Impress}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/AURA3 Mok 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
-\centering
-\caption{AURA-3, progression-free survival with PBDC}\label{fig:Impress}
-\end{figure}
-
 
 
 \subsection{Adverse events}
@@ -1530,13 +1408,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i] 
@@ -1621,17 +1497,14 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
-    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]
-    		+Beta[s[i],a[i],3]*timetrans2[i]
+    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]+Beta[s[i],a[i],3]*timetrans2[i]
     log(h.sd[i])<- Beta[s[i],a[i],4] 
     log(h.pd[i])<- Beta[s[i],a[i],5]+Beta[s[i],a[i],6]*timetrans1[i]
   }
@@ -1719,13 +1592,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i] 
@@ -1849,17 +1720,14 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
-    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]
-    		+Beta[s[i],a[i],3]*timetrans2[i]
+    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]+Beta[s[i],a[i],3]*timetrans2[i]
     log(h.sd[i])<- Beta[s[i],a[i],4] 
     log(h.pd[i])<- Beta[s[i],a[i],5]+Beta[s[i],a[i],6]*timetrans1[i]
   }
@@ -1920,6 +1788,8 @@ model{
       Beta[l,ll,6]<-mu[l,6]
     }
   }
+  
+  
   
   
   for (l in 1:9){
@@ -1983,13 +1853,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i] 
@@ -2072,17 +1940,14 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
-    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]
-    		+Beta[s[i],a[i],3]*timetrans2[i]
+    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]+Beta[s[i],a[i],3]*timetrans2[i]
     log(h.sd[i])<- Beta[s[i],a[i],4] 
     log(h.pd[i])<- Beta[s[i],a[i],5]+Beta[s[i],a[i],6]*timetrans1[i]
   }
@@ -2169,13 +2034,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i] 
@@ -2235,6 +2098,8 @@ model{
       Beta[l,ll,5]<-mu[l,5]
     }
   }
+
+  
 
   
   for (l in 1:9){
@@ -2298,17 +2163,14 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
-    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]
-    		+Beta[s[i],a[i],3]*timetrans2[i]
+    log(h.sp[i])<- Beta[s[i],a[i],1]+Beta[s[i],a[i],2]*timetrans1[i]+Beta[s[i],a[i],3]*timetrans2[i]
     log(h.sd[i])<- Beta[s[i],a[i],4] 
     log(h.pd[i])<- Beta[s[i],a[i],5]+Beta[s[i],a[i],6]*timetrans1[i]
   }
@@ -2371,6 +2233,8 @@ model{
   }
   
   
+  
+  
   for (l in 1:9){
     for (ll in 2:na[l]){
       delta[l,ll]~dnorm(md[l,ll],taud[l,ll])
@@ -2420,8 +2284,6 @@ model{
 
 \subsection{Model parameter estimates}
 
-\subsection{Model fit}\label{app:DIC-nma-1l}
-
 \section{Meta-analysis for absolute effects with 1L reference treatment}
 \subsection{JAGS code}
 
@@ -2440,13 +2302,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- MU[1]+MU[2]*timetrans1[i] 
@@ -2488,13 +2348,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- MU[1]+MU[2]*timetrans1[i]+MU[3]*timetrans2[i] 
@@ -2524,8 +2382,6 @@ model{
 \end{verbatim}
 
 \subsection{Model parameter estimates}
-
-\subsection{Model fit}\label{app:DIC-1l}
 
 
 \section{Analysis of absolute effects with 2L therapy}
@@ -2617,13 +2473,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- MU[1]+MU[2]*timetrans1[i] 
@@ -2677,13 +2531,11 @@ model{
     p[i,1:3]~ddirch(alpha[])
     
     p[i,4]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])
-    		-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,5]<-p[i,2]*exp(-h.pd[i]*dt[i,1])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,1])-exp(-h.pd[i]*dt[i,1]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,6]<-1-(p[i,4]+p[i,5])
     
     p[i,7]<-p[i,1]*exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])
-    		-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
+    p[i,8]<-p[i,2]*exp(-h.pd[i]*dt[i,2])+p[i,1]*h.sp[i]*(exp(-(h.sd[i]+h.sp[i])*dt[i,2])-exp(-h.pd[i]*dt[i,2]))/(h.pd[i]-h.sp[i]-h.sd[i])
     p[i,9]<-1-(p[i,7]+p[i,8])
     
     log(h.sp[i])<- MU[1]+MU[2]*timetrans1[i]+MU[3]*timetrans2[i] 
@@ -2727,11 +2579,6 @@ model{
 
 
 
-
-\subsection{Model fit}\label{app:DIC-2l}
-
-
-
 \section{Network meta-analysis of adverse events}
 \subsection{JAGS code}
 
@@ -2743,15 +2590,15 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:(ns-1)){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:(ns-1)){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
-      for (k in 1:na[ns]) {               
+      for (k in 1:na[ns]) {               # LOOP THROUGH ARMS OF LAST STUDY (FLAURA)
         r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
-        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
+        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  # model for linear predictor
       }
   
   # Exchangeable relative treatment effects for TKIs
@@ -2766,26 +2613,27 @@ model{
        
        
   # Priors
-    d[1]<-0                                     
-    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[5] ~ dnorm(0,.0001)                       
     mu[6] ~ dnorm(0,.0001)                       
     mu[7] ~ dnorm(0,.0001)                       
     mu[10] ~ dnorm(0,.0001)                       
     mu[11] ~ dnorm(0,.0001)                       
       
-    MU ~ dnorm(0,.01)                         
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                        
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -2806,10 +2654,10 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:ns){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:ns){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
   
@@ -2825,25 +2673,26 @@ model{
        
        
   # Priors
-    d[1]<-0                                      
-    for (k in 5:nt){  d[k] ~ dnorm(0,.001) }     
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 5:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[4] ~ dnorm(0,.0001)                       
     mu[5] ~ dnorm(0,.0001)                       
     mu[8] ~ dnorm(0,.0001)                       
                      
       
-    MU ~ dnorm(0,.01)                         
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                       
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -2864,15 +2713,15 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:(ns-1)){                  
-      for (k in 1:na[i]) {              
+    for(i in 1:(ns-1)){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
-      for (k in 1:na[ns]) {               
+      for (k in 1:na[ns]) {               # LOOP THROUGH ARMS OF LAST STUDY (FLAURA)
         r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
-        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
+        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  # model for linear predictor
       }
   
   # Exchangeable relative treatment effects for TKIs
@@ -2889,14 +2738,14 @@ model{
     mu[14] ~ dnorm(MU,MU.prec) 
        
   # Priors
-    d[1]<-0                                      
-    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[4] ~ dnorm(0,.0001)                       
     mu[6] ~ dnorm(0,.0001)                       
     mu[8] ~ dnorm(0,.0001)                       
@@ -2905,12 +2754,13 @@ model{
     mu[15] ~ dnorm(0,.0001) 
     mu[16] ~ dnorm(0,.0001) 
       
-    MU ~ dnorm(0,.01)                         
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                        
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -2931,15 +2781,15 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:(ns-1)){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:(ns-1)){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
-      for (k in 1:na[ns]) {               
+      for (k in 1:na[ns]) {               # LOOP THROUGH ARMS OF LAST STUDY (FLAURA)
         r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
-        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
+        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  # model for linear predictor
       }
   
   # Exchangeable relative treatment effects for TKIs
@@ -2955,24 +2805,25 @@ model{
     mu[9] ~ dnorm(MU,MU.prec)    
        
   # Priors
-    d[1]<-0                                      
-    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[6] ~ dnorm(0,.0001)                       
     mu[10] ~ dnorm(0,.0001)                       
     mu[11] ~ dnorm(0,.0001)                       
       
-    MU ~ dnorm(0,.01)                         
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                       
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -2993,10 +2844,10 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:ns){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:ns){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
   
@@ -3010,17 +2861,18 @@ model{
        
        
   # Priors
-    d[1]<-0                                      
+    d[1]<-0                                      # treatment effect is zero for reference treatment
     d.TKI ~ dnorm(0,.001)
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
       
-    MU ~ dnorm(0,.01)                         
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                     
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -3041,10 +2893,10 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:ns){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:ns){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
   
@@ -3060,26 +2912,27 @@ model{
        
        
   # Priors
-    d[1]<-0                                      
-    for (k in 5:nt){  d[k] ~ dnorm(0,.001) }     
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 5:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[5] ~ dnorm(0,.0001)
     mu[6] ~ dnorm(0,.0001)
     mu[8] ~ dnorm(0,.0001)
     mu[10] ~ dnorm(0,.0001)
                      
       
-    MU ~ dnorm(0,.01)                         
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                        
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -3100,10 +2953,10 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:ns){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:ns){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
   
@@ -3112,16 +2965,17 @@ model{
   
        
   # Priors
-    d[1]<-0                                      
+    d[1]<-0                                      # treatment effect is zero for reference treatment
     d.TKI ~ dnorm(0,.001)
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
       
-    mu[1] ~ dnorm(0,.01)                         
+    mu[1] ~ dnorm(0,.01)                         # priors for study effects
     mu[2] ~ dnorm(0,.01)
     
       
-  #Output                                     
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -3142,10 +2996,10 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:ns){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:ns){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
       
@@ -3162,23 +3016,24 @@ model{
        
        
   # Priors
-    d[1]<-0                                      
-    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[5] ~ dnorm(0,.0001)                       
     mu[6] ~ dnorm(0,.0001)                       
       
-    MU ~ dnorm(0,.01)                         
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                       
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -3199,15 +3054,15 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:(ns-1)){                  
-      for (k in 1:na[i]) {               
+    for(i in 1:(ns-1)){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
-      for (k in 1:na[ns]) {               
+      for (k in 1:na[ns]) {               # LOOP THROUGH ARMS OF LAST STUDY (FLAURA)
         r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
-        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
+        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  # model for linear predictor
       }
   
   # Exchangeable relative treatment effects for TKIs
@@ -3224,14 +3079,14 @@ model{
     mu[15] ~ dnorm(MU,MU.prec)
        
   # Priors
-    d[1]<-0                                      
-    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[4] ~ dnorm(0,.0001)                       
     mu[5] ~ dnorm(0,.0001)                       
     mu[7] ~ dnorm(0,.0001)                       
@@ -3241,12 +3096,13 @@ model{
     mu[16] ~ dnorm(0,.0001)
     mu[17] ~ dnorm(0,.0001)
       
-    MU ~ dnorm(0,.01)                        
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                     
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]
@@ -3267,15 +3123,15 @@ model{
 model{
   # Binomial likelihood, logit link
   # Model for relative treatment effects
-    for(i in 1:(ns-1)){                 
-      for (k in 1:na[i]) {               
+    for(i in 1:(ns-1)){                  # LOOP THROUGH STUDIES
+      for (k in 1:na[i]) {               # LOOP THROUGH ARMS
         r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
-        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
+        logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  # model for linear predictor
       }
     }   
-      for (k in 1:na[ns]) {               
+      for (k in 1:na[ns]) {               # LOOP THROUGH ARMS OF LAST STUDY (FLAURA)
         r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
-        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
+        logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  # model for linear predictor
       }
   
   # Exchangeable relative treatment effects for TKIs
@@ -3290,14 +3146,14 @@ model{
     mu[11] ~ dnorm(MU,MU.prec)
        
   # Priors
-    d[1]<-0                                      
-    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }    
+    d[1]<-0                                      # treatment effect is zero for reference treatment
+    for (k in 6:nt){  d[k] ~ dnorm(0,.001) }     # vague priors for treatment effects
     d.TKI ~ dnorm(0,.001)
     
     d.TKI.sd ~ dunif(0,2) 
     d.TKI.prec<-1/(d.TKI.sd*d.TKI.sd)
     
-    mu[2] ~ dnorm(0,.0001)                     
+    mu[2] ~ dnorm(0,.0001)                     # vague priors for trial baselines
     mu[4] ~ dnorm(0,.0001)                       
     mu[6] ~ dnorm(0,.0001)                       
     mu[7] ~ dnorm(0,.0001)                       
@@ -3306,12 +3162,13 @@ model{
     mu[13] ~ dnorm(0,.0001)
 
       
-    MU ~ dnorm(0,.01)                         #
+    MU ~ dnorm(0,.01)                         # prior for logit probabity with GEF
     MU.sd ~ dunif(0,2) 
     MU.prec<-1/(MU.sd*MU.sd)
     
       
-  #Output                                       
+  #Output 
+    # pairwise ORs and LORs for all possible pair-wise comparisons                                       
     for (c in 1:(nt-1)) {                        
       for (k in (c+1):nt)  { 
         LOR[c,k] <- d[k] - d[c]

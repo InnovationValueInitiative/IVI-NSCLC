@@ -468,7 +468,7 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
                            hr_sd = c(hr$hr_sd),
                            hr_pd = c(hr$hr_pd),
                            haz_sp = c(stprobs$haz_sp),
-                           haz_sd = c(stprobs$haz_sp),
+                           haz_sd = c(stprobs$haz_sd),
                            haz_pd = c(stprobs$haz_pd),
                            pfs = c(stprobs$pfs),
                            os = c(stprobs$os))
