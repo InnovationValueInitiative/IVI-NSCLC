@@ -422,8 +422,10 @@ Any combination of simulated model outcomes can be used for MCDA. If a 3-state m
 Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. To inform relevant decision-making at the local level, it is recommended to use resource use and cost estimates reflective of that setting. 
 
 \subsection{Treatment effects for transition rates} \label{subsec:data-trans-rates}
-Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, search strategies, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \autoref{app:km-curves}. 
+Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \autoref{app:km-curves}. 
 The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
+
+It is important to note that the available PFS and OS data for the different interventions varied dramatically. At the time when the systematic literature review was performed, there was about 25 months of follow-up data available for osimertinib as 1L treatment, with median OS not yet reached; about 40 months of data for dacomitinib; 40-50 months for afatinib; and more than 50 months of follow-up data for gefitinib and erlotinib. This implies that treatment effect estimates for osimertinib and dacomitinib are much more uncertain at this stage than the other interventions and are likely to change when longer term data becomes available. See \autoref{fig:ARCHER-1050}-\autoref{fig:Yang 2014} for more detail.
 
 \subsubsection{Relative treatment effects with 1L therapy}
 Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
@@ -1254,15 +1256,15 @@ For utility studies and studies providing evidence on healthcare utilization and
 Where there were gaps in the identified evidence, the search was expanded to include the grey literature, such as reports published by NICE.
 
 \subsection{Study selection}
-Two reviewers, working independently, reviewed all abstracts and proceedings identified in each of the searches according to the selection criteria, with the exception of outcome criteria in the efficacy and safety searches, which were only applied during the screening of full-text publications. All studies identified as eligible studies during abstract screening were then screened at a full-text stage by the same two reviewers. The full-text studies identified at this stage were included for data extraction. Following reconciliation between the two investigators, a third reviewer was included to reach consensus for any remaining discrepancies. The process of study identification and selection is summarized with Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) flow diagrams (including reasons for exclusion at both the abstract and full text screening stage). 
+Two reviewers, working independently, reviewed all abstracts and proceedings identified in each of the searches according to the selection criteria, with the exception of outcome criteria in the efficacy and safety searches, which were only applied during the screening of full-text publications. All studies identified as eligible studies during abstract screening were then screened at a full-text stage by the same two reviewers. The full-text studies identified at this stage were included for data extraction. Following reconciliation between the two investigators, a third reviewer was included to reach consensus for any remaining discrepancies. The process of study identification and selection is summarized with a Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) flow diagram. 
 
 \subsection{Data collection}
-For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. Data collected included number and percent of patients with: any grade 3 or 4 adverse event, any grade 3 or 4 treatment related adverse event, any serious adverse event, any treatment related serious adverse event, and death within 30 days of last treatment. The duration over which safety outcomes were reported were also captured. 
+For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. 
 
 For utility and cost-effectiveness studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. 
 
 \subsection{Limitations}
-Despite the strengths of the proposed SLR, some limitations are applicable to all SLRs that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. As with any literature review, this SLR is limited by the use of published data and there is a risk of publication bias. Finally, the search and selection were restricted to studies published in English.
+Despite the strengths of the systematic literature review to identify relevant evidence, some limitations are applicable that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. Furthermore, there is a risk of publication bias. Finally, the search and selection were restricted to studies published in English.
 
 \section{Evidence base, efficacy and safety}
 \subsection{Study identification and selection} \label{app:study-selection}
@@ -1561,7 +1563,7 @@ In .... information regarding characteristics of the interventions evaluated in 
 \includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/AURA3 Mok 2017 PFS (EGFR+_T790M+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/AURA3 Mok 2017 PFS (EGFR+_IRC) Kaplan Meier.png}
+\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/.....png}
 \end{subfigure}
 \centering
 \caption{AURA-3 and AURA-2, progression-free survival and overall survival with osimertinib (T790+)}\label{fig:osimertinib-2l}
@@ -2504,7 +2506,7 @@ model{
 
 \subsection{Model fit}\label{app:DIC-nma-1l}
 
-\subsection{Supplementary figures}\label{app:nma-supp-figs}
+\subsection{Supplementary figures of relative treatment effects}\label{app:nma-supp-figs}
 \begin{figure}[h]
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/hr-1L-weibull.pdf} 
@@ -2636,7 +2638,7 @@ model{
 
 \subsection{Model fit}\label{app:DIC-1l}
 
-\subsection{Supplementary figures}\label{app:nma-supp-figs}
+\subsection{Supplementary figures of absolute effects}\label{app:1l-supp-figs}
 
 \begin{figure}[h]
 \centering
@@ -2864,7 +2866,7 @@ model{
 
 \subsection{Model fit}\label{app:DIC-2l}
 
-\subsection{Supplementary figures}\label{app:nma-supp-figs}
+\subsection{Supplementary figures of absolute effects}\label{app:2l-supp-figs}
 
 \begin{figure}
 \centering
