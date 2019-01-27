@@ -29,81 +29,136 @@ surv_mean <- function(x){
   return(res)
 }
 
-# Hazards
-## Hazard ratios 1L
-p <- ggplot(mstate_nma_hr[transition == "Stable to progression"], 
+# Hazard ratios
+## 1L
+p <- ggplot(mstate_nma_hr[transition == "Stable to progression" & 
+                            month > 0], 
             aes(x = month, y = mean, col = tx_name)) +
      geom_line() +
-     facet_wrap(~model, scales = "free_y", ncol = 2) +
+     facet_wrap(~model, ncol = 2) +
      xlab("Month") + ylab("Hazard ratio") +
      scale_colour_discrete(name = "") +
-     theme(legend.position = "bottom")
+     theme(legend.position = "bottom") +
+     coord_cartesian(ylim = c(0, 1.3))
 ggsave("figs/hr-1L.pdf", p, width = 8, height = 8)
 
-## Appendix hazard ratios 1L (with CrI)
-hr_1L_plot <- function(model_name){
+## 1L with CrI
+hr_1L_cri_plot <- function(model_name){
  p <- ggplot(mstate_nma_hr[transition == "Stable to progression" &
-                            model == model_name], 
+                            model == model_name & month > 0], 
             aes(x = month, y = mean)) +
      geom_line() +
-     facet_wrap(~tx_name, scales = "free_y", ncol = 2) +
+     facet_wrap(~tx_name, ncol = 2) +
       geom_ribbon(aes(ymin = l95, ymax = u95),
                 alpha = 0.2) +
      xlab("Month") + ylab("Hazard ratio") +
      scale_colour_discrete(name = "") +
-     theme(legend.position = "bottom")
+     theme(legend.position = "bottom") +
+     coord_cartesian(ylim = c(0, 1.3))
  return(p)
 }
-p <- hr_1L_plot("Weibull")
+p <- hr_1L_cri_plot("Weibull")
 ggsave("figs/hr-1L-weibull.pdf", p, width = 8, height = 8)
-p <- hr_1L_plot("Fractional polynomial (0, 0)")
+p <- hr_1L_cri_plot("Fractional polynomial (0, 0)")
 ggsave("figs/hr-1L-fp-00.pdf", p, width = 8, height = 8)
-p <- hr_1L_plot("Fractional polynomial (0, 1)")
+p <- hr_1L_cri_plot("Fractional polynomial (0, 1)")
 ggsave("figs/hr-1L-fp-01.pdf", p, width = 8, height = 8)
+p <- hr_1L_cri_plot("Gompertz")
+ggsave("figs/hr-1L-gompertz.pdf", p, width = 8, height = 8)
 
-
-## Gefitinib hazard 1L
-p <- ggplot(mstate_nma_hazard[line == 1 & tx_name == "gefitinib" &
-                                model != "Gompertz" &
+# Hazards
+## Main body without CrIs
+haz_plot <- function(line, tx_name, ylim){
+  line_env <- line
+  tx_name_env <- tx_name
+  p <- ggplot(mstate_nma_hazard[line == line_env & 
+                                tx_name == tx_name_env &
                                 month > 0],
             aes(x = month, y = mean, col = model)) +
      geom_line() +
-     # geom_line(aes(y = l95), linetype = "dashed") +
-     # geom_line(aes(y = u95), linetype = "dashed") +
-     facet_wrap(~transition, scales = "free_y", ncol = 2) +
+     facet_wrap(~transition, ncol = 2) +
      xlab("Month") + ylab("Hazard") +
      scale_colour_discrete(name = "") +
-     theme(legend.position = "bottom")
+     theme(legend.position = "bottom") + 
+     coord_cartesian(ylim = ylim)
+  return(p)
+}
+p <- haz_plot(line = 1, tx_name = "gefitinib", ylim = c(0, .3))
 ggsave("figs/hazard-1L.pdf", p, width = 8, height = 8)
-
-## Hazards 2L (osimertinib)
-p <- ggplot(mstate_nma_hazard[line == 2 & tx_name == "osimertinib" & 
-                              model != "Gompertz" &
-                              month > 0],
-            aes(x = month, y = mean, col = model)) +
-     geom_line() +
-     facet_wrap(~transition, scales = "free_y", ncol = 2) +
-     xlab("Month") + ylab("Hazard") +
-     scale_colour_discrete(name = "") +
-     theme(legend.position = "bottom")
+p <- haz_plot(line = 2, tx_name = "osimertinib", ylim = c(0, .5))
 ggsave("figs/hazard-2L-t790m-osi.pdf", p, width = 7, height = 5)
+p <- haz_plot(line = 2, tx_name = "PBDC", ylim = c(0, .5))
+ggsave("figs/hazard-2L-pbdc.pdf", p, width = 7, height = 5)
 
-## Hazards 2L (PBDC)
-p <- ggplot(mstate_nma_hazard[line == 2 & tx_name == "PBDC" & 
-                              model != "Gompertz" & month > 0],
-            aes(x = month, y = mean, col = model)) +
+## With CrIs
+haz_cri_plot <- function(line, tx_name, ylim, model){
+  line_env <- line
+  tx_name_env <- tx_name
+  model_env <- model
+  p <- ggplot(mstate_nma_hazard[line == line_env & 
+                                tx_name == tx_name_env &
+                                model == model_env &
+                                month > 0],
+            aes(x = month, y = mean)) +
      geom_line() +
-     facet_wrap(~transition, scales = "free_y", ncol = 2) +
+     geom_ribbon(aes(ymin = l95, ymax = u95),
+                alpha = 0.2) +
+     facet_wrap(~transition, ncol = 2) +
      xlab("Month") + ylab("Hazard") +
      scale_colour_discrete(name = "") +
-     theme(legend.position = "bottom")
-ggsave("figs/hazard-2L-pbdc.pdf", p, width = 7, height = 5)
+     theme(legend.position = "bottom") + 
+     coord_cartesian(ylim = ylim)
+  return(p)
+}
+
+### 1L
+p <- haz_cri_plot(line = 1, tx_name = "gefitinib", ylim = c(0, .4),
+                  model = "Weibull")
+ggsave("figs/hazard-1L-gef-weibull.pdf", p, width = 8, height = 8)
+p <- haz_cri_plot(line = 1, tx_name = "gefitinib", ylim = c(0, .4),
+                  model = "Fractional polynomial (0, 0)")
+ggsave("figs/hazard-1L-gef-fp-00.pdf", p, width = 8, height = 8)
+p <- haz_cri_plot(line = 1, tx_name = "gefitinib", ylim = c(0, .4),
+                  model = "Fractional polynomial (0, 1)")
+ggsave("figs/hazard-1L-gef-fp-01.pdf", p, width = 8, height = 8)
+p <- haz_cri_plot(line = 1, tx_name = "gefitinib", ylim = c(0, .4),
+                  model = "Gompertz")
+ggsave("figs/hazard-1L-gef-gompertz.pdf", p, width = 8, height = 8)
+
+### 2L
+p <- haz_cri_plot(line = 2, tx_name = "osimertinib", ylim = c(0, .4),
+                  model = "Weibull")
+ggsave("figs/hazard-2L-t790m-osi-weibull.pdf", p, width = 7, height = 5)
+p <- haz_cri_plot(line = 2, tx_name = "PBDC", ylim = c(0, .4),
+                  model = "Weibull")
+ggsave("figs/hazard-2L-pbdc-weibull.pdf", p, width = 7, height = 5)
+
+p <- haz_cri_plot(line = 2, tx_name = "osimertinib", ylim = c(0, .4),
+                  model = "Fractional polynomial (0, 0)")
+ggsave("figs/hazard-2L-t790m-osi-fp-00.pdf", p, width = 7, height = 5)
+p <- haz_cri_plot(line = 2, tx_name = "PBDC", ylim = c(0, .4),
+                  model = "Fractional polynomial (0, 0)")
+ggsave("figs/hazard-2L-pbdc-fp-00.pdf", p, width = 7, height = 5)
+
+p <- haz_cri_plot(line = 2, tx_name = "osimertinib", ylim = c(0, .4),
+                  model = "Fractional polynomial (0, 1)")
+ggsave("figs/hazard-2L-t790m-osi-fp-01.pdf", p, width = 7, height = 5)
+p <- haz_cri_plot(line = 2, tx_name = "PBDC", ylim = c(0, .4),
+                  model = "Fractional polynomial (0, 1)")
+ggsave("figs/hazard-2L-pbdc-fp-01.pdf", p, width = 7, height = 5)
+
+p <- haz_cri_plot(line = 2, tx_name = "osimertinib", ylim = c(0, .4),
+                  model = "Gompertz")
+ggsave("figs/hazard-2L-t790m-osi-gompertz.pdf", p, width = 7, height = 5)
+p <- haz_cri_plot(line = 2, tx_name = "PBDC", ylim = c(0, .4),
+                  model = "Gompertz")
+ggsave("figs/hazard-2L-pbdc-gompertz.pdf", p, width = 7, height = 5)
 
 # PFS/OS curves
 mstate_nma <- rbind(data.table(mstate_nma_pfs, outcome = "PFS"),
                     data.table(mstate_nma_os, outcome = "OS")) 
 
-## First line
+## 1L
 p <- ggplot(mstate_nma[line == 1], 
             aes(x = month, y = mean, col = tx_name, linetype = outcome)) +
      geom_line() +
@@ -114,7 +169,7 @@ p <- ggplot(mstate_nma[line == 1],
      theme(legend.position = "bottom")
 ggsave("figs/surv-1L.pdf", p, width = 8, height = 8)
 
-## Second line (PBDC)
+## 2L (PBDC)
 p <- ggplot(mstate_nma[line == 2 & mutation == 0], 
             aes(x = month, y = mean, linetype = outcome)) +
      geom_line() +
@@ -126,7 +181,7 @@ p <- ggplot(mstate_nma[line == 2 & mutation == 0],
      theme(legend.position = "bottom")
 ggsave("figs/surv-2L-pbdc.pdf", p, width = 7, height = 5)
 
-## Second line (osimertinib)
+## 2L (osimertinib)
 p <- ggplot(mstate_nma[line == 2 & mutation == 1], 
             aes(x = month, y = mean, linetype = outcome)) +
      geom_line() +
