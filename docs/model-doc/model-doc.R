@@ -31,8 +31,7 @@ surv_mean <- function(x){
 
 # Hazards
 ## Hazard ratios 1L
-p <- ggplot(mstate_nma_hr[transition == "Stable to progression" &
-                            model != "Gompertz"], 
+p <- ggplot(mstate_nma_hr[transition == "Stable to progression"], 
             aes(x = month, y = mean, col = tx_name)) +
      geom_line() +
      facet_wrap(~model, scales = "free_y", ncol = 2) +

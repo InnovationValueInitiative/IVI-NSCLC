@@ -544,7 +544,7 @@ surv_2L <- function(n_months, ma_post,
                      sample = rep(1:n_sims, each = length(t)),
                      month = rep(t, n_sims),
                      haz_sp = c(stprobs$haz_sp),
-                     haz_sd = c(stprobs$haz_sp),
+                     haz_sd = c(stprobs$haz_sd),
                      haz_pd = c(stprobs$haz_pd),                     
                      pfs = c(stprobs$pfs),
                      os = c(stprobs$os))
