@@ -41,6 +41,28 @@ p <- ggplot(mstate_nma_hr[transition == "Stable to progression" &
      theme(legend.position = "bottom")
 ggsave("figs/hr-1L.pdf", p, width = 8, height = 8)
 
+## Appendix hazard ratios 1L (with CrI)
+hr_1L_plot <- function(model_name){
+ p <- ggplot(mstate_nma_hr[transition == "Stable to progression" &
+                            model == model_name], 
+            aes(x = month, y = mean)) +
+     geom_line() +
+     facet_wrap(~tx_name, scales = "free_y", ncol = 2) +
+      geom_ribbon(aes(ymin = l95, ymax = u95),
+                alpha = 0.2) +
+     xlab("Month") + ylab("Hazard ratio") +
+     scale_colour_discrete(name = "") +
+     theme(legend.position = "bottom")
+ return(p)
+}
+p <- hr_1L_plot("Weibull")
+ggsave("figs/hr-1L-weibull.pdf", p, width = 8, height = 8)
+p <- hr_1L_plot("Fractional polynomial (0, 0)")
+ggsave("figs/hr-1L-fp-00.pdf", p, width = 8, height = 8)
+p <- hr_1L_plot("Fractional polynomial (0, 1)")
+ggsave("figs/hr-1L-fp-01.pdf", p, width = 8, height = 8)
+
+
 ## Gefitinib hazard 1L
 p <- ggplot(mstate_nma_hazard[line == 1 & tx_name == "gefitinib" &
                                 model != "Gompertz" &
