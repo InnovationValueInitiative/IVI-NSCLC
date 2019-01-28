@@ -405,13 +405,13 @@ The disease model simulates the times that patients transition to and from healt
 
 Costs are computed for multiple categories and separated into health care sector and non-heath care sector costs as recommended by \citet{sanders2016recommendations}. Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), adverse event costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity costs.
 
-Discounted costs and QALYs over the model's time horizon are computed using the continuous time present value given a flow of state values (i.e., utility and annualized costs), which change as patients transition between health states or as costs vary as a function of time since treatment initiation. Denote the set of $M$ time intervals with unique state values for a given patient in the simulation sorted by time as $z_1,\ldots, z_M$. Discounted costs and QALYs are then given by,  
+Discounted costs and QALYs over the model's time horizon are computed using the continuous time present value given a flow of state values (i.e., utility and annualized costs), which change as patients transition between health states or as costs vary as a function of time since treatment initiation. The state values can be partitioned into $M$ time intervals indexed by $m = 1,\ldots, M$ where interval $m$ contains times $u$ such that $u_m\leq u \leq u_{m+1}$ and state values are equal to $z_m$ during interval $m$. Discounted costs and QALYs are then given by,  
 
 \begin{equation} \label{eqn:pv}
 \sum_{m = 1}^M \int_{u_m}^{u_m+1} z_me^{-ru}du = \sum_{m = 1}^M z_m \left(\frac{e^{-r{u_{m}}} - e^{-r{u_{m+1}}}}{r}\right),
 \end{equation}
 
-where $r > 0$ is the discount rate and $u$ is time. If $r = 0$, then the present value simplifies to $\sum_{m = 1}^M z_m(u_{m+1} - u_{m})$. 
+where $r > 0$ is the discount rate. If $r = 0$, then the present value simplifies to $\sum_{m = 1}^M z_m(u_{m+1} - u_{m})$. 
 
 \subsection{Value assessment} \label{subsec:outcomes-value-assessment}
 If CEA is used for value assessment, then the value of treatment is estimated using the NMB defined as discounted QALYs multiplied by willingness to pay per QALY less costs. Costs in analyses conducted from a limited societal perspective include both productivity costs and health care sector costs while costs in analyses conducted from a health care sector perspective only include health care sector costs. 
