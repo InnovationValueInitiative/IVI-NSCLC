@@ -63,7 +63,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2019-01-26</h4>
+            <h4 class="date">2019-01-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -91,7 +91,7 @@
 <span class="kw">library</span>(<span class="st">"gridExtra"</span>)
 <span class="kw">library</span>(<span class="st">"scales"</span>)
 <span class="kw">library</span>(<span class="st">"knitr"</span>)
-ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme_get">theme_set</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>())</code></pre></div>
+ggplot2<span class="op">::</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>())</code></pre></div>
 </div>
 <div id="parameter-estimates" class="section level1">
 <h1 class="hasAnchor">
@@ -226,12 +226,12 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw">print</span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
-<pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      1 67.48191        1    gef
-## 2:           1          1             2      1 67.48191        1    gef
-## 3:           1          1             3      1 67.48191        1    osi
-## 4:           1          1             4      1 67.48191        1    osi
-## 5:           1          1             5      1 67.48191        1    osi
+<pre><code>##    strategy_id patient_id transition_id female     age mutation tx_abb
+## 1:           1          1             1      0 92.2513        0    gef
+## 2:           1          1             2      0 92.2513        0    gef
+## 3:           1          1             3      0 92.2513        0   pbdc
+## 4:           1          1             4      0 92.2513        0   pbdc
+## 5:           1          1             5      0 92.2513        0   pbdc
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:    &lt;NA&gt;           1          0
 ## 2:    &lt;NA&gt;           0          1
@@ -244,11 +244,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
-## [1,]   -0.55523545            0   -3.779463  -7.903105
-## [2,]   -0.10253243            0   -3.436945 -18.960791
-## [3,]   -0.68893080            0   -4.041110  -6.198355
-## [4,]    0.35371287            0   -3.721728 -15.398104
-## [5,]   -0.03387275            0   -3.641433  -6.752580</code></pre>
+## [1,]    -0.7948025            0   -3.527366 -13.380195
+## [2,]    -0.6011652            0   -3.578699  -9.257642
+## [3,]     0.1060868            0   -3.584908  -9.823881
+## [4,]    -0.6998794            0   -3.762948  -5.961728
+## [5,]    -1.0088035            0   -3.565109 -16.323538</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw">class</span>(transmod)</code></pre></div>
@@ -299,11 +299,11 @@ stprobs &lt;-<span class="st"> </span>econmod<span class="op">$</span>stateprobs
                                  by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"state_id"</span>, <span class="st">"t"</span>)]
 <span class="kw">state_factor</span>(stprobs)
 <span class="kw">strategy_factor</span>(stprobs)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(stprobs[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(stprobs[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>state_name) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability in health state"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/stateprobs-1.png" width="672"></p>
 <p>Since <a href="https://en.wikipedia.org/wiki/Progression-free_survival">progression-free survival</a> and <a href="https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival">overall survival</a> are the most commonly reported primary endpoints in clinical trials, they are also useful to compute. We measure PFS as time with stable disease and OS as time before death.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">death_state &lt;-<span class="st"> </span><span class="cf">switch</span>(struct<span class="op">$</span>n_states,
@@ -317,11 +317,11 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
                             <span class="dt">prob_upper =</span> <span class="kw">quantile</span>(prob, .<span class="dv">975</span>)),
                           by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>, <span class="st">"t"</span>)]
 <span class="kw">strategy_factor</span>(curves)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">scales =</span> <span class="st">"free_x"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(curves[t <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> t, <span class="dt">y =</span> prob_mean, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">scales =</span> <span class="st">"free_x"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Years"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Survival probability"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_curves-1.png" width="672"></p>
 <p>We can also summarize quantiles of the PFS and OS curves. Here, we plot the median of (mean) PFS and OS.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quantiles &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/surv_quantile">surv_quantile</a></span>(curves, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">025</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, .<span class="dv">975</span>),
@@ -329,14 +329,14 @@ curves &lt;-<span class="st"> </span>curves[, .(<span class="dt">prob_mean =</sp
                                   <span class="dt">surv_cols =</span> <span class="kw">c</span>(<span class="st">"prob_mean"</span>, <span class="st">"prob_lower"</span>, <span class="st">"prob_upper"</span>),
                                   <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"lab"</span>))
 <span class="kw">strategy_factor</span>(quantiles, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(quantiles[prob <span class="op">==</span><span class="st"> </span>.<span class="dv">5</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> quantile_prob_mean)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> quantile_prob_lower,
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(quantiles[prob <span class="op">==</span><span class="st"> </span>.<span class="dv">5</span>], <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> quantile_prob_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>lab, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">ymin =</span> quantile_prob_lower,
                     <span class="dt">ymax =</span> quantile_prob_upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Median years"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Median years"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/pfs_os_quantiles-1.png" width="672"></p>
 </div>
 <div id="adverse-events-1" class="section level3">
@@ -355,16 +355,16 @@ plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span clas
 plot_data[, ae_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">ifelse</span>(ae_name <span class="op">==</span><span class="st"> "Elevated aspartate transaminase"</span>,
                               <span class="st">"Elevated </span><span class="ch">\n</span><span class="st"> aspartate </span><span class="ch">\n</span><span class="st"> transaminase"</span>,
                               ae_name)]
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> prob_mean)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span><span class="kw">factor</span>(ae_name), <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> prob_lower,
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(plot_data, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> prob_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="kw">factor</span>(ae_name), <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">ymin =</span> prob_lower,
                     <span class="dt">ymax =</span> prob_upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">breaks =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/pretty_breaks">pretty_breaks</a></span>(<span class="dt">n =</span> <span class="dv">3</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability of adverse event"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">panel.spacing =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/reexports">unit</a></span>(<span class="dv">2</span>, <span class="st">"lines"</span>))</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">breaks =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/pretty_breaks">pretty_breaks</a></span>(<span class="dt">n =</span> <span class="dv">3</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability of adverse event"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">panel.spacing =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="dv">2</span>, <span class="st">"lines"</span>))</code></pre></div>
 <p><img src="tutorial_files/figure-html/ae_probs_plot-1.png" width="672"></p>
 </div>
 <div id="qalys" class="section level3">
@@ -379,21 +379,21 @@ mean_qalys &lt;-<span class="st"> </span>econmod<span class="op">$</span>qalys_[
 <p>We first plot undiscounted life-years by health state.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">state_factor</span>(mean_qalys, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
 <span class="kw">strategy_factor</span>(mean_qalys, <span class="dt">rev =</span> <span class="ot">TRUE</span>)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(mean_qalys[dr <span class="op">==</span><span class="st"> </span><span class="dv">0</span>], 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_lys,
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mean_qalys[dr <span class="op">==</span><span class="st"> </span><span class="dv">0</span>], 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_lys,
                        <span class="dt">fill =</span> state_name)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Mean life-years"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/mean_lys-1.png" width="672"></p>
 <p>We then plot discounted QALYs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(mean_qalys[dr <span class="op">==</span><span class="st"> </span>.<span class="dv">03</span>],
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_qalys, <span class="dt">fill =</span> state_name)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Mean QALYs"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip">coord_flip</a></span>() </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mean_qalys[dr <span class="op">==</span><span class="st"> </span>.<span class="dv">03</span>],
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean_qalys, <span class="dt">fill =</span> state_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Mean QALYs"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() </code></pre></div>
 <p><img src="tutorial_files/figure-html/mean_qalys-1.png" width="672"></p>
 </div>
 <div id="costs" class="section level3">
@@ -413,26 +413,26 @@ costs &lt;-<span class="st"> </span>ce_sim<span class="op">$</span>costs[dr <spa
                            <span class="dt">costs_upper =</span> <span class="kw">quantile</span>(costs, .<span class="dv">975</span>)),
                         by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>, <span class="st">"category"</span>)]
 <span class="kw">strategy_factor</span>(costs)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(costs[category <span class="op">==</span><span class="st"> "total"</span>], 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> costs_lower, 
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(costs[category <span class="op">==</span><span class="st"> "total"</span>], 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">ymin =</span> costs_lower, 
                     <span class="dt">ymax =</span> costs_upper), <span class="dt">width=</span>.<span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/costs-1.png" width="384"></p>
 <p>We can also decompose costs by category.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costs[, category_name <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(category, 
                                 <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"ae"</span>, <span class="st">"tx_ac"</span>, <span class="st">"tx_admin"</span>, <span class="st">"inpt"</span>, <span class="st">"op"</span>, <span class="st">"total"</span>),
                                 <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Adverse event"</span>, <span class="st">"Drug acquisition"</span>, <span class="st">"Drug administration"</span>,
                                            <span class="st">"Inpatient"</span>, <span class="st">"Outptient"</span>, <span class="st">"Total"</span>))]
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(costs[category <span class="op">!=</span><span class="st"> "total"</span>], 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean, <span class="dt">fill =</span> category_name)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(costs[category <span class="op">!=</span><span class="st"> "total"</span>], 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean, <span class="dt">fill =</span> category_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/costs_cat-1.png" width="480"></p>
 <p>We might also want to examine incremental costs relative to a comparator (say treatment sequence 1).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute incremental costs for each possible reference treatment sequence</span>
@@ -450,16 +450,16 @@ incr_costs_i &lt;-<span class="st"> </span><span class="kw"><a href="http://www.
 }
 
 <span class="co"># Plot incremental costs with treatment sequence 1 as the reference treatment</span>
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(incr_costs[[<span class="dv">1</span>]][dr <span class="op">==</span><span class="st"> </span>.<span class="dv">03</span> <span class="op">&amp;</span><span class="st"> </span>category <span class="op">==</span><span class="st"> "total"</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(incr_costs[[<span class="dv">1</span>]][dr <span class="op">==</span><span class="st"> </span>.<span class="dv">03</span> <span class="op">&amp;</span><span class="st"> </span>category <span class="op">==</span><span class="st"> "total"</span> <span class="op">&amp;</span><span class="st"> </span>
 <span class="st">                    </span>strategy_id <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>], 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> icosts_mean)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> icosts_lower, 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> icosts_mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">ymin =</span> icosts_lower, 
                     <span class="dt">ymax =</span> icosts_upper), <span class="dt">width=</span>.<span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_discrete">scale_x_discrete</a></span>(<span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Incremental costs"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>())</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span>(<span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Incremental costs"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>())</code></pre></div>
 <p><img src="tutorial_files/figure-html/incr_costs-1.png" width="384"></p>
 </div>
 <div id="productivity-costs" class="section level4">
@@ -476,12 +476,12 @@ costs2[, category_name <span class="op">:</span><span class="er">=</span><span c
                                 <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"ae"</span>, <span class="st">"tx_ac"</span>, <span class="st">"tx_admin"</span>, <span class="st">"prod"</span>, <span class="st">"inpt"</span>, <span class="st">"op"</span>, <span class="st">"total"</span>),
                                 <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"Adverse event"</span>, <span class="st">"Drug acquisition"</span>, <span class="st">"Drug administration"</span>,
                                            <span class="st">"Productivity"</span>, <span class="st">"Inpatient"</span>, <span class="st">"Outptient"</span>, <span class="st">"Total"</span>))]
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(costs2[category <span class="op">!=</span><span class="st"> "total"</span>], 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean, <span class="dt">fill =</span> category_name)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(costs2[category <span class="op">!=</span><span class="st"> "total"</span>], 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> costs_mean, <span class="dt">fill =</span> category_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Costs"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/plot_prod_costs_cat-1.png" width="480"></p>
 <p>Plots of undecomposed or incremental costs could be recreated in a similar fashion.</p>
 </div>
@@ -509,64 +509,64 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td align="left">Life-years</td>
-<td align="left">3.57 (3.23, 4.09)</td>
-<td align="left">4.40 (3.49, 6.76)</td>
+<td align="left">3.56 (3.22, 4.04)</td>
+<td align="left">4.35 (3.48, 6.64)</td>
 </tr>
 <tr class="even">
 <td align="left">QALYs</td>
-<td align="left">2.09 (1.87, 2.37)</td>
-<td align="left">2.73 (2.05, 4.58)</td>
+<td align="left">2.09 (1.88, 2.36)</td>
+<td align="left">2.71 (2.04, 4.55)</td>
 </tr>
 <tr class="odd">
 <td align="left">Drug acquisition costs</td>
-<td align="left">220,811 (199,828, 249,015)</td>
-<td align="left">293,534 (223,318, 491,997)</td>
+<td align="left">220,901 (199,538, 247,807)</td>
+<td align="left">291,181 (224,138, 474,288)</td>
 </tr>
 <tr class="even">
 <td align="left">Drug administration costs</td>
-<td align="left">12,294 (10,480, 15,095)</td>
-<td align="left">11,760 (9,338, 14,592)</td>
+<td align="left">12,258 (10,448, 14,990)</td>
+<td align="left">11,767 (9,345, 14,581)</td>
 </tr>
 <tr class="odd">
 <td align="left">Outpatient medical costs</td>
-<td align="left">43,279 (35,389, 54,305)</td>
-<td align="left">42,163 (33,518, 52,834)</td>
+<td align="left">43,206 (35,205, 53,776)</td>
+<td align="left">42,228 (34,040, 52,844)</td>
 </tr>
 <tr class="even">
 <td align="left">Inpatient medical costs</td>
-<td align="left">246,280 (199,209, 304,769)</td>
-<td align="left">258,541 (205,184, 327,242)</td>
+<td align="left">245,215 (197,258, 298,795)</td>
+<td align="left">257,118 (203,360, 323,310)</td>
 </tr>
 <tr class="odd">
 <td align="left">Adverse event costs</td>
-<td align="left">4,832 (2,438, 9,079)</td>
-<td align="left">7,503 (2,822, 16,232)</td>
+<td align="left">4,673 (2,409, 8,647)</td>
+<td align="left">7,344 (2,792, 15,315)</td>
 </tr>
 <tr class="even">
 <td align="left">Health care sector costs</td>
-<td align="left">527,496 (461,353, 618,523)</td>
-<td align="left">613,500 (499,966, 838,725)</td>
+<td align="left">526,253 (458,105, 614,123)</td>
+<td align="left">609,637 (501,138, 831,913)</td>
 </tr>
 <tr class="odd">
 <td align="left">Productivity costs</td>
-<td align="left">64,634 (59,735, 68,978)</td>
-<td align="left">58,862 (45,645, 66,564)</td>
+<td align="left">61,665 (56,905, 66,009)</td>
+<td align="left">56,248 (44,710, 63,700)</td>
 </tr>
 <tr class="even">
 <td align="left">Societal costs</td>
-<td align="left">592,130 (526,900, 681,690)</td>
-<td align="left">672,362 (563,207, 884,444)</td>
+<td align="left">587,918 (520,259, 674,677)</td>
+<td align="left">665,885 (561,667, 875,329)</td>
 </tr>
 <tr class="odd">
 <td align="left">Net monetary benefit</td>
-<td align="left">-279,378 (-340,872, -226,345)</td>
-<td align="left">-262,303 (-335,096, -168,749)</td>
+<td align="left">-275,129 (-337,472, -222,408)</td>
+<td align="left">-260,131 (-330,782, -180,044)</td>
 </tr>
 </tbody>
 </table>
 <p>CEA can be <a href="https://innovationvalueinitiative.github.io/hesim/articles/icea.html">performed using <code>hesim</code></a> with the functions <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea()</a></code> and <code><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw()</a></code>. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of $150,000.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icea &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea</a></span>(ce_sim, <span class="dt">dr =</span> .<span class="dv">03</span>)
-icea_pw &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw</a></span>(ce_sim, <span class="dt">comparator =</span> <span class="dv">1</span>, <span class="dt">dr =</span> .<span class="dv">03</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icea &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea</a></span>(ce_sim, <span class="dt">dr_qalys =</span> .<span class="dv">03</span>, <span class="dt">dr_costs =</span> .<span class="dv">03</span>)
+icea_pw &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icea">icea_pw</a></span>(ce_sim, <span class="dt">comparator =</span> <span class="dv">1</span>, <span class="dt">dr_qalys =</span> .<span class="dv">03</span>, <span class="dt">dr_costs =</span> .<span class="dv">03</span>)</code></pre></div>
 <p>We report <a href="https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio">incremental cost-effective ratios (ICERs)</a>—a commonly used measure for summarizing the cost-effectiveness of interventions—as well as the incremental net monetary benefit (NMB). The incremental NMB is defined as incremental QALYs multiplied by a willingness to pay threshold ($150,000 in this example) less incremental costs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">icer &lt;-<span class="st"> </span>hesim<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/hesim/topics/icer_tbl">icer_tbl</a></span>(icea_pw,
                         <span class="dt">k =</span> <span class="dv">150000</span>, <span class="co"># WTP per QALY </span>
@@ -586,22 +586,22 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.65 (0.03, 2.51)</td>
+<td align="left">0.62 (0.02, 2.41)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">86,004 (4,390, 310,182)</td>
+<td align="left">83,385 (6,410, 299,233)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">11,303 (-19,710, 83,627)</td>
+<td align="left">9,581 (-18,722, 72,457)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">132,576</td>
+<td align="left">134,541</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -614,29 +614,29 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ylim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(icea_pw<span class="op">$</span>delta[, ic])) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
 xlim &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(icea_pw<span class="op">$</span>delta[, ie])) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>
 <span class="kw">strategy_factor</span>(icea_pw<span class="op">$</span>delta)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(icea_pw<span class="op">$</span>delta, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> ie, <span class="dt">y =</span> ic, <span class="dt">col =</span> strategy_name)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_jitter">geom_jitter</a></span>(<span class="dt">size =</span> .<span class="dv">5</span>)  <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Incremental QALYs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Incremental costs"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> dollar, <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span>ylim, ylim)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span>xlim, xlim)) <span class="op">+</span>
-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">150000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(icea_pw<span class="op">$</span>delta, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> ie, <span class="dt">y =</span> ic, <span class="dt">col =</span> strategy_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span>(<span class="dt">size =</span> .<span class="dv">5</span>)  <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Incremental QALYs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Incremental costs"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> dollar, <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span>ylim, ylim)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span>xlim, xlim)) <span class="op">+</span>
+<span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span>(<span class="dt">slope =</span> <span class="dv">150000</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceplane-1.png" width="672"></p>
 <p>A cost-effectiveness acceptability curve (CEAC) is useful way to measure uncertainty in our decision about whether a treatment sequence is cost-effective. We plot the proportion of simulations from the PSA that each treatment sequence is the most cost-effective option (y-axis) against different willingness to pay thresholds (x-axis).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strategy_factor</span>(icea<span class="op">$</span>mce)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(icea<span class="op">$</span>mce, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> prob, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability most cost-effective"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>)</code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(icea<span class="op">$</span>mce, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> prob, <span class="dt">col =</span> strategy_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability most cost-effective"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_colour_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/ceac-1.png" width="672"></p>
 <p>Finally, we can plot the expected value of perfect information (EVPI), which is a measure of the maximum amount that a decision maker would be willing to pay to reduce all uncertainty in all parameters.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(icea<span class="op">$</span>evpi, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> evpi)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Expected value of perfect information"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(icea<span class="op">$</span>evpi, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> k, <span class="dt">y =</span> evpi)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Willingness to pay"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Expected value of perfect information"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar)</code></pre></div>
 <p><img src="tutorial_files/figure-html/evpi-1.png" width="672"></p>
 </div>
 <div id="multi-criteria-decision-analysis" class="section level2">
@@ -693,38 +693,38 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.99 (0.90, 1.11)</td>
-<td align="left">1.93 (1.03, 4.64)</td>
+<td align="left">0.99 (0.90, 1.10)</td>
+<td align="left">1.89 (1.04, 4.57)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.67 (0.59, 0.77)</td>
-<td align="left">0.64 (0.52, 0.75)</td>
+<td align="left">0.66 (0.59, 0.77)</td>
+<td align="left">0.64 (0.54, 0.75)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">1.90 (1.57, 2.40)</td>
-<td align="left">1.82 (1.42, 2.35)</td>
+<td align="left">1.90 (1.58, 2.41)</td>
+<td align="left">1.82 (1.41, 2.33)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">527,496 (461,352, 618,523)</td>
-<td align="left">613,500 (499,965, 838,725)</td>
+<td align="left">526,252 (458,104, 614,122)</td>
+<td align="left">609,637 (501,137, 831,913)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">64,634 (59,734, 68,977)</td>
-<td align="left">58,861 (45,644, 66,564)</td>
+<td align="left">61,665 (56,905, 66,008)</td>
+<td align="left">56,247 (44,710, 63,700)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.41 (0.38, 0.45)</td>
-<td align="left">0.50 (0.41, 0.64)</td>
+<td align="left">0.42 (0.38, 0.45)</td>
+<td align="left">0.50 (0.42, 0.63)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">8.52 (8.17, 8.84)</td>
-<td align="left">12.39 (12.10, 12.84)</td>
+<td align="left">8.51 (8.18, 8.87)</td>
+<td align="left">12.38 (12.09, 12.80)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
@@ -735,9 +735,9 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 </table>
 <p>Next, we conduct the MCDA, which explicitly weights and scores the criteria. Specifically, each criterion is translated onto a common scale ranging from 0 to 100 and a “total value” is computed as a weighted average of each criteria on this common scale. We’ll take a simple approach and use a linear partial value function, which assumes that performance on the original scale can be translated to a common scale in a linear fashion. We illustrate with health care sector costs, where a lower value is better.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lpvf_plot_data.html">lpvf_plot_data</a></span>(outcomes<span class="op">$</span>hc_costs, <span class="dt">optimal =</span> <span class="st">"low"</span>)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Health care sector costs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Score"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(plot_data, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Health care sector costs"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Score"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">label =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/dollar_format">dollar_format</a></span>()) </code></pre></div>
 <p><img src="tutorial_files/figure-html/lpvf-1.png" width="672"></p>
 <p>We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we’ll use example weights for the analysis. We conduct the MCDA with <code><a href="../reference/mcda.html">mcda()</a></code>, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a “total value” and the probability that each treatment strategy has a given rank.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights &lt;-<span class="st"> </span><span class="kw">c</span>(.<span class="dv">17</span>, .<span class="dv">17</span>, .<span class="dv">16</span>, .<span class="dv">2</span>, .<span class="dv">1</span>, .<span class="dv">05</span>, .<span class="dv">05</span>, .<span class="dv">1</span>)
@@ -761,43 +761,43 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">2.93 (1.78, 4.37)</td>
-<td align="left">14.50 (3.37, 47.87)</td>
+<td align="left">2.85 (1.71, 4.18)</td>
+<td align="left">14.36 (3.50, 48.83)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">64.73 (51.05, 82.87)</td>
-<td align="left">59.89 (38.61, 78.93)</td>
+<td align="left">65.52 (52.43, 83.36)</td>
+<td align="left">61.34 (43.93, 79.87)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">43.86 (30.74, 63.57)</td>
-<td align="left">40.55 (24.76, 61.26)</td>
+<td align="left">41.56 (28.55, 61.96)</td>
+<td align="left">38.44 (21.87, 58.99)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">85.03 (72.46, 94.16)</td>
-<td align="left">73.16 (42.06, 88.83)</td>
+<td align="left">85.80 (73.49, 95.34)</td>
+<td align="left">74.11 (42.97, 89.31)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">20.13 (9.38, 32.26)</td>
-<td align="left">34.43 (15.35, 67.16)</td>
+<td align="left">18.32 (6.41, 31.37)</td>
+<td align="left">33.17 (12.74, 64.80)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">17.98 (9.88, 26.44)</td>
-<td align="left">37.54 (17.93, 69.20)</td>
+<td align="left">20.07 (11.90, 27.36)</td>
+<td align="left">37.62 (21.05, 64.65)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">11.53 (5.17, 17.44)</td>
-<td align="left">82.38 (76.99, 90.48)</td>
+<td align="left">11.00 (4.91, 17.73)</td>
+<td align="left">82.20 (76.83, 89.94)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">91.78 (84.28, 97.37)</td>
-<td align="left">91.34 (67.17, 99.36)</td>
+<td align="left">92.46 (85.58, 97.79)</td>
+<td align="left">91.86 (67.30, 99.33)</td>
 </tr>
 </tbody>
 </table>
@@ -808,13 +808,13 @@ total_value &lt;-<span class="st"> </span>mcda<span class="op">$</span>total_val
                                     <span class="dt">upper =</span> <span class="kw">quantile</span>(score, .<span class="dv">975</span>)),
                                 by =<span class="st"> </span><span class="kw">c</span>(<span class="st">"strategy_id"</span>)]
 <span class="kw">strategy_factor</span>(total_value)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(total_value, 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_errorbar</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">ymin =</span> lower, 
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(total_value, 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"#d9230f"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">ymin =</span> lower, 
                     <span class="dt">ymax =</span> upper), <span class="dt">width =</span> .<span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/mcda-total-value-1.png" width="384"></p>
 <p>It can sometimes be useful to decompose these scores by criteria, to help which criteria are most important in driving the results. The contribution of each criteria is the product of the weight and its score on the common scale.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Weighted scores</span>
@@ -824,11 +824,11 @@ weighted_scores[, criteria <span class="op">:</span><span class="er">=</span><sp
                                      <span class="dt">levels =</span> criteria_vars,
                                 <span class="dt">labels =</span> criteria_names)]
 <span class="kw">strategy_factor</span>(weighted_scores)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(weighted_scores, 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean, <span class="dt">fill =</span> criteria)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(weighted_scores, 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> mean, <span class="dt">fill =</span> criteria)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Total value"</span>) </code></pre></div>
 <p><img src="tutorial_files/figure-html/mcda-total-value-decompose-1.png" width="480"></p>
 <p>The treatment strategies can be ranked by their “total value”, which varies across samples of the PSA. We count the number of times each treatment strategy has a given rank and use this to compute the probability that a treatment strategy has a given ranking. We visualize these results in two equivalent ways: first, with treatment strategies on the x-axis and ranking as a group variable, and second, with rankings on the x-axis and treatment strategy as a group variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prank &lt;-<span class="st"> </span>mcda<span class="op">$</span>prob_rank
@@ -840,20 +840,20 @@ prank[, f2_rank <span class="op">:</span><span class="er">=</span><span class="s
                           <span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">"Rank = "</span>, prank_levels))]
 
 <span class="co"># Rank on x-axis</span>
-p1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(prank, 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> f1_rank, <span class="dt">y =</span> prob, <span class="dt">fill =</span> strategy_name)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Rank"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)
+p1 &lt;-<span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(prank, 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> f1_rank, <span class="dt">y =</span> prob, <span class="dt">fill =</span> strategy_name)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">"Rank"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)
 
 <span class="co"># Treatment sequence on x-axis</span>
-p2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(prank, 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> prob, <span class="dt">fill =</span> f2_rank)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Probability"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)
+p2 &lt;-<span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(prank, 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> prob, <span class="dt">fill =</span> f2_rank)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Probability"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)
 
 <span class="co"># Combine</span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
@@ -875,12 +875,12 @@ plot_data[, variable <span class="op">:</span><span class="er">=</span><span cla
                                <span class="st">"Standard"</span>,
                                <span class="st">"With value of hope"</span>)]
 <span class="kw">strategy_factor</span>(plot_data)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> qalys, <span class="dt">fill =</span> variable)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Incremental QALYs"</span>)</code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(plot_data, 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> qalys, <span class="dt">fill =</span> variable)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Incremental QALYs"</span>)</code></pre></div>
 <p><img src="tutorial_files/figure-html/voh-plot-qalys-1.png" width="672"></p>
 <p>Since modifications to QALYs also impact estimates of cost-effectiveness, we also compare the incremental NMB (again using a willingness to pay of $150,000) with and without the value of hope.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">k &lt;-<span class="st"> </span><span class="dv">150000</span>
@@ -889,13 +889,13 @@ incr_costs_mean &lt;-<span class="st"> </span>incr_costs[[<span class="dv">1</sp
 plot_data[, icosts <span class="op">:</span><span class="er">=</span><span class="st"> </span>incr_costs_mean<span class="op">$</span>icosts_mean[<span class="kw">match</span>(strategy_id,
                                             incr_costs_mean<span class="op">$</span>strategy_id)]]
 plot_data[, inmb <span class="op">:</span><span class="er">=</span><span class="st"> </span>k <span class="op">*</span><span class="st"> </span>qalys <span class="op">-</span><span class="st"> </span>icosts]
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data, 
-       <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> inmb, <span class="dt">fill =</span> variable)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_bar">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Incremental NMB"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar)</code></pre></div>
+<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(plot_data, 
+       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> strategy_name, <span class="dt">y =</span> inmb, <span class="dt">fill =</span> variable)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">position =</span> <span class="st">"dodge"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_fill_discrete</a></span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span>(<span class="st">""</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span>(<span class="st">"Incremental NMB"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">label =</span> scales<span class="op">::</span>dollar)</code></pre></div>
 <p><img src="tutorial_files/figure-html/voh-plot-nmb-1.png" width="672"></p>
 </div>
   </div>

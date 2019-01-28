@@ -467,8 +467,8 @@ knitr::kable(outcomes)
 CEA can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$150,000.  
 
 ```{r icea}
-icea <- hesim::icea(ce_sim, dr = .03)
-icea_pw <- hesim::icea_pw(ce_sim, comparator = 1, dr = .03)
+icea <- hesim::icea(ce_sim, dr_qalys = .03, dr_costs = .03)
+icea_pw <- hesim::icea_pw(ce_sim, comparator = 1, dr_qalys = .03, dr_costs = .03)
 ```
 
 We report [incremental cost-effective ratios (ICERs)](https://en.wikipedia.org/wiki/Incremental_cost-effectiveness_ratio)---a commonly used measure for summarizing the cost-effectiveness of interventions---as well as the incremental net monetary benefit (NMB). The incremental NMB is defined as incremental QALYs multiplied by a willingness to pay threshold (\$150,000 in this example) less incremental costs.
