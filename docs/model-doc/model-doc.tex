@@ -405,7 +405,7 @@ The disease model simulates the times that patients transition to and from healt
 
 Costs are computed for multiple categories and separated into health care sector and non-heath care sector costs as recommended by \citet{sanders2016recommendations}. Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), adverse event costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity costs.
 
-Discounted costs and QALYs over the model's time horizon are computed using the continuous time present value given a flow of state values (i.e., utility and annualized costs), which change as patients transition between health states or as costs vary as a function of time since treatment initiation. Denote the set of $M$ state values for a given patient in the simulation sorted by time as $z_1,\ldots, z_M$. Discounted costs and QALYs are then given by,  
+Discounted costs and QALYs over the model's time horizon are computed using the continuous time present value given a flow of state values (i.e., utility and annualized costs), which change as patients transition between health states or as costs vary as a function of time since treatment initiation. Denote the set of $M$ time intervals with unique state values for a given patient in the simulation sorted by time as $z_1,\ldots, z_M$. Discounted costs and QALYs are then given by,  
 
 \begin{equation} \label{eqn:pv}
 \sum_{m = 1}^M \int_{u_m}^{u_m+1} z_me^{-ru}du = \sum_{m = 1}^M z_m \left(\frac{e^{-r{u_{m}}} - e^{-r{u_{m+1}}}}{r}\right),
@@ -1566,7 +1566,7 @@ In .... information regarding characteristics of the interventions evaluated in 
 \includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/AURA3 Mok 2017 PFS (EGFR+_T790M+) Kaplan Meier.png}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/.....png}
+%\includegraphics[max size={\textwidth}{\textheight}]{figs/km-plots/.....png}
 \end{subfigure}
 \centering
 \caption{AURA-3 and AURA-2, progression-free survival and overall survival with osimertinib (T790+)}\label{fig:osimertinib-2l}
