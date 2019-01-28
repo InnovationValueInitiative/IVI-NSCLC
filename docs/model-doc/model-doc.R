@@ -84,7 +84,7 @@ haz_plot <- function(line, tx_name, ylim){
   return(p)
 }
 p <- haz_plot(line = 1, tx_name = "gefitinib", ylim = c(0, .3))
-ggsave("figs/hazard-1L.pdf", p, width = 8, height = 8)
+ggsave("figs/hazard-1L-gef.pdf", p, width = 8, height = 8)
 p <- haz_plot(line = 2, tx_name = "osimertinib", ylim = c(0, .5))
 ggsave("figs/hazard-2L-t790m-osi.pdf", p, width = 7, height = 5)
 p <- haz_plot(line = 2, tx_name = "PBDC", ylim = c(0, .5))
