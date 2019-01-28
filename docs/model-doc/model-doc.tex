@@ -422,10 +422,10 @@ Any combination of simulated model outcomes can be used for MCDA. If a 3-state m
 Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. To inform relevant decision-making at the local level, it is recommended to use resource use and cost estimates reflective of that setting. 
 
 \subsection{Treatment effects for transition rates} \label{subsec:data-trans-rates}
-Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, included studies, extracted information regarding study and patient characteristics, results, and KM curves are provided in \autoref{app:km-curves}. 
+Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, included studies, extracted information regarding study, treatment, and patient characteristics, and Kaplan-Meier survival curves are provided in \autoref{app:km-curves}. 
 The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
 
-It is important to note that the available PFS and OS data for the different interventions varied dramatically. At the time when the systematic literature review was performed, there was about 25 months of follow-up data available for osimertinib as 1L treatment, with median OS not yet reached; about 40 months of data for dacomitinib; 40-50 months for afatinib; and more than 50 months of follow-up data for gefitinib and erlotinib. This implies that treatment effect estimates for osimertinib and dacomitinib are much more uncertain at this stage than the other interventions and are likely to change when longer term data becomes available. See \autoref{fig:ARCHER-1050}-\autoref{fig:Yang 2014} for more detail.
+It is important to note that the available PFS and OS data for the different interventions varied dramatically. At the time when the systematic literature review was performed, there was about 25 months of follow-up data available for osimertinib as 1L treatment, with median OS not yet reached; about 40 months of data for dacomitinib; 40-50 months for afatinib; and more than 50 months of follow-up data for gefitinib and erlotinib. This implies that treatment effect estimates for osimertinib and dacomitinib are much more uncertain than the other interventions at this stage, and are likely to change when longer term data become available. See \autoref{fig:FLAURA}-\autoref{fig:Yang 2014} for more detail.
 
 \subsubsection{Relative treatment effects with 1L therapy}
 Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
@@ -752,7 +752,7 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 \end{figure}
 
 \subsubsection{Software}
-The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using \R{} statistical software \citep{team2014r}.
+The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using \R{} statistical software \citep{team2014r}. See \autoref{sec:1l-nma-jags}, \autoref{sec:1l-ma-jags}, and \autoref{sec:2l-jags} for the JAGS code of the models used to estimate treatment effects.
 
 \subsubsection{Model selection}
 The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \autoref{app:DIC-nma-1l}, \autoref{app:DIC-1l}, \autoref{app:DIC-2l}) \citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
@@ -761,7 +761,7 @@ Informed by model fit criteria, we used treatment effect estimates obtained with
 
 
 \subsection{Adverse events}\label{subsec:data-aes}
-The identified RCTs also provided the evidence base to estimate treatment specific adverse event probabilities. Since adverse events in nearly all RCTs were reported as the number of patients experiencing the event, the NMA was performed on the proportion of patients experiencing the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}. \hl{Add details about pooling and the priors...}
+The identified RCTs also provided the evidence base to estimate treatment specific adverse event probabilities. Since adverse events in nearly all RCTs were reported as the number of patients experiencing the event, the NMA was performed on the proportion of patients experiencing the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}. Given the presence of studies with zero-cell counts, we used a model where treatment specific relative treatment effects were assumed exchangeable among the TKI class such that unstable estimates were shrunken towards the average effect of the class. See \autoref{sec:nma-ae-jags} for the JAGS code of the NMA models used.
 
 \subsection{Utilities}\label{subsec:data-utility}
 Health state utilities based on public literature are reported in \autoref{tbl:state-utility}. We assume that utilities do not vary across treatment strategies. We use estimates from \citet{nafees2017health}, a global study of patients with metastatic NSCLC that used health states representative of 1L treatment to derive utility values. Estimates are based on the "global" analysis that pooled estimates across 6 countries (Australia, China, France, Korea, Taiwan, and the UK) for patients with stable disease and no side effects. Utilities for patients with progressed disease are based on \citet{nafees2008health}, a study representative of metastatic NSCLC patients on 2L treatment. Estimates are from predictions using the mixed model among patients with no adverse events. Utility in the P1/S2 state is estimated using patients that have not yet progressed while on 2L, while estimates in the P2 state are among the progressed 2L patients. 
@@ -1036,8 +1036,7 @@ Second, both  4-state (\autoref{fig:model-structure-4-states}) and 3-state (\aut
 \section{Systematic Literature Review}\label{app:slr}
 
 \subsection{Treatment effects for transition rates}
-Details regarding eligibility criteria defining the scope of the studies considered relevant are outlined in \autoref{tbl:picos-tx-effects-1L}, \autoref{tbl:picos-tx-effects-2L}, and \autoref{tbl:picos-tx-effects-2LP}. 
-
+Evidence to estimate treatment effects regarding efficacy and safety were obtained from RCTs identified with a systematic literature review. The scope of the review in terms of population, interventions, comparators, outcomes, and study design (PICOS) are outlined in \autoref{tbl:picos-tx-effects-1L}, \autoref{tbl:picos-tx-effects-2L}, and \autoref{tbl:picos-tx-effects-2LP}. 
 
 \begin{table}[!ht]
 \begin{center}
@@ -1176,7 +1175,7 @@ Other & English language\\
 
 
 \subsection{Utilities}
-Health state utility values (EQ-5d, HUI2, HUI-3, SF-6D) for the different health states were used in the model as well as disutility estimates associated with adverse events identified by focusing on review studies. Based on these review studies, the primary studies were identified when deemed relevant for the model and available. Furthermore, published mapping algorithms that allow a non-preference-based measure (generic or disease-specific measure) to be mapped onto a generic preference-based measure are of interest, as well as mapping algorithms between different generic preference-based health state utility values (e.g. between SF-6D and EQ5D) were searched for, in anticipation that there were no studies providing utility estimates that could directly be linked to PFS and OS related health states used in the model. Details regarding eligibility criteria defining the scope of the studies considered relevant are outlined in \autoref{tbl:picos-utilities}. 
+In order to identify utility values for the different (PFS and OS related) health states of the model, as well as disutility estimates associated with adverse events, a systematic search of the literature was performed to identify published (systematic) review studies. Available review studies were used to select the primary studies with estimates relevant for the model. In anticipation that there may not have been studies reporting utility estimates that could directly be used in the model, we also searched for published mapping algorithms that would allow a non-preference-based measure (generic or disease-specific measure) to be mapped onto a generic preference-based measure of interest, as well as mapping algorithms between different generic preference-based health state utility values. Details regarding eligibility criteria defining the scope of the literature review are outlined in \autoref{tbl:picos-utilities}. 
 
 
 \begin{table}[!ht]
@@ -1214,7 +1213,7 @@ English language\\
 
 
 \subsection{Resource use, productivity, and cost}
-Relevant evidence regarding resource use, productivity and cost estimates were identified by means of a review of published cost-of-illness studies, cost-effectiveness studies, and budget impact studies in NSCLC relevant for the US setting. Details regarding eligibility criteria defining the scope of the studies considered relevant are outlined in \autoref{tbl:picos-cost}. Studies with relevant data among EGFR+NSCLC  patients and treated with TKIs were use in the economic model, with a preference for more recent publications.
+Relevant evidence regarding resource use, productivity and cost estimates was identified by means of a review of published cost-of-illness studies, cost-effectiveness studies, and budget impact studies in NSCLC relevant for the US setting. Criteria defining studies considered relevant are outlined in \autoref{tbl:picos-cost}. The most recent studies reporting relevant estimates among EGFR+NSCLC patients treated with TKIs were used in the economic model.
 
 \begin{table}[!ht]
 \begin{center}
@@ -1249,26 +1248,30 @@ English language\\
 \end{table}
 
 \subsection{Study identification}
-Relevant studies were identified by searching the following databases using predefined search strategies: Medical Literature Analysis and Retrieval System Online (MEDLINE), Excerpta Medica database (EMBASE), and Cochrane Central Register of Controlled Trials. The study design filters recommended by the Scottish Intercollegiate Guidelines Network (SIGN) for MEDLINE and EMBASE were used to identify clinical trials. The search included terms related to the generic and brand name of the interventions of interest. The US National Institutes of Health Clinical Trial Registry and EU Clinical Trials Registry were also searched to identify completed clinical trials not yet published to identify any completed or ongoing trials that meet the criteria with results available.
+Relevant clinical studies were identified by searching the following databases using predefined search strategies: Medical Literature Analysis and Retrieval System Online (MEDLINE), Excerpta Medica database (EMBASE), and Cochrane Central Register of Controlled Trials. The study design filters recommended by the Scottish Intercollegiate Guidelines Network (SIGN) for MEDLINE and EMBASE were used to identify clinical trials. The search included terms related to the generic and brand name of the interventions of interest. Search strategies are available in the MS Excel spreadsheet available on GitHub.
 
-For utility studies and studies providing evidence on healthcare utilization and costs, the following additional databases were searched in addition: NHS Economic Evaluation Database (NHS EED), Health Economic Evaluations Database (HEED), THe Health Economics Research Centre-maintained mapping algorithm database, and The University of Sheffield's ScHARRHUD database of health utilities' evidence.
+For utility studies and studies providing evidence on healthcare utilization and costs, the following databases were searched: MEDLINE, EMBASE, NHS Economic Evaluation Database (NHS EED), The Health Economics Research Centre (HERC)-maintained mapping algorithm database, and The University of Sheffield's ScHARRHUD database of health utilities' evidence.
 
-Where there were gaps in the identified evidence, the search was expanded to include the grey literature, such as reports published by NICE.
+Search strategies are available in the spreadsheets available on GitHub.
 
 \subsection{Study selection}
-Two reviewers, working independently, reviewed all abstracts and proceedings identified in each of the searches according to the selection criteria, with the exception of outcome criteria in the efficacy and safety searches, which were only applied during the screening of full-text publications. All studies identified as eligible studies during abstract screening were then screened at a full-text stage by the same two reviewers. The full-text studies identified at this stage were included for data extraction. Following reconciliation between the two investigators, a third reviewer was included to reach consensus for any remaining discrepancies. The process of study identification and selection is summarized with a Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) flow diagram. 
+For the review of clinical evidence, two reviewers, working independently, reviewed all abstracts identified with each of the searches according to the selection criteria, with the exception of outcome criteria in the efficacy and safety searches, which were only applied during the screening of full-text publications. All studies identified as eligible studies during abstract screening were then screened at a full-text stage by the same two reviewers. The full-text studies identified at this stage were included for data extraction. Following reconciliation between the two investigators, a third reviewer was included to reach consensus for any remaining discrepancies. The process of study identification and selection is summarized with a Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) flow diagram. 
+
+For the review of utility studies and studies providing evidence on healthcare utilization and costs, this process was performed by a single reviewer and findings checked by a second-reviewer. 
 
 \subsection{Data collection}
 For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. 
 
 For utility and cost-effectiveness studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. 
 
+Spreadsheets with extracted data are available on GitHub.
+
 \subsection{Limitations}
-Despite the strengths of the systematic literature review to identify relevant evidence, some limitations are applicable that should be acknowledged. As the evidence base is continually growing, any trials published after the search date will not be captured. Furthermore, there is a risk of publication bias. Finally, the search and selection were restricted to studies published in English.
+Despite the strengths of the systematic literature review to identify relevant evidence, some limitations should be acknowledged. First, the scope of the review was restricted to studies published in English. Second, the evidence base is continually growing and at some point the studies used for model input parameter estimates may no longer reflect the latest data. This may especially be the case for the efficacy of osimertinib and dacomitinib. Third, there is always a risk of publication or outcome reporting bias. Finally, the information obtained from the literature and used in the model may not be an accurate reflection of a local setting.
 
 \section{Evidence base, efficacy and safety}
 \subsection{Study identification and selection} \label{app:study-selection}
-The identification and selection of relevant studies used to estimate treatment effects is summarized with \autoref{fig:slr-flow}.
+The identification and selection of relevant studies used to estimate treatment effects is summarized with \autoref{fig:slr-flow}.Detailed results regarding the screening and selection process are available in the spreadsheet available on GitHub.
 
 
 \begin{figure}
@@ -1597,7 +1600,7 @@ In .... information regarding characteristics of the interventions evaluated in 
 
 
 \section{Network meta-analysis for relative treatment effects with 1L therapy}
-\subsection{JAGS code}
+\subsection{JAGS code}\label{sec:1l-nma-jags}
 
 \subsubsection{Fixed effects multistate Weibull and Gompertz network meta-analysis model for estimation of relative treatment effects with each treatment versus gefitinib} 
 
@@ -2534,7 +2537,7 @@ model{
 \FloatBarrier
 
 \section{Meta-analysis for absolute effects with 1L reference treatment}
-\subsection{JAGS code}
+\subsection{JAGS code}\label{sec:1l-ma-jags}
 
 \subsubsection{Fixed effects multistate Weibull and Gompertz meta-analysis model for estimation of absolute effects with 1L gefitinib } 
 
@@ -2665,7 +2668,7 @@ model{
 \end{figure}
 
 \section{Meta-analysis of absolute effects with 2L therapy}
-\subsection{JAGS code}
+\subsection{JAGS code}\label{sec:2l-jags}
 
 \subsubsection{Fixed effects multistate Weibull and Gompertz model for estimation of absolute effects with 2L osimertinib}  
 \begin{verbatim} 
@@ -2929,7 +2932,7 @@ model{
 \end{figure}
 
 \section{Network meta-analysis of adverse events}
-\subsection{JAGS code}
+\subsection{JAGS code}\label{sec:nma-ae-jags}
 
 
 
