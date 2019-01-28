@@ -66,3 +66,7 @@ navbar:
     href: reference/index.html  
   - text: "Tutorial"
     href: articles/tutorial.html
+  - text: "PDF documentation"
+    href: model-doc/model-doc.pdf
+  - text: "Source data"
+    href: articles/source-data.html
