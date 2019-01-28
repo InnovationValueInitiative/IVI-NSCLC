@@ -5,6 +5,7 @@ library("MASS")
 library("hesim")
 library("ggplot2")
 treatments <- fread("treatments.csv")
+max_months = 50 # Maximum months for plots reflective of follow-up time in RCTs
 
 # Helpful functions ------------------------------------------------------------
 d_col <- function(i, j){
@@ -478,25 +479,25 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
 }
 
 surv_1L_est <- list()
-surv_1L_est$wei <- surv_1L(n_months = 72, 
+surv_1L_est$wei <- surv_1L(n_months = max_months, 
                            nma_post = nma_1L$weibull, 
                            ma_gef_post = ma_1L$weibull,
                            econmod_tx_lookup = econmod_tx_lookup_1L,
                            nma_params_lookup = nma_params_lookup_1L$weibull,
                            powers = 0)
-surv_1L_est$gomp <- surv_1L(n_months = 72, 
+surv_1L_est$gomp <- surv_1L(n_months = max_months, 
                             nma_post = nma_1L$gompertz, 
                             ma_gef_post = ma_1L$gompertz,
                             econmod_tx_lookup = econmod_tx_lookup_1L,
                             nma_params_lookup = nma_params_lookup_1L$gompertz,
                             powers = 1)
-surv_1L_est$fracpoly1 <- surv_1L(n_months = 72, 
+surv_1L_est$fracpoly1 <- surv_1L(n_months = max_months, 
                                  nma_post = nma_1L$fracpoly1, 
                                  ma_gef_post = ma_1L$fracpoly1,
                                  econmod_tx_lookup = econmod_tx_lookup_1L,
                                  nma_params_lookup = nma_params_lookup_1L$fracpoly1,
                                  powers = c(0, 0))
-surv_1L_est$fracpoly2 <- surv_1L(n_months = 72, 
+surv_1L_est$fracpoly2 <- surv_1L(n_months = max_months, 
                                  nma_post = nma_1L$fracpoly2, 
                                  ma_gef_post = ma_1L$fracpoly2,
                                  econmod_tx_lookup = econmod_tx_lookup_1L,
@@ -553,31 +554,31 @@ surv_2L <- function(n_months, ma_post,
 
 # T790M positive (osimertinib)
 surv_2L_t790m_osi_est <- list()
-surv_2L_t790m_osi_est$wei <- surv_2L(n_months = 72, 
+surv_2L_t790m_osi_est$wei <- surv_2L(n_months = max_months, 
                                      ma_post = ma_2L_t790m_osi$weibull, 
                                      ma_params_lookup = ma_params_lookup_2L_t790m_osi$weibull,
                                      powers = 0,
                                      "osimertinib",
                                      mutation = 1)
-surv_2L_t790m_osi_est$gomp <- surv_2L(n_months = 72, 
+surv_2L_t790m_osi_est$gomp <- surv_2L(n_months = max_months, 
                                       ma_post = ma_2L_t790m_osi$gompertz, 
                                       ma_params_lookup = ma_params_lookup_2L_t790m_osi$gompertz,
                                       powers = 0,
                                       "osimertinib",
                                       mutation = 1)
-surv_2L_t790m_osi_est$gomp <- surv_2L(n_months = 72, 
+surv_2L_t790m_osi_est$gomp <- surv_2L(n_months = max_months, 
                                       ma_post = ma_2L_t790m_osi$gompertz, 
                                       ma_params_lookup = ma_params_lookup_2L_t790m_osi$gompertz,
                                       powers = 1,
                                       "osimertinib", 
                                       mutation = 1)
-surv_2L_t790m_osi_est$fracpoly1 <- surv_2L(n_months = 72, 
+surv_2L_t790m_osi_est$fracpoly1 <- surv_2L(n_months = max_months, 
                                            ma_post = ma_2L_t790m_osi$fracpoly1, 
                                            ma_params_lookup = ma_params_lookup_2L_t790m_osi$fracpoly1,
                                            powers = c(0, 0),
                                            "osimertinib",
                                            mutation = 1)
-surv_2L_t790m_osi_est$fracpoly2 <- surv_2L(n_months = 72, 
+surv_2L_t790m_osi_est$fracpoly2 <- surv_2L(n_months = max_months, 
                                            ma_post = ma_2L_t790m_osi$fracpoly2, 
                                            ma_params_lookup = ma_params_lookup_2L_t790m_osi$fracpoly2,
                                            powers = c(0, 1),
@@ -587,25 +588,25 @@ surv_2L_t790m_osi_est <- rbindlist(surv_2L_t790m_osi_est)
 
 # T790M negative (PBDC)
 surv_2L_pbdc_est <- list()
-surv_2L_pbdc_est$wei <- surv_2L(n_months = 72, 
+surv_2L_pbdc_est$wei <- surv_2L(n_months = max_months, 
                                 ma_post = ma_2L_pbdc$weibull, 
                                 ma_params_lookup = ma_params_lookup_2L_pbdc$weibull,
                                 powers = 0,
                                 "PBDC",
                                  mutation = 0)
-surv_2L_pbdc_est$gomp <- surv_2L(n_months = 72, 
+surv_2L_pbdc_est$gomp <- surv_2L(n_months = max_months, 
                                  ma_post = ma_2L_pbdc$gompertz, 
                                  ma_params_lookup = ma_params_lookup_2L_pbdc$gompertz,
                                  powers = 1,
                                  "PBDC",
                                  mutation = 0)
-surv_2L_pbdc_est$fracpoly1 <- surv_2L(n_months = 72, 
+surv_2L_pbdc_est$fracpoly1 <- surv_2L(n_months = max_months, 
                                       ma_post = ma_2L_pbdc$fracpoly1, 
                                       ma_params_lookup = ma_params_lookup_2L_pbdc$fracpoly1,
                                       powers = c(0, 0),
                                       "PBDC",
                                       mutation = 0)
-surv_2L_pbdc_est$fracpoly2 <- surv_2L(n_months = 72, 
+surv_2L_pbdc_est$fracpoly2 <- surv_2L(n_months = max_months, 
                                       ma_post = ma_2L_pbdc$fracpoly2, 
                                       ma_params_lookup = ma_params_lookup_2L_pbdc$fracpoly2,
                                       powers = c(0, 1),
