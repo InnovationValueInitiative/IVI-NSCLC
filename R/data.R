@@ -295,6 +295,23 @@
 #' print(params_costs_prod)
 "params_costs_prod"
 
+#' MCDA defaults
+#'
+#' Default values used in web applications for multi-criteria decision-analysis.
+#'
+#' @format A list of two data tables, one for the three state model and
+#' another for the four state model. Each table contains the following columns:
+#' \describe{
+#' \item{criteria_name}{Name of the criteria.}
+#' \item{weight}{Weights to apply to each criteria.}
+#' \item{min}{Minimum value for the criteria (i.e., lowest possible performance).}
+#' \item{max}{Maximum value for the criteria (i.e., highest possible performance).}
+#' }
+#' @seealso \code{\link{mcda}}
+#' @examples 
+#' print(mcda_defaults)
+"mcda_defaults"
+
 #' Progression-free survival and overall survival from network meta-analysis
 #'
 #' Curves of progression-free survival (PFS) and overall survival (OS) 

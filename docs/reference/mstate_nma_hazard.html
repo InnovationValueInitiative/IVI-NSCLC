@@ -126,6 +126,7 @@ estimated using a Bayesian multi-state network meta-analyis (NMA).</p>
   <dt>month</dt><dd><p>Trial month.</p></dd>
   <dt>transition</dt><dd><p>The health state transition.</p></dd>
   <dt>mean</dt><dd><p>Mean hazard from the posterior distribution.</p></dd>
+  <dt>median</dt><dd><p>Median hazard from the posterior distribution.</p></dd>
   <dt>l95</dt><dd><p>Lower limit of 95 percent credible interval from posterior distribution.</p></dd>
   <dt>u95</dt><dd><p>Upper limit of the 95 percent credible interval from the posterior distribution.</p></dd>
 </dl>
@@ -138,18 +139,18 @@ estimated using a Bayesian multi-state network meta-analyis (NMA).</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_hazard</span>)</div><div class='output co'>#&gt;    line mutation   model   tx_name month            transition       mean
 #&gt; 1:    1       NA Weibull erlotinib     0 Stable to progression 0.00000000
-#&gt; 2:    1       NA Weibull erlotinib     1 Stable to progression 0.01844696
-#&gt; 3:    1       NA Weibull erlotinib     2 Stable to progression 0.02320769
-#&gt; 4:    1       NA Weibull erlotinib     3 Stable to progression 0.02705509
-#&gt; 5:    1       NA Weibull erlotinib     4 Stable to progression 0.03042351
-#&gt; 6:    1       NA Weibull erlotinib     5 Stable to progression 0.03348448
-#&gt;            l95        u95
-#&gt; 1: 0.000000000 0.00000000
-#&gt; 2: 0.006472174 0.04048934
-#&gt; 3: 0.011335981 0.04280677
-#&gt; 4: 0.014469665 0.04602445
-#&gt; 5: 0.016041951 0.05035647
-#&gt; 6: 0.017395459 0.05685420</div></pre>
+#&gt; 2:    1       NA Weibull erlotinib     1 Stable to progression 0.01856030
+#&gt; 3:    1       NA Weibull erlotinib     2 Stable to progression 0.02333390
+#&gt; 4:    1       NA Weibull erlotinib     3 Stable to progression 0.02718846
+#&gt; 5:    1       NA Weibull erlotinib     4 Stable to progression 0.03056072
+#&gt; 6:    1       NA Weibull erlotinib     5 Stable to progression 0.03362348
+#&gt;        median         l95        u95
+#&gt; 1: 0.00000000 0.000000000 0.00000000
+#&gt; 2: 0.01669442 0.006649992 0.04093952
+#&gt; 3: 0.02203804 0.011704229 0.04221888
+#&gt; 4: 0.02636427 0.014921971 0.04643930
+#&gt; 5: 0.02973639 0.016256593 0.05189522
+#&gt; 6: 0.03244486 0.017186136 0.05676506</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

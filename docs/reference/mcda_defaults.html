@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hazard ratios from network meta-analysis — mstate_nma_hr • iviNSCLC</title>
+<title>MCDA defaults — mcda_defaults • iviNSCLC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Hazard ratios from network meta-analysis — mstate_nma_hr" />
+<meta property="og:title" content="MCDA defaults — mcda_defaults" />
 
-<meta property="og:description" content="Hazard ratios for first line treatments relative to gefitinib
-estimated using a Bayesian multi-state network meta-analyis (NMA)." />
+<meta property="og:description" content="Default values used in web applications for multi-criteria decision-analysis." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,56 +100,56 @@ estimated using a Bayesian multi-state network meta-analyis (NMA)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Hazard ratios from network meta-analysis</h1>
+    <h1>MCDA defaults</h1>
     <small class="dont-index">Source: <a href='https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>mstate_nma_hr.Rd</code></div>
+    <div class="hidden name"><code>mcda_defaults.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Hazard ratios for first line treatments relative to gefitinib
-estimated using a Bayesian multi-state network meta-analyis (NMA).</p>
+    <p>Default values used in web applications for multi-criteria decision-analysis.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>mstate_nma_hr</span></pre>
+    <pre class="usage"><span class='no'>mcda_defaults</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data.table with the following columns:</p><dl class='dl-horizontal'>
-  <dt>line</dt><dd><p>Line of treatment. Either first or second.</p></dd>
-  <dt>mutation</dt><dd><p>At 2nd line, equal to 1 if there is a T790M mutation and 
-  0 otherwise.</p></dd>
-  <dt>model</dt><dd><p>The statistical model.</p></dd> 
-  <dt>tx_name</dt><dd><p>Name of the treatment.</p></dd>
-  <dt>month</dt><dd><p>Trial month.</p></dd>
-  <dt>transition</dt><dd><p>The health state transition.</p></dd>
-  <dt>mean</dt><dd><p>Mean hazard ratio from the posterior distribution.</p></dd>
-  <dt>median</dt><dd><p>Median hazard ratio from the posterior distribution.</p></dd>
-  <dt>l95</dt><dd><p>Lower limit of 95 percent credible interval from posterior distribution.</p></dd>
-  <dt>u95</dt><dd><p>Upper limit of the 95 percent credible interval from the posterior distribution.</p></dd>
+    <p>A list of two data tables, one for the three state model and
+another for the four state model. Each table contains the following columns:</p><dl class='dl-horizontal'>
+<dt>criteria_name</dt><dd><p>Name of the criteria.</p></dd>
+<dt>weight</dt><dd><p>Weights to apply to each criteria.</p></dd>
+<dt>min</dt><dd><p>Minimum value for the criteria (i.e., lowest possible performance).</p></dd>
+<dt>max</dt><dd><p>Maximum value for the criteria (i.e., highest possible performance).</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='mstate_nma_surv.html'>mstate_nma_surv</a></code>, <code><a href='mstate_nma_hazard.html'>mstate_nma_hazard</a></code></p></div>
+    <div class='dont-index'><p><code><a href='mcda.html'>mcda</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_hr</span>)</div><div class='output co'>#&gt;    line mutation   model   tx_name month            transition      mean
-#&gt; 1:    1       NA Weibull erlotinib     0 Stable to progression 1.0000000
-#&gt; 2:    1       NA Weibull erlotinib     1 Stable to progression 0.7534282
-#&gt; 3:    1       NA Weibull erlotinib     2 Stable to progression 0.6267102
-#&gt; 4:    1       NA Weibull erlotinib     3 Stable to progression 0.5727375
-#&gt; 5:    1       NA Weibull erlotinib     4 Stable to progression 0.5415394
-#&gt; 6:    1       NA Weibull erlotinib     5 Stable to progression 0.5208545
-#&gt;       median       l95       u95
-#&gt; 1: 1.0000000 1.0000000 1.0000000
-#&gt; 2: 0.6815825 0.2802687 1.5939442
-#&gt; 3: 0.5969727 0.3149345 1.0758052
-#&gt; 4: 0.5528516 0.3227722 0.9344328
-#&gt; 5: 0.5266664 0.2962844 0.8701981
-#&gt; 6: 0.5028066 0.2721158 0.8613339</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>mcda_defaults</span>)</div><div class='output co'>#&gt; $three_state
+#&gt;                criteria_name weight          min  max
+#&gt; 1:     PFS with 1L treatment     10 4.166667e-01  3.5
+#&gt; 2: Post-progression survival     10 1.166667e+00  4.5
+#&gt; 3:   Total health care costs      5 1.000000e+06  0.0
+#&gt; 4:       Administered orally      0 0.000000e+00  1.0
+#&gt; 5:  Years since FDA approval      0 0.000000e+00 20.0
+#&gt; 6:            Loss of income      0 1.000000e+05  0.0
+#&gt; 7:              Aes combined      5 1.000000e+00  0.0
+#&gt; 
+#&gt; $four_state
+#&gt;                criteria_name weight          min  max
+#&gt; 1:     PFS with 1L treatment     10 4.166667e-01  3.5
+#&gt; 2:     PFS with 2L treatment     10 3.333333e-01  1.0
+#&gt; 3: Post-progression survival     10 8.333333e-01  3.5
+#&gt; 4:   Total health care costs      5 1.000000e+06  0.0
+#&gt; 5:       Administered orally      0 0.000000e+00  1.0
+#&gt; 6:  Years since FDA approval      0 0.000000e+00 20.0
+#&gt; 7:            Loss of income      0 1.000000e+05  0.0
+#&gt; 8:              Aes combined      5 1.000000e+00  0.0
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

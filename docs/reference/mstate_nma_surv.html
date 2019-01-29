@@ -131,6 +131,7 @@ progression and OS is the duration of a time a patient is alive.</p>
   <dt>tx_name</dt><dd><p>Name of the treatment.</p></dd>
   <dt>month</dt><dd><p>Trial month.</p></dd>
   <dt>mean</dt><dd><p>Mean PFS/OS from the posterior distribution.</p></dd>
+  <dt>median</dt><dd><p>Median PFS/OS from the posterior distribution.</p></dd>
   <dt>l95</dt><dd><p>Lower limit of 95 percent credible interval from posterior distribution.</p></dd>
   <dt>u95</dt><dd><p>Upper limit of the 95 percent credible interval from the posterior distribution.</p></dd>
 </dl>
@@ -141,19 +142,33 @@ progression and OS is the duration of a time a patient is alive.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_pfs</span>)</div><div class='output co'>#&gt;    line mutation   model   tx_name month      mean       l95       u95
+    <pre class="examples"><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_pfs</span>)</div><div class='output co'>#&gt;    line mutation   model   tx_name month      mean    median       l95
 #&gt; 1:    1       NA Weibull erlotinib     0 1.0000000 1.0000000 1.0000000
-#&gt; 2:    1       NA Weibull erlotinib     1 0.9814312 0.9602436 0.9934261
-#&gt; 3:    1       NA Weibull erlotinib     2 0.9586855 0.9218135 0.9816584
-#&gt; 4:    1       NA Weibull erlotinib     3 0.9329146 0.8791236 0.9664039
-#&gt; 5:    1       NA Weibull erlotinib     4 0.9048390 0.8379409 0.9488706
-#&gt; 6:    1       NA Weibull erlotinib     5 0.8750064 0.7954131 0.9303853</div><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_os</span>)</div><div class='output co'>#&gt;    line mutation   model   tx_name month      mean       l95       u95
+#&gt; 2:    1       NA Weibull erlotinib     1 0.9813128 0.9831876 0.9591186
+#&gt; 3:    1       NA Weibull erlotinib     2 0.9584437 0.9612476 0.9197846
+#&gt; 4:    1       NA Weibull erlotinib     3 0.9325516 0.9361429 0.8820475
+#&gt; 5:    1       NA Weibull erlotinib     4 0.9043601 0.9075891 0.8382485
+#&gt; 6:    1       NA Weibull erlotinib     5 0.8744189 0.8774188 0.7935833
+#&gt;          u95
+#&gt; 1: 1.0000000
+#&gt; 2: 0.9931107
+#&gt; 3: 0.9808260
+#&gt; 4: 0.9653296
+#&gt; 5: 0.9478870
+#&gt; 6: 0.9284482</div><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_os</span>)</div><div class='output co'>#&gt;    line mutation   model   tx_name month      mean    median       l95
 #&gt; 1:    1       NA Weibull erlotinib     0 1.0000000 1.0000000 1.0000000
-#&gt; 2:    1       NA Weibull erlotinib     1 0.9990962 0.9970744 0.9998331
-#&gt; 3:    1       NA Weibull erlotinib     2 0.9971462 0.9928264 0.9992438
-#&gt; 4:    1       NA Weibull erlotinib     3 0.9941074 0.9867704 0.9980094
-#&gt; 5:    1       NA Weibull erlotinib     4 0.9899561 0.9793775 0.9959826
-#&gt; 6:    1       NA Weibull erlotinib     5 0.9846871 0.9707360 0.9932740</div></pre>
+#&gt; 2:    1       NA Weibull erlotinib     1 0.9990851 0.9993163 0.9969418
+#&gt; 3:    1       NA Weibull erlotinib     2 0.9971186 0.9975396 0.9926917
+#&gt; 4:    1       NA Weibull erlotinib     3 0.9940580 0.9946105 0.9867761
+#&gt; 5:    1       NA Weibull erlotinib     4 0.9898799 0.9905707 0.9786638
+#&gt; 6:    1       NA Weibull erlotinib     5 0.9845798 0.9853897 0.9697365
+#&gt;          u95
+#&gt; 1: 1.0000000
+#&gt; 2: 0.9998248
+#&gt; 3: 0.9992038
+#&gt; 4: 0.9980502
+#&gt; 5: 0.9962049
+#&gt; 6: 0.9936172</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -54,6 +54,7 @@ reference:
       - txattr_performance
       - performance_matrix
       - lpvf_plot_data
+      - mcda_defaults
       - mcda
   - title: "Value of hope"
     contents:

@@ -26,5 +26,4 @@ The value of the score on the common scale.
 }
 \description{
 Convert performance for criterion on original scale to a score on a common scale
-using a linear partial value function.
 }
