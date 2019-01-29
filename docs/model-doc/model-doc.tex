@@ -603,7 +603,7 @@ T_\mu =
 0 & 10 & 0 & 0 & 0 & 0 \\
 0 & 0 & 10 & 0 & 0 & 0 \\
 0 & 0 & 0 & 100 & 0 & 0 \\
-0 & 0 & 0 & 0 & 10 & 0 \\
+0 & 0 & 0 & 0 & 100 & 0 \\
 0 & 0 & 0 & 0 & 0 & 10 \\
 \end{pmatrix}\\\\
 %
@@ -632,7 +632,7 @@ T_d =
 %
 \\
 % Prior for between-study heterogeneity
-\sigma_{d_{1}} &= uniform(0.2)  \\
+\sigma_{d_{1}} &= uniform(0, 2)  \\
 \end{aligned}
 \end{equation}
 
@@ -680,7 +680,44 @@ M_{5} + M_{6}u^{p_1}\\
 where $u^0= \ln(u)$
 \\
 
-$h_{i}^{SD}(u)$, $h_{i}^{PD}(u)$, and $h_{i}^{SD}(u)$ are the underlying hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ at time $u$. The $M_{\cdot}$ represent the pooled scale and shape parameters describing the log hazard functions over time. As before, when $p_{1}=0$ and $M_{3}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $M_{3}=0$ these log-hazard functions follow a Gompertz distribution. When $\{(p_1, p_2) = (0, 0), (0,1)\}$ and $M_{3}\neq0$, the log-hazard functions follow a second order fractional polynomial to allow for arc- and bathtub shaped log-hazard functions. 
+$h_{i}^{SD}(u)$, $h_{i}^{PD}(u)$, and $h_{i}^{SD}(u)$ are the underlying hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ at time $u$. The $M_{\cdot}$ represent the pooled scale and shape parameters describing the log hazard functions over time. As before, when $p_{1}=0$ and $M_{3}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $M_{3}=0$ these log-hazard functions follow a Gompertz distribution. When $\{(p_1, p_2) = (0, 0), (0,1)\}$ and $M_{3}\neq0$, the log-hazard functions follow a second order fractional polynomial. The following prior distributions for the parameters of the model were used:
+
+\begin{equation} \label{eqn:multistate-ma-priors-gef}
+\begin{aligned}
+% Prior for mu's
+\begin{pmatrix}
+M_{1}  \\
+M_{2}  \\
+M_{3}  \\
+M_{4}  \\
+M_{5}  \\
+M_{6}  \\
+\end{pmatrix} 
+&\sim 
+MVN\left(
+\begin{pmatrix}
+0  \\
+0  \\
+0  \\
+0  \\
+0  \\
+0 \\
+\end{pmatrix}, 
+T_M
+\right) 
+\qquad
+T_M =
+\begin{pmatrix}
+100 & 0 & 0 & 0 & 0 & 0 \\
+0 & 10 & 0 & 0 & 0 & 0 \\
+0 & 0 & 10 & 0 & 0 & 0 \\
+0 & 0 & 0 & 100 & 0 & 0 \\
+0 & 0 & 0 & 0 & 100 & 0 \\
+0 & 0 & 0 & 0 & 0 & 10 \\
+\end{pmatrix}\\\\
+\end{aligned}
+\end{equation}
+
 
 \autoref{fig:hazard-gef-1L} shows the hazard functions for the transitions between stable, progression, and death with gefitinib for each fitted model.
 
@@ -708,7 +745,7 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 
 
 \subsubsection{Absolute effects with 2L therapy}
-For the 2L treatment options, the available number of RCTs among patients who progressed on 1L TKI were limited. For T790M positive patients, the transition rates with osimertinib were estimated based on data from two RCTs according to \autoref{eqn:multistate-ma}.  Regarding other possible treatments, there was only data available for PBDC from three RCTs, which were used to estimate transition rates according to \autoref{eqn:multistate-ma} as well. In the absence of RCT evidence, these estimates were assumed to be representative of the other 2L treatment regimens presented in \autoref{fig:treatment-strategies} for both an all-comer population and a T790M mutation negative population. \autoref{fig:hazards-2L} shows the hazard functions for the transitions between stable, progression, and death for each fitted model and \autoref{fig:surv-2L} shows the corresponding PFS and OS curves.
+For the 2L treatment options, the available number of RCTs among patients who progressed on 1L TKI were limited. For T790M positive patients, the transition rates with osimertinib were estimated based on data from two RCTs according to \autoref{eqn:multistate-ma} and with prior distributions according to \autoref{eqn:multistate-ma-priors-gef}.  Regarding other possible treatments, there was only data available for PBDC from three RCTs, which were used to estimate transition rates according to \autoref{eqn:multistate-ma} and \autoref{eqn:multistate-ma-priors-gef} as well. In the absence of RCT evidence, these estimates were assumed to be representative of the other 2L treatment regimens presented in \autoref{fig:treatment-strategies} for both an all-comer population and a T790M mutation negative population. \autoref{fig:hazards-2L} shows the hazard functions for the transitions between stable, progression, and death for each fitted model and \autoref{fig:surv-2L} shows the corresponding PFS and OS curves.
 
 \FloatBarrier
 
@@ -757,7 +794,7 @@ The parameters of the different models were estimated using a Markov Chain Monte
 \subsubsection{Model selection}
 The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \autoref{app:DIC-nma-1l}, \autoref{app:DIC-1l}, \autoref{app:DIC-2l}) \citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
 
-Informed by model fit criteria, we used treatment effect estimates obtained with the fixed and random effects, Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model. 
+Informed by model fit criteria, we used treatment effect estimates obtained with the fixed effects Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model. 
 
 
 \subsection{Adverse events}\label{subsec:data-aes}
