@@ -1,0 +1,8 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Tue Jan 29 06:57:37 2019
+  \hline
+Fractional Polynomial (0, 0) & 9,689 & 9,698 & 9,671 & 9,672 \\ 
+  Fractional Polynomial (0, 1) & 9,710 & 9,656 & 9,685 & 9,689 \\ 
+  Gompertz & 9,743 & 9,749 & 9,760 & 9,756 \\ 
+  Weibull & 9,618 & 9,637 & 9,648 & 9,649 \\ 
+   \hline

@@ -245,6 +245,38 @@ ggsave("figs/medsurv-os.pdf", p, width = 7, height = 5)
 surv_mean(mstate_nma_pfs)
 surv_mean(mstate_nma_os)
 
+# DIC
+dic <- fread("output/dic.csv")
+dic[, dic := formatC(dic, format = "d", big.mark = ",")]
+
+## 1L NMA
+tbl <- dic[line == 1 & effects == "Relative"]
+tbl <- dcast(tbl, model ~ method + sd_tx_effect + pd_tx_effect,
+                value.var = "dic")
+setcolorder(tbl, c("model", 
+                 "FE_none_none", "FE_none_constant",
+                  "RE_none_none", "RE_none_constant"))
+print(xtable(tbl), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/dic-1L-nma.txt")
+
+## 1L MA
+tbl <- dic[line == 1 & effects == "Absolute", .(model, dic)]
+print(xtable(tbl), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/dic-1L-ma-gef.txt")
+
+## 2L MA
+tbl <- dic[line == 2 & effects == "Absolute",]
+tbl <- dcast(tbl, model ~ method + mutation,
+                value.var = "dic")
+print(xtable(tbl), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/dic-2L-ma.txt")
+
 # Utility ----------------------------------------------------------------------
 # Utility by health state
 state_utility <- copy(params_utility$state_utility)
