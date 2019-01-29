@@ -14,6 +14,7 @@
   \item{month}{Trial month.}
   \item{transition}{The health state transition.}
   \item{mean}{Mean hazard ratio from the posterior distribution.}
+  \item{median}{Median hazard ratio from the posterior distribution.}
   \item{l95}{Lower limit of 95 percent credible interval from posterior distribution.}
   \item{u95}{Upper limit of the 95 percent credible interval from the posterior distribution.}
 }}

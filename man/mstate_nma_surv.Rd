@@ -15,6 +15,7 @@
   \item{tx_name}{Name of the treatment.}
   \item{month}{Trial month.}
   \item{mean}{Mean PFS/OS from the posterior distribution.}
+  \item{median}{Median PFS/OS from the posterior distribution.}
   \item{l95}{Lower limit of 95 percent credible interval from posterior distribution.}
   \item{u95}{Upper limit of the 95 percent credible interval from the posterior distribution.}
 }}

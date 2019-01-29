@@ -558,7 +558,6 @@ criteria_names <- c(lys_names,
                     "Health care sector costs", "Productivity costs",
                     "Route of administration", "Years since FDA approval",
                     "Diarrhea")
-
 ```
 
 Before conducting the MCDA, it useful to summarize the performance of the criteria on their original scales with a "performance matrix". High values are better for life-years, route of administration (1 = oral, 0 = intravenous), and years since FDA approval while lower values are better for health care sector costs, productivity losses, and the probability of experiencing diarrhea.

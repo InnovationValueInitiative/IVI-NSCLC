@@ -33,7 +33,7 @@ surv_mean <- function(x){
 ## 1L
 p <- ggplot(mstate_nma_hr[transition == "Stable to progression" & 
                             month > 0], 
-            aes(x = month, y = mean, col = tx_name)) +
+            aes(x = month, y = median, col = tx_name)) +
      geom_line() +
      facet_wrap(~model, ncol = 2) +
      xlab("Month") + ylab("Hazard ratio") +
@@ -46,7 +46,7 @@ ggsave("figs/hr-1L.pdf", p, width = 8, height = 8)
 hr_1L_cri_plot <- function(model_name){
  p <- ggplot(mstate_nma_hr[transition == "Stable to progression" &
                             model == model_name & month > 0], 
-            aes(x = month, y = mean)) +
+            aes(x = month, y = median)) +
      geom_line() +
      facet_wrap(~tx_name, ncol = 2) +
       geom_ribbon(aes(ymin = l95, ymax = u95),
@@ -74,7 +74,7 @@ haz_plot <- function(line, tx_name, ylim){
   p <- ggplot(mstate_nma_hazard[line == line_env & 
                                 tx_name == tx_name_env &
                                 month > 0],
-            aes(x = month, y = mean, col = model)) +
+            aes(x = month, y = median, col = model)) +
      geom_line() +
      facet_wrap(~transition, ncol = 2) +
      xlab("Month") + ylab("Hazard") +
@@ -99,7 +99,7 @@ haz_cri_plot <- function(line, tx_name, ylim, model){
                                 tx_name == tx_name_env &
                                 model == model_env &
                                 month > 0],
-            aes(x = month, y = mean)) +
+            aes(x = month, y = median)) +
      geom_line() +
      geom_ribbon(aes(ymin = l95, ymax = u95),
                 alpha = 0.2) +
@@ -160,7 +160,7 @@ mstate_nma <- rbind(data.table(mstate_nma_pfs, outcome = "PFS"),
 
 ## 1L
 p <- ggplot(mstate_nma[line == 1], 
-            aes(x = month, y = mean, col = tx_name, linetype = outcome)) +
+            aes(x = month, y = median, col = tx_name, linetype = outcome)) +
      geom_line() +
      facet_wrap(~model) + 
      xlab("Month") + ylab("Proportion surviving") +
@@ -171,7 +171,7 @@ ggsave("figs/surv-1L.pdf", p, width = 8, height = 8)
 
 ## 2L (PBDC)
 p <- ggplot(mstate_nma[line == 2 & mutation == 0], 
-            aes(x = month, y = mean, linetype = outcome)) +
+            aes(x = month, y = median, linetype = outcome)) +
      geom_line() +
      geom_ribbon(aes(ymin = l95, ymax = u95),
                 alpha = 0.2) + 
@@ -183,7 +183,7 @@ ggsave("figs/surv-2L-pbdc.pdf", p, width = 7, height = 5)
 
 ## 2L (osimertinib)
 p <- ggplot(mstate_nma[line == 2 & mutation == 1], 
-            aes(x = month, y = mean, linetype = outcome)) +
+            aes(x = month, y = median, linetype = outcome)) +
      geom_line() +
       geom_ribbon(aes(ymin = l95, ymax = u95),
                 alpha = 0.2) +

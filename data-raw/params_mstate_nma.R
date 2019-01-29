@@ -106,11 +106,17 @@ pfs_followup <- 36
 os_followup <- 48
 
 # NMA parameter estimates ------------------------------------------------------
-sample_posterior <- function(x, n_sims){
+sample_posterior <- function(x, n_sims, random = FALSE){
   for (i in 1:length(x)){ 
     if (nrow(x[[i]]) != n_sims){
-      sampled_rows <- sample.int(nrow(x[[i]]), n_sims, replace = FALSE)
-      x[[i]] <- x[[i]][sampled_rows, ]
+      if (random){ # Randomly sample from posterior
+        sampled_rows <- sample.int(nrow(x[[i]]), n_sims, replace = FALSE)
+        x[[i]] <- x[[i]][sampled_rows, ]
+      } else{ # Use last n_sims rows
+        last_row <- nrow(x[[i]])
+        first_row <- last_row - n_sims + 1
+        x[[i]] <- x[[i]][first_row:last_row, ]
+      }
     }
   }
   return (x)
@@ -415,7 +421,7 @@ surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
   
   n_params <- length(unique(nma_params_lookup$param))
   n_trans <- 3
-  t <- seq(0, n_months + 1)
+  t <- seq(0, n_months)
   n_powers <- length(powers)
   
   # Number of simulations
@@ -511,7 +517,7 @@ surv_2L <- function(n_months, ma_post,
   
   n_params <- length(unique(ma_params_lookup$param))
   n_trans <- 3
-  t <- seq(0, n_months + 1)
+  t <- seq(0, n_months)
   n_powers <- length(powers)
   n_sims <- nrow(ma_post)
 
@@ -560,12 +566,6 @@ surv_2L_t790m_osi_est$wei <- surv_2L(n_months = max_months,
                                      powers = 0,
                                      "osimertinib",
                                      mutation = 1)
-surv_2L_t790m_osi_est$gomp <- surv_2L(n_months = max_months, 
-                                      ma_post = ma_2L_t790m_osi$gompertz, 
-                                      ma_params_lookup = ma_params_lookup_2L_t790m_osi$gompertz,
-                                      powers = 0,
-                                      "osimertinib",
-                                      mutation = 1)
 surv_2L_t790m_osi_est$gomp <- surv_2L(n_months = max_months, 
                                       ma_post = ma_2L_t790m_osi$gompertz, 
                                       ma_params_lookup = ma_params_lookup_2L_t790m_osi$gompertz,
@@ -622,14 +622,16 @@ surv_est <- rbind(surv_1L_est,
 
 # PFS
 mstate_nma_pfs <- surv_est[, .(mean = mean(pfs),
-                          l95 = quantile(pfs, .025),
-                          u95 = quantile(pfs, .975)),
-                          by = c("line", "mutation", "model", "tx_name", "month")]
+                               median = median(pfs),
+                               l95 = quantile(pfs, .025),
+                               u95 = quantile(pfs, .975)),
+                            by = c("line", "mutation", "model", "tx_name", "month")]
 
 # OS
 mstate_nma_os <- surv_est[, .(mean = mean(os),
-                          l95 = quantile(os, .025),
-                          u95 = quantile(os, .975)),
+                              median = median(os),
+                              l95 = quantile(os, .025),
+                              u95 = quantile(os, .975)),
                           by = c("line", "mutation", "model", "tx_name", "month")]
 
 # Hazards
@@ -645,6 +647,7 @@ hazard_est[, transition := factor(transition,
                                              "Stable to death",
                                              "Progression to death"))]
 mstate_nma_hazard <- hazard_est[, .(mean = mean(hazard),
+                                    median = median(hazard),
                                     l95 = quantile(hazard, .025),
                                     u95 = quantile(hazard, .975)),
                                  by = c("line", "mutation", "model", "tx_name",
@@ -664,6 +667,7 @@ hr_est[, transition := factor(transition,
                                            "Progression to death"))]
 mstate_nma_hr <- hr_est[line == 1 & tx_name != "gefitinib",
                         .(mean = mean(hr),
+                          median = median(hr),
                           l95 = quantile(hr, .025),
                           u95 = quantile(hr, .975)),
                         by = c("line", "mutation", "model", "tx_name",
@@ -723,7 +727,7 @@ jags_v_R <- function(ma_post, line, tx_name, outcome = c("PFS", "OS")){
 }
 
 ## 1st Line
-p <- jags_v_R(nma_1L, line = 1, tx_name = "osimertinib", outcome = "PFS")
+p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "PFS")
 ggsave("figs/pfs-1L-gef-check.pdf", p, width = 7, height = 7)
 
 p <- jags_v_R(ma_1L, line = 1, tx_name = "gefitinib", outcome = "OS")
