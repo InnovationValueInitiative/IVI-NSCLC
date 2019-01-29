@@ -2553,6 +2553,27 @@ model{
 
 \subsection{Model fit}\label{app:DIC-nma-1l}
 
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\footnotesize
+\caption{Deviance information criterion for first line network meta-analysis } \label{tbl:dic-nma-1L}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}ld{-1}d{-1}d{-1}d{-1}}
+\hline
+\multicolumn{1}{l}{} & \multicolumn{2}{c}{Fixed effects} & \multicolumn{2}{c}{Random effects}\\
+\cmidrule(r){2-3} \cmidrule(r){4-5}
+\multicolumn{1}{l}{} & \multicolumn{1}{l}{Treatment effect} & \multicolumn{1}{l}{Treatment effect} & \multicolumn{1}{l}{Treatment effect} & \multicolumn{1}{l}{Treatment effect} \\
+\multicolumn{1}{l}{} & \multicolumn{1}{l}{$P$ to $D$: none} & \multicolumn{1}{l}{$P$ to $D$: constant} & \multicolumn{1}{l}{$P$ to $D$: none} & \multicolumn{1}{l}{$P$ to $D$: constant} \\
+\hline
+\ExpandableInput{tables/dic-1L-nma.txt}
+\hline
+\end{tabularx}
+\scriptsize
+Notes: The transition from $P$ to $D$ is the transition from progression to death. If there is no treatment effect, then hazard rates do not vary across treatments or over time; if there is a constant treatment effect, then hazard rates vary across treatments but not over time.
+\end{threeparttable}
+\end{center}
+\end{table}
+
 \subsection{Supplementary figures of relative treatment effects}\label{app:nma-supp-figs}
 \begin{figure}[h]
 \centering
@@ -2684,6 +2705,23 @@ model{
 \subsection{Model parameter estimates}
 
 \subsection{Model fit}\label{app:DIC-1l}
+
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\caption{Deviance information criterion for first line fixed effects meta-analysis of gefitinib } \label{tbl:dic-ma-1L}
+\begin{tabularx}{.7\textwidth}{@{\extracolsep{\fill}}ld{-1}}
+\hline
+\multicolumn{1}{l}{Model} & \multicolumn{1}{l}{DIC} \\
+\hline
+\ExpandableInput{tables/dic-1L-ma-gef.txt}
+\hline
+\end{tabularx}
+\scriptsize
+Notes: DIC = Deviance informationc criterion.
+\end{threeparttable}
+\end{center}
+\end{table}
 
 \subsection{Supplementary figures of absolute effects}\label{app:1l-supp-figs}
 
@@ -2912,6 +2950,22 @@ model{
 
 
 \subsection{Model fit}\label{app:DIC-2l}
+
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\caption{Deviance information criterion for second line fixed effects meta-analysis} \label{tbl:dic-ma-2L}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}ld{-1}d{-1}}
+\hline
+\multicolumn{1}{l}{Model} & \multicolumn{1}{l}{PBDC} & \multicolumn{1}{l}{osimertinib (T790M+)}  \\
+\hline
+\ExpandableInput{tables/dic-2L-ma.txt}
+\hline
+\end{tabularx}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
 
 \subsection{Supplementary figures of absolute effects}\label{app:2l-supp-figs}
 
