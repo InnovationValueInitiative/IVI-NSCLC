@@ -1,7 +1,6 @@
 #' Linear partial value function
 #' 
 #' Convert performance for criterion on original scale to a score on a common scale
-#' using a linear partial value function.
 #' @param x Performance of the criterion on the original scale.
 #' @param x_min Minimum value of criterion on original scale. If higher performance
 #' is better, then the minimum value is the lowest possible value; otherwise, it
@@ -13,9 +12,17 @@
 #' @param score_max Maximum value of score on common scale.
 #' @return The value of the score on the common scale.
 lpvf <- function(x, x_min, x_max, score_min = 0, score_max = 100){
-  score <- (x - x_min) * (score_max - score_min) / (x_max - x_min) + score_min
   if (x_min == x_max){
-    score <- rep(0, length(score))
+    stop("'x_min' and 'x_max' cannot be equal.")
+  } else{
+    score <- (x - x_min) * (score_max - score_min) / (x_max - x_min) + score_min
+    if (x_min < x_max){
+      score <- ifelse(x > x_max, score_max, score)
+      score <- ifelse(x < x_min, score_min, score)
+    } else{
+      score <- ifelse(x < x_max, score_min, score)
+      score <- ifelse(x > x_min, score_max, score)
+    }
   }
   return(score)
 }
@@ -136,8 +143,8 @@ mcda <- function(x, sample, strategy, criteria,
   colnames(scores) <- criteria
   for (i in 1:length(criteria)){
     scores[, i] <- lpvf(x[[criteria[i]]], 
-                                  x_min = criteria_min[i], x_max = criteria_max[i],
-                                  score_min = score_min, score_max = score_max)
+                        x_min = criteria_min[i], x_max = criteria_max[i],
+                        score_min = score_min, score_max = score_max)
   }  
   scores_dt <- data.table(sample = x[[sample]],
                           strategy = x[[strategy]],

@@ -4,12 +4,12 @@ library("flexsurv")
 library("hesim")
 rm(list = ls())
 
-n_samples <- 5
 strategies <- c("Strategy 1", "Strategy 2")
-outcome1 <- c(rnorm(n_samples, mean = 10, sd = 5),
-              rnorm(n_samples, mean = 8, sd = 4))
-outcome2 <- c(rnorm(n_samples, mean = 1500, sd = 90),
-              rnorm(n_samples, mean = 1000, sd = 100))
+outcome1 <- c(c(10, 18, 12, 15, 14), # Strategy 1
+              c(9, 7, 6, 8, 5))
+outcome2 <- c(c(1600, 1500, 1700, 1750, 1800),
+                1100, 1150, 1050, 1250, 1300)
+n_samples <- length(outcome1)/2
 outcomes <- data.table(sample = rep(1:n_samples, length(strategies)),
                        strategy_id = rep(strategies, each = n_samples),
                        criteria1 = outcome1,
@@ -39,13 +39,41 @@ test_that("mcda", {
   
   expect_true(inherits(mcda, "list"))
   expect_true(all(mcda$scores$criteria1 >= 0 &
-                  mcda$scores$criteria1 <= 100.01)) # .01 because of strange floating point imprecision 
+                  mcda$scores$criteria1 <= 100)) 
   expect_true(all(mcda$weighted_scores$weighted_score >= 0 & 
-                mcda$weighted_scores$weighted_score <= 100.01))  
+                mcda$weighted_scores$weighted_score <= 100))  
   expect_true(all(mcda$total_value$score >= 0 & 
-                mcda$total_value$score <= 100.01))
+                mcda$total_value$score <= 100))
   expect_true(all(mcda$prob_rank$prob <= 1 & 
                   mcda$prob_rank$prob >= 0))
+  
+  # With minimum criteria
+  ## all criteria 1 less than maximum score (lower scores are better)
+  mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",
+             criteria = c("criteria1", "criteria2"),
+             criteria_min = c(max(outcome1) + 10, min(outcome2)),
+             criteria_max =  c(max(outcome1) + 1, max(outcome2)),
+             weights = weights,
+             optimal = c("low", "high"))  
+  expect_true(all(mcda$scores$criteria1 == 0))
+
+  ## all criteria 2 greater than maximum score (higher scores are better)
+  mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",
+             criteria = c("criteria1", "criteria2"),
+             criteria_min = c(max(outcome1), min(outcome2) - 5),
+             criteria_max = c(min(outcome1), min(outcome2) - 1),
+             weights = weights,
+             optimal = c("low", "high")) 
+  expect_true(all(mcda$scores$criteria2 == 100))
+  
+  # Error
+  expect_error(mcda(outcomes, sample = "sample", strategy = "strategy_id",
+               criteria = c("criteria1", "criteria2"),
+               criteria_min = c(0, 0),
+               criteria_max = c(0, 0),
+               weights = weights,
+               optimal = c("low", "high")))
+  
 })
 
 test_that("txattr_performance", {
