@@ -1,0 +1,36 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Tue Jan 29 17:41:19 2019
+  \hline
+Weibull & S to D & $d_1$ & erlotinib & -1.27 & -0.68 & -0.38 & -0.07 & 0.47 \\ 
+  Weibull & S to D & $d_1$ & afatinib & -0.43 & -0.11 & 0.07 & 0.25 & 0.64 \\ 
+  Weibull & S to D & $d_1$ & dacomitinib & -1.06 & -0.54 & -0.31 & -0.08 & 0.40 \\ 
+  Weibull & S to D & $d_1$ & osimertinib & -2.09 & -1.43 & -1.13 & -0.84 & -0.32 \\ 
+  Weibull & S to D & $d_2$ & erlotinib & -0.79 & -0.39 & -0.19 & -0.00 & 0.37 \\ 
+  Weibull & S to D & $d_2$ & afatinib & -0.57 & -0.35 & -0.23 & -0.12 & 0.09 \\ 
+  Weibull & S to D & $d_2$ & dacomitinib & -0.67 & -0.37 & -0.23 & -0.09 & 0.16 \\ 
+  Weibull & S to D & $d_2$ & osimertinib & -0.48 & -0.15 & -0.00 & 0.15 & 0.49 \\ 
+  Gompertz & S to D & $d_1$ & erlotinib & -1.05 & -0.52 & -0.27 & -0.04 & 0.39 \\ 
+  Gompertz & S to D & $d_1$ & afatinib & -0.37 & -0.09 & 0.07 & 0.24 & 0.57 \\ 
+  Gompertz & S to D & $d_1$ & dacomitinib & -0.94 & -0.50 & -0.28 & -0.08 & 0.26 \\ 
+  Gompertz & S to D & $d_1$ & osimertinib & -2.07 & -1.36 & -1.04 & -0.74 & -0.22 \\ 
+  Gompertz & S to D & $d_2$ & erlotinib & -0.19 & -0.09 & -0.05 & -0.01 & 0.07 \\ 
+  Gompertz & S to D & $d_2$ & afatinib & -0.24 & -0.15 & -0.09 & -0.04 & 0.01 \\ 
+  Gompertz & S to D & $d_2$ & dacomitinib & -0.20 & -0.09 & -0.07 & -0.04 & 0.00 \\ 
+  Gompertz & S to D & $d_2$ & osimertinib & -0.23 & -0.08 & -0.04 & -0.01 & 0.06 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_1$ & erlotinib & -1.43 & -0.74 & -0.43 & -0.11 & 0.48 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_1$ & afatinib & -0.52 & -0.18 & -0.02 & 0.16 & 0.51 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_1$ & dacomitinib & -1.08 & -0.56 & -0.29 & -0.06 & 0.40 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_1$ & osimertinib & -2.14 & -1.47 & -1.16 & -0.81 & 0.03 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_2$ & erlotinib & -0.84 & -0.43 & -0.22 & -0.02 & 0.36 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_2$ & afatinib & -0.49 & -0.28 & -0.16 & -0.05 & 0.17 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_2$ & dacomitinib & -0.69 & -0.39 & -0.25 & -0.10 & 0.24 \\ 
+  Fractional polynomial (0, 0) & S to D & $d_2$ & osimertinib & -0.62 & -0.18 & 0.01 & 0.18 & 0.52 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_1$ & erlotinib & -1.36 & -0.74 & -0.42 & -0.09 & 0.53 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_1$ & afatinib & -0.50 & -0.17 & 0.00 & 0.17 & 0.55 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_1$ & dacomitinib & -1.15 & -0.57 & -0.28 & -0.02 & 0.49 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_1$ & osimertinib & -2.28 & -1.52 & -1.17 & -0.83 & -0.23 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_2$ & erlotinib & -1.00 & -0.49 & -0.27 & -0.07 & 0.33 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_2$ & afatinib & -0.52 & -0.28 & -0.17 & -0.06 & 0.15 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_2$ & dacomitinib & -0.74 & -0.38 & -0.21 & -0.05 & 0.33 \\ 
+  Fractional polynomial (0, 1) & S to D & $d_2$ & osimertinib & -0.51 & -0.17 & 0.01 & 0.20 & 0.57 \\ 
+   \hline

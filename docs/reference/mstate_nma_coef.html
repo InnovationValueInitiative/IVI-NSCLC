@@ -122,7 +122,7 @@ estimated using a Bayesian multi-state network meta-analyis (NMA).</p>
   <dt>model</dt><dd><p>The statistical model.</p></dd> 
   <dt>tx_name</dt><dd><p>Name of the treatment.</p></dd>
   <dt>transition</dt><dd><p>The health state transition.</p></dd>
-  <dt>coef_num</dt><dd><p>Coefficient number as outlined mathematically in the 
+  <dt>coef</dt><dd><p>Coefficient as outlined mathematically in the 
                   PDF model documentation.</p></dd>
   <dt>q0.025</dt><dd><p>2.5th percentile of the posterior distribution.</p></dd>
   <dt>q0.25</dt><dd><p>25th percentile of the posterior distribution.</p></dd>
@@ -137,90 +137,90 @@ estimated using a Bayesian multi-state network meta-analyis (NMA).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>mstate_nma_coef</span>)</div><div class='output co'>#&gt;     line                        model     tx_name transition coef_num
-#&gt;  1:    1                      Weibull   gefitinib       s1p1        1
-#&gt;  2:    1                      Weibull   erlotinib       s1p1        1
-#&gt;  3:    1                      Weibull    afatinib       s1p1        1
-#&gt;  4:    1                      Weibull dacomitinib       s1p1        1
-#&gt;  5:    1                      Weibull osimertinib       s1p1        1
-#&gt;  6:    1                      Weibull   gefitinib       s1p1        2
-#&gt;  7:    1                      Weibull   erlotinib       s1p1        2
-#&gt;  8:    1                      Weibull    afatinib       s1p1        2
-#&gt;  9:    1                      Weibull dacomitinib       s1p1        2
-#&gt; 10:    1                      Weibull osimertinib       s1p1        2
-#&gt; 11:    1                     Gompertz   gefitinib       s1p1        1
-#&gt; 12:    1                     Gompertz   erlotinib       s1p1        1
-#&gt; 13:    1                     Gompertz    afatinib       s1p1        1
-#&gt; 14:    1                     Gompertz dacomitinib       s1p1        1
-#&gt; 15:    1                     Gompertz osimertinib       s1p1        1
-#&gt; 16:    1                     Gompertz   gefitinib       s1p1        2
-#&gt; 17:    1                     Gompertz   erlotinib       s1p1        2
-#&gt; 18:    1                     Gompertz    afatinib       s1p1        2
-#&gt; 19:    1                     Gompertz dacomitinib       s1p1        2
-#&gt; 20:    1                     Gompertz osimertinib       s1p1        2
-#&gt; 21:    1 Fractional polynomial (0, 0)   gefitinib       s1p1        1
-#&gt; 22:    1 Fractional polynomial (0, 0)   erlotinib       s1p1        1
-#&gt; 23:    1 Fractional polynomial (0, 0)    afatinib       s1p1        1
-#&gt; 24:    1 Fractional polynomial (0, 0) dacomitinib       s1p1        1
-#&gt; 25:    1 Fractional polynomial (0, 0) osimertinib       s1p1        1
-#&gt; 26:    1 Fractional polynomial (0, 0)   gefitinib       s1p1        2
-#&gt; 27:    1 Fractional polynomial (0, 0)   erlotinib       s1p1        2
-#&gt; 28:    1 Fractional polynomial (0, 0)    afatinib       s1p1        2
-#&gt; 29:    1 Fractional polynomial (0, 0) dacomitinib       s1p1        2
-#&gt; 30:    1 Fractional polynomial (0, 0) osimertinib       s1p1        2
-#&gt; 31:    1 Fractional polynomial (0, 1)   gefitinib       s1p1        1
-#&gt; 32:    1 Fractional polynomial (0, 1)   erlotinib       s1p1        1
-#&gt; 33:    1 Fractional polynomial (0, 1)    afatinib       s1p1        1
-#&gt; 34:    1 Fractional polynomial (0, 1) dacomitinib       s1p1        1
-#&gt; 35:    1 Fractional polynomial (0, 1) osimertinib       s1p1        1
-#&gt; 36:    1 Fractional polynomial (0, 1)   gefitinib       s1p1        2
-#&gt; 37:    1 Fractional polynomial (0, 1)   erlotinib       s1p1        2
-#&gt; 38:    1 Fractional polynomial (0, 1)    afatinib       s1p1        2
-#&gt; 39:    1 Fractional polynomial (0, 1) dacomitinib       s1p1        2
-#&gt; 40:    1 Fractional polynomial (0, 1) osimertinib       s1p1        2
-#&gt;     line                        model     tx_name transition coef_num
-#&gt;         q0.025       q0.25         q0.5         q0.75       q0.975
-#&gt;  1:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt;  2: -1.2720244 -0.68039129 -0.383338132 -0.0668855107  0.466211388
-#&gt;  3: -0.4333372 -0.11164097  0.066885900  0.2496819815  0.639791061
-#&gt;  4: -1.0579476 -0.54325476 -0.307991096 -0.0815316826  0.403269129
-#&gt;  5: -2.0923241 -1.42637027 -1.133525747 -0.8448649850 -0.318952050
-#&gt;  6:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt;  7: -0.7930788 -0.39020521 -0.192678770 -0.0006429364  0.370885827
-#&gt;  8: -0.5659022 -0.34774809 -0.233468253 -0.1236296394  0.094526200
-#&gt;  9: -0.6699134 -0.37494297 -0.230697638 -0.0912025104  0.159065458
-#&gt; 10: -0.4752217 -0.14824135 -0.003885926  0.1527455956  0.489842914
-#&gt; 11:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt; 12: -1.0522126 -0.52401708 -0.274967203 -0.0409269536  0.393343009
-#&gt; 13: -0.3720864 -0.08635937  0.067123511  0.2363460852  0.565473480
-#&gt; 14: -0.9358040 -0.49816437 -0.280306299 -0.0821071407  0.255606898
-#&gt; 15: -2.0709792 -1.35710056 -1.042097870 -0.7428131691 -0.221050413
-#&gt; 16:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt; 17: -0.1859039 -0.09188598 -0.049622237 -0.0099898444  0.070651033
-#&gt; 18: -0.2447781 -0.14913472 -0.087946651 -0.0431639268  0.005289728
-#&gt; 19: -0.2024955 -0.09459079 -0.066789100 -0.0438709299  0.004382719
-#&gt; 20: -0.2287914 -0.07635877 -0.038500005 -0.0060091030  0.063423221
-#&gt; 21:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt; 22: -1.4339206 -0.74311358 -0.434403053 -0.1088907743  0.475285028
-#&gt; 23: -0.5222232 -0.18486168 -0.022254209  0.1626908298  0.505715300
-#&gt; 24: -1.0802027 -0.55807091 -0.294749160 -0.0620099235  0.397573038
-#&gt; 25: -2.1360725 -1.47329837 -1.158583458 -0.8145921893  0.030488245
-#&gt; 26:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt; 27: -0.8360265 -0.42867093 -0.220098696 -0.0161500247  0.362148229
-#&gt; 28: -0.4928029 -0.28146915 -0.160351149 -0.0461988984  0.174264866
-#&gt; 29: -0.6898635 -0.38987500 -0.247000258 -0.1044792964  0.241431360
-#&gt; 30: -0.6225605 -0.17660589  0.007776439  0.1843727054  0.521386910
-#&gt; 31:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt; 32: -1.3594741 -0.74040364 -0.419474573 -0.0946323638  0.526438016
-#&gt; 33: -0.5049607 -0.16901847  0.001320278  0.1746986267  0.545149000
-#&gt; 34: -1.1508858 -0.57290413 -0.281550453 -0.0229286006  0.489830944
-#&gt; 35: -2.2770433 -1.52329099 -1.166966020 -0.8291139838 -0.231623056
-#&gt; 36:  0.0000000  0.00000000  0.000000000  0.0000000000  0.000000000
-#&gt; 37: -1.0035783 -0.48885776 -0.269956000 -0.0654400761  0.331438987
-#&gt; 38: -0.5181481 -0.28159855 -0.171161951 -0.0577838164  0.151018291
-#&gt; 39: -0.7362069 -0.37795493 -0.212807157 -0.0461493966  0.329024052
-#&gt; 40: -0.5118987 -0.16696108  0.010941294  0.2005025240  0.571847960
-#&gt;         q0.025       q0.25         q0.5         q0.75       q0.975</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>print</span>(<span class='no'>mstate_nma_coef</span>)</div><div class='output co'>#&gt;     line                        model transition coef     tx_name     q0.025
+#&gt;  1:    1                      Weibull     S to D  d_1   gefitinib  0.0000000
+#&gt;  2:    1                      Weibull     S to D  d_1   erlotinib -1.2720244
+#&gt;  3:    1                      Weibull     S to D  d_1    afatinib -0.4333372
+#&gt;  4:    1                      Weibull     S to D  d_1 dacomitinib -1.0579476
+#&gt;  5:    1                      Weibull     S to D  d_1 osimertinib -2.0923241
+#&gt;  6:    1                      Weibull     S to D  d_2   gefitinib  0.0000000
+#&gt;  7:    1                      Weibull     S to D  d_2   erlotinib -0.7930788
+#&gt;  8:    1                      Weibull     S to D  d_2    afatinib -0.5659022
+#&gt;  9:    1                      Weibull     S to D  d_2 dacomitinib -0.6699134
+#&gt; 10:    1                      Weibull     S to D  d_2 osimertinib -0.4752217
+#&gt; 11:    1                     Gompertz     S to D  d_1   gefitinib  0.0000000
+#&gt; 12:    1                     Gompertz     S to D  d_1   erlotinib -1.0522126
+#&gt; 13:    1                     Gompertz     S to D  d_1    afatinib -0.3720864
+#&gt; 14:    1                     Gompertz     S to D  d_1 dacomitinib -0.9358040
+#&gt; 15:    1                     Gompertz     S to D  d_1 osimertinib -2.0709792
+#&gt; 16:    1                     Gompertz     S to D  d_2   gefitinib  0.0000000
+#&gt; 17:    1                     Gompertz     S to D  d_2   erlotinib -0.1859039
+#&gt; 18:    1                     Gompertz     S to D  d_2    afatinib -0.2447781
+#&gt; 19:    1                     Gompertz     S to D  d_2 dacomitinib -0.2024955
+#&gt; 20:    1                     Gompertz     S to D  d_2 osimertinib -0.2287914
+#&gt; 21:    1 Fractional polynomial (0, 0)     S to D  d_1   gefitinib  0.0000000
+#&gt; 22:    1 Fractional polynomial (0, 0)     S to D  d_1   erlotinib -1.4339206
+#&gt; 23:    1 Fractional polynomial (0, 0)     S to D  d_1    afatinib -0.5222232
+#&gt; 24:    1 Fractional polynomial (0, 0)     S to D  d_1 dacomitinib -1.0802027
+#&gt; 25:    1 Fractional polynomial (0, 0)     S to D  d_1 osimertinib -2.1360725
+#&gt; 26:    1 Fractional polynomial (0, 0)     S to D  d_2   gefitinib  0.0000000
+#&gt; 27:    1 Fractional polynomial (0, 0)     S to D  d_2   erlotinib -0.8360265
+#&gt; 28:    1 Fractional polynomial (0, 0)     S to D  d_2    afatinib -0.4928029
+#&gt; 29:    1 Fractional polynomial (0, 0)     S to D  d_2 dacomitinib -0.6898635
+#&gt; 30:    1 Fractional polynomial (0, 0)     S to D  d_2 osimertinib -0.6225605
+#&gt; 31:    1 Fractional polynomial (0, 1)     S to D  d_1   gefitinib  0.0000000
+#&gt; 32:    1 Fractional polynomial (0, 1)     S to D  d_1   erlotinib -1.3594741
+#&gt; 33:    1 Fractional polynomial (0, 1)     S to D  d_1    afatinib -0.5049607
+#&gt; 34:    1 Fractional polynomial (0, 1)     S to D  d_1 dacomitinib -1.1508858
+#&gt; 35:    1 Fractional polynomial (0, 1)     S to D  d_1 osimertinib -2.2770433
+#&gt; 36:    1 Fractional polynomial (0, 1)     S to D  d_2   gefitinib  0.0000000
+#&gt; 37:    1 Fractional polynomial (0, 1)     S to D  d_2   erlotinib -1.0035783
+#&gt; 38:    1 Fractional polynomial (0, 1)     S to D  d_2    afatinib -0.5181481
+#&gt; 39:    1 Fractional polynomial (0, 1)     S to D  d_2 dacomitinib -0.7362069
+#&gt; 40:    1 Fractional polynomial (0, 1)     S to D  d_2 osimertinib -0.5118987
+#&gt;     line                        model transition coef     tx_name     q0.025
+#&gt;           q0.25         q0.5         q0.75       q0.975
+#&gt;  1:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt;  2: -0.68039129 -0.383338132 -0.0668855107  0.466211388
+#&gt;  3: -0.11164097  0.066885900  0.2496819815  0.639791061
+#&gt;  4: -0.54325476 -0.307991096 -0.0815316826  0.403269129
+#&gt;  5: -1.42637027 -1.133525747 -0.8448649850 -0.318952050
+#&gt;  6:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt;  7: -0.39020521 -0.192678770 -0.0006429364  0.370885827
+#&gt;  8: -0.34774809 -0.233468253 -0.1236296394  0.094526200
+#&gt;  9: -0.37494297 -0.230697638 -0.0912025104  0.159065458
+#&gt; 10: -0.14824135 -0.003885926  0.1527455956  0.489842914
+#&gt; 11:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt; 12: -0.52401708 -0.274967203 -0.0409269536  0.393343009
+#&gt; 13: -0.08635937  0.067123511  0.2363460852  0.565473480
+#&gt; 14: -0.49816437 -0.280306299 -0.0821071407  0.255606898
+#&gt; 15: -1.35710056 -1.042097870 -0.7428131691 -0.221050413
+#&gt; 16:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt; 17: -0.09188598 -0.049622237 -0.0099898444  0.070651033
+#&gt; 18: -0.14913472 -0.087946651 -0.0431639268  0.005289728
+#&gt; 19: -0.09459079 -0.066789100 -0.0438709299  0.004382719
+#&gt; 20: -0.07635877 -0.038500005 -0.0060091030  0.063423221
+#&gt; 21:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt; 22: -0.74311358 -0.434403053 -0.1088907743  0.475285028
+#&gt; 23: -0.18486168 -0.022254209  0.1626908298  0.505715300
+#&gt; 24: -0.55807091 -0.294749160 -0.0620099235  0.397573038
+#&gt; 25: -1.47329837 -1.158583458 -0.8145921893  0.030488245
+#&gt; 26:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt; 27: -0.42867093 -0.220098696 -0.0161500247  0.362148229
+#&gt; 28: -0.28146915 -0.160351149 -0.0461988984  0.174264866
+#&gt; 29: -0.38987500 -0.247000258 -0.1044792964  0.241431360
+#&gt; 30: -0.17660589  0.007776439  0.1843727054  0.521386910
+#&gt; 31:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt; 32: -0.74040364 -0.419474573 -0.0946323638  0.526438016
+#&gt; 33: -0.16901847  0.001320278  0.1746986267  0.545149000
+#&gt; 34: -0.57290413 -0.281550453 -0.0229286006  0.489830944
+#&gt; 35: -1.52329099 -1.166966020 -0.8291139838 -0.231623056
+#&gt; 36:  0.00000000  0.000000000  0.0000000000  0.000000000
+#&gt; 37: -0.48885776 -0.269956000 -0.0654400761  0.331438987
+#&gt; 38: -0.28159855 -0.171161951 -0.0577838164  0.151018291
+#&gt; 39: -0.37795493 -0.212807157 -0.0461493966  0.329024052
+#&gt; 40: -0.16696108  0.010941294  0.2005025240  0.571847960
+#&gt;           q0.25         q0.5         q0.75       q0.975</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -245,6 +245,46 @@ ggsave("figs/medsurv-os.pdf", p, width = 7, height = 5)
 surv_mean(mstate_nma_pfs)
 surv_mean(mstate_nma_os)
 
+# Coefficient tables
+## 1L NMA
+mstate_nma_coef_1L <- mstate_nma_coef[line == 1 & tx_name != "gefitinib"]
+mstate_nma_coef_1L[, line := NULL]
+mstate_nma_coef_1L[, coef := paste0("$", coef, "$")]
+print(xtable(mstate_nma_coef_1L), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/mstate-nma-1L-coef.txt")
+
+## 1L MA
+mstate_ma_coef_1L <- mstate_ma_coef[line == 1]
+mstate_ma_coef_1L[, c("line", "mutation", "tx_name") := NULL]
+mstate_ma_coef_1L[, coef := paste0("$\\", coef, "$")]
+print(xtable(mstate_ma_coef_1L), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/mstate-ma-1L-coef.txt")
+
+## 2L MA
+### PBDC
+mstate_ma_coef_2L_pbdc <- mstate_ma_coef[line == 2 & mutation == 0]
+mstate_ma_coef_2L_pbdc[, c("line", "mutation", "tx_name") := NULL]
+mstate_ma_coef_2L_pbdc[, coef := paste0("$\\", coef, "$")]
+print(xtable(mstate_ma_coef_2L_pbdc), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/mstate-ma-2L-pbdc-coef.txt")
+
+
+### Osimertinib
+mstate_ma_coef_2L_osi <- mstate_ma_coef[line == 2 & mutation == 1]
+mstate_ma_coef_2L_osi[, c("line", "mutation", "tx_name") := NULL]
+mstate_ma_coef_2L_osi[, coef := paste0("$\\", coef, "$")]
+print(xtable(mstate_ma_coef_2L_osi), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/mstate-ma-2L-t790m-osi-coef.txt")
+
+
 # DIC
 dic <- fread("output/dic.csv")
 dic[, dic := formatC(dic, format = "d", big.mark = ",")]

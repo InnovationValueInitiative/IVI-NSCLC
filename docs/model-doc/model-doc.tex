@@ -1104,9 +1104,10 @@ Comparators &
 Outcomes & 
 \begin{itemize}
 \item OS
-\item PFS, TTP
+\item PFS
+\item TTP
 \end{itemize} \\
-Study design & Randomized controlled trials \\
+Study design & RCTs \\
 &\\
 Other & English language\\
 \hline
@@ -1128,7 +1129,7 @@ Other & English language\\
 Population & Adult patients with metastatic non-squamous NSCLC who are EGFR+ positive and
 who have experienced progression after one line of prior treatment.\\
 &\\
-Interventions & The following drugs as monotherapy or in combination 
+Interventions & The following drugs as monotherapy or in combination with other drugs 
 \begin{itemize}
 \item erlotinib
 \item afatinib
@@ -1139,7 +1140,7 @@ Interventions & The following drugs as monotherapy or in combination
 \item pembrolizumab
 \item atezolizumab
 \item bevacizumab
-\item platinum-based doublet chemotherapy
+\item platinum-based doublet therapy
 \end{itemize} \\
 Comparators & 
 \begin{itemize}
@@ -1151,13 +1152,11 @@ Comparators &
 Outcomes & 
 \begin{itemize}
 \item OS
-\item PFS, TTP
+\item PFS
+\item TTP
 \end{itemize} \\
-Study design &
-\begin{itemize}
-\item Randomized controlled trials
-\item if not available, single arm trials for key interventions used in the model
-\end{itemize} \\
+Study design & RCTs \\
+&\\
 Other & English language\\
 \hline
 \end{tabular}
@@ -1177,13 +1176,13 @@ Other & English language\\
 Population & Adult patients with metastatic non-squamous NSCLC who are EGFR+ positive and
 who have experienced progression after two or more prior prior treatments.\\
 &\\
-Interventions & The following drugs as monotherapy or in combination 
+Interventions & The following drugs as monotherapy or in combination with other drugs 
 \begin{itemize}
 \item nivolumab
 \item pembrolizumab
 \item atezolizumab
 \item bevacizumab
-\item platinum-based doublet chemotherapy
+\item platinum-based doublet therapy
 \end{itemize} \\
 Comparators & 
 \begin{itemize}
@@ -1198,11 +1197,8 @@ Outcomes &
 \item PFS
 \item TTP
 \end{itemize} \\
-Study design &
-\begin{itemize}
-\item Randomized controlled trials
-\item if not available, single arm trials for key interventions used in the model
-\end{itemize} \\
+Study design & RCTs \\
+&\\
 Other & English language\\
 \hline
 \end{tabular}
@@ -1274,7 +1270,7 @@ Outcomes &
 \item Cost
 \item Productivity
 \end{itemize} \\
-Study design &  US specific:
+Study design &  
 \begin{itemize}
 \item Cost-of-illness studies
 \item Cost-effectiveness studies
@@ -1397,7 +1393,7 @@ In .... information regarding characteristics of the interventions evaluated in 
 
 \subsection{Kaplan-Meier curves} \label{app:km-curves}
 \subsubsection{1L treatment}
-%\iffalse
+\iffalse
 
 \begin{figure}
 \centering
@@ -1641,7 +1637,7 @@ In .... information regarding characteristics of the interventions evaluated in 
 \caption{AURA-3, progression-free survival with PBDC}\label{fig:Impress}
 \end{figure}
 
-%\fi
+\fi
 
 
 \subsection{Adverse events}
@@ -2555,6 +2551,28 @@ model{
 
 \subsection{Model parameter estimates}
 
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\scriptsize
+\caption{First line relative treatment effects relative to gefitinib from the multi-state network meta-analysis}  \label{tbl:mstate-nma-1L-coef}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}llllrrrrr}
+\hline
+\multicolumn{4}{c}{} & \multicolumn{5}{c}{Posterior quantiles} \\
+\cmidrule{5-9}
+\multicolumn{1}{l}{Model} & \multicolumn{1}{l}{Transition} & \multicolumn{1}{l}{Coefficient} & \multicolumn{1}{l}{Treatment} 
+& \multicolumn{1}{r}{2.5\%} & \multicolumn{1}{r}{25\%} & \multicolumn{1}{r}{50\%} & \multicolumn{1}{r}{75\%} & \multicolumn{1}{r}{97.5\%} \\
+\hline
+\ExpandableInput{tables/mstate-nma-1L-coef.txt}
+\hline
+\end{tabularx}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
+
+\FloatBarrier
+
 \subsection{Model fit}\label{app:DIC-nma-1l}
 
 \begin{table}[!ht]
@@ -2707,6 +2725,28 @@ model{
 \end{verbatim}
 
 \subsection{Model parameter estimates}
+
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\scriptsize
+\caption{First line absolute effects with gefitinib from the multi-state meta-analysis} \label{tbl:mstate-ma-1L-coef}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}lllrrrrr}
+\hline
+\multicolumn{3}{c}{} & \multicolumn{5}{c}{Posterior quantiles} \\
+\cmidrule{4-8}
+\multicolumn{1}{l}{Model} & \multicolumn{1}{l}{Transition} & \multicolumn{1}{l}{Coefficient}
+& \multicolumn{1}{r}{2.5\%} & \multicolumn{1}{r}{25\%} & \multicolumn{1}{r}{50\%} & \multicolumn{1}{r}{75\%} & \multicolumn{1}{r}{97.5\%} \\
+\hline
+\ExpandableInput{tables/mstate-ma-1L-coef.txt}
+\hline
+\end{tabularx}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
+
+\FloatBarrier
 
 \subsection{Model fit}\label{app:DIC-1l}
 
@@ -2950,7 +2990,47 @@ model{
 
 \subsection{Model parameter estimates}
 
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\scriptsize
+\caption{Second line absolute effects with PBDC from the multi-state meta-analysis} \label{tbl:mstate-ma-2L-pbdc-coef}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}lllrrrrr}
+\hline
+\multicolumn{3}{c}{} & \multicolumn{5}{c}{Posterior quantiles} \\
+\cmidrule{4-8}
+\multicolumn{1}{l}{Model} & \multicolumn{1}{l}{Transition} & \multicolumn{1}{l}{Coefficient}
+& \multicolumn{1}{r}{2.5\%} & \multicolumn{1}{r}{25\%} & \multicolumn{1}{r}{50\%} & \multicolumn{1}{r}{75\%} & \multicolumn{1}{r}{97.5\%} \\
+\hline
+\ExpandableInput{tables/mstate-ma-2L-pbdc-coef.txt}
+\hline
+\end{tabularx}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
 
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\scriptsize
+\caption{Second line absolute effects with osimertinib among T790M positive patients from the multi-state meta-analysis} \label{tbl:mstate-ma-2L-pbdc-coef}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}lllrrrrr}
+\hline
+\multicolumn{3}{c}{} & \multicolumn{5}{c}{Posterior quantiles} \\
+\cmidrule{4-8}
+\multicolumn{1}{l}{Model} & \multicolumn{1}{l}{Transition} & \multicolumn{1}{l}{Coefficient}
+& \multicolumn{1}{r}{2.5\%} & \multicolumn{1}{r}{25\%} & \multicolumn{1}{r}{50\%} & \multicolumn{1}{r}{75\%} & \multicolumn{1}{r}{97.5\%} \\
+\hline
+\ExpandableInput{tables/mstate-ma-2L-t790m-osi-coef.txt}
+\hline
+\end{tabularx}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
+
+\FloatBarrier
 
 
 \subsection{Model fit}\label{app:DIC-2l}

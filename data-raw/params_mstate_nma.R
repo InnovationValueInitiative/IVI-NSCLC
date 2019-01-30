@@ -445,12 +445,15 @@ nma_coef_table <- function(x, econmod_tx_lookup, params_lookup,
   tx_num <- as.integer(tx_num)
   coef_num <- as.integer(coef_num)
   tx_name <- econmod_tx_lookup$name[match(tx_num, econmod_tx_lookup$num)]
+  coef_name <- params_lookup$d_name[match(coef_num, params_lookup$d_num)]
   transition <- params_lookup$transition[match(coef_num, params_lookup$d_num)]
   
   # Return
   tbl <- data.table(model = model_lookup(powers),
-                    tx_name = tx_name, transition = transition,
-                    coef_num = coef_num, ests)
+                    transition = transition,
+                    coef = coef_name,
+                    tx_name = tx_name,
+                    ests)
   tbl <- tbl[!is.na(tx_name)]
   return(tbl)
 }
@@ -470,12 +473,13 @@ ma_coef_table <- function(x, params_lookup, powers){
     coef_num[i] <-substr(colnames(x)[i], bracket_pos[i] + 1, bracket_pos[i] + 1) 
   }
   coef_num <- as.integer(coef_num)
+  coef_name <- params_lookup$mu_name[match(coef_num, params_lookup$mu_num)]
   transition <- params_lookup$transition[match(coef_num, params_lookup$mu_num)]  
   
   # Return
   tbl <- data.table(model = model_lookup(powers),
                     transition = transition,
-                    coef_num = coef_num, ests)
+                    coef = coef_name, ests)
   return(tbl)  
 }
 
@@ -500,6 +504,9 @@ coef_nma_1L$fracpoly2 <- nma_coef_table(x = nma_1L$fracpoly2,
 coef_nma_1L <- rbindlist(coef_nma_1L)
 coef_nma_1L[, line := 1]
 setcolorder(coef_nma_1L, "line")
+coef_nma_1L[, transition := factor(transition,
+                                   levels = "s1p1",
+                                   labels = "S to D")]
 
 
 # 1st line MA
@@ -517,6 +524,7 @@ coef_ma_1L$fracpoly2 <- ma_coef_table(x = ma_1L$fracpoly2,
                                           params_lookup = nma_params_lookup_1L$fracpoly2,
                                           powers = c(0, 1))
 coef_ma_1L <- rbindlist(coef_ma_1L)
+coef_ma_1L[, tx_name := "gefitinib"]
 coef_ma_1L[, line := 1]
 
 # 2nd line MA (T790M positive - osimertinib)
@@ -535,6 +543,7 @@ coef_ma_2L_t790m_osi$fracpoly2 <- ma_coef_table(x = ma_2L_t790m_osi$fracpoly2,
                                                     powers = c(0, 1))
 coef_ma_2L_t790m_osi <- rbindlist(coef_ma_2L_t790m_osi)
 coef_ma_2L_t790m_osi[, line := 2]
+coef_ma_2L_t790m_osi[, tx_name := "osimertinib"]
 coef_ma_2L_t790m_osi[, mutation := 1]
 
 # 2nd line MA (PBDC)
@@ -553,6 +562,7 @@ coef_ma_2L_pbdc$fracpoly2 <- ma_coef_table(x = ma_2L_t790m_osi$fracpoly2,
                                                powers = c(0, 1))
 coef_ma_2L_pbdc <- rbindlist(coef_ma_2L_pbdc)
 coef_ma_2L_pbdc[, line := 2]
+coef_ma_2L_pbdc[, tx_name := "PBDC"]
 coef_ma_2L_pbdc[, mutation := 0]
 
 # Combine
@@ -561,7 +571,14 @@ mstate_ma_coef <- rbind(coef_ma_1L,
                      coef_ma_2L_pbdc,
                      coef_ma_2L_t790m_osi,
                      fill = TRUE)
-setcolorder(mstate_ma_coef, c("line", "mutation"))
+setcolorder(mstate_ma_coef, c("line", "mutation", "tx_name"))
+mstate_ma_coef[, transition := ifelse(transition %in% c("s1p1", "s2p2"),
+                                      "S to P", transition)]
+mstate_ma_coef[, transition := ifelse(transition %in% c("s1d", "s2d"),
+                                      "S to D", transition)]
+mstate_ma_coef[, transition := ifelse(transition %in% c("p1d", "p2d"),
+                                      "P to D", transition)]
+mstate_ma_coef[, transition := factor(transition)]
 
 # 1st line PFS/OS --------------------------------------------------------------
 surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,

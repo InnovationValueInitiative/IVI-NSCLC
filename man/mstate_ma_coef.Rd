@@ -12,7 +12,7 @@
   \item{model}{The statistical model.} 
   \item{tx_name}{Name of the treatment.}
   \item{transition}{The health state transition.}
-  \item{coef_num}{Coefficient number as outlined mathematically in the 
+  \item{coef}{Coefficient as outlined mathematically in the 
                   PDF model documentation.}
   \item{q0.025}{2.5th percentile of the posterior distribution.}
   \item{q0.25}{25th percentile of the posterior distribution.}

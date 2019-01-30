@@ -1,0 +1,26 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Tue Jan 29 17:42:01 2019
+  \hline
+Weibull & S to P & $\mu_1$ & -2.61 & -2.44 & -2.35 & -2.27 & -2.11 \\ 
+  Weibull & S to P & $\mu_2$ & 0.23 & 0.34 & 0.40 & 0.45 & 0.56 \\ 
+  Weibull & S to D & $\mu_4$ & -23.12 & -13.47 & -9.13 & -6.27 & -4.09 \\ 
+  Weibull & P to D & $\mu_5$ & -4.08 & -2.89 & -2.46 & -2.08 & -1.56 \\ 
+  Weibull & P to D & $\mu_6$ & -0.55 & -0.35 & -0.23 & -0.08 & 0.27 \\ 
+  Gompertz & S to P & $\mu_1$ & -2.48 & -2.32 & -2.23 & -2.15 & -2.01 \\ 
+  Gompertz & S to P & $\mu_2$ & 0.04 & 0.06 & 0.08 & 0.09 & 0.12 \\ 
+  Gompertz & S to D & $\mu_4$ & -25.43 & -11.87 & -8.27 & -5.74 & -3.86 \\ 
+  Gompertz & P to D & $\mu_5$ & -3.60 & -2.84 & -2.61 & -2.37 & -2.02 \\ 
+  Gompertz & P to D & $\mu_6$ & -0.06 & -0.04 & -0.03 & -0.02 & 0.01 \\ 
+  Fractional polynomial (0, 0) & S to P & $\mu_1$ & -2.78 & -2.55 & -2.45 & -2.36 & -2.19 \\ 
+  Fractional polynomial (0, 0) & S to P & $\mu_2$ & 0.32 & 0.65 & 0.84 & 1.02 & 1.37 \\ 
+  Fractional polynomial (0, 0) & S to P & $\mu_3$ & -0.42 & -0.28 & -0.20 & -0.12 & 0.02 \\ 
+  Fractional polynomial (0, 0) & S to D & $\mu_4$ & -23.63 & -13.97 & -9.33 & -6.35 & -4.18 \\ 
+  Fractional polynomial (0, 0) & P to D & $\mu_5$ & -3.98 & -2.85 & -2.42 & -2.08 & -1.56 \\ 
+  Fractional polynomial (0, 0) & P to D & $\mu_6$ & -0.54 & -0.34 & -0.23 & -0.08 & 0.27 \\ 
+  Fractional polynomial (0, 1) & S to P & $\mu_1$ & -5.90 & -3.91 & -3.47 & -3.15 & -2.73 \\ 
+  Fractional polynomial (0, 1) & S to P & $\mu_2$ & 0.60 & 1.31 & 1.73 & 2.32 & 4.76 \\ 
+  Fractional polynomial (0, 1) & S to P & $\mu_3$ & -0.83 & -0.43 & -0.31 & -0.22 & -0.06 \\ 
+  Fractional polynomial (0, 1) & S to D & $\mu_4$ & -22.96 & -10.82 & -6.08 & -4.41 & -3.84 \\ 
+  Fractional polynomial (0, 1) & P to D & $\mu_5$ & -9.62 & -5.93 & -4.78 & -4.47 & -4.14 \\ 
+  Fractional polynomial (0, 1) & P to D & $\mu_6$ & 0.19 & 0.34 & 0.43 & 0.67 & 1.69 \\ 
+   \hline
