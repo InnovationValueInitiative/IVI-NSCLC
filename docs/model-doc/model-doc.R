@@ -186,13 +186,14 @@ ggsave("figs/surv-2L-pbdc.pdf", p, width = 7, height = 5)
 
 ### 2L (osimertinib)
 p <- ggplot(mstate_nma[line == 2 & mutation == 1], 
-            aes(x = month, y = median, linetype = outcome)) +
-     geom_line() +
-      geom_ribbon(aes(ymin = l95, ymax = u95),
-                alpha = 0.2) +
+            aes(x = month, y = median)) +
+     geom_line(aes(linetype = outcome)) +
+     geom_ribbon(aes(ymin = l95, ymax = u95, fill = outcome),
+                alpha = 0.2) + 
      facet_wrap(~model) + 
      xlab("Month") + ylab("Proportion surviving") +
      scale_linetype_discrete(name = "") +
+     scale_fill_discrete(name = "") +
      theme(legend.position = "bottom")
 ggsave("figs/surv-2L-t790m-osi.pdf", p, width = 7, height = 5)
 
