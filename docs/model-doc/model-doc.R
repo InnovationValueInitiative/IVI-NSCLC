@@ -158,7 +158,9 @@ ggsave("figs/hazard-2L-pbdc-gompertz.pdf", p, width = 7, height = 5)
 mstate_nma <- rbind(data.table(mstate_nma_pfs, outcome = "PFS"),
                     data.table(mstate_nma_os, outcome = "OS")) 
 
-## 1L
+## Without CrIs
+
+### 1L
 p <- ggplot(mstate_nma[line == 1], 
             aes(x = month, y = median, col = tx_name, linetype = outcome)) +
      geom_line() +
@@ -169,19 +171,20 @@ p <- ggplot(mstate_nma[line == 1],
      theme(legend.position = "bottom")
 ggsave("figs/surv-1L.pdf", p, width = 8, height = 8)
 
-## 2L (PBDC)
+### 2L (PBDC)
 p <- ggplot(mstate_nma[line == 2 & mutation == 0], 
-            aes(x = month, y = median, linetype = outcome)) +
-     geom_line() +
-     geom_ribbon(aes(ymin = l95, ymax = u95),
+            aes(x = month, y = median)) +
+     geom_line(aes(linetype = outcome)) +
+     geom_ribbon(aes(ymin = l95, ymax = u95, fill = outcome),
                 alpha = 0.2) + 
      facet_wrap(~model) + 
      xlab("Month") + ylab("Proportion surviving") +
      scale_linetype_discrete(name = "") +
+     scale_fill_discrete(name = "") +
      theme(legend.position = "bottom")
 ggsave("figs/surv-2L-pbdc.pdf", p, width = 7, height = 5)
 
-## 2L (osimertinib)
+### 2L (osimertinib)
 p <- ggplot(mstate_nma[line == 2 & mutation == 1], 
             aes(x = month, y = median, linetype = outcome)) +
      geom_line() +
@@ -192,6 +195,42 @@ p <- ggplot(mstate_nma[line == 2 & mutation == 1],
      scale_linetype_discrete(name = "") +
      theme(legend.position = "bottom")
 ggsave("figs/surv-2L-t790m-osi.pdf", p, width = 7, height = 5)
+
+## With CrIs
+surv_cri_plot <- function(model, line, mutation = NULL){
+  model_env <- model
+  line_env <- line
+  mutation_env <- mutation
+  if (line == 1){
+    dat <- mstate_nma[line == line_env & model == model_env]
+  } else{
+    dat <- mstate_nma[line == line_env & model == model_env &
+                         mutation == mutation_env]
+  }
+  p <- ggplot(dat, 
+             aes(x = month, y = median)) +
+      geom_line(aes(linetype = outcome)) +
+      geom_ribbon(aes(ymin = l95, ymax = u95, fill = outcome),
+                alpha = 0.2) +
+     facet_wrap(~tx_name) + 
+     xlab("Month") + ylab("Proportion surviving") +
+     scale_linetype_discrete(name = "") +
+     scale_fill_discrete(name = "") +
+     theme(legend.position = "bottom") 
+ return(p)
+}
+
+### 1L
+p <- surv_cri_plot(model = "Weibull", line = 1)
+ggsave("figs/surv-1L-weibull.pdf", p, width = 8, height = 8)
+p <- surv_cri_plot(model = "Gompertz", line = 1)
+ggsave("figs/surv-1L-gompertz.pdf", p, width = 8, height = 8)
+p <- surv_cri_plot(model = "Fractional polynomial (0, 0)", line = 1)
+ggsave("figs/surv-1L-fp-00.pdf", p, width = 8, height = 8)
+p <- surv_cri_plot(model = "Fractional polynomial (0, 1)", line = 1)
+ggsave("figs/surv-1L-fp-01.pdf", p, width = 8, height = 8)
+
+#### T790M (osimertinib)
 
 # Median survival
 surv_med_est <- hesim:::surv_quantile(mstate_nma, 
