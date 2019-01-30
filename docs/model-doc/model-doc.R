@@ -477,6 +477,31 @@ txt$HoursReductionEst <- perm_disability["hours_reduction_est"]
 txt$HoursReductionLower <- perm_disability["hours_reduction_lower"]
 txt$HoursReductionUpper <- perm_disability["hours_reduction_upper"]
 
+# SLR --------------------------------------------------------------------------
+prop_digits <- 0
+
+patchar_1_1L <- fread("tables-raw/patchar-1-1L.csv", fill = TRUE)
+patchar_1_1L[, treatment := gsub("%", "\\\\%", treatment)]
+integer_cols <- c("age_median", "age_min", "age_max")
+for (j in integer_cols){
+  patchar_1_1L[, (j) := formatC(get(j), format = "d")]
+  set(patchar_1_1L, which(patchar_1_1L[[j]] == "NA"), j, "--")
+}
+prop_cols <- c("female_prop", "caucasian_prop", "asian_prop", "current_or_former_smoker_prop",
+               "current_smoker_prop", "former_smoker_prop", "never_smoker_prop")
+for (j in prop_cols){
+  patchar_1_1L[, (j) := formatC(100 * get(j), format = "f", 
+                                           digits = prop_digits)]
+  set(patchar_1_1L, which(patchar_1_1L[[j]] == "NA"), j, "--")
+  patchar_1_1L[, (j) := ifelse(get(j) != "--",
+                               paste0(get(j), "\\%"),
+                               get(j))]
+}
+print(xtable(patchar_1_1L), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/patchar-1-1L.txt")
+
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame
 txtstats <- data.frame(do.call(rbind, txt))
