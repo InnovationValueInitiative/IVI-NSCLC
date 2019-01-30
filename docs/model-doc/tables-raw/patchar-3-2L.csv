@@ -1,0 +1,7 @@
+﻿Trial ID,Population,Treatment,Histology,,,,,EGFR mutation status,,,,,,
+,,,"Adenocarcinoma, %, reported","Squamous, %, reported","Large cell, %, reported","Broncho-alveolar carcinoma, %, reported","Other, %, reported","Positive, %, reported","Negative/WT, %, reported","Missing/Unknown, %, reported","Activating mutation, %","Exon 19 deletion,  %","Exon 21 L858R, %","Other mutation, %"
+AURA2,All,Osimitinib,96.00%,--,--,--,4.00%,100.00%,--,--,--,68.00%,29.00%,--
+AURA3,ITT,Osimertinib,83.00%,1.00%,--,--,16.00%,100.00%,--,--,--,68.00%,30.00%,--
+AURA3,ITT,Pemetrexed + Carboplatin/Cisplatin,87.00%,0.00%,--,--,13.00%,100.00%,--,--,--,62.00%,32.00%,--
+IMPRESS,ITT,Gefitinib + Cisplatin + Pemetrexed,95.00%,--,--,--,--,100.00%,--,--,--,64.00%,30.00%,8.00%
+IMPRESS,ITT,Placebo + Cisplatin + Pemetrexed,99.00%,--,--,--,--,100.00%,--,--,--,65.00%,32.00%,5.00%
