@@ -725,7 +725,7 @@ T_M =
 
 \autoref{fig:hazard-gef-1L} and \autoref{fig:hazard-1L-gef-weibull} - \autoref{fig:hazard-1L-gef-gompertz} show the hazard functions for the transitions between stable, progression, and death with gefitinib for each fitted model.
 
-The posterior distributions of $M_{\cdot}$ along with the parameters representing the relative treatment effects of each TKI relative to gefitinib ($d_{1, t}$ and ${d_{2,t}}$), were used to simulate a posterior distribution for PFS and OS as displayed in \autoref{fig:surv-1L} for each 1L treatment and each fitted model. 
+The posterior distributions of $M_{\cdot}$ along with the parameters representing the relative treatment effects of each TKI relative to gefitinib ($d_{1, t}$ and ${d_{2,t}}$), were used to simulate a posterior distribution for PFS and OS as displayed in \autoref{fig:surv-1L} and \autoref{fig:surv-1L-weibull}- \autoref{fig:surv-1L-gompertz} for each 1L treatment and each fitted model. 
 
 
 \begin{figure}[h]
@@ -798,7 +798,7 @@ The parameters of the different models were estimated using a Markov Chain Monte
 \subsubsection{Model selection}\label{subsubsec:DIC}
 The residual deviance and the deviance information criterion (DIC) were used to compare the goodness-of-fit of the competing NMA models, i.e. fixed and random effects Weibull, Gompertz, and fractional polynomial models (See \autoref{app:DIC-nma-1l}, \autoref{app:DIC-1l}, \autoref{app:DIC-2l}) \citep{dias2018network}. The DIC provides a measure of model fit that penalizes model complexity. In general, a more complex model results in a better fit to the data, demonstrating a smaller residual deviance. The model with the better trade-off between fit and parsimony has a lower DIC. A difference in the DIC of about 10 points is considered meaningful. 
 
-Informed by model fit criteria, we used treatment effect estimates obtained with the fixed effects Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model. 
+Informed by model fit criteria and stability of the estimates, we used treatment effect estimates obtained with the fixed effects Weibull and fractional polynomial models without a treatment effect for progression to death for the economic model. 
 
 
 \subsection{Adverse events}\label{subsec:data-aes}
@@ -3155,12 +3155,12 @@ model{
   # Model for relative treatment effects
     for(i in 1:(ns-1)){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
       for (k in 1:na[ns]) {               
-        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
+        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     
         logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
       }
   
@@ -3218,7 +3218,7 @@ model{
   # Model for relative treatment effects
     for(i in 1:ns){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
@@ -3276,12 +3276,12 @@ model{
   # Model for relative treatment effects
     for(i in 1:(ns-1)){                  
       for (k in 1:na[i]) {              
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
       for (k in 1:na[ns]) {               
-        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
+        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     
         logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
       }
   
@@ -3343,12 +3343,12 @@ model{
   # Model for relative treatment effects
     for(i in 1:(ns-1)){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
       for (k in 1:na[ns]) {               
-        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
+        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     
         logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
       }
   
@@ -3405,7 +3405,7 @@ model{
   # Model for relative treatment effects
     for(i in 1:ns){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
@@ -3453,7 +3453,7 @@ model{
   # Model for relative treatment effects
     for(i in 1:ns){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
@@ -3512,7 +3512,7 @@ model{
   # Model for relative treatment effects
     for(i in 1:ns){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
@@ -3554,7 +3554,7 @@ model{
   # Model for relative treatment effects
     for(i in 1:ns){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
@@ -3611,12 +3611,12 @@ model{
   # Model for relative treatment effects
     for(i in 1:(ns-1)){                  
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
       for (k in 1:na[ns]) {               
-        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
+        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     
         logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
       }
   
@@ -3679,12 +3679,12 @@ model{
   # Model for relative treatment effects
     for(i in 1:(ns-1)){                 
       for (k in 1:na[i]) {               
-        r[i,k] ~ dbin(p[i,k],n[i,k])     # binomial likelihood
+        r[i,k] ~ dbin(p[i,k],n[i,k])     
         logit(p[i,k]) <- mu[i] + d[t[i,k]] - d[t[i,1]]  
       }
     }   
       for (k in 1:na[ns]) {               
-        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     # binomial likelihood
+        r[ns,k] ~ dbin(p[ns,k],n[ns,k])     
         logit(p[ns,k]) <- mu[ns] + d[t[ns,k]] - (0.66*d[1]+0.34*d[2])  
       }
   
