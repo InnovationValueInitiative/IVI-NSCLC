@@ -506,7 +506,9 @@ coef_nma_1L[, line := 1]
 setcolorder(coef_nma_1L, "line")
 coef_nma_1L[, transition := factor(transition,
                                    levels = "s1p1",
-                                   labels = "S to D")]
+                                   labels = "S to P")]
+setorderv(coef_nma_1L,
+          c("line", "model", "coef", "tx_name"))
 
 
 # 1st line MA
@@ -579,6 +581,8 @@ mstate_ma_coef[, transition := ifelse(transition %in% c("s1d", "s2d"),
 mstate_ma_coef[, transition := ifelse(transition %in% c("p1d", "p2d"),
                                       "P to D", transition)]
 mstate_ma_coef[, transition := factor(transition)]
+setorderv(mstate_ma_coef,
+          c("line", "model", "coef", "tx_name"))
 
 # 1st line PFS/OS --------------------------------------------------------------
 surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
