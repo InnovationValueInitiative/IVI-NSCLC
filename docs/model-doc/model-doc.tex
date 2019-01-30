@@ -552,7 +552,7 @@ D_{ik}(u) &= 1-S_{ik}(u) - P_{ik}(u) \\
 In order to estimate $h_{ikm}^{SP}$, $h_{ikm}^{SD}$, and $h_{ikm}^{PD}$ for each interval $m$,  data at three time points were used: $u_{m}$, $u_{m+\frac{1}{2}}$, and $u_{m+1}$. The obtained estimates of the hazards for interval $m$ were assigned to the time point corresponding to the mid point of the interval when used in the NMA.
 \\
 
-For time points of a trial for which only OS data was reported (and no PFS), the number of patients that survived time interval $m$ ($r_{ikm}^{OS}$) out of the number of patients alive at the beginning of interval ($n_{ikm}^{OS}$) were used for the model parameter estimation. A binomial likelihood was used for the conditional survival probabilities ($p_{ikm}^{OS}$):
+For time points of a trial for which only OS data was reported (and no PFS data was available anymore), the number of patients that survived time interval $m$ ($r_{ikm}^{OS}$) out of the number of patients alive at the beginning of interval ($n_{ikm}^{OS}$) were used for the model parameter estimation. A binomial likelihood was used for the conditional survival probabilities ($p_{ikm}^{OS}$):
 
 
 \begin{equation} \label{eqn:binomial_likelihood}
@@ -562,7 +562,7 @@ r_{ikm}^{OS} \sim binomial(p_{ikm}^{OS},n_{ikm}^{OS})
 \end{aligned}
 \end{equation}
 \\
-The conditional survival probabilities inform $h_{ik}^{SD}(u)$ and $h_{ik}^{PD}(u)$ according to:
+Given the generally small estimate for $h^{SD}$, the conditional survival probabilities were assumed to inform $h_{ik}^{SD}(u)$ and $h_{ik}^{PD}(u)$ at these time points according to:
 
 \begin{equation} \label{eqn:diff_equations_OS}
 \begin{aligned}
