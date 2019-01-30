@@ -7,8 +7,6 @@
 \format{A data.table with the following columns:
 \describe{
   \item{line}{Line of treatment. Either first or second.}
-  \item{mutation}{At 2nd line, equal to 1 if there is a T790M mutation and 
-  0 otherwise.}
   \item{model}{The statistical model.} 
   \item{tx_name}{Name of the treatment.}
   \item{month}{Trial month.}

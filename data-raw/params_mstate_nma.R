@@ -415,6 +415,154 @@ for (i in 1:n_models){
                                                aux = mod_aux[[i]])
 } # End loop over models
 
+# Regression tables ------------------------------------------------------------
+coef_summary <- function(x){
+  probs <- c(.025, .25, .5, .75, .975)
+  ests <- matrix(NA,  nrow = ncol(x), ncol = length(probs))
+  for (i in 1:ncol(ests)){
+    ests[, i] <- apply(x, 2, quantile, prob = probs[i])
+  }
+  colnames(ests) <- paste0("q", probs)
+  return(ests)
+}
+
+nma_coef_table <- function(x, econmod_tx_lookup, params_lookup,
+                          powers){
+  
+  # Extract relevant columns
+  x <- x[, grep(paste0("d", "\\["), colnames(x))]
+  
+  # Compute quantiles of regression coefficients
+  ests <- coef_summary(x)
+  
+  # Add ID variables
+  comma_pos <- regexpr(",", colnames(x))
+  tx_num <- coef_num <- rep(NA, ncol(x))
+  for (i in 1:ncol(x)){
+    tx_num[i] <- substr(colnames(x)[i], comma_pos[i] - 1, comma_pos[i] - 1)
+    coef_num[i] <-substr(colnames(x)[i], comma_pos[i] + 1, comma_pos[i] + 1) 
+  }
+  tx_num <- as.integer(tx_num)
+  coef_num <- as.integer(coef_num)
+  tx_name <- econmod_tx_lookup$name[match(tx_num, econmod_tx_lookup$num)]
+  transition <- params_lookup$transition[match(coef_num, params_lookup$d_num)]
+  
+  # Return
+  tbl <- data.table(model = model_lookup(powers),
+                    tx_name = tx_name, transition = transition,
+                    coef_num = coef_num, ests)
+  tbl <- tbl[!is.na(tx_name)]
+  return(tbl)
+}
+
+ma_coef_table <- function(x, params_lookup, powers){
+  
+  # Extract relevant columns
+  x <- x[, grep(paste0("MU", "\\["), colnames(x))]
+  
+  # Compute quantiles of regression coefficients
+  ests <- coef_summary(x)
+  
+  # Add ID variables
+  bracket_pos <- regexpr("\\[", colnames(x))
+  tx_num <- coef_num <- rep(NA, ncol(x))
+  for (i in 1:ncol(x)){
+    coef_num[i] <-substr(colnames(x)[i], bracket_pos[i] + 1, bracket_pos[i] + 1) 
+  }
+  coef_num <- as.integer(coef_num)
+  transition <- params_lookup$transition[match(coef_num, params_lookup$mu_num)]  
+  
+  # Return
+  tbl <- data.table(model = model_lookup(powers),
+                    transition = transition,
+                    coef_num = coef_num, ests)
+  return(tbl)  
+}
+
+# 1st line NMA
+coef_nma_1L <- list()
+coef_nma_1L$wei <- nma_coef_table(x = nma_1L$weibull, 
+                                     econmod_tx_lookup = econmod_tx_lookup_1L,
+                                     params_lookup = nma_params_lookup_1L$weibull,
+                                     powers = 0)
+coef_nma_1L$gomp <- nma_coef_table(x = nma_1L$gompertz, 
+                                      econmod_tx_lookup = econmod_tx_lookup_1L,
+                                      params_lookup = nma_params_lookup_1L$gompertz,
+                                      powers = 1)
+coef_nma_1L$fracpoly1 <- nma_coef_table(x = nma_1L$fracpoly1, 
+                                            econmod_tx_lookup = econmod_tx_lookup_1L,
+                                            params_lookup = nma_params_lookup_1L$fracpoly1,
+                                            powers = c(0, 0))
+coef_nma_1L$fracpoly2 <- nma_coef_table(x = nma_1L$fracpoly2, 
+                                            econmod_tx_lookup = econmod_tx_lookup_1L,
+                                            params_lookup = nma_params_lookup_1L$fracpoly2,
+                                            powers = c(0, 1))
+coef_nma_1L <- rbindlist(coef_nma_1L)
+coef_nma_1L[, line := 1]
+setcolorder(coef_nma_1L, "line")
+
+
+# 1st line MA
+coef_ma_1L <- list()
+coef_ma_1L$wei <- ma_coef_table(x = ma_1L$weibull, 
+                                    params_lookup = nma_params_lookup_1L$weibull,
+                                    powers = 0)
+coef_ma_1L$gomp <- ma_coef_table(x = ma_1L$gompertz, 
+                                    params_lookup = nma_params_lookup_1L$gompertz,
+                                    powers = 1)
+coef_ma_1L$fracpoly1 <- ma_coef_table(x = ma_1L$fracpoly1, 
+                                          params_lookup = nma_params_lookup_1L$fracpoly1,
+                                          powers = c(0, 0))
+coef_ma_1L$fracpoly2 <- ma_coef_table(x = ma_1L$fracpoly2, 
+                                          params_lookup = nma_params_lookup_1L$fracpoly2,
+                                          powers = c(0, 1))
+coef_ma_1L <- rbindlist(coef_ma_1L)
+coef_ma_1L[, line := 1]
+
+# 2nd line MA (T790M positive - osimertinib)
+coef_ma_2L_t790m_osi <- list()
+coef_ma_2L_t790m_osi$wei <- ma_coef_table(x = ma_2L_t790m_osi$weibull, 
+                                                         params_lookup = ma_params_lookup_2L_t790m_osi$weibull,
+                                                         powers = 0)
+coef_ma_2L_t790m_osi$gomp <- ma_coef_table(x = ma_2L_t790m_osi$gompertz, 
+                                              params_lookup = ma_params_lookup_2L_t790m_osi$gompertz,
+                                              powers = 1)
+coef_ma_2L_t790m_osi$fracpoly1 <- ma_coef_table(x = ma_2L_t790m_osi$fracpoly1, 
+                                                    params_lookup = ma_params_lookup_2L_t790m_osi$fracpoly1,
+                                                    powers = c(0, 0))
+coef_ma_2L_t790m_osi$fracpoly2 <- ma_coef_table(x = ma_2L_t790m_osi$fracpoly2, 
+                                                    params_lookup = ma_params_lookup_2L_t790m_osi$fracpoly2,
+                                                    powers = c(0, 1))
+coef_ma_2L_t790m_osi <- rbindlist(coef_ma_2L_t790m_osi)
+coef_ma_2L_t790m_osi[, line := 2]
+coef_ma_2L_t790m_osi[, mutation := 1]
+
+# 2nd line MA (PBDC)
+coef_ma_2L_pbdc <- list()
+coef_ma_2L_pbdc$wei <- ma_coef_table(x = ma_2L_pbdc$weibull, 
+                                        params_lookup = ma_params_lookup_2L_pbdc$weibull,
+                                        powers = 0)
+coef_ma_2L_pbdc$gomp <- ma_coef_table(x = ma_2L_pbdc$gompertz, 
+                                          params_lookup = ma_params_lookup_2L_pbdc$gompertz,
+                                          powers = 1)
+coef_ma_2L_pbdc$fracpoly1 <- ma_coef_table(x = ma_2L_pbdc$fracpoly1, 
+                                               params_lookup = ma_params_lookup_2L_pbdc$fracpoly1,
+                                               powers = c(0, 0))
+coef_ma_2L_pbdc$fracpoly2 <- ma_coef_table(x = ma_2L_t790m_osi$fracpoly2, 
+                                               params_lookup = ma_params_lookup_2L_pbdc$fracpoly2,
+                                               powers = c(0, 1))
+coef_ma_2L_pbdc <- rbindlist(coef_ma_2L_pbdc)
+coef_ma_2L_pbdc[, line := 2]
+coef_ma_2L_pbdc[, mutation := 0]
+
+# Combine
+mstate_nma_coef <- coef_nma_1L
+mstate_ma_coef <- rbind(coef_ma_1L,
+                     coef_ma_2L_pbdc,
+                     coef_ma_2L_t790m_osi,
+                     fill = TRUE)
+setcolorder(mstate_ma_coef, c("line", "mutation"))
+
 # 1st line PFS/OS --------------------------------------------------------------
 surv_1L <- function(n_months, nma_post, ma_gef_post, econmod_tx_lookup,
                     nma_params_lookup, powers){
@@ -672,6 +820,7 @@ mstate_nma_hr <- hr_est[line == 1 & tx_name != "gefitinib",
                           u95 = quantile(hr, .975)),
                         by = c("line", "mutation", "model", "tx_name",
                                 "month", "transition")]
+mstate_nma_hr[, mutation := NULL]
 
 # Save -------------------------------------------------------------------------
 save(params_mstate_nma, file = "../data/params_mstate_nma.rda", compress = "bzip2")
@@ -679,6 +828,8 @@ save(mstate_nma_pfs, file = "../data/mstate_nma_pfs.rda", compress = "bzip2")
 save(mstate_nma_os, file = "../data/mstate_nma_os.rda", compress = "bzip2")
 save(mstate_nma_hazard, file = "../data/mstate_nma_hazard.rda", compress = "bzip2")
 save(mstate_nma_hr, file = "../data/mstate_nma_hr.rda", compress = "bzip2")
+save(mstate_nma_coef, file = "../data/mstate_nma_coef.rda", compress = "bzip2")
+save(mstate_ma_coef, file = "../data/mstate_ma_coef.rda", compress = "bzip2")
 
 # Check PFS against JAGS code --------------------------------------------------
 # The mu's

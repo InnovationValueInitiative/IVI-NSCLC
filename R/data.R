@@ -377,8 +377,6 @@ NULL
 #' @format A data.table with the following columns:
 #' \describe{
 #'   \item{line}{Line of treatment. Either first or second.}
-#'   \item{mutation}{At 2nd line, equal to 1 if there is a T790M mutation and 
-#'   0 otherwise.}
 #'   \item{model}{The statistical model.} 
 #'   \item{tx_name}{Name of the treatment.}
 #'   \item{month}{Trial month.}
@@ -392,3 +390,53 @@ NULL
 #' head(mstate_nma_hr)
 #' @seealso \code{\link{mstate_nma_surv}}, \code{\link{mstate_nma_hazard}}
 "mstate_nma_hr"
+
+#' Coefficients from network meta-analysis
+#'
+#' Coefficients for first line treatments relative to gefitinib
+#' estimated using a Bayesian multi-state network meta-analyis (NMA).
+#'
+#' @format A data.table with the following columns:
+#' \describe{
+#'   \item{line}{Line of treatment. Either first or second.}
+#'   \item{model}{The statistical model.} 
+#'   \item{tx_name}{Name of the treatment.}
+#'   \item{transition}{The health state transition.}
+#'   \item{coef_num}{Coefficient number as outlined mathematically in the 
+#'                   PDF model documentation.}
+#'   \item{q0.025}{2.5th percentile of the posterior distribution.}
+#'   \item{q0.25}{25th percentile of the posterior distribution.}
+#'   \item{q0.5}{50th percentile of the posterior distribution.}
+#'   \item{q0.75}{75th percentile of the posterior distribution.}
+#'   \item{q0.90}{90th percentile of the posterior distribution.}
+#' }
+#' @seealso \code{\link{mstate_ma_coef}}
+#' @examples 
+#' print(mstate_nma_coef)
+"mstate_nma_coef"
+
+#' Coefficients from meta-analyses
+#'
+#' Coefficients for first and second line absolute effects estimated using
+#' Bayesian meta-analyes (MAs).
+#'
+#' @format A data.table with the following columns:
+#' \describe{
+#'   \item{line}{Line of treatment. Either first or second.}
+#'   \item{mutation}{At 2nd line, equal to 1 if there is a T790M mutation and 
+#'   0 otherwise.}
+#'   \item{model}{The statistical model.} 
+#'   \item{tx_name}{Name of the treatment.}
+#'   \item{transition}{The health state transition.}
+#'   \item{coef_num}{Coefficient number as outlined mathematically in the 
+#'                   PDF model documentation.}
+#'   \item{q0.025}{2.5th percentile of the posterior distribution.}
+#'   \item{q0.25}{25th percentile of the posterior distribution.}
+#'   \item{q0.5}{50th percentile of the posterior distribution.}
+#'   \item{q0.75}{75th percentile of the posterior distribution.}
+#'   \item{q0.90}{90th percentile of the posterior distribution.}
+#' }
+#' @seealso \code{\link{mstate_nma_coef}}
+#' @examples 
+#' print(mstate_ma_coef)
+"mstate_ma_coef"

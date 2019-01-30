@@ -12,6 +12,8 @@ reference:
       - mstate_nma_pfs
       - mstate_nma_hazard
       - mstate_nma_hr
+      - mstate_nma_coef
+      - mstate_ma_coef
       - adverse_events
       - params_ae_nma
       - params_utility

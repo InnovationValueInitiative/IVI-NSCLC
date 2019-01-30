@@ -119,8 +119,6 @@ estimated using a Bayesian multi-state network meta-analyis (NMA).</p>
 
     <p>A data.table with the following columns:</p><dl class='dl-horizontal'>
   <dt>line</dt><dd><p>Line of treatment. Either first or second.</p></dd>
-  <dt>mutation</dt><dd><p>At 2nd line, equal to 1 if there is a T790M mutation and 
-  0 otherwise.</p></dd>
   <dt>model</dt><dd><p>The statistical model.</p></dd> 
   <dt>tx_name</dt><dd><p>Name of the treatment.</p></dd>
   <dt>month</dt><dd><p>Trial month.</p></dd>
@@ -137,20 +135,20 @@ estimated using a Bayesian multi-state network meta-analyis (NMA).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_hr</span>)</div><div class='output co'>#&gt;    line mutation   model   tx_name month            transition      mean
-#&gt; 1:    1       NA Weibull erlotinib     0 Stable to progression 1.0000000
-#&gt; 2:    1       NA Weibull erlotinib     1 Stable to progression 0.7534282
-#&gt; 3:    1       NA Weibull erlotinib     2 Stable to progression 0.6267102
-#&gt; 4:    1       NA Weibull erlotinib     3 Stable to progression 0.5727375
-#&gt; 5:    1       NA Weibull erlotinib     4 Stable to progression 0.5415394
-#&gt; 6:    1       NA Weibull erlotinib     5 Stable to progression 0.5208545
-#&gt;       median       l95       u95
-#&gt; 1: 1.0000000 1.0000000 1.0000000
-#&gt; 2: 0.6815825 0.2802687 1.5939442
-#&gt; 3: 0.5969727 0.3149345 1.0758052
-#&gt; 4: 0.5528516 0.3227722 0.9344328
-#&gt; 5: 0.5266664 0.2962844 0.8701981
-#&gt; 6: 0.5028066 0.2721158 0.8613339</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>head</span>(<span class='no'>mstate_nma_hr</span>)</div><div class='output co'>#&gt;    line   model   tx_name month            transition      mean    median
+#&gt; 1:    1 Weibull erlotinib     0 Stable to progression 1.0000000 1.0000000
+#&gt; 2:    1 Weibull erlotinib     1 Stable to progression 0.7534282 0.6815825
+#&gt; 3:    1 Weibull erlotinib     2 Stable to progression 0.6267102 0.5969727
+#&gt; 4:    1 Weibull erlotinib     3 Stable to progression 0.5727375 0.5528516
+#&gt; 5:    1 Weibull erlotinib     4 Stable to progression 0.5415394 0.5266664
+#&gt; 6:    1 Weibull erlotinib     5 Stable to progression 0.5208545 0.5028066
+#&gt;          l95       u95
+#&gt; 1: 1.0000000 1.0000000
+#&gt; 2: 0.2802687 1.5939442
+#&gt; 3: 0.3149345 1.0758052
+#&gt; 4: 0.3227722 0.9344328
+#&gt; 5: 0.2962844 0.8701981
+#&gt; 6: 0.2721158 0.8613339</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
