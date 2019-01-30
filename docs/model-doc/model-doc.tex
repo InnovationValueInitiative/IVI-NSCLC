@@ -1393,10 +1393,30 @@ In .... information regarding characteristics of the interventions evaluated in 
 \caption{Proportion of current or former smokers in 1L studies}\label{fig:currentformermoker-1l}
 \end{figure}
 
+\begin{sidewaystable}[h]
+\begin{center}
+\begin{threeparttable}
+\caption{Patient characteristics in 1L studies, demographics and health behavior} \label{tbl:patchar-1-1L}
+\tiny
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}llp{0.20\linewidth}rrrrrrrrrr}
+\hline
+\multicolumn{3}{c}{} & \multicolumn{3}{c}{Age} & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Race/ethnicity (\%)} & \multicolumn{4}{c}{Smoking status (\%)}\\
+\cmidrule(r){4-6} \cmidrule(r){8-9} \cmidrule(r){10-13}
+\multicolumn{11}{c}{} & \multicolumn{1}{r}{Current or} & \multicolumn{1}{r}{}\\
+\multicolumn{1}{l}{Trial} & \multicolumn{1}{l}{Population} & \multicolumn{1}{l}{Treatment} &
+\multicolumn{1}{r}{Median} & \multicolumn{1}{r}{Min} & \multicolumn{1}{r}{Max} & \multicolumn{1}{r}{Female} & \multicolumn{1}{r}{Caucasian} & \multicolumn{1}{r}{Asian} & \multicolumn{1}{r}{Former} & \multicolumn{1}{r}{Current} & \multicolumn{1}{r}{former} & \multicolumn{1}{r}{Never}\\
+\hline
+\ExpandableInput{tables/patchar-1-1L.txt}
+\hline
+\end{tabularx}
+\end{threeparttable}
+\end{center}
+\end{sidewaystable}
+
 
 \subsection{Kaplan-Meier curves} \label{app:km-curves}
 \subsubsection{1L treatment}
-%\iffalse
+\iffalse
 
 \begin{figure}
 \centering
@@ -1640,7 +1660,7 @@ In .... information regarding characteristics of the interventions evaluated in 
 \caption{AURA-3, progression-free survival with PBDC}\label{fig:Impress}
 \end{figure}
 
-%\fi
+\fi
 
 
 \subsection{Adverse events}
