@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Tue Jan 29 18:01:26 2019
+% Tue Jan 29 20:03:10 2019
   \hline
 Fractional polynomial (0, 0) & S to P & $d_1$ & afatinib & -0.52 & -0.18 & -0.02 & 0.16 & 0.51 \\ 
   Fractional polynomial (0, 0) & S to P & $d_1$ & dacomitinib & -1.08 & -0.56 & -0.29 & -0.06 & 0.40 \\ 

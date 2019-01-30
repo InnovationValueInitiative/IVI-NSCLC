@@ -258,7 +258,7 @@ print(xtable(mstate_nma_coef_1L),
 ## 1L MA
 mstate_ma_coef_1L <- mstate_ma_coef[line == 1]
 mstate_ma_coef_1L[, c("line", "mutation", "tx_name") := NULL]
-mstate_ma_coef_1L[, coef := paste0("$\\", coef, "$")]
+mstate_ma_coef_1L[, coef := paste0("$", coef, "$")]
 print(xtable(mstate_ma_coef_1L), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,
@@ -268,7 +268,7 @@ print(xtable(mstate_ma_coef_1L),
 ### PBDC
 mstate_ma_coef_2L_pbdc <- mstate_ma_coef[line == 2 & mutation == 0]
 mstate_ma_coef_2L_pbdc[, c("line", "mutation", "tx_name") := NULL]
-mstate_ma_coef_2L_pbdc[, coef := paste0("$\\", coef, "$")]
+mstate_ma_coef_2L_pbdc[, coef := paste0("$", coef, "$")]
 print(xtable(mstate_ma_coef_2L_pbdc), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,
@@ -278,7 +278,7 @@ print(xtable(mstate_ma_coef_2L_pbdc),
 ### Osimertinib
 mstate_ma_coef_2L_osi <- mstate_ma_coef[line == 2 & mutation == 1]
 mstate_ma_coef_2L_osi[, c("line", "mutation", "tx_name") := NULL]
-mstate_ma_coef_2L_osi[, coef := paste0("$\\", coef, "$")]
+mstate_ma_coef_2L_osi[, coef := paste0("$", coef, "$")]
 print(xtable(mstate_ma_coef_2L_osi), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,

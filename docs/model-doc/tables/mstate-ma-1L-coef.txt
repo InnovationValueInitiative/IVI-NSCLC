@@ -1,26 +1,26 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Tue Jan 29 18:01:26 2019
+% Tue Jan 29 20:03:10 2019
   \hline
-Fractional polynomial (0, 0) & S to P & $\mu_1$ & -4.20 & -3.87 & -3.73 & -3.60 & -3.40 \\ 
-  Fractional polynomial (0, 0) & S to P & $\mu_2$ & 0.19 & 0.48 & 0.63 & 0.80 & 1.16 \\ 
-  Fractional polynomial (0, 0) & S to P & $\mu_3$ & -0.15 & -0.06 & -0.01 & 0.03 & 0.13 \\ 
-  Fractional polynomial (0, 0) & S to D & $\mu_4$ & -23.13 & -14.45 & -10.55 & -8.01 & -5.87 \\ 
-  Fractional polynomial (0, 0) & P to D & $\mu_5$ & -3.69 & -3.12 & -2.82 & -2.57 & -2.17 \\ 
-  Fractional polynomial (0, 0) & P to D & $\mu_6$ & -0.31 & -0.18 & -0.10 & -0.01 & 0.15 \\ 
-  Fractional polynomial (0, 1) & S to P & $\mu_1$ & -4.18 & -3.89 & -3.77 & -3.66 & -3.45 \\ 
-  Fractional polynomial (0, 1) & S to P & $\mu_2$ & 0.39 & 0.61 & 0.72 & 0.83 & 1.10 \\ 
-  Fractional polynomial (0, 1) & S to P & $\mu_3$ & -0.07 & -0.04 & -0.02 & -0.00 & 0.03 \\ 
-  Fractional polynomial (0, 1) & S to D & $\mu_4$ & -24.21 & -15.11 & -11.14 & -8.30 & -5.90 \\ 
-  Fractional polynomial (0, 1) & P to D & $\mu_5$ & -3.71 & -3.05 & -2.79 & -2.54 & -2.15 \\ 
-  Fractional polynomial (0, 1) & P to D & $\mu_6$ & -0.32 & -0.19 & -0.11 & -0.03 & 0.15 \\ 
-  Gompertz & S to P & $\mu_1$ & -3.59 & -3.44 & -3.37 & -3.30 & -3.19 \\ 
-  Gompertz & S to P & $\mu_2$ & 0.05 & 0.07 & 0.07 & 0.08 & 0.09 \\ 
-  Gompertz & S to D & $\mu_4$ & -22.58 & -14.15 & -10.35 & -7.52 & -5.70 \\ 
-  Gompertz & P to D & $\mu_5$ & -3.41 & -3.13 & -3.00 & -2.87 & -2.66 \\ 
-  Gompertz & P to D & $\mu_6$ & -0.02 & -0.01 & -0.01 & -0.00 & 0.01 \\ 
-  Weibull & S to P & $\mu_1$ & -4.02 & -3.81 & -3.71 & -3.61 & -3.44 \\ 
-  Weibull & S to P & $\mu_2$ & 0.46 & 0.55 & 0.60 & 0.66 & 0.75 \\ 
-  Weibull & S to D & $\mu_4$ & -24.39 & -14.83 & -10.88 & -8.06 & -5.96 \\ 
-  Weibull & P to D & $\mu_5$ & -3.71 & -3.09 & -2.81 & -2.56 & -2.12 \\ 
-  Weibull & P to D & $\mu_6$ & -0.31 & -0.18 & -0.10 & -0.02 & 0.16 \\ 
+Fractional polynomial (0, 0) & S to P & $M_1$ & -4.20 & -3.87 & -3.73 & -3.60 & -3.40 \\ 
+  Fractional polynomial (0, 0) & S to P & $M_2$ & 0.19 & 0.48 & 0.63 & 0.80 & 1.16 \\ 
+  Fractional polynomial (0, 0) & S to P & $M_3$ & -0.15 & -0.06 & -0.01 & 0.03 & 0.13 \\ 
+  Fractional polynomial (0, 0) & S to D & $M_4$ & -23.13 & -14.45 & -10.55 & -8.01 & -5.87 \\ 
+  Fractional polynomial (0, 0) & P to D & $M_5$ & -3.69 & -3.12 & -2.82 & -2.57 & -2.17 \\ 
+  Fractional polynomial (0, 0) & P to D & $M_6$ & -0.31 & -0.18 & -0.10 & -0.01 & 0.15 \\ 
+  Fractional polynomial (0, 1) & S to P & $M_1$ & -4.18 & -3.89 & -3.77 & -3.66 & -3.45 \\ 
+  Fractional polynomial (0, 1) & S to P & $M_2$ & 0.39 & 0.61 & 0.72 & 0.83 & 1.10 \\ 
+  Fractional polynomial (0, 1) & S to P & $M_3$ & -0.07 & -0.04 & -0.02 & -0.00 & 0.03 \\ 
+  Fractional polynomial (0, 1) & S to D & $M_4$ & -24.21 & -15.11 & -11.14 & -8.30 & -5.90 \\ 
+  Fractional polynomial (0, 1) & P to D & $M_5$ & -3.71 & -3.05 & -2.79 & -2.54 & -2.15 \\ 
+  Fractional polynomial (0, 1) & P to D & $M_6$ & -0.32 & -0.19 & -0.11 & -0.03 & 0.15 \\ 
+  Gompertz & S to P & $M_1$ & -3.59 & -3.44 & -3.37 & -3.30 & -3.19 \\ 
+  Gompertz & S to P & $M_2$ & 0.05 & 0.07 & 0.07 & 0.08 & 0.09 \\ 
+  Gompertz & S to D & $M_4$ & -22.58 & -14.15 & -10.35 & -7.52 & -5.70 \\ 
+  Gompertz & P to D & $M_5$ & -3.41 & -3.13 & -3.00 & -2.87 & -2.66 \\ 
+  Gompertz & P to D & $M_6$ & -0.02 & -0.01 & -0.01 & -0.00 & 0.01 \\ 
+  Weibull & S to P & $M_1$ & -4.02 & -3.81 & -3.71 & -3.61 & -3.44 \\ 
+  Weibull & S to P & $M_2$ & 0.46 & 0.55 & 0.60 & 0.66 & 0.75 \\ 
+  Weibull & S to D & $M_4$ & -24.39 & -14.83 & -10.88 & -8.06 & -5.96 \\ 
+  Weibull & P to D & $M_5$ & -3.71 & -3.09 & -2.81 & -2.56 & -2.12 \\ 
+  Weibull & P to D & $M_6$ & -0.31 & -0.18 & -0.10 & -0.02 & 0.16 \\ 
    \hline
