@@ -585,7 +585,7 @@ ggplot(plot_data, aes(x = x, y = y)) + geom_line() +
 We would ideally estimate weights using preference elicitation techniques such as swing weighting or discrete choice experiments. But since we have not conducted such an analysis, we'll use example weights for the analysis. We conduct the MCDA with `mcda()`, which require a probability distribution of model outcomes (from the PSA) for each criteria by treatment strategy. The function translates performance of the criteria to a common scale and computes both a "total value" and the probability that each treatment strategy has a given rank.
 
 ```{r mcda}
-weights <- c(1, .17, .16, .2, .1, .05, .05, .1)
+weights <- c(.17, .17, .16, .2, .1, .05, .05, .1)
 mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",
              criteria = criteria_vars,
              weights = weights,
