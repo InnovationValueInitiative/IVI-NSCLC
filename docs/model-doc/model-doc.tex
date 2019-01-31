@@ -227,7 +227,7 @@
 % title
 \title{A Description of the IVI-NSCLC Model v1.0
 \thanks{We would like to thank Mark Linthicum, Jason Shafrin, Lauren Zhao, Ina Zhang, Shivani Mehta, Florence Wilson, Rohan Shirali, Oscar Correa, Evgeniya Correa, Vladimir Banderov, and Sergio Zapatel for their contribution to the development of the IVI-NSCLC model.} 
-\footnote{This report should be referenced as follows: Incerti D, Jansen JP. A Description of the IVI-NSCLC Model v1.0; last updated January 31, 2019; available from https://innovationvalueinitiative.github.io/IVI-NSCLC/model-doc/model-doc.pdf.}
+\footnote{This report should be referenced as follows: Incerti D, Jansen JP. A Description of the IVI-NSCLC Model v1.0; last updated January 31, 2019; available from https://innovationvalueinitiative.github.io/IVI-NSCLC/model-doc/model-doc.pdf. This report may be updated on a regular basis. It is recommended to access the report at the website to ensure you have the latest copy.}
 }
 \author{Devin Incerti\footnote{\href{http://www.thevalueinitiative.org/}{Innovation and Value Initiative}} \and Jeroen P. Jansen\sameaff}
 \date{\today}
@@ -430,7 +430,7 @@ The identified evidence base was used to 1) estimate the relative treatment effe
 
 It is important to note that the available PFS and OS data for the different interventions varied dramatically. At the time when the systematic literature review was performed, there was about 25 months of follow-up data available for osimertinib as 1L treatment, with median OS not yet reached; about 40 months of data for dacomitinib; 40-50 months for afatinib; and more than 50 months of follow-up data for gefitinib and erlotinib. This implies that treatment effect estimates for osimertinib and dacomitinib are much more uncertain than the other interventions at this stage, and are likely to change when longer term data become available. See \autoref{fig:FLAURA}-\autoref{fig:Yang 2014} for more detail.
 
-\subsubsection{Relative treatment effects with 1L therapy}
+\subsubsection{Relative treatment effects with first line therapy}
 Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
 
 RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \citep[Chapter~1]{dias2018network}.. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
@@ -660,7 +660,7 @@ The time-varying HRs corresponding to the parameter estimates  ${d_{1,t}}$ and $
 
 
 
-\subsubsection{Absolute effects with 1L reference treatment}
+\subsubsection{Absolute effects with first line reference treatment}
 Absolute effects with 1L therapy with the reference intervention, i.e. gefitinib, were estimated with the multi-state meta-analysis model expressed in \autoref{eqn:multistate-ma} with likelihoods and transformations according to \autoref{eqn:multinomial_likelihood}, \autoref{eqn:diff_equations}, \autoref{eqn:binomial_likelihood}, and \autoref{eqn:diff_equations_OS} based on the reported KM curves of all the gefitinib treatment arms of the available RCTs.
 
 \begin{equation}\label{eqn:multistate-ma}
@@ -748,7 +748,7 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 \FloatBarrier
 
 
-\subsubsection{Absolute effects with 2L therapy}
+\subsubsection{Absolute effects with second line therapy}
 For the 2L treatment options, the available number of RCTs among patients who progressed on 1L TKI were limited. For T790M positive patients, the transition rates with osimertinib were estimated based on data from two RCTs according to \autoref{eqn:multistate-ma} and with a prior distribution according to \autoref{eqn:multistate-ma-priors-gef}. Regarding other possible treatments, there was only data available for PBDC from three RCTs, which were used to estimate transition rates according to \autoref{eqn:multistate-ma} and \autoref{eqn:multistate-ma-priors-gef} as well. In the absence of RCT evidence, these estimates were assumed to be representative of the other 2L treatment regimens presented in \autoref{fig:treatment-strategies} for both an all-comer population and a T790M mutation negative population. \autoref{fig:hazards-2L} and \autoref{fig:hazard-2L-weibull} -  \autoref{fig:hazard-2L-gompertz} show the hazard functions for the transitions between stable, progression, and death for each fitted model and \autoref{fig:surv-2L} show the corresponding PFS and OS curves.
 
 \FloatBarrier
@@ -1211,7 +1211,7 @@ Other & English language\\
 \end{table}
 
 
-
+\FloatBarrier
 
 
 
@@ -1251,7 +1251,7 @@ English language\\
 \end{table}
 
 
-
+\FloatBarrier
 
 \subsection{Resource use, productivity, and cost}
 Relevant evidence regarding resource use, productivity and cost estimates was identified by means of a review of published cost-of-illness studies, cost-effectiveness studies, and budget impact studies in NSCLC relevant for the US setting. Criteria defining studies considered relevant are outlined in \autoref{tbl:picos-cost}. The most recent studies reporting relevant estimates among EGFR+NSCLC patients treated with TKIs were used in the economic model.
@@ -1288,12 +1288,12 @@ English language\\
 \end{center}
 \end{table}
 
+\FloatBarrier
+
 \subsection{Study identification}
 Relevant clinical studies were identified by searching the following databases using predefined search strategies: Medical Literature Analysis and Retrieval System Online (MEDLINE), Excerpta Medica database (EMBASE), and Cochrane Central Register of Controlled Trials. The study design filters recommended by the Scottish Intercollegiate Guidelines Network (SIGN) for MEDLINE and EMBASE were used to identify clinical trials. The search included terms related to the generic and brand name of the interventions of interest. Search strategies are available in the MS Excel spreadsheet available on GitHub.
 
-For utility studies and studies providing evidence on healthcare utilization and costs, the following databases were searched: MEDLINE, EMBASE, NHS Economic Evaluation Database (NHS EED), The Health Economics Research Centre (HERC)-maintained mapping algorithm database, and The University of Sheffield's ScHARRHUD database of health utilities' evidence.
-
-Search strategies are available in the spreadsheets available on GitHub.
+For utility studies and studies providing evidence on healthcare utilization and costs, the following databases were searched: MEDLINE, EMBASE, NHS Economic Evaluation Database (NHS EED), The Health Economics Research Centre (HERC)-maintained mapping algorithm database, and The University of Sheffield's ScHARRHUD database of health utilities' evidence. Search strategies are available in the spreadsheets on GitHub.
 
 \subsection{Study selection}
 For the review of clinical evidence, two reviewers, working independently, reviewed all abstracts identified with each of the searches according to the selection criteria, with the exception of outcome criteria in the efficacy and safety searches, which were only applied during the screening of full-text publications. All studies identified as eligible studies during abstract screening were then screened at a full-text stage by the same two reviewers. The full-text studies identified at this stage were included for data extraction. Following reconciliation between the two investigators, a third reviewer was included to reach consensus for any remaining discrepancies. The process of study identification and selection is summarized with a Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) flow diagram. 
@@ -1303,14 +1303,12 @@ For the review of utility studies and studies providing evidence on healthcare u
 \subsection{Data collection}
 For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. 
 
-For utility and cost-effectiveness studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. 
-
-Spreadsheets with extracted data are available on GitHub.
+For utility and cost-effectiveness studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. Spreadsheets with extracted data are available on GitHub.
 
 \subsection{Limitations}
 Despite the strengths of the systematic literature review to identify relevant evidence, some limitations should be acknowledged. First, the scope of the review was restricted to studies published in English. Second, the evidence base is continually growing and at some point the studies used for model input parameter estimates may no longer reflect the latest data. This may especially be the case for the efficacy of osimertinib and dacomitinib. Third, there is always a risk of publication or outcome reporting bias. Finally, the information obtained from the literature and used in the model may not be an accurate reflection of a local setting.
 
-\section{Evidence base, clinical}
+\section{Clinical evidence base}
 \subsection{Study identification and selection} \label{app:study-selection}
 The identification and selection of relevant studies used to estimate treatment effects is summarized with \autoref{fig:slr-flow}. Detailed results regarding the screening and selection process are available in the spreadsheet available on GitHub.
 
@@ -1321,6 +1319,7 @@ The identification and selection of relevant studies used to estimate treatment 
 \caption{Study identification and selection}\label{fig:slr-flow}
 \end{figure}
 
+\FloatBarrier
 
 \subsection{Study characteristics} \label{app:study-characteristics}
 In .... information regarding study design characteristics is provided for the studies used to estimate PFS and OS. 
@@ -1333,65 +1332,6 @@ In .... information regarding characteristics of the interventions evaluated in 
 
 ... provides information on the study populations of the different studies used to estimate PFS and OS. \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l} shows the distribution of key characteristics across the studies. 
 
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/female 1L.jpg}
-\caption{Proportion of women in 1L studies}\label{fig:female-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/age 1L.jpg}
-\caption{Median age in 1L studies}\label{fig:age-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop asian 1L.jpg}
-\caption{Proportion of Asian patients in 1L studies}\label{fig:asian-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop white 1L.jpg}
-\caption{Proportion of Caucasian patients in 1L studies}\label{fig:white-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop adenocarcinoma 1L.jpg}
-\caption{Proportion of patient with adenocarcinoma in 1L studies}\label{fig:adeno-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IIIb 1L.jpg}
-\caption{Proportion of patients with stage 3b disease in 1L studies}\label{fig:stageiiib-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IV 1L.jpg}
-\caption{Proportion of patients with stage 4 disease in 1L studies}\label{fig:stageiv-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop PS 0 or 1 1L.jpg}
-\caption{Proportion of patients with performance status 0 or 1 in 1L studies}\label{fig:ps01-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/never smoker 1L.jpg}
-\caption{Proportion of never smokers in 1L studies}\label{fig:neversmoker-1l}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/current former smoker 1L.jpg}
-\caption{Proportion of current or former smokers in 1L studies}\label{fig:currentformermoker-1l}
-\end{figure}
 
 \begin{sidewaystable}[h]
 \begin{center}
@@ -1413,9 +1353,74 @@ In .... information regarding characteristics of the interventions evaluated in 
 \end{center}
 \end{sidewaystable}
 
+\FloatBarrier
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/female 1L.jpg}
+\caption{Proportion of women in first line studies}\label{fig:female-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/age 1L.jpg}
+\caption{Median age in first line studies}\label{fig:age-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop asian 1L.jpg}
+\caption{Proportion of Asian patients in first line studies}\label{fig:asian-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop white 1L.jpg}
+\caption{Proportion of Caucasian patients in first line studies}\label{fig:white-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop adenocarcinoma 1L.jpg}
+\caption{Proportion of patient with adenocarcinoma in first line studies}\label{fig:adeno-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IIIb 1L.jpg}
+\caption{Proportion of patients with stage 3b disease in first line studies}\label{fig:stageiiib-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop stage IV 1L.jpg}
+\caption{Proportion of patients with stage 4 disease in first line studies}\label{fig:stageiv-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/prop PS 0 or 1 1L.jpg}
+\caption{Proportion of patients with performance status 0 or 1 in first line studies}\label{fig:ps01-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/never smoker 1L.jpg}
+\caption{Proportion of never smokers in first line studies}\label{fig:neversmoker-1l}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/dist-patchar-plots/current former smoker 1L.jpg}
+\caption{Proportion of current or former smokers in first line studies}\label{fig:currentformermoker-1l}
+\end{figure}
+
+
+\FloatBarrier
+
 
 \subsection{Kaplan-Meier curves} \label{app:km-curves}
-\subsubsection{1L treatment}
+\subsubsection{First line treatment}
 \autoref{fig:ARCHER-1050}-\autoref{fig:Yang 2014} show the trial-specific KM curves regarding PFS and OS with 1L treatment that were used to estimate transitions between the health states of the model.
 
 %\iffalse
@@ -1619,8 +1624,9 @@ In .... information regarding characteristics of the interventions evaluated in 
 \caption{Yang 2014 and Yang 2016, progression-free survival and overall survival}\label{fig:Yang 2014}
 \end{figure}
 
+\FloatBarrier
 
-\subsubsection{2L treatment}
+\subsubsection{Second line treatment}
 \autoref{fig:osimertinib-2l-pfs}- \autoref{fig:aura3-pbdc} show the trial-specific KM curves regarding PFS and OS with 2L treatment that were used to estimate transitions between the health states of the model.
 
 \begin{figure}
@@ -1668,7 +1674,7 @@ In .... information regarding characteristics of the interventions evaluated in 
 
 
 
-\section{Network meta-analysis for relative treatment effects with 1L therapy}
+\section{Network meta-analysis for relative treatment effects with first line therapy}
 \subsection{JAGS code}\label{sec:1l-nma-jags}
 
 \subsubsection{Fixed effects multistate Weibull and Gompertz network meta-analysis model for estimation of relative treatment effects with each treatment versus gefitinib} 
@@ -2648,10 +2654,10 @@ Notes: The transition from $P$ to $D$ is the transition from progression to deat
 
 \FloatBarrier
 
-\section{Meta-analysis for absolute effects with 1L reference treatment}
+\section{Meta-analysis for absolute effects with first line reference treatment}
 \subsection{JAGS code}\label{sec:1l-ma-jags}
 
-\subsubsection{Fixed effects multistate Weibull and Gompertz meta-analysis model for estimation of absolute effects with 1L gefitinib } 
+\subsubsection{Fixed effects multistate Weibull and Gompertz meta-analysis model for estimation of absolute effects with first line gefitinib} 
 
 \begin{verbatim} 
 
@@ -2699,7 +2705,7 @@ model{
 
 \end{verbatim}
 
-\subsubsection{Fixed effects multistate 2nd order fractional polynomial meta-analysis model for estimation of absolute effects with 1L gefitinib}
+\subsubsection{Fixed effects multistate 2nd order fractional polynomial meta-analysis model for estimation of absolute effects with first line gefitinib}
 
 \begin{verbatim} 
 
@@ -2844,10 +2850,10 @@ Notes: DIC = Deviance informationc criterion.
 
 
 
-\section{Meta-analysis of absolute effects with 2L therapy}
+\section{Meta-analysis of absolute effects with second line therapy}
 \subsection{JAGS code}\label{sec:2l-jags}
 
-\subsubsection{Fixed effects multistate Weibull and Gompertz model for estimation of absolute effects with 2L osimertinib}  
+\subsubsection{Fixed effects multistate Weibull and Gompertz model for estimation of absolute effects with second line osimertinib}  
 \begin{verbatim} 
 
 model{
@@ -2883,7 +2889,7 @@ model{
 
 \end{verbatim}
 
-\subsubsection{Fixed effects multistate 2nd order fractional polynomial model for estimation of absolute effects with 2L osimertinib} 
+\subsubsection{Fixed effects multistate 2nd order fractional polynomial model for estimation of absolute effects with second line osimertinib} 
 \begin{verbatim} 
 
 model{
@@ -2919,7 +2925,7 @@ model{
 
 \end{verbatim}
 
-\subsubsection{Fixed effects multistate Weibull and Gompertz model for estimation of absolute effects with 2L PBDC} 
+\subsubsection{Fixed effects multistate Weibull and Gompertz model for estimation of absolute effects with second line PBDC} 
 \begin{verbatim} 
 
 model{
@@ -2979,7 +2985,7 @@ model{
 
 \end{verbatim}
 
-\subsubsection{Fixed effects multistate 2nd order fractional polynomial  model for estimation of absolute effects with 2L PBDC} 
+\subsubsection{Fixed effects multistate 2nd order fractional polynomial  model for estimation of absolute effects with second line PBDC} 
 \begin{verbatim} 
 
 model{
