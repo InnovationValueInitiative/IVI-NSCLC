@@ -1,0 +1,10 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Jan 30 23:14:42 2019
+  \hline
+AURA2 & Osimertinib & Osimertinib, PO (80mg; D1; Cycle length: 1 day(s); UDP) & -- & -- \\ 
+  AURA3 & Osimertinib & Osimertinib, PO (80mg; D1; Cycle length: 1 day(s); UDP) & -- & -- \\ 
+  AURA3 & Pemetrexed + Carboplatin & Pemetrexed, IV (500mg/m2; D1; Cycle length: 3 week(s); Max no. cycles: 6 cycle(s)) & Carboplatin, IV (AUC 5--; D1; Cycle length: 3 week(s); Max no. cycles: 6 cycle(s)) & -- \\ 
+  AURA3 & Pemetrexed + Cisplatin & Pemetrexed, IV (500mg/m2; D1; Cycle length: 3 week(s); Max no. cycles: 6 cycle(s)) & Cisplatin, IV (75mg/m2; D1; Cycle length: 3 week(s); Max no. cycles: 6 cycle(s)) & -- \\ 
+  IMPRESS & Gefitinib + Cisplatin + Pemetrexed & Gefitinib, PO (250mg; D1; Cycle length: 1 day(s); UDP) & Cisplatin, IV (75mg/m2; D1; Cycle length: per local guidance --; Max no. cycles: 6 cycle(s)) & Pemetrexed, IV (500mg/m2; D1; Cycle length: per local guidance --; Max no. cycles: 6 cycle(s)) \\ 
+  IMPRESS & Placebo + Cisplatin + Pemetrexed & Placebo, PO (250mg; D1; Cycle length: 1 day(s); UDP) & Cisplatin, IV (75mg/m2; D1; Cycle length: per local guidance --; Max no. cycles: 6 cycle(s)) & Pemetrexed, IV (500mg/m2; D1; Cycle length: per local guidance --; Max no. cycles: 6 cycle(s)) \\ 
+   \hline

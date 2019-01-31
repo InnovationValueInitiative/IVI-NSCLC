@@ -1318,12 +1318,30 @@ Despite the strengths of the systematic literature review to identify relevant e
 \subsection{Study identification and selection} \label{app:study-selection}
 The identification and selection of relevant studies used to estimate treatment effects is summarized with \autoref{fig:slr-flow}. Detailed results regarding the screening and selection process are available in the spreadsheet available on GitHub.
 
-
 \begin{figure}
 \centering
 \includegraphics[max size={\textwidth}{\textheight}]{figs/flow diagram SLR.png}
 \caption{Study identification and selection}\label{fig:slr-flow}
 \end{figure}
+
+The clinical trials used to estimate treatment effects are provided in \autoref{tbl:trials}.
+
+\begin{table}[!ht]
+\begin{center}
+\begin{threeparttable}
+\caption{Trials used for clinical evidence base} \label{tbl:trials}
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}ll}
+\hline
+\multicolumn{1}{l}{Trial} & \multicolumn{1}{l}{References} \\
+\hline
+\ExpandableInput{tables/trials.txt}
+\hline
+\end{tabularx}
+\scriptsize
+\end{threeparttable}
+\end{center}
+\end{table}
+
 
 \FloatBarrier
 
@@ -1455,10 +1473,48 @@ The identification and selection of relevant studies used to estimate treatment 
 \end{threeparttable}
 \end{center}
 \end{sidewaystable}
+
+
+\FloatBarrier
  
 \subsection{Treatment characteristics} \label{app:treatment-characteristics}
-In .... information regarding characteristics of the interventions evaluated in the studies used to estimate treatment effects is provided.
+Information regarding characteristics of the interventions evaluated in the studies used to estimate treatment effects is provided in \autoref{tbl:treatchar-1-1L} and \autoref{tbl:treatchar-1-2L}.
 
+\begin{sidewaystable}[h]
+\begin{center}
+\begin{threeparttable}
+\caption{Treatment characteristics in first line studies} \label{tbl:treatchar-1-1L}
+\tiny
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}lp{0.1\linewidth}p{0.25\linewidth}p{0.25\linewidth}p{0.25\linewidth}}
+\hline
+\multicolumn{1}{l}{Trial} & \multicolumn{1}{l}{Regimen} & \multicolumn{1}{l}{Agent 1} & \multicolumn{1}{l}{Agent 2} & \multicolumn{1}{l}{Agent 3}\\
+\hline
+\ExpandableInput{tables/treatchar-1-1L.txt}
+\hline
+\end{tabularx}
+\end{threeparttable}
+\end{center}
+\end{sidewaystable}
+
+
+\begin{sidewaystable}[h]
+\begin{center}
+\begin{threeparttable}
+\caption{Treatment characteristics in second line studies} \label{tbl:treatchar-1-2L}
+\tiny
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}}lp{0.1\linewidth}p{0.25\linewidth}p{0.25\linewidth}p{0.25\linewidth}}
+\hline
+\multicolumn{1}{l}{Trial} & \multicolumn{1}{l}{Regimen} & \multicolumn{1}{l}{Agent 1} & \multicolumn{1}{l}{Agent 2} & \multicolumn{1}{l}{Agent 3}\\
+\hline
+\ExpandableInput{tables/treatchar-1-2L.txt}
+\hline
+\end{tabularx}
+\end{threeparttable}
+\end{center}
+\end{sidewaystable}
+
+
+\FloatBarrier
 
 \subsection{Patient characteristics} \label{app:patient-characteristics}
 \autoref{tbl:patchar-1-1L}-\autoref{tbl:patchar-3-2L} provides information on the study populations of the different studies used to estimate PFS and OS. \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l} shows the distribution of key characteristics across the studies. 

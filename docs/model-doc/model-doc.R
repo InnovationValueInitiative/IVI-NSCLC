@@ -482,6 +482,10 @@ txt$HoursReductionUpper <- perm_disability["hours_reduction_upper"]
 # References
 trials <- fread("tables-raw/trials.csv")
 trials[, ref := paste0("\\citet{", ref, "}")]
+print(xtable(trials), 
+      include.rownames = FALSE, include.colnames = FALSE,
+      only.contents = TRUE, sanitize.text.function = identity,
+      file = "tables/trials.txt")
 
 # Patient characteristics tables
 patchar <- list()
@@ -631,6 +635,19 @@ save_trials_tbl(studychar$v3_1L, integer_cols = NULL, prop_cols = NULL,
 save_trials_tbl(studychar$v3_2L, integer_cols = NULL, prop_cols = NULL,
                 drop_cols = drop_cols,
                 filename = "tables/studychar-3-2L.txt", print = to_print)
+
+# Treatment characteristics tables
+treatchar <- list()
+treatchar$v1_1L <- data.table(read_excel("tables-raw/treatchars.xlsx", 
+                                         sheet = "treatchar-1-1L"))
+treatchar$v1_2L <- data.table(read_excel("tables-raw/treatchars.xlsx", 
+                                         sheet = "treatchar-1-2L"))
+save_trials_tbl(treatchar$v1_1L, integer_cols = NULL, prop_cols = NULL,
+                drop_cols = NULL,
+                filename = "tables/treatchar-1-1L.txt", print = to_print)
+save_trials_tbl(treatchar$v1_2L, integer_cols = NULL, prop_cols = NULL,
+                drop_cols = NULL,
+                filename = "tables/treatchar-1-2L.txt", print = to_print)
 
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame

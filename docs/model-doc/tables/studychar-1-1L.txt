@@ -1,12 +1,12 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan 30 22:26:42 2019
+% Wed Jan 30 23:14:41 2019
   \hline
 ARCHER1050 & RCT & III & Dacomitinib & Gefitinib & 227 & 225 & April, 2013 & Open-label & Yes & No \\ 
   ENSURE & RCT & III & Erlotinib & Cisplatin + Gemcitabine & 110 & 107 & March, 2011 & Open-label & Yes & Yes \\ 
   EURTAC & RCT & III & Erlotinib & Chemotherapy (Cisplatin + Docetaxel/Gemcitabine) & 86 & 87 & February, 2007 & Open-label & Yes & Yes \\ 
   First-SIGNAL & RCT & III & Gefitinib & Cisplatin + Gemcitabine & 159 & 154 & -- & Open-label & Yes & No \\ 
   FLAURA & RCT & III & Osimertinib & Gefitinib/Erlotinib & 279 & 277 & December, 2014 & Double-blind & Yes & Yes \\ 
-  Han 2017 & RCT & II & Carboplatin + Pemetrexed + Gefitinib & Carboplatin + Pemetrexed & 40 & 40 & May, 2014 & Open-label & No & No \\ 
+  Han2017 & RCT & II & Carboplatin + Pemetrexed + Gefitinib & Carboplatin + Pemetrexed & 40 & 40 & May, 2014 & Open-label & No & No \\ 
   IPASS & RCT & III & Gefitinib & Carboplatin + Paclitaxel & 609 & 608 & March, 2006 & Open-label & Yes & No \\ 
   LUX-lung 3 & RCT & III & Afatinib & Cisplatin + Pemetrexed & 230 & 115 & August, 2009 & Open-label & Yes & Yes \\ 
   LUX-lung 6 & RCT & III & Afatinib & Cisplatin + Gemcitabine & 242 & 122 & April, 2010 & Open-label & Yes & Yes \\ 
@@ -14,5 +14,5 @@ ARCHER1050 & RCT & III & Dacomitinib & Gefitinib & 227 & 225 & April, 2013 & Ope
   NEJ002 & RCT & III & Gefitinib & Carboplatin + Paclitaxel & 115 & 115 & March, 2006 & Open-label & Yes & Yes \\ 
   OPTIMAL & RCT & III & Erlotinib & Carboplatin + Gemcitabine & 83 & 82 & August, 2008 & Open-label & No & No \\ 
   WJTOG3405 & RCT & III & Gefitinib & Docetaxel + Cisplatin & 88 & 89 & January, 2006 & Open-label & Yes & No \\ 
-  Yang 2014 & RCT & III & Cisplatin + Pemetrexed followed by Gefitinib maintenance & Gefitinib & 118 & 118 & November, 2009 & Open-label & Yes & No \\ 
+  Yang2014 & RCT & III & Cisplatin + Pemetrexed followed by Gefitinib maintenance & Gefitinib & 118 & 118 & November, 2009 & Open-label & Yes & No \\ 
    \hline

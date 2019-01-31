@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan 30 21:10:16 2019
+% Wed Jan 30 23:14:41 2019
   \hline
 ARCHER1050 & All & Dacomitinib & ECOG & 33\% & 67\% & -- & -- & -- & -- & -- & -- & -- & 8\% & 81\% \\ 
   ARCHER1050 & All & Gefitinib & ECOG & 28\% & 72\% & -- & -- & -- & -- & -- & -- & -- & 7\% & 81\% \\ 
@@ -11,9 +11,9 @@ ARCHER1050 & All & Dacomitinib & ECOG & 33\% & 67\% & -- & -- & -- & -- & -- & -
   First-SIGNAL & ITT & Cisplatin + Gemcitabine & ECOG & 21\% & 70\% & -- & 9\% & -- & -- & -- & -- & -- & 9\% & 91\% \\ 
   FLAURA & ITT & Osimertinib & WHO & 40\% & 60\% & 100\% & -- & -- & -- & -- & -- & -- & 5\% & 95\% \\ 
   FLAURA & ITT & Gefitinib (66\%) /Erlotinib (34\%) & WHO & 42\% & 58\% & 100\% & -- & -- & -- & -- & -- & -- & 5\% & 95\% \\ 
-  Han 2017 & ITT & Carboplatin + Pemetrexed + Gefitinib & ECOG & 20\% & 80\% & 100\% & -- & -- & -- & -- & -- & -- & 20\% & 80\% \\ 
-  Han 2017 & ITT & Carboplatin + Pemetrexed & ECOG & 25\% & 75\% & 100\% & -- & -- & -- & -- & -- & -- & 18\% & 82\% \\ 
-  Han 2017 & ITT & Gefitinib & ECOG & 22\% & 78\% & 100\% & -- & -- & -- & -- & -- & -- & 12\% & 88\% \\ 
+  Han2017 & ITT & Carboplatin + Pemetrexed + Gefitinib & ECOG & 20\% & 80\% & 100\% & -- & -- & -- & -- & -- & -- & 20\% & 80\% \\ 
+  Han2017 & ITT & Carboplatin + Pemetrexed & ECOG & 25\% & 75\% & 100\% & -- & -- & -- & -- & -- & -- & 18\% & 82\% \\ 
+  Han2017 & ITT & Gefitinib & ECOG & 22\% & 78\% & 100\% & -- & -- & -- & -- & -- & -- & 12\% & 88\% \\ 
   IPASS & ITT & Gefitinib & WHO & 26\% & 64\% & -- & 10\% & 1\% & 0\% & 0\% & 0\% & 1\% & 25\% & 75\% \\ 
   IPASS & ITT & Carboplatin + Paclitaxel & WHO & 26\% & 63\% & -- & 11\% & 2\% & 2\% & 0\% & 1\% & 0\% & 24\% & 76\% \\ 
   IPASS & EGFR+ & Gefitinib & WHO & -- & -- & 90\% & -- & -- & -- & -- & -- & -- & -- & -- \\ 
@@ -30,6 +30,6 @@ ARCHER1050 & All & Dacomitinib & ECOG & 33\% & 67\% & -- & -- & -- & -- & -- & -
   OPTIMAL & All & Carboplatin + Gemcitabine & ECOG & -- & -- & 96\% & 4\% & -- & -- & -- & -- & -- & 7\% & 93\% \\ 
   WJTOG3405 & ITT & Gefitinib & ECOG & 65\% & 35\% & 100\% & -- & -- & -- & -- & -- & -- & 12\% & 48\% \\ 
   WJTOG3405 & ITT & Docetaxel + Cisplatin & ECOG & 60\% & 40\% & 100\% & -- & -- & -- & -- & -- & -- & 10\% & 48\% \\ 
-  Yang 2014 & ITT & Cisplatin + Pemetrexed followed by Gefitinib maintenance & ECOG & 42\% & 58\% & 100\% & -- & -- & -- & -- & -- & -- & 5\% & 95\% \\ 
-  Yang 2014 & ITT & Gefitinib & ECOG & 42\% & 58\% & 100\% & -- & -- & -- & -- & -- & -- & 7\% & 93\% \\ 
+  Yang2014 & ITT & Cisplatin + Pemetrexed followed by Gefitinib maintenance & ECOG & 42\% & 58\% & 100\% & -- & -- & -- & -- & -- & -- & 5\% & 95\% \\ 
+  Yang2014 & ITT & Gefitinib & ECOG & 42\% & 58\% & 100\% & -- & -- & -- & -- & -- & -- & 7\% & 93\% \\ 
    \hline
