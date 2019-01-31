@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan 30 20:34:37 2019
+% Wed Jan 30 21:10:16 2019
   \hline
 ARCHER1050 & All & Dacomitinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & -- & 59\% & 41\% & -- \\ 
   ARCHER1050 & All & Gefitinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & -- & 59\% & 41\% & -- \\ 

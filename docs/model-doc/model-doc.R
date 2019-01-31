@@ -484,23 +484,31 @@ trials <- fread("tables-raw/trials.csv")
 trials[, ref := paste0("\\citet{", ref, "}")]
 
 # Patient characteristics tables
-patchar_1_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+patchar <- list()
+patchar$v1_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-1-1L"))
-patchar_1_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+patchar$v1_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-1-2L"))
-patchar_2_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+patchar$v2_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-2-1L"))
-patchar_2_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+patchar$v2_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-2-2L"))
-patchar_3_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+patchar$v3_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-3-1L"))
-patchar_3_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+patchar$v3_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-3-2L"))
+lapply(patchar,
+       function(x) x[, treatment := gsub("%", "\\\\%", treatment)])
 
-save_patchar_tbl <- function(data, integer_cols, prop_cols,
-                              filename, prop_digits = 0, print = FALSE){
+save_trials_tbl <- function(data, integer_cols = NULL, prop_cols = NULL, 
+                            drop_cols = NULL,
+                            filename, prop_digits = 0, print = FALSE){
   x <- copy(data)
-  x[, treatment := gsub("%", "\\\\%", treatment)]
+  if (!is.null(drop_cols)){
+    x[, (drop_cols) := NULL]
+  }
+  
+  # Integer columns
   char_var <- FALSE
   if (!is.null(integer_cols)){
     for (j in integer_cols){
@@ -508,25 +516,31 @@ save_patchar_tbl <- function(data, integer_cols, prop_cols,
       set(x, which(x[[j]] == "NA"), j, "--")
     } 
   }
-  for (j in prop_cols){
-    if (is.character(x[[j]])){
-      char_var <- TRUE
-      x[, less := grepl("<", get(j))]
-      x[, (j) := gsub("<", "", get(j))]
-      x[, (j) := as.numeric(get(j))]
-    }
-    x[, (j) := formatC(100 * get(j), format = "f", 
-                                             digits = prop_digits)]
-    if (char_var){
-      x[, (j) := ifelse(less == TRUE, paste0("<", get(j)), get(j))] 
-      x[, less := NULL]
-      char_var <- FALSE
-    }
-    set(x, which(x[[j]] == "NA"), j, "--")
-    x[, (j) := ifelse(get(j) != "--",
-                      paste0(get(j), "\\%"),
-                      get(j))]
-  }  
+  
+  # Proportion columns
+  if (!is.null(prop_cols)){
+    for (j in prop_cols){
+      if (is.character(x[[j]])){
+        char_var <- TRUE
+        x[, less := grepl("<", get(j))]
+        x[, (j) := gsub("<", "", get(j))]
+        x[, (j) := as.numeric(get(j))]
+      }
+      x[, (j) := formatC(100 * get(j), format = "f", 
+                                               digits = prop_digits)]
+      if (char_var){
+        x[, (j) := ifelse(less == TRUE, paste0("<", get(j)), get(j))] 
+        x[, less := NULL]
+        char_var <- FALSE
+      }
+      set(x, which(x[[j]] == "NA"), j, "--")
+      x[, (j) := ifelse(get(j) != "--",
+                        paste0(get(j), "\\%"),
+                        get(j))]
+    }     
+  }
+  
+  # Save table
   print(xtable(x), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,
@@ -541,18 +555,18 @@ to_print <- TRUE
 integer_cols <- c("age_median", "age_min", "age_max")
 prop_cols <- c("female_prop", "caucasian_prop", "asian_prop", "current_or_former_smoker_prop",
                "current_smoker_prop", "former_smoker_prop", "never_smoker_prop")
-save_patchar_tbl(patchar_1_1L, integer_cols, prop_cols,
+save_trials_tbl(patchar$v1_1L, integer_cols, prop_cols,
                         filename = "tables/patchar-1-1L.txt", print = to_print)
-save_patchar_tbl(patchar_1_2L, integer_cols, prop_cols,
+save_trials_tbl(patchar$v1_2L, integer_cols, prop_cols,
                         filename = "tables/patchar-1-2L.txt", print = to_print)
 
 ## Disease and functional status 
 prop_cols <- c("status_0", "status_1", "status_0_or_1", "status_2",
                "stage_1A", "stage_1B", "stage_2A", "stage_2B", "stage_3A", "stage_3B",
                "stage_4")
-save_patchar_tbl(patchar_2_1L, integer_cols = NULL, prop_cols,
+save_trials_tbl(patchar$v2_1L, integer_cols = NULL, prop_cols,
                         filename = "tables/patchar-2-1L.txt", print = to_print)
-save_patchar_tbl(patchar_2_2L, integer_cols = NULL, prop_cols,
+save_trials_tbl(patchar$v2_2L, integer_cols = NULL, prop_cols,
                         filename = "tables/patchar-2-2L.txt", print = to_print)
 
 # Histology and mutation status
@@ -560,10 +574,36 @@ prop_cols <- c("histology_adenocarcinoma", "histology_squamous", "histology_larg
                "histology_broncho_alveolar_carcinoma",
                "histology_other", "egfr_positive", "egfr_negative", "egfr_missing", "egfr_activating", "egfr_exon_19_deletion",
                "egfr_exon_21_l858R", "egfr_other_mutation")
-save_patchar_tbl(patchar_3_1L, integer_cols = NULL, prop_cols,
+save_trials_tbl(patchar$v3_1L, integer_cols = NULL, prop_cols,
                         filename = "tables/patchar-3-1L.txt", print = to_print)
-save_patchar_tbl(patchar_3_2L, integer_cols = NULL, prop_cols,
+save_trials_tbl(patchar$v3_2L, integer_cols = NULL, prop_cols,
                         filename = "tables/patchar-3-2L.txt", print = to_print)
+
+# Study characteristics tables
+studychar <- list()
+studychar$v1_1L <- data.table(read_excel("tables-raw/studychars.xlsx", 
+                                         sheet = "studychar-1-1L"))
+studychar$v1_2L <- data.table(read_excel("tables-raw/studychars.xlsx", 
+                                         sheet = "studychar-1-2L"))
+studychar$v2_1L <- data.table(read_excel("tables-raw/studychars.xlsx", 
+                                         sheet = "studychar-2-1L"))
+studychar$v2_2L <- data.table(read_excel("tables-raw/studychars.xlsx", 
+                                         sheet = "studychar-2-2L"))
+studychar$v3_1L <- data.table(read_excel("tables-raw/studychars.xlsx", 
+                                         sheet = "studychar-3-1L"))
+studychar$v3_2L <- data.table(read_excel("tables-raw/studychars.xlsx", 
+                                         sheet = "studychar-3-2L"))
+
+## Trial characteristics
+integer_cols <- c("n_1", "n_2")
+drop_cols <- c("nct_code", "author", "year", "estimated_study_completion_date",
+               "study_completion_date", "region", "planned_treatment_duration")
+save_trials_tbl(studychar$v1_1L, integer_cols = integer_cols, prop_cols = NULL,
+                drop_cols = drop_cols,
+                filename = "tables/studychar-1-1L.txt", print = to_print)
+save_trials_tbl(studychar$v1_2L, integer_cols = integer_cols, prop_cols = NULL,
+                drop_cols = drop_cols,
+                filename = "tables/studychar-1-2L.txt", print = to_print)
 
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame
