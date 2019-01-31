@@ -403,7 +403,7 @@ p <- ggplot(ae_prob, aes(x = tx_abb, y = median)) +
   scale_fill_discrete(name = "") +
   scale_y_continuous(breaks = seq(0, .3, .1)) +
   xlab("") + ylab("Probability of adverse event")
-ggsave("figs/ae-probs.pdf", p, width = 10, height = 8)
+ggsave("figs/ae-probs.pdf", p, width = 10, height = 10)
 
 
 # Utility ----------------------------------------------------------------------
