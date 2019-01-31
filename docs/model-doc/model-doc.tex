@@ -740,7 +740,7 @@ The posterior distributions of $M_{\cdot}$ along with the parameters representin
 \caption{First line estimates of progression-free survival and overall survival for the competing interventions obtained with the multi-state (network) meta-analysis}\label{fig:surv-1L}
 \begin{minipage}{\linewidth}
 \footnotesize
-Notes: The simulated posterior distribution of the parameters of the Bayesian multi-state NMA was used to simulate a distribution of progression-free survival and overall survival curves. The curves in the figure are posterior means. Curves with credible intervals are shown in the appendix.
+Note: The simulated posterior distribution of the parameters of the Bayesian multi-state NMA was used to simulate a distribution of progression-free survival and overall survival curves. The curves in the figure are posterior means. Curves with credible intervals are shown in the appendix.
 \end{minipage}
 \end{figure}
 
@@ -786,7 +786,7 @@ For the 2L treatment options, the available number of RCTs among patients who pr
 \caption{Second line estimates of progression-free survival and overall survival from the multi-state meta-analysis}\label{fig:surv-2L}
 \begin{minipage}{\linewidth}
 \footnotesize
-Notes: The simulated posterior distribution of the parameters of the Bayesian multi-state NMA was used to simulate a distribution of progression-free survival and overall survival curves. The solid lines are posterior means and the shaded region denotes the 95 percent credible interval.
+Note: The simulated posterior distribution of the parameters of the Bayesian multi-state NMA was used to simulate a distribution of progression-free survival and overall survival curves. The solid lines are posterior means and the shaded region denotes the 95 percent credible interval.
 \end{minipage}
 \end{figure}
 
@@ -803,7 +803,18 @@ Informed by model fit criteria and stability of the estimates, we used treatment
 
 
 \subsection{Adverse events}\label{subsec:data-aes}
-The identified RCTs also provided the evidence base to estimate treatment specific adverse event probabilities. Since adverse events in nearly all RCTs were reported as the number of patients experiencing the event, the NMA was performed on the proportion of patients experiencing the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}. Given the presence of studies with zero-cell counts, we used a model where treatment specific relative treatment effects were assumed exchangeable among the TKI class such that unstable estimates were shrunken towards the average effect of the class. See \autoref{sec:nma-ae-jags} for the JAGS code of the NMA models used.
+The identified RCTs also provided the evidence base to estimate treatment specific adverse event probabilities. Since adverse events in nearly all RCTs were reported as the number of patients experiencing the event, the Bayesian NMA was performed on the proportion of patients experiencing the event of interest with a binomial likelihood and logit link \citep[Chapter~2]{dias2018network}. Given the presence of studies with zero-cell counts, we used a model where treatment specific relative treatment effects were assumed exchangeable among the TKI class such that unstable estimates were shrunken towards the average effect of the class. See \autoref{sec:nma-ae-jags} for the JAGS code of the NMA models used. Posterior medians of adverse event probabilities are displayed in \autoref{fig:ae_probs} along with 95\% credible intervals.
+
+\begin{figure}[h]
+\centering
+\includegraphics[max size={\textwidth}{\textheight}]{figs/ae-probs.pdf} 
+\caption{Adverse event probabilities by treatment}\label{fig:ae_probs}
+\begin{minipage}{\linewidth}
+\footnotesize
+Note: afa = afatinib; dac = dacomitinib; erl = erlotinib; gef = gefitinib; osi = osimertinib; PBDC = platinum-based doublet chemotherapy.
+\end{minipage}
+\end{figure}
+
 
 \subsection{Utilities}\label{subsec:data-utility}
 Health state utilities based on public literature are reported in \autoref{tbl:state-utility}. We assume that utilities do not vary across treatment strategies. We use estimates from \citet{nafees2017health}, a global study of patients with metastatic NSCLC that used health states representative of 1L treatment to derive utility values. Estimates are based on the "global" analysis that pooled estimates across 6 countries (Australia, China, France, Korea, Taiwan, and the UK) for patients with stable disease and no side effects. Utilities for patients with progressed disease are based on \citet{nafees2008health}, a study representative of metastatic NSCLC patients on 2L treatment. Estimates are from predictions using the mixed model among patients with no adverse events. Utility in the P1/S2 state is estimated using patients that have not yet progressed while on 2L, while estimates in the P2 state are among the progressed 2L patients. 
@@ -2920,7 +2931,7 @@ model{
 \hline
 \end{tabularx}
 \scriptsize
-Notes: The transition from $P$ to $D$ is the transition from progression to death. If there is no treatment effect, then hazard rates do not vary across treatments or over time; if there is a constant treatment effect, then hazard rates vary across treatments but not over time.
+Note: The transition from $P$ to $D$ is the transition from progression to death. If there is no treatment effect, then hazard rates do not vary across treatments or over time; if there is a constant treatment effect, then hazard rates vary across treatments but not over time.
 \end{threeparttable}
 \end{center}
 \end{table}
@@ -3091,7 +3102,7 @@ model{
 \hline
 \end{tabularx}
 \scriptsize
-Notes: DIC = Deviance informationc criterion.
+Note: DIC = Deviance informationc criterion.
 \end{threeparttable}
 \end{center}
 \end{table}

@@ -358,6 +358,54 @@ print(xtable(tbl),
       only.contents = TRUE, sanitize.text.function = identity,
       file = "tables/dic-2L-ma.txt")
 
+# Adverse events ---------------------------------------------------------------
+n_events <- length(params_ae_nma)
+ae_prob <- vector(mode = "list", length = n_events)
+for (i in 1:n_events){
+  tx_select <- which(attr(params_ae_nma[[i]], "imputed") == 0)
+  cols <- colnames(params_ae_nma[[i]])[tx_select]
+  str_length <- sapply(cols, nchar)
+  tx_abb <- substr(cols,
+                   regexpr("_", colnames(params_ae_nma[[i]])[tx_select]) + 1,
+                   str_length)
+  tx_name <- iviNSCLC::treatments$tx_name[match(tx_abb, 
+                                                iviNSCLC::treatments$tx_abb)]
+  params_ae_nma_i <- params_ae_nma[[i]][, cols]
+  ae_prob_median_i <- apply(params_ae_nma_i, 2, quantile, prob = .5)
+  ae_prob_l95_i <- apply(params_ae_nma_i, 2, quantile, prob = .025)
+  ae_prob_u95_i <- apply(params_ae_nma_i, 2, quantile, prob = .975)
+  ae_prob[[i]] <- data.table(ae_abb = names(params_ae_nma)[i],
+                             tx_abb = tx_abb,
+                             tx_name = tx_name,
+                             median = ae_prob_median_i,
+                             l95 = ae_prob_l95_i,
+                             u95 = ae_prob_u95_i)
+}
+ae_prob <- rbindlist(ae_prob)
+indx <- match(ae_prob$ae_abb, iviNSCLC::adverse_events$ae_abb)
+ae_prob$ae_name <- iviNSCLC::adverse_events$ae_name[indx]
+ae_prob[, ae_name := ifelse(ae_name == "Elevated alanine transaminase",
+                            "Elevated \n alanine \n transaminase",
+                            ae_name)]
+ae_prob[, ae_name := ifelse(ae_name == "Elevated aspartate transaminase",
+                            "Elevated \n aspartate \n transaminase",
+                            ae_name)]
+ae_prob[, tx_abb := ifelse(tx_abb == "pbdc",
+                           "PBDC",
+                            tx_abb)]
+
+# Plot
+p <- ggplot(ae_prob, aes(x = tx_abb, y = median)) + 
+  facet_wrap(~factor(ae_name), ncol = 3) +
+  geom_bar(stat = "identity", fill = "#d9230f") +
+  geom_errorbar(aes(ymin = l95,
+                    ymax = u95), width = .2) +
+  scale_fill_discrete(name = "") +
+  scale_y_continuous(breaks = seq(0, .3, .1)) +
+  xlab("") + ylab("Probability of adverse event")
+ggsave("figs/ae-probs.pdf", p, width = 10, height = 8)
+
+
 # Utility ----------------------------------------------------------------------
 # Utility by health state
 state_utility <- copy(params_utility$state_utility)
