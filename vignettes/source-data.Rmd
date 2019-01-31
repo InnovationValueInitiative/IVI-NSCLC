@@ -3,4 +3,9 @@ title: "Source data"
 output: html_document
 ---
 
-Coming soon.
+# Systematic literature review
+Systematic literature reviews (SLRs) were used to identify relevant studies for estimating treatment effects for health state transitions and adverse events, utilities, and costs. Information on the SLR can be found in the [PDF documentation](../model-doc/model-doc.pdf) and on GitHub within the [`docs/model-doc`](https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/docs/model-doc) directory (which also contains all the figures, tables, output, and R code used to produce the PDF documentation). The [`tables-raw`](https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/docs/model-doc/tables-raw) directory contains additional information on the treatment, study, and patient characteristics among the clinical trials comprising the clinical evidence base. Similarly, the [`slr`](https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/docs/model-doc/slr) directory contains information on the SLRs used to identify studies for estimating treatment effects, utilities, and costs.
+
+# Parameter estimation
+Parameters in the IVI-NSCLC model are prefixed by `params` and exported as data when loading the `iviNSCLC` package. All code to create these parameters can be found in the [`data-raw`](https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/data-raw) directory. The [`Make-data`](https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/data-raw/Make-data.R) file runs all relevant scripts, although please note that we were unable to include the simulated posterior distributions from the multi-state and adverse event NMAs on GitHub due to size limitations. Details of the statistical methods are provided in the PDF documentation.  
+ 

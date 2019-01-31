@@ -73,3 +73,9 @@ navbar:
     href: model-doc/model-doc.pdf
   - text: "Source data"
     href: articles/source-data.html
+  - text: "Web apps"
+    menu:
+      - text: "Basic "
+        href: https://vt-nsclc.clarityviz.com/
+      - text: "Advanced"
+        href: https://et-nsclc.clarityviz.com/

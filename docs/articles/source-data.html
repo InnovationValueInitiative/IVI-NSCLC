@@ -47,6 +47,21 @@
 <li>
   <a href="../articles/source-data.html">Source data</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Web apps
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="https://vt-nsclc.clarityviz.com/">Basic </a>
+    </li>
+    <li>
+      <a href="https://et-nsclc.clarityviz.com/">Advanced</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -77,10 +92,27 @@
 
     
     
-<p>Coming soon.</p>
+<div id="systematic-literature-review" class="section level1">
+<h1 class="hasAnchor">
+<a href="#systematic-literature-review" class="anchor"></a>Systematic literature review</h1>
+<p>Systematic literature reviews (SLRs) were used to identify relevant studies for estimating treatment effects for health state transitions and adverse events, utilities, and costs. Information on the SLR can be found in the <a href="../model-doc/model-doc.pdf">PDF documentation</a> and on GitHub within the <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/docs/model-doc"><code>docs/model-doc</code></a> directory (which also contains all the figures, tables, output, and R code used to produce the PDF documentation). The <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/docs/model-doc/tables-raw"><code>tables-raw</code></a> directory contains additional information on the treatment, study, and patient characteristics among the clinical trials comprising the clinical evidence base. Similarly, the <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/docs/model-doc/slr"><code>slr</code></a> directory contains information on the SLRs used to identify studies for estimating treatment effects, utilities, and costs.</p>
+</div>
+<div id="parameter-estimation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#parameter-estimation" class="anchor"></a>Parameter estimation</h1>
+<p>Parameters in the IVI-NSCLC model are prefixed by <code>params</code> and exported as data when loading the <code>iviNSCLC</code> package. All code to create these parameters can be found in the <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/tree/master/data-raw"><code>data-raw</code></a> directory. The <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/data-raw/Make-data.R"><code>Make-data</code></a> file runs all relevant scripts, although please note that we were unable to include the simulated posterior distributions from the multi-state and adverse event NMAs on GitHub due to size limitations. Details of the statistical methods are provided in the PDF documentation.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#systematic-literature-review">Systematic literature review</a></li>
+      <li><a href="#parameter-estimation">Parameter estimation</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
