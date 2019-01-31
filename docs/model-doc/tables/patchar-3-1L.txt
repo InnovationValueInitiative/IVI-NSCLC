@@ -1,0 +1,35 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Jan 30 20:34:37 2019
+  \hline
+ARCHER1050 & All & Dacomitinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & -- & 59\% & 41\% & -- \\ 
+  ARCHER1050 & All & Gefitinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & -- & 59\% & 41\% & -- \\ 
+  ENSURE & ITT & Erlotinib & 94\% & 2\% & -- & -- & 4\% & 100\% & -- & -- & 100\% & 52\% & 48\% & -- \\ 
+  ENSURE & ITT & Cisplatin + Gemcitabine & 94\% & 2\% & -- & -- & 4\% & 100\% & -- & -- & 100\% & 57\% & 43\% & -- \\ 
+  EURTAC & ITT & Erlotinib & 95\% & 1\% & 3\% & 0\% & 0\% & 100\% & -- & -- & 100\% & 66\% & 34\% & -- \\ 
+  EURTAC & ITT & Carboplatin/Cisplatin + Docetaxel/Gemcitabine & 90\% & 0\% & 1\% & 2\% & 7\% & 100\% & -- & -- & 100\% & 67\% & 33\% & -- \\ 
+  First-SIGNAL & ITT & Gefitinib & 100\% & -- & -- & -- & -- & 16\% & 17\% & 67\% & 16\% & -- & -- & -- \\ 
+  First-SIGNAL & ITT & Cisplatin + Gemcitabine & 100\% & -- & -- & -- & -- & 11\% & 18\% & 71\% & 11\% & -- & -- & -- \\ 
+  FLAURA & ITT & Osimertinib & 99\% & -- & -- & -- & 1\% & 100\% & -- & 9\% & -- & 57\% & 35\% & -- \\ 
+  FLAURA & ITT & Gefitinib (66\%) /Erlotinib (34\%) & 98\% & -- & -- & -- & 2\% & 100\% & -- & 12\% & -- & 56\% & 32\% & -- \\ 
+  Han 2017 & ITT & Carboplatin + Pemetrexed + Gefitinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & -- & 52\% & 48\% & -- \\ 
+  Han 2017 & ITT & Carboplatin + Pemetrexed & 100\% & -- & -- & -- & -- & 100\% & -- & -- & -- & 50\% & 50\% & -- \\ 
+  Han 2017 & ITT & Gefitinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & -- & 51\% & 48\% & -- \\ 
+  IPASS & ITT & Gefitinib & 95\% & -- & -- & 4\% & -- & 22\% & 15\% & 63\% & 98\% & 11\% & 10\% & -- \\ 
+  IPASS & ITT & Carboplatin + Paclitaxel & 97\% & -- & -- & 2\% & -- & 21\% & 14\% & 65\% & 94\% & 12\% & 8\% & -- \\ 
+  IPASS & EGFR+ & Gefitinib & -- & -- & -- & -- & -- & 100\% & -- & -- & -- & -- & -- & -- \\ 
+  IPASS & EGFR+ & Carboplatin + Paclitaxel & -- & -- & -- & -- & -- & 100\% & -- & -- & -- & -- & -- & -- \\ 
+  LUX-LUNG 3 & All & Afatinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & 89\% & 49\% & 40\% & 11\% \\ 
+  LUX-LUNG 3 & All & Cisplatin + Pemetrexed & 100\% & -- & -- & -- & -- & 100\% & -- & -- & 90\% & 50\% & 41\% & 10\% \\ 
+  LUX-LUNG 6 & All & Afatinib & 100\% & -- & -- & -- & -- & 100\% & -- & -- & 89\% & 51\% & 38\% & 11\% \\ 
+  LUX-LUNG 6 & All & Cisplatin + Gemcitabine & 100\% & -- & -- & -- & -- & 100\% & -- & -- & 88\% & 51\% & 38\% & 12\% \\ 
+  LUX-LUNG 7 & ITT & Afatinib & 99\% & -- & -- & -- & -- & 100\% & -- & -- & 100\% & 58\% & 42\% & -- \\ 
+  LUX-LUNG 7 & ITT & Gefitinib & 99\% & -- & -- & -- & -- & 100\% & -- & -- & 100\% & 58\% & 42\% & -- \\ 
+  NEJ002 & ITT & Gefitinib & 90\% & 3\% & 1\% & -- & 4\% & 100\% & -- & -- & 94\% & 51\% & 43\% & 6\% \\ 
+  NEJ002 & ITT & Carboplatin + Paclitaxel & 96\% & 2\% & 0\% & -- & 1\% & 100\% & -- & -- & 94\% & 52\% & 42\% & 6\% \\ 
+  OPTIMAL & All & Erlotinib & 88\% & -- & -- & -- & 12\% & 100\% & -- & -- & 100\% & 52\% & 48\% & -- \\ 
+  OPTIMAL & All & Carboplatin + Gemcitabine & 86\% & -- & -- & -- & 14\% & 100\% & -- & -- & 100\% & 54\% & 46\% & -- \\ 
+  WJTOG3405 & ITT & Gefitinib & -- & 1\% & -- & -- & 2\% & 100\% & -- & -- & 100\% & 58\% & 42\% & -- \\ 
+  WJTOG3405 & ITT & Docetaxel + Cisplatin & -- & 0\% & -- & -- & 1\% & 100\% & -- & -- & 100\% & 43\% & 57\% & -- \\ 
+  Yang 2014 & ITT & Cisplatin + Pemetrexed followed by Gefitinib maintenance & 97\% & -- & -- & -- & 3\% & 22\% & 11\% & 67\% & 20\% & 12\% & 8\% & 2\% \\ 
+  Yang 2014 & ITT & Gefitinib & 97\% & -- & -- & -- & 3\% & 20\% & 9\% & 70\% & 20\% & 9\% & 11\% & 0\% \\ 
+   \hline
