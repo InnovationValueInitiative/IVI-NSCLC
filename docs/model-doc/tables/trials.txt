@@ -1,9 +1,8 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan 30 23:14:40 2019
+% Thu Jan 31 08:46:43 2019
   \hline
 FLAURA & \citet{soria2018osimertinib} \\ 
-  ARCHER1050 & \citet{wu2017dacomitinib} \\ 
-  ARCHER1050 & \citet{mok2018improvement} \\ 
+  ARCHER1050 & \citet{wu2017dacomitinib, mok2018improvement} \\ 
   LUX-LUNG 7 & \citet{park2016afatinib, paz2017afatinib} \\ 
   LUX-LUNG 3 & \citet{sequist2013phase, yang2015afatinib} \\ 
   LUX-LUNG 6 & \citet{wu2014afatinib, yang2015afatinib} \\ 
@@ -17,8 +16,7 @@ FLAURA & \citet{soria2018osimertinib} \\
   Han2017 & \citet{han2017combination} \\ 
   Yang2014 & \citet{yang2014first, yang2016first} \\ 
   AURA3 & \citet{mok2017osimertinib} \\ 
-  AURA2 & \citet{mitsudomi20171348poverall} \\ 
-  AURA-ext & \citet{mitsudomi20171348poverall} \\ 
+  AURA2, AURA-ext & \citet{mitsudomi20171348poverall} \\ 
   IMPRESS & \citet{mok2017gefitinib, soria2015gefitinib} \\ 
   Yang2017 & \citet{yang2017phase} \\ 
   Yu2014 & \citet{yu2014phase} \\ 
