@@ -1,0 +1,9 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Jan 30 19:41:40 2019
+  \hline
+AURA2 & All & Osimitinib & WHO & 37\% & 63\% & -- & <1\% & -- & -- & -- & -- & -- & -- & -- \\ 
+  AURA3 & ITT & Osimertinib & WHO & 37\% & 63\% & -- & -- & -- & -- & -- & -- & -- & 5\% & 95\% \\ 
+  AURA3 & ITT & Pemetrexed + Carboplatin/Cisplatin & WHO & 40\% & 60\% & -- & -- & -- & -- & -- & -- & -- & 1\% & 99\% \\ 
+  IMPRESS & ITT & Gefitinib + Cisplatin + Pemetrexed & WHO & 41\% & 59\% & 100\% & -- & -- & -- & -- & -- & -- & -- & 93\% \\ 
+  IMPRESS & ITT & Placebo + Cisplatin + Pemetrexed & WHO & 40\% & 60\% & 100\% & -- & -- & -- & -- & -- & -- & -- & 90\% \\ 
+   \hline

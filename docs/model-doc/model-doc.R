@@ -501,13 +501,27 @@ save_patchar_tbl <- function(data, integer_cols, prop_cols,
                               filename, prop_digits = 0, print = FALSE){
   x <- copy(data)
   x[, treatment := gsub("%", "\\\\%", treatment)]
-  for (j in integer_cols){
-    x[, (j) := formatC(get(j), format = "d")]
-    set(x, which(x[[j]] == "NA"), j, "--")
+  char_var <- FALSE
+  if (!is.null(integer_cols)){
+    for (j in integer_cols){
+      x[, (j) := formatC(get(j), format = "d")]
+      set(x, which(x[[j]] == "NA"), j, "--")
+    } 
   }
   for (j in prop_cols){
+    if (is.character(x[[j]])){
+      char_var <- TRUE
+      x[, less := grepl("<", get(j))]
+      x[, (j) := gsub("<", "", get(j))]
+      x[, (j) := as.numeric(get(j))]
+    }
     x[, (j) := formatC(100 * get(j), format = "f", 
                                              digits = prop_digits)]
+    if (char_var){
+      x[, (j) := ifelse(less == TRUE, paste0("<", get(j)), get(j))] 
+      x[, less := NULL]
+      char_var <- FALSE
+    }
     set(x, which(x[[j]] == "NA"), j, "--")
     x[, (j) := ifelse(get(j) != "--",
                       paste0(get(j), "\\%"),
@@ -522,15 +536,24 @@ save_patchar_tbl <- function(data, integer_cols, prop_cols,
   }
 }
 
-# Demographics and health behavior
+to_print <- TRUE
+## Demographics and smoking status
 integer_cols <- c("age_median", "age_min", "age_max")
 prop_cols <- c("female_prop", "caucasian_prop", "asian_prop", "current_or_former_smoker_prop",
                "current_smoker_prop", "former_smoker_prop", "never_smoker_prop")
 save_patchar_tbl(patchar_1_1L, integer_cols, prop_cols,
-                        filename = "tables/patchar-1-1L.txt", print = TRUE)
+                        filename = "tables/patchar-1-1L.txt", print = to_print)
 save_patchar_tbl(patchar_1_2L, integer_cols, prop_cols,
-                        filename = "tables/patchar-1-2L.txt", print = TRUE)
+                        filename = "tables/patchar-1-2L.txt", print = to_print)
 
+## Disease and functional status 
+prop_cols <- c("status_0", "status_1", "status_0_or_1", "status_2",
+               "stage_1A", "stage_1B", "stage_2A", "stage_2B", "stage_3A", "stage_3B",
+               "stage_4")
+save_patchar_tbl(patchar_2_1L, integer_cols = NULL, prop_cols,
+                        filename = "tables/patchar-2-1L.txt", print = to_print)
+save_patchar_tbl(patchar_2_2L, integer_cols = NULL, prop_cols,
+                        filename = "tables/patchar-2-2L.txt", print = to_print)
 
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame
