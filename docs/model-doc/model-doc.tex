@@ -324,9 +324,9 @@ Tyrosine kinase inhibitors (TKIs) can be used at 1L. If osimertinib is not selec
 The specific treatments included in the model are:
 
 \begin{itemize}
-\item \textbf{TKIs}: erlotinib, gefitinib, afatinib, dacomitinib, osimertinib
-\item \textbf{anti-VEGF therapy}: bevacizumab
-\item \textbf{ICIs}: nivolumab, pembrolizumab, atezolizumab
+\item TKIs: erlotinib, gefitinib, afatinib, dacomitinib, osimertinib
+\item anti-VEGF therapy: bevacizumab
+\item ICIs: nivolumab, pembrolizumab, atezolizumab
 
 \end{itemize} 
 
@@ -362,12 +362,12 @@ Our statistical approach for modeling transitions between health states also all
 \FloatBarrier
 
 \subsection{Adverse events}
-The model simulates the probability of a number of distinct adverse events. Since the trials typically only report the number of proportion of patients experiencing an adverse event we were unable to model adverse events as a function of time on treatment and instead assume that adverse events occur during the first month of treatment as a function of the 1L treatment.
+The model simulates the probability of a number of distinct adverse events. Since the trials typically only report the number of proportion of patients experiencing an adverse event, we were unable to model adverse events as a function of time on treatment. Instead, we assumed that adverse events occur during the first month of treatment as a function of the 1L treatment.
 
 \subsection{Utility and health care sector costs}
 Utility depends on the health state and the probability of an adverse event. Adverse events occur during the first month and cause utility decrements, which vary across treatments. After the first month, utility is only a function of the health state. 
 
-Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), costs due to inpatient hospitalizations, outpatient costs, and adverse event costs. Inpatient and outpatient costs vary by health state and accrue until death. Adverse event costs---which accrue during the first month---are a weighted sum of the probability of each adverse event and the event's expected cost. Treatment costs at a given line in the sequence accrue until until disease progression or, if dosage depends on time, the duration of the treatment.
+Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), costs due to inpatient care, outpatient care, and adverse event costs. Inpatient and outpatient costs vary by health state and accrue until death. Adverse event costs---which accrue during the first month---are a weighted sum of the probability of each adverse event and the event's expected cost. Treatment costs at a given line in the sequence accrue until until disease progression or, if dosage depends on time, the duration of the treatment.
 
 \subsection{Productivity}
 Productivity costs are currently estimated using the human capital approach (HCA), which measures lost productivity using work time lost. The approach is rooted in economic theory as time away from work is valued at the market wage, which, in a competitive market, reflects the societal value of work. The HCA contrasts with the friction cost approach (FCA), which only measures productivity costs during the time (i.e., the friction period) required to replace workers leaving employment due to illness. A practical limitation of the FCA is that it is difficult to reliably estimate the friction period, which depends on the unemployment rate and consequently varies considerably across individuals and over time. In general, the HCA tends to overestimate productivity costs while the FCA may underestimate them. 
@@ -405,7 +405,7 @@ Value assessment & Cost-effectiveness analysis; multi-criteria decision analysis
 \subsection{Health outcomes, adverse events, and costs}
 The disease model simulates the times that patients transition to and from health states, which, in turn, is used to estimate the probability that a patient is in a given health state at a given point in time following treatment initiation. Progression free survival (PFS) with 1L treatment is defined as time in state $S_1$ while PFS with 2L is defined as time in state $P_1 \rightarrow S_2$. Overall survival is time until death. Adverse events are summarized using the probability of occurrence.  
 
-Costs are computed for multiple categories and separated into health care sector and non-heath care sector costs as recommended by \citet{sanders2016recommendations}. Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), adverse event costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity costs.
+Costs are computed for multiple categories and separated into health care sector and non-health care sector costs as recommended by \citet{sanders2016recommendations}. Health care sector costs include treatment costs (i.e., drug acquisition and administration costs), adverse event costs, the costs of inpatient hospital stays, and costs from hospital outpatient and doctor office visits. Non-health care sector costs include productivity costs.
 
 Discounted costs and QALYs over the model's time horizon are computed using the continuous time present value given a flow of state values (i.e., utility and annualized costs), which change as patients transition between health states or as costs vary as a function of time since treatment initiation. The state values can be partitioned into $M$ time intervals indexed by $m = 1,\ldots, M$ where interval $m$ contains times $u$ such that $u_m\leq u \leq u_{m+1}$ and state values are equal to $z_m$ during interval $m$. Discounted costs and QALYs are then given by,  
 
@@ -418,19 +418,19 @@ where $r > 0$ is the discount rate. If $r = 0$, then the present value simplifie
 \subsection{Value assessment} \label{subsec:outcomes-value-assessment}
 If CEA is used for value assessment, then the value of treatment is estimated using the NMB defined as discounted QALYs multiplied by willingness to pay per QALY less costs. Costs in analyses conducted from a limited societal perspective include both productivity costs and health care sector costs while costs in analyses conducted from a health care sector perspective only include health care sector costs. 
 
-Any combination of simulated model outcomes can be used for MCDA. If a 3-state model is selected, the MCDA in IVI's web applications is currently based on the following criteria: progression free survival (PFS) with 1L treatment, post-progression survival, total health care sector costs,oral administration (vs. intravenous administration), and years since FDA approval. If a 4-state model is selected, then PFS with 2L treatment is added as an additional criteria. Similarly, if the MCDA is conducted from limited societal perspective, then productivity costs are added as a criteria. Performance on the oral administration criteria is computed as the percentage of simulated life-years treated using oral therapies rather than intravenous therapies. Performance on the years since FDA approval criteria is the weighted time since FDA approval for each treatment in a treatment sequence, with weights equal to the number of life-years spent using a particular treatment with the sequence. In the web interfaces users can input their own weights for each of the criteria, but it is important to note that we have not conducted the surveys required to elicit weights for a representative sample of patients.
+Any combination of simulated model outcomes can be used for a MCDA. If a 3-state model is selected, the MCDA in IVI's web applications is currently based on the following criteria: progression free survival (PFS) with 1L treatment, post-progression survival, total health care sector costs,oral administration (vs. intravenous administration), and years since FDA approval. If a 4-state model is selected, then PFS with 2L treatment is added as an additional criteria. Similarly, if the MCDA is conducted from limited societal perspective, then productivity costs are added as a criteria. Performance on the oral administration criteria is computed as the percentage of simulated life-years treated using oral therapies rather than intravenous therapies. Performance on the years since FDA approval criteria is the weighted time since FDA approval for each treatment in a treatment sequence, with weights equal to the number of life-years spent using a particular treatment with the sequence. In the web interfaces users can input their own weights for each of the criteria, but it is important to note that we have not conducted the surveys required to elicit weights for a representative sample of patients.
 
 \section{Source data and parameter estimation}\label{sec:data}
 Key parameters for the model relate to: (i) treatment effects in terms of transitions between the health states; (ii) adverse events; (iii) utilities; (iv) healthcare resource use; and (v) productivity. Parameter estimates for the current version of the IVI-NSCLC(egfr+) model are based on currently available published evidence identified by means of a systematic literature review and synthesized with meta-analysis techniques where appropriate. To inform relevant decision-making at the local level, it is recommended to use resource use and cost estimates reflective of that setting. 
 
 \subsection{Treatment effects for transition rates} \label{subsec:data-trans-rates}
-Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, included studies, extracted information regarding study, treatment, and patient characteristics, and Kaplan-Meier survival curves are provided in \autoref{app:km-curves}. 
+Relevant evidence to estimate treatment effects with the alternative TKIs and chemotherapy regimens in terms of transitions between the health states was obtained with a systematic literature review of RCTs evaluating the efficacy of relevant competing interventions for the treatment of adult patients with metastatic EGFR+ non-squamous NSCLC by line of treatment (i.e. 1L, 2L, and 2L+) in terms of OS and PFS. Details regarding eligibility criteria, included studies, extracted information regarding study, treatment, and patient characteristics, and Kaplan-Meier (KM) survival curves are provided in \autoref{app:km-curves}. 
 The identified evidence base was used to 1) estimate the relative treatment effects for each 1L treatment versus a defined reference treatment; 2) estimate the absolute effects with the corresponding 1L reference treatment; and 3) estimate the absolute treatment effects with 2L treatment options. 
 
 It is important to note that the available PFS and OS data for the different interventions varied dramatically. At the time when the systematic literature review was performed, there was about 25 months of follow-up data available for osimertinib as 1L treatment, with median OS not yet reached; about 40 months of data for dacomitinib; 40-50 months for afatinib; and more than 50 months of follow-up data for gefitinib and erlotinib. This implies that treatment effect estimates for osimertinib and dacomitinib are much more uncertain than the other interventions at this stage, and are likely to change when longer term data become available. See \autoref{fig:FLAURA}-\autoref{fig:Yang 2014} for more detail.
 
 \subsubsection{Relative treatment effects with first line therapy}
-Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian network meta-analysis (NMA) using alternative fixed and random effects models. 
+Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian NMA using alternative fixed and random effects models. 
 
 RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \citep[Chapter~1]{dias2018network}.. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
 
@@ -447,9 +447,9 @@ The RCTs that were part of one evidence network and were deemed sufficiently sim
 \FloatBarrier
 
 \subsubsubsection{Network meta-analysis model}
-Traditionally, NMAs in oncology are based on separate analyses for OS and PFS, with relative treatment effects estimated using reported hazard ratios (HR). There are two limitations of this approach. First, HR estimates rely on the proportional hazard assumption, which is implausible if the hazard functions of the competing interventions cross \citep{dias2018network}. Second, separate analyses of OS and PFS ignore the structural relationship between stable disease, progression, and death and implicitly assume that transition probabilities for stable to death and progression to death are equal.
+Traditionally, NMAs in oncology are based on separate analyses for OS and PFS, with relative treatment effects estimated using reported hazard ratios (HR). There are two limitations of this approach. First, HR estimates rely on the proportional hazard assumption, which is implausible if the hazard functions of the competing interventions cross \citep[Chapter~10]{dias2018network}. Second, separate analyses of OS and PFS ignore the structural relationship between stable disease, progression, and death and implicitly assume that transition probabilities for stable to death and progression to death are equal.
 
-We overcome these limitations by introducing a multi-state NMA that explicitly estimates each possible transition in a 3-state model---stable to progression, stable to death, and progression to death--and modeling time-varying hazard rates and relative treatment effects with known parametric survival functions or fractional polynomials. Our approach is illustrated in \autoref{fig:multistate-nma} and expressed mathematically as follows:
+We overcome these limitations by introducing a multi-state NMA that explicitly estimates each possible transition in a 3-state model---stable to progression, stable to death, and progression to death--and modeling time-varying hazard rates and relative treatment effects with known parametric survival functions or fractional polynomials \citep{jansen2013multivariate}. Our approach is illustrated in \autoref{fig:multistate-nma} and expressed mathematically as follows:
 
 \FloatBarrier
 
@@ -512,9 +512,9 @@ d_{3, t_{ik}} - d_{3, t_{i1}} \\
 where $u^0= \ln(u)$ and ${d_{1,1}}=0$, ${d_{2,1}}=0$, and ${d_{3,1}}=0$
 \\
 
-$h_{ik}^{SD}(u)$, $h_{ik}^{PD}(u)$, and $h_{ik}^{SD}(u)$ are the the hazard rate for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ for treatment arm $k$ at time $u$. The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1, ${d_{1,1t}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $.  ${d_{2,1t}}$ are the treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression relative to the reference treatment 1 (i.e. gefitinib). To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. ${d_{3,1t}}$ are the treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death relative to reference treatment 1 (i.e. gefitinib). 
+$h_{ik}^{SD}(u)$, $h_{ik}^{PD}(u)$, and $h_{ik}^{SD}(u)$ are the hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ for treatment arm $k$ at time $u$. The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1, ${d_{1,1t}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $.  ${d_{2,1t}}$ are the treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression relative to the reference treatment 1 (i.e. gefitinib). To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. ${d_{3,1t}}$ are the treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death relative to reference treatment 1 (i.e. gefitinib). 
 
-When $p_{1}=0$ and $\alpha_{3ik}=0$ the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When $\{(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to allow for arc- and bathtub shaped log-hazard functions. 
+When $p_{1}=0$ and $\alpha_{3ik}=0$, the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When $\{(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to allow for arc- and bathtub shaped log-hazard functions. 
 
 A fixed effects model is obtained by replacing $\delta_{1,ik} \sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $\delta_{1,ik} = d_{1, t_{ik}} - d_{1, t_{i1}}$. 
 
@@ -522,7 +522,7 @@ If it is assumed that treatment has only a direct effect on the transitions from
 
 
 \subsubsubsection{Likelihood}
-The model parameters were estimated based on the number of patients $r$ in each of the three health states (stable, progression and death) at time $u$ for each arm $k$ of each trial $i$ obtained from the published Kaplan-Meier (KM) curves for time points for which both PFS and OS were reported. Accordingly, a multinomial likelihood was used for the proportion of patients in each of the three health states at any time point for each arm of each trial ($S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$) according to: 
+The model parameters were estimated based on the number of patients $r$ in each of the three health states (stable, progression and death) at time $u$ for each arm $k$ of each trial $i$ obtained from the published KM curves for time points for which both PFS and OS were reported. Accordingly, a multinomial likelihood was used for the proportion of patients in each of the three health states at any time point for each arm of each trial ($S_{ik}(u)$, $P_{ik}(u)$, and $D_{ik}(u)$) according to: 
 
 \begin{equation} \label{eqn:multinomial_likelihood}
 \begin{aligned}
@@ -657,7 +657,7 @@ The time-varying HRs corresponding to the parameter estimates  ${d_{1,t}}$ and $
 \caption{First line estimates of hazard ratios from stable to progression relative to gefitinib from the multi-state network meta-analysis}\label{fig:hr-1L}
 \end{figure}
 
-
+\FloatBarrier
 
 \subsubsection{Absolute effects with first line reference treatment}
 Absolute effects with 1L therapy with the reference intervention, i.e. gefitinib, were estimated with the multi-state meta-analysis model expressed in \autoref{eqn:multistate-ma} with likelihoods and transformations according to \autoref{eqn:multinomial_likelihood}, \autoref{eqn:diff_equations}, \autoref{eqn:binomial_likelihood}, and \autoref{eqn:diff_equations_OS} based on the reported KM curves of all the gefitinib treatment arms of the available RCTs.
@@ -750,7 +750,6 @@ Notes: The simulated posterior distribution of the parameters of the Bayesian mu
 \subsubsection{Absolute effects with second line therapy}
 For the 2L treatment options, the available number of RCTs among patients who progressed on 1L TKI were limited. For T790M positive patients, the transition rates with osimertinib were estimated based on data from two RCTs according to \autoref{eqn:multistate-ma} and with a prior distribution according to \autoref{eqn:multistate-ma-priors-gef}. Regarding other possible treatments, there was only data available for PBDC from three RCTs, which were used to estimate transition rates according to \autoref{eqn:multistate-ma} and \autoref{eqn:multistate-ma-priors-gef} as well. In the absence of RCT evidence, these estimates were assumed to be representative of the other 2L treatment regimens presented in \autoref{fig:treatment-strategies} for both an all-comer population and a T790M mutation negative population. \autoref{fig:hazards-2L} and \autoref{fig:hazard-2L-weibull} -  \autoref{fig:hazard-2L-gompertz} show the hazard functions for the transitions between stable, progression, and death for each fitted model and \autoref{fig:surv-2L} show the corresponding PFS and OS curves.
 
-\FloatBarrier
 
 
 
@@ -790,6 +789,9 @@ For the 2L treatment options, the available number of RCTs among patients who pr
 Notes: The simulated posterior distribution of the parameters of the Bayesian multi-state NMA was used to simulate a distribution of progression-free survival and overall survival curves. The solid lines are posterior means and the shaded region denotes the 95 percent credible interval.
 \end{minipage}
 \end{figure}
+
+\FloatBarrier
+
 
 \subsubsection{Software}
 The parameters of the different models were estimated using a Markov Chain Monte Carlo (MCMC) method implemented in the JAGS software package. All JAGS analyses were run using \R{} statistical software \citep{team2014r}. See \autoref{sec:1l-nma-jags}, \autoref{sec:1l-ma-jags}, and \autoref{sec:2l-jags} for the JAGS code of the models used to estimate treatment effects.
@@ -1051,9 +1053,13 @@ Reduction in hours worked & Uniform\\
 \end{table}
 
 \subsection{Structural uncertainty}
-Structural uncertainty is assessed in two ways. First, as discussed in \autoref{subsec:data-trans-rates} different model specifications were used in the multi-state NMA. These included a Weibull model and two second order fractional polynomial models $\{(p_0, p_1) = (0, 0), (0,1)\}$. A Gompertz distribution was also considered but the model fit was considerably worse. 
+Structural uncertainty is assessed in two ways. First, as discussed in \autoref{subsec:data-trans-rates} different model specifications were used in the multi-state NMA. These included a Weibull model and two second order fractional polynomial models $\{(p_0, p_1) = (0, 0), (0,1)\}$. A Gompertz distribution was also considered but the model fit was considerably worse and resulted in unstable extrapolated estimates. 
 
 Second, both  4-state (\autoref{fig:model-structure-4-states}) and 3-state (\autoref{fig:model-structure-3-states}) model structures can be used. The 3-state approach is the typical model structure in economic modeling in oncology and therefore included for consistency with the standard approach. That said, the 4-state model may be preferred because it is able to overcome some of the limitations of the 3-state model. For one, estimates of transition rates following progression are based on specific 2L treatments rather than an "average" of 2L treatments (as in the $P_1$ to $D$ transition in the 3-state model). Similarly, treatment costs after progression are based on explicit treatment sequences (i.e., 2L treatment following by 2L+ treatment) whereas in the 3-state model assumptions must be made such as using a market basket of post 1L treatments or (as is commonly done, including by us) assuming that costs in the progressed state are based on 2L treatment.
+
+\FloatBarrier
+
+
 
 \begin{appendices}
 \setcounter{table}{0}
@@ -1072,6 +1078,7 @@ Second, both  4-state (\autoref{fig:model-structure-4-states}) and 3-state (\aut
 \caption{Age distribution of patients with cancer of the lung and bronchus}\label{fig:age-distribution}
 \end{figure}
 
+\FloatBarrier
 
 \section{Systematic Literature Review}\label{app:slr}
 
@@ -1253,7 +1260,7 @@ English language\\
 \FloatBarrier
 
 \subsection{Resource use, productivity, and cost}
-Relevant evidence regarding resource use, productivity and cost estimates was identified by means of a review of published cost-of-illness studies, cost-effectiveness studies, and budget impact studies in NSCLC relevant for the US setting. Criteria defining studies considered relevant are outlined in \autoref{tbl:picos-cost}. The most recent studies reporting relevant estimates among EGFR+NSCLC patients treated with TKIs were used in the economic model.
+Relevant evidence regarding resource use and cost estimates was identified by means of a review of published cost-of-illness studies, cost-effectiveness studies, and budget impact studies in NSCLC relevant for the US setting. Criteria defining studies considered relevant are outlined in \autoref{tbl:picos-cost}. The most recent studies reporting relevant estimates among EGFR+NSCLC patients treated with TKIs were used in the economic model.
 
 \begin{table}[!ht]
 \begin{center}
@@ -1300,9 +1307,9 @@ For the review of clinical evidence, two reviewers, working independently, revie
 For the review of utility studies and studies providing evidence on healthcare utilization and costs, this process was performed by a single reviewer and findings checked by a second-reviewer. 
 
 \subsection{Data collection}
-For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. For PFS and OS, hazard ratios and associated information regarding uncertainty were extracted. If results were reported as forest plots, the point estimate and 95\$ percent\ confidence interval were extracted using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.). Kaplan Meier curves will also be digitzed using DigitizeIt and the proportion of patients free of the event over time will be extracted and the number of patients at risk over time. Adverse events were collected, if reported. 
+For the clinical studies, two reviewers, working independently, extracted data on study characteristics, interventions, patient characteristics, and outcomes for the final list of included studies. Following reconciliation between the two reviewers, a third reviewer was included to reach consensus on any remaining discrepancies. For all outcomes of interest, information regarding point estimates, variability and uncertainty was obtained. PFS and OS KM curves were digitzed using DigitizeIt software version 2.1.4 (Bormisoft - Informer Technologies, Inc.) and the proportion of patients free of the event over time were extracted and the number of patients at risk over time. Adverse events were collected, if reported. 
 
-For utility and cost-effectiveness studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. Spreadsheets with extracted data are available on GitHub.
+For utility and economic studies, relevant information for the model was extracted from the source publications and checked by a second-reviewer. Spreadsheets with extracted data are available on GitHub.
 
 \subsection{Limitations}
 Despite the strengths of the systematic literature review to identify relevant evidence, some limitations should be acknowledged. First, the scope of the review was restricted to studies published in English. Second, the evidence base is continually growing and at some point the studies used for model input parameter estimates may no longer reflect the latest data. This may especially be the case for the efficacy of osimertinib and dacomitinib. Third, there is always a risk of publication or outcome reporting bias. Finally, the information obtained from the literature and used in the model may not be an accurate reflection of a local setting.
@@ -1358,13 +1365,11 @@ In .... information regarding study design characteristics is provided for the s
 \end{center}
 \end{sidewaystable}
  
-
 \subsection{Treatment characteristics} \label{app:treatment-characteristics}
-In .... information regarding characteristics of the interventions evaluated in the studies used to estimate PFS and OS is provided.
+In .... information regarding characteristics of the interventions evaluated in the studies used to estimate treatment effects is provided.
 
 
 \subsection{Patient characteristics} \label{app:patient-characteristics}
-
 \autoref{tbl:patchar-1-1L}-\autoref{tbl:patchar-3-2L} provides information on the study populations of the different studies used to estimate PFS and OS. \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l} shows the distribution of key characteristics across the studies. 
 
 
