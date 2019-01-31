@@ -1,0 +1,18 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Jan 30 22:26:42 2019
+  \hline
+ARCHER1050 & $\geq$ 18 ($\geq$ 20 in Japan and South Korea) & IIIb or IV & 0-1 (ECOG) & -- & Adenocarcinoma & -- & -- & Mutation + (Exon 19 or L858R with or without Thr790Met mutation) & Yes & Yes \\ 
+  ENSURE & $\geq$ 18 & IIIb or IV & 0-2 (ECOG) & -- & -- & -- & Asian & Mutation+ (Exon 19 or 21) & Yes & Yes \\ 
+  EURTAC & > 18 years & IIIb or IV & 0-1 (ECOG) & -- & -- & -- & -- & Mutation+ (Exon 19 or 21) & Yes & No \\ 
+  First-SIGNAL & > 18 years & IIIb or IV & 0-2 (ECOG) & -- & Adenocarcinoma & Never-smoker & Asian & -- & Yes & Yes \\ 
+  FLAURA & $\geq$ 18 years & IIIb or IV & 0-1 (WHO) & at least 12 weeks & Adenocarcinoma & -- & -- & Mutation+ (Activating) & Yes & No \\ 
+  Han 2017 & > 18 years & IIIb or IV & 0-1 (ECOG) & -- & Adenocarcinoma & -- & Asian & Mutation+ (Sensitive) & Yes & Yes \\ 
+  IPASS & $\geq$ 18 years & IIIb or IV & 0-2 (WHO) & -- & Adenocarcinoma & Never smoker or former light smoker & Asian & -- & Yes & -- \\ 
+  LUX-lung 3 & > 18 years & IIIb or IV & 0-1 (ECOG) & at least 12 weeks & Adenocarcinoma & -- & -- & Mutation+ & Yes & Yes \\ 
+  LUX-lung 6 & $\geq$ 18 years & IIIb or IV & 0-1 (ECOG) & at least 12 weeks & Adenocarcinoma & -- & Asian & Mutation+ & Yes & Yes \\ 
+  LUX-lung 7 & $\geq$ 18 years & IIIb or IV & 0-1 (ECOG) & -- & Adenocarcinoma & -- & -- & Mutation+ & Yes & Yes \\ 
+  NEJ002 & 20-75 years & IIIb or IV & 0-1 (ECOG) & at least 12 weeks & -- & -- & Asian & Mutation+ (Sensitive) & Yes & Yes \\ 
+  OPTIMAL & > 18 years & IIIb or IV & 0-2 (ECOG) & at least 12 weeks & -- & -- & Asian & Mutation+ & Yes & Yes \\ 
+  WJTOG3405 & 20-75 years & IIIb or IV & 0-1 (WHO) & -- & -- & -- & Asian & Mutation + (Exon 19 or L858R) & Yes & Yes \\ 
+  Yang 2014 & $\geq$ 18 years & IIIb or IV & 0-1 (ECOG) & -- & Non-squamous & Never-smoker or former light smoker & Asian & Mutation+ & Yes & Yes \\ 
+   \hline

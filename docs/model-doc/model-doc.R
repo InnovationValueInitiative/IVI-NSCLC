@@ -605,6 +605,33 @@ save_trials_tbl(studychar$v1_2L, integer_cols = integer_cols, prop_cols = NULL,
                 drop_cols = drop_cols,
                 filename = "tables/studychar-1-2L.txt", print = to_print)
 
+## Inclusion/exclusion criteria
+drop_cols <- c("inclusion_criteria_description", "exclusion_criteria_description",
+               "prior_chemo_plat_based", "prior_egfr_tki_treatment_lines",
+               "prior_chemo_line",
+               "cns_metastases_excluded_detail", "egfr_mutation")
+save_trials_tbl(studychar$v2_1L, integer_cols = NULL, prop_cols = NULL,
+                drop_cols = drop_cols,
+                filename = "tables/studychar-2-1L.txt", print = to_print)
+save_trials_tbl(studychar$v2_2L, integer_cols = NULL, prop_cols = NULL,
+                drop_cols = drop_cols,
+                filename = "tables/studychar-2-2L.txt", print = to_print)
+
+## Bias tables
+drop_cols <- c("selection_bias_randomization_reason", 
+               "selection_bias_allocation_concealment_reason",
+               "performance_bias_blinding_participants_reason",
+               "detection_bias_blinding_outcome_reason",
+               "attrition_bias_incomplete_outcome_reason",
+               "reporting_bias_selective_reason",
+               "other_bias_reason")
+save_trials_tbl(studychar$v3_1L, integer_cols = NULL, prop_cols = NULL,
+                drop_cols = drop_cols,
+                filename = "tables/studychar-3-1L.txt", print = to_print)
+save_trials_tbl(studychar$v3_2L, integer_cols = NULL, prop_cols = NULL,
+                drop_cols = drop_cols,
+                filename = "tables/studychar-3-2L.txt", print = to_print)
+
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame
 txtstats <- data.frame(do.call(rbind, txt))

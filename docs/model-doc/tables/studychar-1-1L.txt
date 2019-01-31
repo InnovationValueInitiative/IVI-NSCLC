@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan 30 21:18:07 2019
+% Wed Jan 30 22:26:42 2019
   \hline
 ARCHER1050 & RCT & III & Dacomitinib & Gefitinib & 227 & 225 & April, 2013 & Open-label & Yes & No \\ 
   ENSURE & RCT & III & Erlotinib & Cisplatin + Gemcitabine & 110 & 107 & March, 2011 & Open-label & Yes & Yes \\ 

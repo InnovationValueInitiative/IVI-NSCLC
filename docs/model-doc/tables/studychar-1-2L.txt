@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan 30 21:20:42 2019
+% Wed Jan 30 22:26:42 2019
   \hline
 AURA2 & Single-arm & II & Osimertinib (80mg) & -- & 411 & -- & May, 2014 & Open-label & Yes & -- \\ 
   AURA3 & RCT & III & Osimertinib & Pemetrexed + Carboplatin/Cisplatin & 279 & 140 & August, 2014 & Open-label & Yes & -- \\ 

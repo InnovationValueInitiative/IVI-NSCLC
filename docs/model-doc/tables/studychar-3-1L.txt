@@ -1,0 +1,18 @@
+% latex table generated in R 3.4.1 by xtable 1.8-2 package
+% Wed Jan 30 22:35:21 2019
+  \hline
+ARCHER1050 & Low risk & Low risk & High risk & Low risk & Low risk & Low risk & High Risk \\ 
+  ENSURE & Low risk & Unclear risk & High risk & Low risk & Low risk & Low risk & High Risk \\ 
+  EURTAC & Low risk & Low risk & High risk & Low risk & Low risk & Low risk & High Risk \\ 
+  First-SIGNAL & Low risk & Unclear risk & High risk & Low risk & Low risk & Low risk & High Risk \\ 
+  FLAURA & Low risk & Low risk & Low risk & Low risk & Low risk & Low risk & Low Risk \\ 
+  Han 2017 & Low risk & Low risk & High risk & Unclear risk & Low risk & Low risk & High Risk \\ 
+  IPASS & Low risk & Unclear risk & High risk & Unclear risk & Low risk & Low risk & High Risk \\ 
+  LUX-lung 3 & Low risk & Unclear risk & High risk & Low risk & Low risk & Low risk & High Risk \\ 
+  LUX-lung 6 & Low risk & Low risk & High risk & Low risk & Low risk & Low risk & High Risk \\ 
+  LUX-lung 7 & Low risk & Low risk & High risk & Low risk & Low risk & Low risk & High Risk \\ 
+  NEJ002 & Low risk & Unclear risk & High risk & Low risk & Low risk & Low risk & Low Risk \\ 
+  OPTIMAL & Low risk & Low risk & High risk & High risk & Low risk & Low risk & High Risk \\ 
+  WJTOG3405 & Low risk & Low risk & High risk & Unclear risk & Low risk & Low risk & High Risk \\ 
+  Yang 2014 & Low risk & Low risk & High risk & Unclear risk & Low risk & Low risk & High Risk \\ 
+   \hline
