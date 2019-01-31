@@ -493,7 +493,7 @@ patchar_2_1L <- data.table(read_excel("tables-raw/patchars.xlsx",
 patchar_2_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-2-2L"))
 patchar_3_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
-                                      sheet = "patchar-3-2L"))
+                                      sheet = "patchar-3-1L"))
 patchar_3_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
                                       sheet = "patchar-3-2L"))
 
@@ -554,6 +554,16 @@ save_patchar_tbl(patchar_2_1L, integer_cols = NULL, prop_cols,
                         filename = "tables/patchar-2-1L.txt", print = to_print)
 save_patchar_tbl(patchar_2_2L, integer_cols = NULL, prop_cols,
                         filename = "tables/patchar-2-2L.txt", print = to_print)
+
+# Histology and mutation status
+prop_cols <- c("histology_adenocarcinoma", "histology_squamous", "histology_large_cell", 
+               "histology_broncho_alveolar_carcinoma",
+               "histology_other", "egfr_positive", "egfr_negative", "egfr_missing", "egfr_activating", "egfr_exon_19_deletion",
+               "egfr_exon_21_l858R", "egfr_other_mutation")
+save_patchar_tbl(patchar_3_1L, integer_cols = NULL, prop_cols,
+                        filename = "tables/patchar-3-1L.txt", print = to_print)
+save_patchar_tbl(patchar_3_2L, integer_cols = NULL, prop_cols,
+                        filename = "tables/patchar-3-2L.txt", print = to_print)
 
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame
