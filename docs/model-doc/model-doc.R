@@ -1,5 +1,6 @@
 rm(list = ls())
 library("data.table")
+library("readxl")
 library("ggplot2")
 library("xtable")
 library("pracma") # For numerical integration with trapezoid rule
@@ -478,29 +479,58 @@ txt$HoursReductionLower <- perm_disability["hours_reduction_lower"]
 txt$HoursReductionUpper <- perm_disability["hours_reduction_upper"]
 
 # SLR --------------------------------------------------------------------------
-prop_digits <- 0
+# References
+trials <- fread("tables-raw/trials.csv")
+trials[, ref := paste0("\\citet{", ref, "}")]
 
-patchar_1_1L <- fread("tables-raw/patchar-1-1L.csv", fill = TRUE)
-patchar_1_1L[, treatment := gsub("%", "\\\\%", treatment)]
-integer_cols <- c("age_median", "age_min", "age_max")
-for (j in integer_cols){
-  patchar_1_1L[, (j) := formatC(get(j), format = "d")]
-  set(patchar_1_1L, which(patchar_1_1L[[j]] == "NA"), j, "--")
-}
-prop_cols <- c("female_prop", "caucasian_prop", "asian_prop", "current_or_former_smoker_prop",
-               "current_smoker_prop", "former_smoker_prop", "never_smoker_prop")
-for (j in prop_cols){
-  patchar_1_1L[, (j) := formatC(100 * get(j), format = "f", 
-                                           digits = prop_digits)]
-  set(patchar_1_1L, which(patchar_1_1L[[j]] == "NA"), j, "--")
-  patchar_1_1L[, (j) := ifelse(get(j) != "--",
-                               paste0(get(j), "\\%"),
-                               get(j))]
-}
-print(xtable(patchar_1_1L), 
+# Patient characteristics tables
+patchar_1_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+                                      sheet = "patchar-1-1L"))
+patchar_1_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+                                      sheet = "patchar-1-2L"))
+patchar_2_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+                                      sheet = "patchar-2-1L"))
+patchar_2_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+                                      sheet = "patchar-2-2L"))
+patchar_3_1L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+                                      sheet = "patchar-3-2L"))
+patchar_3_2L <- data.table(read_excel("tables-raw/patchars.xlsx", 
+                                      sheet = "patchar-3-2L"))
+
+save_patchar_tbl <- function(data, integer_cols, prop_cols,
+                              filename, prop_digits = 0, print = FALSE){
+  x <- copy(data)
+  x[, treatment := gsub("%", "\\\\%", treatment)]
+  for (j in integer_cols){
+    x[, (j) := formatC(get(j), format = "d")]
+    set(x, which(x[[j]] == "NA"), j, "--")
+  }
+  for (j in prop_cols){
+    x[, (j) := formatC(100 * get(j), format = "f", 
+                                             digits = prop_digits)]
+    set(x, which(x[[j]] == "NA"), j, "--")
+    x[, (j) := ifelse(get(j) != "--",
+                      paste0(get(j), "\\%"),
+                      get(j))]
+  }  
+  print(xtable(x), 
       include.rownames = FALSE, include.colnames = FALSE,
       only.contents = TRUE, sanitize.text.function = identity,
-      file = "tables/patchar-1-1L.txt")
+      file = filename)
+  if (print){
+    print(x)
+  }
+}
+
+# Demographics and health behavior
+integer_cols <- c("age_median", "age_min", "age_max")
+prop_cols <- c("female_prop", "caucasian_prop", "asian_prop", "current_or_former_smoker_prop",
+               "current_smoker_prop", "former_smoker_prop", "never_smoker_prop")
+save_patchar_tbl(patchar_1_1L, integer_cols, prop_cols,
+                        filename = "tables/patchar-1-1L.txt", print = TRUE)
+save_patchar_tbl(patchar_1_2L, integer_cols, prop_cols,
+                        filename = "tables/patchar-1-2L.txt", print = TRUE)
+
 
 # Text for model documentation -------------------------------------------------
 # convert statistics to data frame

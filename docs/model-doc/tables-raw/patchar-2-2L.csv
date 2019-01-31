@@ -1,7 +1,0 @@
-﻿Trial ID,Population,Treatment,ECOG/WHO Performance status,,,,,Disease Stage (baseline),,,,,,
-,,,Status (ECOG/WHO),"0, %, reported","1, %, reported","0/1, %, reported","2, %, reported","Stage IA, %, reported","Stage IB, %, reported","Stage IIA, %, reported","Stage IIB, %, reported","Stage IIIA, %, reported","Stage IIIB, %, reported","Stage IV, %, reported"
-AURA2,All,Osimitinib,WHO,37.00%,63.00%,--,<1,--,--,--,--,--,--,--
-AURA3,ITT,Osimertinib,WHO,37.00%,63.00%,--,--,--,--,--,--,--,5.00%,95.00%
-AURA3,ITT,Pemetrexed + Carboplatin/Cisplatin,WHO,40.00%,60.00%,--,--,--,--,--,--,--,1.00%,99.00%
-IMPRESS,ITT,Gefitinib + Cisplatin + Pemetrexed,WHO,41.00%,59.00%,100.00%,--,--,--,--,--,--,--,93.00%
-IMPRESS,ITT,Placebo + Cisplatin + Pemetrexed,WHO,40.00%,60.00%,100.00%,--,--,--,--,--,--,--,90.00%

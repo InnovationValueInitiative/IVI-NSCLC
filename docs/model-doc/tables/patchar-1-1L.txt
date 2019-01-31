@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.1 by xtable 1.8-2 package
-% Wed Jan 30 11:38:20 2019
+% Wed Jan 30 18:05:42 2019
   \hline
 ARCHER1050 & All & Dacomitinib & 62 & -- & -- & 64\% & 25\% & 75\% & -- & 7\% & 29\% & 65\% \\ 
   ARCHER1050 & All & Gefitinib & 61 & -- & -- & 56\% & 22\% & 78\% & -- & 8\% & 28\% & 64\% \\ 
@@ -11,9 +11,9 @@ ARCHER1050 & All & Dacomitinib & 62 & -- & -- & 64\% & 25\% & 75\% & -- & 7\% & 
   First-SIGNAL & ITT & Cisplatin + Gemcitabine & 56 & 19 & 74 & 89\% & -- & 100\% & -- & -- & -- & 100\% \\ 
   FLAURA & ITT & Osimertinib & 64 & 26 & 85 & 64\% & 36\% & 62\% & -- & 3\% & 32\% & 65\% \\ 
   FLAURA & ITT & Gefitinib (66\%) / Erlotinib (34\%) & 64 & 35 & 93 & 62\% & 36\% & 62\% & -- & 3\% & 34\% & 63\% \\ 
-  Han 2017 & ITT & Carboplatin + Pemetrexed + Gefitinib & -- & -- & -- & 62\% & -- & 100\% & 32\% & -- & -- & 68\% \\ 
-  Han 2017 & ITT & Carboplatin + Pemetrexed & -- & -- & -- & 57\% & -- & 100\% & 28\% & -- & -- & 72\% \\ 
-  Han 2017 & ITT & Gefitinib & -- & -- & -- & 56\% & -- & 100\% & 34\% & -- & -- & 66\% \\ 
+  Han2017 & ITT & Carboplatin + Pemetrexed + Gefitinib & -- & -- & -- & 62\% & -- & 100\% & 32\% & -- & -- & 68\% \\ 
+  Han2017 & ITT & Carboplatin + Pemetrexed & -- & -- & -- & 57\% & -- & 100\% & 28\% & -- & -- & 72\% \\ 
+  Han2017 & ITT & Gefitinib & -- & -- & -- & 56\% & -- & 100\% & 34\% & -- & -- & 66\% \\ 
   IPASS & ITT & Gefitinib & 57 & 24 & 84 & 80\% & -- & 100\% & -- & -- & 6\% & 94\% \\ 
   IPASS & ITT & Carboplatin + Paclitaxel & 57 & 25 & 84 & 79\% & -- & 100\% & -- & -- & 6\% & 94\% \\ 
   IPASS & EGFR+ & Gefitinib & -- & -- & -- & 82\% & -- & -- & -- & -- & -- & 94\% \\ 
@@ -30,6 +30,6 @@ ARCHER1050 & All & Dacomitinib & 62 & -- & -- & 64\% & 25\% & 75\% & -- & 7\% & 
   OPTIMAL & All & Carboplatin + Gemcitabine & 59 & 36 & 78 & 60\% & -- & 100\% & 31\% & -- & -- & 69\% \\ 
   WJTOG3405 & ITT & Gefitinib & 64 & 34 & 74 & 69\% & -- & 100\% & 29\% & -- & -- & -- \\ 
   WJTOG3405 & ITT & Docetaxel + Cisplatin & 64 & 41 & 75 & 70\% & -- & 100\% & 34\% & -- & -- & -- \\ 
-  Yang 2014 & ITT & Cisplatin + Pemetrexed followed by Gefitinib maintenance & 59 & 24 & 81 & 75\% & -- & 100\% & -- & -- & 8\% & 92\% \\ 
-  Yang 2014 & ITT & Gefitinib & 59 & 31 & 79 & 75\% & -- & 100\% & -- & -- & 8\% & 92\% \\ 
+  Yang2014 & ITT & Cisplatin + Pemetrexed followed by Gefitinib maintenance & 59 & 24 & 81 & 75\% & -- & 100\% & -- & -- & 8\% & 92\% \\ 
+  Yang2014 & ITT & Gefitinib & 59 & 31 & 79 & 75\% & -- & 100\% & -- & -- & 8\% & 92\% \\ 
    \hline
