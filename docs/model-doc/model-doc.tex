@@ -432,11 +432,11 @@ It is important to note that the available PFS and OS data for the different int
 \subsubsection{Relative treatment effects with first line therapy}
 Relative treatment effects of the competing TKIs in comparison to gefitinib for the 1L treatment of EGFR+ NSCLC were estimated by means of a Bayesian NMA using alternative fixed and random effects models. 
 
-RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \citep[Chapter~1]{dias2018network}.. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
+RCTs are considered the gold standard to assess treatment effects of medical interventions. For many disease states there are multiple competing interventions to choose from. However, an RCT will rarely include all competing interventions of interest for a particular disease state when there are more than two relevant treatment options available. As such, an individual trial rarely provides all the information needed to guide evidence-based treatment selection. When each RCT compares only a subset of the interventions of interest---it may be possible to represent the evidence base as a network where all trials have at least one intervention in common with another trial. Such a network of trials involving treatments compared directly, indirectly, or both, can be synthesized by means of a network meta-analysis \citep[Chapter~1]{dias2018network}. As a result we not only get pooled results of available treatment comparisons studied in a head-to-head fashion but also relative treatment effects between interventions not compared directly. In order to ensure that a network meta-analysis are not affected by bias due to differences in prognostic factors between studies, we want to only consider the relative treatment effects of each trial. This implies that all interventions have to be part of one network of trials where each trial has at least one intervention in common with another trial.  
 
 Patients are randomized only within trials, not across trials, so there is a risk that patients participating in different trials differ with respect to demographic, disease or other characteristics. In addition, features of the trials themselves may differ. If these trial or patient characteristics are effect modifiers, i.e. they affect the treatment effects of an intervention versus a control, then there are systematic differences in treatment effects across trials. Systematic differences in known and unknown effect-modifiers among studies comparing the same interventions in direct fashion result in between-study heterogeneity. An imbalance in the distribution of effect modifiers between studies comparing different interventions will result in transitivity or consistency violations and therefore biased indirect comparisons.
 
-The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \autoref{fig:RCT network-1L}. Information regarding the distribution of patients characteristics across the studies in the network  are presented in \ \autoref{app:patient-characteristics}. 
+The RCTs that were part of one evidence network and were deemed sufficiently similar were included in the NMA. The evidence network for 1L treatments is presented in \autoref{fig:RCT network-1L}. Information regarding the distribution of patients characteristics across the studies in the network  are presented in  \autoref{tbl:patchar-1-1L}-\autoref{tbl:patchar-3-2L} and \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l}.
 
 \begin{figure}
 \centering
@@ -648,7 +648,7 @@ The prior distribution for the probabilities at the beginning of each interval, 
 \end{equation}
 
 \subsubsubsection{Estimated time-varying hazard ratios}
-The time-varying HRs corresponding to the parameter estimates  ${d_{1,t}}$ and ${d_{2,t}}$   of the fixed effects Weibull, Gompertz, and fractional polynomial models without a treatment effect for progression to death (i.e. ${d_{3,t}=0}$) are presented in \autoref{fig:hr-1L} and \autoref{fig:hr-1L-weibull}- \autoref{fig:hr-1L-gompertz}.
+The time-varying HRs corresponding to the parameter estimates  ${d_{1,t}}$ and ${d_{2,t}}$   of the fixed effects Weibull, Gompertz, and fractional polynomial models without a treatment effect for progression to death (i.e. ${d_{3,t}=0}$) are presented in \autoref{fig:hr-1L} and \autoref{fig:hr-1L-weibull}-\autoref{fig:hr-1L-gompertz}.
 
 
 \begin{figure}[h]
@@ -722,9 +722,9 @@ T_M =
 \end{equation}
 
 
-\autoref{fig:hazard-gef-1L} and \autoref{fig:hazard-1L-gef-weibull} - \autoref{fig:hazard-1L-gef-gompertz} show the hazard functions for the transitions between stable, progression, and death with gefitinib for each fitted model.
+\autoref{fig:hazard-gef-1L} and \autoref{fig:hazard-1L-gef-weibull}-\autoref{fig:hazard-1L-gef-gompertz} show the hazard functions for the transitions between stable, progression, and death with gefitinib for each fitted model.
 
-The posterior distributions of $M_{\cdot}$ along with the parameters representing the relative treatment effects of each TKI relative to gefitinib ($d_{1, t}$ and ${d_{2,t}}$), were used to simulate a posterior distribution for PFS and OS as displayed in \autoref{fig:surv-1L} and \autoref{fig:surv-1L-weibull}- \autoref{fig:surv-1L-gompertz} for each 1L treatment and each fitted model. 
+The posterior distributions of $M_{\cdot}$ along with the parameters representing the relative treatment effects of each TKI relative to gefitinib ($d_{1, t}$ and ${d_{2,t}}$), were used to simulate a posterior distribution for PFS and OS as displayed in \autoref{fig:surv-1L} and \autoref{fig:surv-1L-weibull}-\autoref{fig:surv-1L-gompertz} for each 1L treatment and each fitted model. 
 
 
 \begin{figure}[h]
@@ -748,7 +748,7 @@ Note: The simulated posterior distribution of the parameters of the Bayesian mul
 
 
 \subsubsection{Absolute effects with second line therapy}
-For the 2L treatment options, the available number of RCTs among patients who progressed on 1L TKI were limited. For T790M positive patients, the transition rates with osimertinib were estimated based on data from two RCTs according to \autoref{eqn:multistate-ma} and with a prior distribution according to \autoref{eqn:multistate-ma-priors-gef}. Regarding other possible treatments, there was only data available for PBDC from three RCTs, which were used to estimate transition rates according to \autoref{eqn:multistate-ma} and \autoref{eqn:multistate-ma-priors-gef} as well. In the absence of RCT evidence, these estimates were assumed to be representative of the other 2L treatment regimens presented in \autoref{fig:treatment-strategies} for both an all-comer population and a T790M mutation negative population. \autoref{fig:hazards-2L} and \autoref{fig:hazard-2L-weibull} -  \autoref{fig:hazard-2L-gompertz} show the hazard functions for the transitions between stable, progression, and death for each fitted model and \autoref{fig:surv-2L} show the corresponding PFS and OS curves.
+For the 2L treatment options, the available number of RCTs among patients who progressed on 1L TKI were limited. For T790M positive patients, the transition rates with osimertinib were estimated based on data from two RCTs according to \autoref{eqn:multistate-ma} and with a prior distribution according to \autoref{eqn:multistate-ma-priors-gef}. Regarding other possible treatments, there was only data available for PBDC from three RCTs, which were used to estimate transition rates according to \autoref{eqn:multistate-ma} and \autoref{eqn:multistate-ma-priors-gef} as well. In the absence of RCT evidence, these estimates were assumed to be representative of the other 2L treatment regimens presented in \autoref{fig:treatment-strategies} for both an all-comer population and a T790M mutation negative population. \autoref{fig:hazards-2L} and \autoref{fig:hazard-2L-weibull}-\autoref{fig:hazard-2L-gompertz} show the hazard functions for the transitions between stable, progression, and death for each fitted model and \autoref{fig:surv-2L} show the corresponding PFS and OS curves.
 
 
 
@@ -1328,7 +1328,7 @@ Despite the strengths of the systematic literature review to identify relevant e
 
 \section{Clinical evidence base}
 \subsection{Study identification and selection} \label{app:study-selection}
-The identification and selection of relevant studies used to estimate treatment effects is summarized with \autoref{fig:slr-flow}. Detailed results regarding the screening and selection process are available in the spreadsheet available on GitHub.
+The identification and selection of relevant studies used to estimate treatment effects regarding the transitions between the health states with 1L and 2L treatment and adverse events is summarized with \autoref{fig:slr-flow}. An overview of these clinical trials is provided in \autoref{tbl:trials}. Detailed results regarding the screening and selection process are available in the spreadsheet available on GitHub.
 
 \begin{figure}
 \centering
@@ -1336,7 +1336,6 @@ The identification and selection of relevant studies used to estimate treatment 
 \caption{Study identification and selection}\label{fig:slr-flow}
 \end{figure}
 
-The clinical trials used to estimate treatment effects are provided in \autoref{tbl:trials}.
 
 \begin{table}[!ht]
 \begin{center}
@@ -1358,7 +1357,7 @@ The clinical trials used to estimate treatment effects are provided in \autoref{
 \FloatBarrier
 
 \subsection{Study characteristics} \label{app:study-characteristics}
-\autoref{tbl:studychar-1-1L}-\autoref{tbl:studychar-3-2L} provide information on the study design characteristics for the studies used to estimate PFS and OS.
+\autoref{tbl:studychar-1-1L}-\autoref{tbl:studychar-3-2L} provide information on the design characteristics of the studies used to estimate treatment effects (efficacy and safety). 
 
 \begin{sidewaystable}[h]
 \begin{center}
@@ -1529,7 +1528,7 @@ Information regarding characteristics of the interventions evaluated in the stud
 \FloatBarrier
 
 \subsection{Patient characteristics} \label{app:patient-characteristics}
-\autoref{tbl:patchar-1-1L}-\autoref{tbl:patchar-3-2L} provides information on the study populations of the different studies used to estimate PFS and OS. \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l} shows the distribution of key characteristics across the studies. 
+\autoref{tbl:patchar-1-1L}-\autoref{tbl:patchar-3-2L} provide information on the patient characteristics of the studies used to estimate treatment effects. \autoref{fig:female-1l}-\autoref{fig:currentformermoker-1l} show the distribution of key characteristics across the different types of 1L head-to-head comparisons.
 
 
 \begin{sidewaystable}[h]
