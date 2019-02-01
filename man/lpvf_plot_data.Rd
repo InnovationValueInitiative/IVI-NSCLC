@@ -4,10 +4,17 @@
 \alias{lpvf_plot_data}
 \title{Data to plot linear partial value function}
 \usage{
-lpvf_plot_data(x, optimal = c("low", "high"), length_out = 1000)
+lpvf_plot_data(x, criteria_min = NULL, criteria_max = NULL,
+  optimal = c("low", "high"), length_out = 1000)
 }
 \arguments{
 \item{x}{Model outcomes for a particular criteria on the original scale.}
+
+\item{criteria_min}{A vector of minimum values for each criterion. If \code{NULL}, 
+then the minimum value is computed automatically.}
+
+\item{criteria_max}{A vector of maximum values for each criterion. If \code{NULL}, 
+then the maximum value is computed automatically.}
 
 \item{optimal}{If \code{"low"}, then lower values of the outcome are better, and,
 if \code{"high"}, then higher values of the outcome are better.}
@@ -25,8 +32,15 @@ particular criteria given model outcomes.
 }
 \examples{
 outcome <- rnorm(10, mean = 100, sd = 11)
+
+# Using optimal
 plot_data <- lpvf_plot_data(outcome, optimal = "high")
 print(plot_data)
+
+# Using criteria_min and criteria_max
+plot_data <- lpvf_plot_data(outcome, criteria_min = 80, criteria_max = 130)
+print(plot_data)
+
 }
 \seealso{
 \code{\link{mcda}}

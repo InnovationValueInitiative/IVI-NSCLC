@@ -30,6 +30,32 @@ test_that("performance_matrix", {
               as.numeric(substr(pmat[1,1],1, pos[[1]])))
 })
 
+test_that("lpvf_plot_data", {
+  # Automatically compute min/max
+  ## Upward slope
+  dat <- lpvf_plot_data(outcome1, optimal = "high")
+  expect_true(dat[1, y] < dat[5, y])
+  expect_equal(min(dat$y), 0)
+  expect_equal(max(dat$y), 100)
+  
+  ## Downward slope
+  dat <- lpvf_plot_data(outcome1, optimal = "low")
+  expect_true(dat[1, y] > dat[20, y]) 
+  
+  # Manually set min/max
+  ## Upward slope
+  dat <- lpvf_plot_data(outcome1, criteria_min = 2, criteria_max = 10)
+  expect_true(dat[1, y] < dat[5, y])
+  expect_equal(max(dat$x), 10)
+  expect_equal(min(dat$x), 2)
+  
+  ## Downward slope
+  dat <- lpvf_plot_data(outcome1, criteria_min = 50, criteria_max = 3)
+  expect_true(dat[1, y] > dat[5, y])
+  expect_equal(max(dat$x), 50)
+  expect_equal(min(dat$x), 3)  
+})
+
 test_that("mcda", {
   weights <- c(.7, .3)
   mcda <- mcda(outcomes, sample = "sample", strategy = "strategy_id",

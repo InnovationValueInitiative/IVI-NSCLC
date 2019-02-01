@@ -128,7 +128,8 @@ particular criteria given model outcomes.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>lpvf_plot_data</span>(<span class='no'>x</span>, <span class='kw'>optimal</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"low"</span>, <span class='st'>"high"</span>), <span class='kw'>length_out</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
+    <pre class="usage"><span class='fu'>lpvf_plot_data</span>(<span class='no'>x</span>, <span class='kw'>criteria_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>criteria_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>optimal</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"low"</span>, <span class='st'>"high"</span>), <span class='kw'>length_out</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,6 +137,16 @@ particular criteria given model outcomes.</p>
     <tr>
       <th>x</th>
       <td><p>Model outcomes for a particular criteria on the original scale.</p></td>
+    </tr>
+    <tr>
+      <th>criteria_min</th>
+      <td><p>A vector of minimum values for each criterion. If <code>NULL</code>, 
+then the minimum value is computed automatically.</p></td>
+    </tr>
+    <tr>
+      <th>criteria_max</th>
+      <td><p>A vector of maximum values for each criterion. If <code>NULL</code>, 
+then the maximum value is computed automatically.</p></td>
     </tr>
     <tr>
       <th>optimal</th>
@@ -161,19 +172,36 @@ a line plot.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>outcome</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fl'>10</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>11</span>)
+
+<span class='co'># Using optimal</span>
 <span class='no'>plot_data</span> <span class='kw'>&lt;-</span> <span class='fu'>lpvf_plot_data</span>(<span class='no'>outcome</span>, <span class='kw'>optimal</span> <span class='kw'>=</span> <span class='st'>"high"</span>)
 <span class='fu'>print</span>(<span class='no'>plot_data</span>)</div><div class='output co'>#&gt;               x           y
-#&gt;    1:  83.84492   0.0000000
-#&gt;    2:  83.88159   0.1001001
-#&gt;    3:  83.91825   0.2002002
-#&gt;    4:  83.95492   0.3003003
-#&gt;    5:  83.99158   0.4004004
+#&gt;    1:  73.19010   0.0000000
+#&gt;    2:  73.22958   0.1001001
+#&gt;    3:  73.26906   0.2002002
+#&gt;    4:  73.30855   0.3003003
+#&gt;    5:  73.34803   0.4004004
 #&gt;   ---                      
-#&gt;  996: 120.32584  99.5995996
-#&gt;  997: 120.36250  99.6996997
-#&gt;  998: 120.39917  99.7997998
-#&gt;  999: 120.43583  99.8998999
-#&gt; 1000: 120.47249 100.0000000</div></pre>
+#&gt;  996: 112.47460  99.5995996
+#&gt;  997: 112.51408  99.6996997
+#&gt;  998: 112.55356  99.7997998
+#&gt;  999: 112.59305  99.8998999
+#&gt; 1000: 112.63253 100.0000000</div><div class='input'>
+<span class='co'># Using criteria_min and criteria_max</span>
+<span class='no'>plot_data</span> <span class='kw'>&lt;-</span> <span class='fu'>lpvf_plot_data</span>(<span class='no'>outcome</span>, <span class='kw'>criteria_min</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>criteria_max</span> <span class='kw'>=</span> <span class='fl'>130</span>)
+<span class='fu'>print</span>(<span class='no'>plot_data</span>)</div><div class='output co'>#&gt;               x           y
+#&gt;    1:  80.00000   0.0000000
+#&gt;    2:  80.05005   0.1001001
+#&gt;    3:  80.10010   0.2002002
+#&gt;    4:  80.15015   0.3003003
+#&gt;    5:  80.20020   0.4004004
+#&gt;   ---                      
+#&gt;  996: 129.79980  99.5995996
+#&gt;  997: 129.84985  99.6996997
+#&gt;  998: 129.89990  99.7997998
+#&gt;  999: 129.94995  99.8998999
+#&gt; 1000: 130.00000 100.0000000</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

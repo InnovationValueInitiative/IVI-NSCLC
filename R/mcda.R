@@ -27,7 +27,24 @@ lpvf <- function(x, x_min, x_max, score_min = 0, score_max = 100){
   return(score)
 }
 
- 
+compute_criteria_min <- function(x, optimal){
+  if (optimal == "low"){
+    criteria_min <- max(x)
+  } else{
+    criteria_min <- min(x)
+  } 
+  return (criteria_min)
+}
+
+compute_criteria_max <- function(x, optimal){
+  if (optimal == "low"){
+    criteria_max <- min(x)
+  } else{
+    criteria_max <- max(x)
+  } 
+  return (criteria_max)
+}
+
 #' Multi criteria decision analysis
 #' 
 #' Conduct a multi criteria decision analysis (MCDA) and compute scores for
@@ -120,21 +137,13 @@ mcda <- function(x, sample, strategy, criteria,
   if (is.null(criteria_min)){
     criteria_min <- rep(NA, length(criteria))
     for (i in 1:length(criteria)){
-      if (optimal[i] == "low"){
-        criteria_min[i] <- max(x[[criteria[i]]])
-      } else{
-        criteria_min[i] <- min(x[[criteria[i]]])
-      }
+      criteria_min[i] <- compute_criteria_min(x[[criteria[i]]], optimal[i])
     }
   }
   if (is.null(criteria_max)){
    criteria_max <- rep(NA, length(criteria))
     for (i in 1:length(criteria)){
-      if (optimal[i] == "low"){
-        criteria_max[i] <- min(x[[criteria[i]]])
-      } else{
-        criteria_max[i] <- max(x[[criteria[i]]])
-      }
+      criteria_max[i] <- compute_criteria_max(x[[criteria[i]]], optimal[i])
     }
   }
 
@@ -257,6 +266,10 @@ performance_matrix <- function(x, strategy, criteria, cri = TRUE, digits = 2,
 #' Generate data used to plot a linear partial value function for a 
 #' particular criteria given model outcomes.
 #' @param x Model outcomes for a particular criteria on the original scale.
+#' @param criteria_min A vector of minimum values for each criterion. If \code{NULL}, 
+#' then the minimum value is computed automatically.
+#' @param criteria_max A vector of maximum values for each criterion. If \code{NULL}, 
+#' then the maximum value is computed automatically.
 #' @param optimal If \code{"low"}, then lower values of the outcome are better, and,
 #' if \code{"high"}, then higher values of the outcome are better.
 #' @param length_out Number of points between minimum and maximum values of 
@@ -265,20 +278,41 @@ performance_matrix <- function(x, strategy, criteria, cri = TRUE, digits = 2,
 #' a line plot.
 #' @examples 
 #' outcome <- rnorm(10, mean = 100, sd = 11)
+#' 
+#' # Using optimal
 #' plot_data <- lpvf_plot_data(outcome, optimal = "high")
 #' print(plot_data)
+#' 
+#' # Using criteria_min and criteria_max
+#' plot_data <- lpvf_plot_data(outcome, criteria_min = 80, criteria_max = 130)
+#' print(plot_data)
+#' 
 #' @export
 #' @seealso \code{\link{mcda}}
-lpvf_plot_data <- function(x, optimal = c("low", "high"),
+lpvf_plot_data <- function(x, 
+                           criteria_min = NULL,
+                           criteria_max = NULL,
+                           optimal = c("low", "high"),
                            length_out = 1000){
-  optimal <- match.arg(optimal)
-  if (optimal == "low"){
-    max_x <- min(x)
-    min_x <- max(x)
-  } else{
-    min_x <- min(x)
-    max_x <- max(x) 
+  if (is.null(criteria_min) | is.null(criteria_max)){
+    optimal <- match.arg(optimal)
   }
+  
+  # Minimum criteria
+  if (is.null(criteria_min)){
+    min_x <- compute_criteria_min(x, optimal)
+  } else{
+    min_x <- criteria_min
+  }
+  
+  # Maximum criteria
+  if (is.null(criteria_max)){
+    max_x <- compute_criteria_max(x, optimal)
+  } else{
+    max_x <- criteria_max
+  }
+  
+  # Create plot data
   if (min_x < max_x){
       x_data <-  seq(min_x, max_x, length.out = length_out)
       range_x <- c(min_x, max_x)
@@ -287,7 +321,7 @@ lpvf_plot_data <- function(x, optimal = c("low", "high"),
       range_x <- c(max_x, min_x)
   }
   data <- data.table(x = x_data,
-                    y = lpvf(x = x_data, x_min = min_x, x_max = max_x))
+                     y = lpvf(x = x_data, x_min = min_x, x_max = max_x))
 }
 
 #' Treatment attribute performance
