@@ -164,7 +164,7 @@ create_costmod_tx <- function(n = 100,
   
   # 1. Treatments by strategy, health state, and mutation status
   txseq_dt <- tx_by_state(struct)
-
+  
   # 2. Compute annualized costs
   annualized_costs <- annualized_tx_costs(params)
   annualized_costs <- annualized_costs[, c("agent_name", "duration_days", 

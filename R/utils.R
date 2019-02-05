@@ -196,7 +196,7 @@ tx_by_state <- function(struct){
                                 tx_name = c(txseq_i[1], txseq_i),
                                 line = rep(c("first", "second", "second_plus"), 
                                            each = 2),
-                                mutation = rep(c(0, 1), 3),
+                                mutation = rep(c(1, 0), 3),
                                 grp_id = rep(c(1, 2), 3)) 
   }
   txseq_dt <- rbindlist(txseq_dt)
