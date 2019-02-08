@@ -14,13 +14,17 @@ txseq1 <- txseq(first = "erlotinib",
 txseq2 <- txseq(first = "dacomitinib",
                second = c("osimertinib", "PBDC"),
                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+txseq3 <- txseq(first = "osimertinib",
+               second = c("PBDC", "PBDC"),
+               second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
 
 # Patient population
 pats <- create_patients(n = 10)
 
 test_that("create_transmod_data: first line,  4 health states", {
   # Model structure
-  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2,
+                       seq3 = txseq3)
   struct <- model_structure(txseqs, dist = "weibull")
   tmat <- create_trans_mat(struct)
   
@@ -31,6 +35,7 @@ test_that("create_transmod_data: first line,  4 health states", {
   expect_equal(length(unique(transmod_data$transition_id)), 5)
   expect_equal(max(transmod_data$transition_id), 5)  
   
+  ## First line
   sub_dt <- transmod_data[transition_id == 1]
   expect_all_equal(sub_dt$gef_s1p1_a0, 1)
   expect_all_equal(sub_dt$gef_s1p1_a1, 1)
@@ -45,8 +50,17 @@ test_that("create_transmod_data: first line,  4 health states", {
   expect_all_equal(sub_dt$d_dac_s1p1_a0, 0)
   expect_all_equal(sub_dt$d_dac_s1d_a0, 1)
   
+  ## Second line
   sub_dt <- transmod_data[transition_id == 3 & tx_abb == "osi"]  
   expect_all_equal(sub_dt$osi_s2p2_a0, 1)
+  
+  sub_dt <- transmod_data[transition_id == 3 & strategy_id == 3]  
+  expect_all_equal(sub_dt$pbdc_s2p2_a0, 1)
+  expect_all_equal(sub_dt$osi_s2p2_a0, 0)
+  
+  sub_dt <- transmod_data[transition_id == 5 & strategy_id == 3] 
+  expect_all_equal(sub_dt$pbdc_p2d_a1, 1)
+  expect_all_equal(sub_dt$osi_p2d_a0, 0)
   
   # Errors
   struct2 <- model_structure(txseqs, dist = "weibull", n_states = "three")
@@ -55,7 +69,8 @@ test_that("create_transmod_data: first line,  4 health states", {
 
 test_that("create_transmod_data: first line,  3 health states", {
   # Model structure
-  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2)
+  txseqs <- txseq_list(seq1 = txseq1, seq2 = txseq2,
+                       seq3 = txseq3)
   struct <- model_structure(txseqs, n_states = "three", dist = "weibull")
   tmat <- create_trans_mat(struct)
   
@@ -73,7 +88,10 @@ test_that("create_transmod_data: first line,  3 health states", {
   expect_all_equal(sub_dt$d_erl_s1p1_a0, 1)
   expect_all_equal(sub_dt$d_erl_s1p1_a1, 1)
   expect_all_equal(sub_dt$d_erl_s1d_a0, 0)
-  expect_all_equal(sub_dt$d_dac_s1p1_a1, 0)  
+  expect_all_equal(sub_dt$d_dac_s1p1_a1, 0)
+  
+  sub_dt <- transmod_data[transition_id == 2 & strategy_id == 3]
+  expect_all_equal(sub_dt$d_osi_s1d_a0, 1)
 })
 
 test_that("create_transmod_params", {

@@ -100,33 +100,18 @@ transmod_vars <- function(struct, data){
       } # end first line treatment loop      
       
       if (struct$n_states == "four") {
-        # Loop through second line treatments for T790M positive patients
-        data[, paste0("osi_s2p2_", params[j]) := ifelse(transition_id == 3 & mutation == 1, 1, 0)]
-        data[, paste0("osi_s2d_", params[j]) := ifelse(transition_id == 4 & mutation == 1, 1, 0)]
-        data[, paste0("osi_p2d_", params[j]) := ifelse(transition_id == 5 & mutation == 1, 1, 0)]
+        # Second line treatments for T790M positive patients
+        data[, paste0("osi_s2p2_", params[j]) := ifelse(transition_id == 3 & mutation == 1 & abb_first != "osi", 1, 0)]
+        data[, paste0("osi_s2d_", params[j]) := ifelse(transition_id == 4 & mutation == 1 & abb_first != "osi", 1, 0)]
+        data[, paste0("osi_p2d_", params[j]) := ifelse(transition_id == 5 & mutation == 1 & abb_first != "osi", 1, 0)]
         
-        # Loop through second line treatments for T790M negative patients
-        for (i in 1:length(abb_second_neg)){    
-          abb_second_neg_i <- abb_second_neg[i]
-          if (abb_second_neg_i =="pbdc"){
-            data[, paste0("pbdc_s2p2_", params[j]) := ifelse(transition_id == 3 & mutation == 0, 1, 0)]
-            data[, paste0("pbdc_s2d_", params[j]) := ifelse(transition_id == 4 & mutation == 0, 1, 0)]
-            data[, paste0("pbdc_p2d_", params[j]) := ifelse(transition_id == 5 & mutation == 0, 1, 0)]
-          } else{
-              data[, paste0("d_", abb_second_neg_i, "_s2p2_", params[j]) := ifelse(transition_id == 3 &
-                                                                                    mutation == 0 &
-                                                                                    tx_abb == abb_second_neg_i, 
-                                                                                    1, 0)]
-              data[, paste0("d_", abb_second_neg_i, "_s2d_", params[j]) := ifelse(transition_id == 4 &
-                                                                                    mutation == 0 &
-                                                                                    tx_abb == abb_second_neg_i, 
-                                                                                    1, 0)]    
-              data[, paste0("d_", abb_second_neg_i, "_p2d_", params[j]) := ifelse(transition_id == 5 &
-                                                                                    mutation == 0 &
-                                                                                    tx_abb == abb_second_neg_i, 
-                                                                                    1, 0)]               
-          }
-        } # end T790M negative second line loop        
+        # Second line treatments for T790M negative patients
+        data[, paste0("pbdc_s2p2_", params[j]) := ifelse((transition_id == 3 & mutation == 0) | 
+                                                           (transition_id == 3 & abb_first == "osi"), 1, 0)]
+        data[, paste0("pbdc_s2d_", params[j]) := ifelse((transition_id == 4 & mutation == 0) | 
+                                                           (transition_id == 4 & abb_first == "osi"), 1, 0)]
+        data[, paste0("pbdc_p2d_", params[j]) := ifelse((transition_id == 5 & mutation == 0) | 
+                                                           (transition_id == 5 & abb_first == "osi"), 1, 0)]
       } # end conditional requiring four-state model
     } # end model starting at first line (i.e., start_line = "first")
     
