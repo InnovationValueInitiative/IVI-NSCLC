@@ -86,10 +86,12 @@ mod_aux <- list(weibull = NULL,
                 gompertz = NULL,
                 fracpoly1 = list(powers = fp_powers$fracpoly1,
                                  cumhaz_method = "riemann",
-                                 step = .02),
+                                 step = .02,
+                                 random_method = "sample"),
                 fracpoly2 = list(powers = fp_powers$fracpoly1,
                                  cumhaz_method = "riemann",
-                                 step = .02))
+                                 step = .02,
+                                 random_method = "sample"))
 
 model_lookup <- function(powers){
   powers <- paste(as.character(powers), collapse = ", ")
