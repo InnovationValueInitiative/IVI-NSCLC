@@ -9,10 +9,8 @@
 \item{ae_name}{Name of the adverse event.}
 \item{ae_abb}{Abbreviation for the adverse event.}
 \item{mean}{Mean costs.}
-\item{lower}{2.5\% quantile for mean costs. Currently assumed to be +20\%
-of mean costs given lack of data for estimating standard errors.}
-\item{upper}{97.5\% quantile for mean costs. Currently assumed to be -20\%
-of mean costs given lack of data for estimating standard errors.}
+\item{lower}{2.5\% quantile for mean costs.}
+\item{upper}{97.5\% quantile for mean costs.}
 \item{se}{Standard error of costs.}
 \item{ref}{Reference for mean costs.}
 }}
@@ -20,7 +18,8 @@ of mean costs given lack of data for estimating standard errors.}
 params_costs_ae
 }
 \description{
-Mean costs by adverse event.
+Mean costs by adverse event. Note that only the \code{mean} and \code{se} 
+columns in the table below are used for the probabilistic sensitivity analysis.
 }
 \examples{
 print(params_costs_ae)
