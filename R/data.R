@@ -136,8 +136,8 @@
 #' @section dosage:
 #' A \code{data.table} containing information on dosage for each
 #' agent used for treatments that can be included in a treatment sequence. The variables
-#' \code{strength1}, \code{strength2}, \code{quantity1}, \code{quantity2}, and \code{units_per_day} can
-#' be modified to change annualized costs. 
+#' \code{strength1}, \code{strength2}, \code{quantity1}, \code{quantity2}, \code{units_per_day},
+#' and \code{duration_days} can be modified to change annualized costs. 
 #' \describe{
 #' \item{agent_name}{Name of the agent used in the treatment; combination therapies will have
 #' more than one agents.}
