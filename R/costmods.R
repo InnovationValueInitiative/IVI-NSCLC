@@ -256,7 +256,7 @@ create_costmod_tx <- function(n = 100,
 
   # 4. Create StateVals models
   patients2 <- copy(patients)
-  patients2[, ("grp_id") := ifelse(get("mutation") == 0, 1, 2)]
+  patients2[, ("grp_id") := ifelse(get("mutation") == 0, 2, 1)]
   hesim_dat <- hesim::hesim_data(strategies = data.table(strategy_id = 1:length(struct$txseqs)),
                                 patients = patients2)
   
