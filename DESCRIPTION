@@ -1,7 +1,7 @@
 Package: iviNSCLC
 Type: Package
 Title: The IVI-NSCLC model
-Version: 0.0.0.9000
+Version: 1.0.0.9000
 Authors@R: c(
     person("Devin", "Incerti", , "devin.incerti@thevalueinitiative.org", c("aut", "cre")),
     person("Jeroen P.", "Jansen", , "jeroen.jansen@thevalueinitiative.org", role = "aut")
@@ -15,7 +15,7 @@ BugReports: https://github.com/InnovationValueInitiative/IVI-NSCLC/issues
 License: GPL-3
 LazyData: true
 Depends:
-    R (>= 3.4.1)
+    R (>= 3.4.0)
 Imports:
     data.table,
     flexsurv,
@@ -25,7 +25,6 @@ Imports:
     stats,
     survival,
     truncnorm
-Remotes: InnovationValueInitiative/hesim    
 Suggests:
     covr,
     ggplot2,
