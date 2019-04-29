@@ -156,7 +156,7 @@ create_transmod_data <- function(struct, trans_mat, patients){
   # Expand for each transition
   n_transitions <- max(trans_mat, na.rm = TRUE)
   data <- data[rep(seq_len(nrow(data)), each = n_transitions)]
-  data[, "transition_id" := 1:n_transitions]
+  data[, "transition_id" := rep(1:n_transitions, times = nrow(data)/n_transitions)]
   setcolorder(data, c("strategy_id", "patient_id", "transition_id"))
   setattr(data, "id_vars", c("strategy_id", "patient_id", "transition_id"))
 
