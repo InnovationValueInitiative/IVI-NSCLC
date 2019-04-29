@@ -1,6 +1,10 @@
 ---
 title: "Source data"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 # Systematic literature review
