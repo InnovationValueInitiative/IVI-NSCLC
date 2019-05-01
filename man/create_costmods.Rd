@@ -34,7 +34,7 @@ in the same format as \code{\link{params_costs_ae}}.}
 }
 \value{
 A list of objects of class "StateVals" from the 
-\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+\href{https://hesim-dev.github.io/hesim/}{hesim} package.
 }
 \description{
 Create a cost model for four cost categories: (i) treatment costs (i.e., drug

@@ -38,7 +38,7 @@
 #' costmods <- create_costmods(n = 2, struct = struct, patients = pats,
 #'                             ae_probs = ae_probs)
 #' @return A list of objects of class "StateVals" from the 
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' \href{https://hesim-dev.github.io/hesim/}{hesim} package.
 #' @export
 create_costmods <- function(n = 100, struct, patients,
                             ae_probs,

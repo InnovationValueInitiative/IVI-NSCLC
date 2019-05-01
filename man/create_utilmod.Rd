@@ -28,7 +28,7 @@ stable disease).}
 }
 \value{
 An object of class "StateVals" from the 
-\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+\href{https://hesim-dev.github.io/hesim/}{hesim} package.
 }
 \description{
 Create a model for health state utility given values of utility by

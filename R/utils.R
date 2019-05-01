@@ -22,7 +22,7 @@ check_is_class <- function(object, name, class){
 #' 
 #' Summarize clinical and economic outcomes from the simulation.
 #' @param econmod An economic model of class "IndivCtstm" from the
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package. 
+#' \href{https://hesim-dev.github.io/hesim/}{hesim} package. 
 #'  QALYs and costs must have been previously simulated (i.e., $qalys_ and 
 #'  $costs_ cannot be NULL).
 #' @param prod_costs An object of class "prod_costs" simulated using 

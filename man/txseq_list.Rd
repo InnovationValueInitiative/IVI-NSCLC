@@ -4,8 +4,8 @@
 \alias{txseq_list}
 \title{A list of treatment sequences}
 \usage{
-txseq_list(..., start_line = c("first", "second"), mutation = c("unknown",
-  "positive", "negative"))
+txseq_list(..., start_line = c("first", "second"),
+  mutation = c("unknown", "positive", "negative"))
 }
 \arguments{
 \item{...}{Objects to form a list.}

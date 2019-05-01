@@ -15,7 +15,7 @@ create_transmod_data(struct, trans_mat, patients)
 }
 \value{
 An object of class "expanded_hesim_data" from the 
-\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package, which
+\href{https://hesim-dev.github.io/hesim/}{hesim} package, which
 is a data table with one observation for each treatment strategy 
 (i.e., treatment sequence), patient, and transition combination. The model 
 structure (\code{struct}) is stored as a "model_structure" attribute and the

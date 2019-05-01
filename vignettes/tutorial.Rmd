@@ -47,7 +47,7 @@ knitr::include_graphics("modstruct3_1L.png")
 
 The three and four-state model structures are used to construct an economic model that consists of three primary submodels: (i) a disease progression model (i.e., transition model) that determines transitions between health states, (ii) a utility model that simulates the health-state utility of each health state, and (iii) a set of cost models that simulates the costs associated with multiple cost categories (i.e., drug acquisition and administration costs, inpatient medical costs, outpatient medical costs, adverse event costs, and productivity losses). The economic model simulates relevant outcomes of interest including the probabilities of being in each of the health states over time, quality-adjusted life-years (QALYs), and costs by category. Probabilistic sensitivity analysis (PSA) is used to propagate uncertainty in the model input parameters throughout the model.
 
-Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://innovationvalueinitiative.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/), [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html), and [scales](https://scales.r-lib.org/) for plotting, [knitr](https://rmarkdown.rstudio.com/lesson-7.html) to create tables, and [data.table](https://github.com/Rdatatable/data.table/wiki) to manipulate data and simulation output.
+Two R packages are needed to simulate the model: the `iviNSCLC` and [hesim](https://hesim-dev.github.io/hesim/) packages. We will also use [ggplot2](https://ggplot2.tidyverse.org/), [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html), and [scales](https://scales.r-lib.org/) for plotting, [knitr](https://rmarkdown.rstudio.com/lesson-7.html) to create tables, and [data.table](https://github.com/Rdatatable/data.table/wiki) to manipulate data and simulation output.
 
 ```{r, message=FALSE, warning=FALSE}
 library("iviNSCLC")
@@ -75,7 +75,7 @@ A number of different statistical models are used to parameterize the economic m
 # Economic model
 We provide an example a four-state model for 1L treatment, while also showing how a three-state model could be specified. Importantly, different modeling approaches are used for the three-state and four-state approaches. Since a "clock-forward" multi-state NMA was conducted separately by line of treatment, the four-state model is a mixture of clock-forward and "clock-reset" models. In the clock-reset approach, time $u$ in $h^{rs}(u)$ resets after each transition whereas in the clock-forward approach time $u$ refers to time since the start of the model (see the tutorial [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.2712) for a more detailed discussion). In the four-state model, the clock resets when entering state S1. Conversely, in the three-state model (either starting at 1L or 2L), the transition rates are always estimated using a NMA of treatments within a single line, so a clock-forward multi-state model must be used. 
 
-An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the `IndivCtstm` class from the [hesim](https://innovationvalueinitiative.github.io/hesim/) package.
+An individual-level simulation is required to simulate clock-reset and mixtures of clock-forward and clock-reset models, and can also be used to simulate clock-forward models. The individual-level model is simulated in R using the `IndivCtstm` class from the [hesim](https://hesim-dev.github.io/hesim/) package.
 
 ## Set up
 ### Patient population
@@ -465,7 +465,7 @@ outcomes <- summarize_outcomes(econmod = econmod, prod_costs = prodcosts,
 knitr::kable(outcomes)
 ```
 
-CEA can be [performed using `hesim`](https://innovationvalueinitiative.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$150,000.  
+CEA can be [performed using `hesim`](https://hesim-dev.github.io/hesim/articles/icea.html) with the functions `icea()` and `icea_pw()`. For this analysis, we used the first treatment sequence as the comparator and assume a willingness to pay per QALY of \$150,000.  
 
 ```{r icea}
 icea <- hesim::icea(ce_sim, dr_qalys = .03, dr_costs = .03)

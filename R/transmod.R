@@ -135,7 +135,7 @@ transmod_vars <- function(struct, data){
 #' @param trans_mat A transition matrix as returned by \code{\link{create_trans_mat}}.
 #' @param patients A data table returned from \code{\link{create_patients}}.
 #' @return An object of class "expanded_hesim_data" from the 
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package, which
+#' \href{https://hesim-dev.github.io/hesim/}{hesim} package, which
 #' is a data table with one observation for each treatment strategy 
 #' (i.e., treatment sequence), patient, and transition combination. The model 
 #' structure (\code{struct}) is stored as a "model_structure" attribute and the

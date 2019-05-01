@@ -4,7 +4,8 @@
 \alias{tidy.ae_probs}
 \title{Tidy adverse event data}
 \usage{
-\method{tidy}{ae_probs}(object, ae_lookup = iviNSCLC::adverse_events, ...)
+\method{tidy}{ae_probs}(object, ae_lookup = iviNSCLC::adverse_events,
+  ...)
 }
 \arguments{
 \item{object}{An "ae_probs" object as returned by \code{\link{ae_probs}}.}

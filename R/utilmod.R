@@ -14,7 +14,7 @@
 #' disease progression (i.e., over the entire duration of time spent in 
 #' stable disease).
 #' @return An object of class "StateVals" from the 
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' \href{https://hesim-dev.github.io/hesim/}{hesim} package.
 #' @examples
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",

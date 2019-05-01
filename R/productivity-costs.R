@@ -101,8 +101,8 @@ sim_prod_costs <- function(econmod, patients, params = iviNSCLC::params_costs_pr
 #' Add productivity costs to a cost-effectiveness object
 #' 
 #' Add productivity costs to a 
-#' \href{https://innovationvalueinitiative.github.io/hesim/reference/ce.html}{cost-effectiveness object}
-#' from the \href{https://innovationvalueinitiative.github.io/hesim/index.html}{hesim} pacakge.
+#' \href{https://hesim-dev.github.io/hesim/reference/ce.html}{cost-effectiveness object}
+#' from the \href{https://hesim-dev.github.io/hesim/index.html}{hesim} pacakge.
 #' @param ce An object of class "ce". 
 #' @param prod_costs An object of class "prod_costs". 
 #' @return Unknown

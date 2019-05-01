@@ -4,8 +4,8 @@
 \alias{create_patients}
 \title{Create patient data table}
 \usage{
-create_patients(n, female_prop = 0.48, age_mean = 70.39, age_sd = 11.68,
-  mutation_prob = 0.52)
+create_patients(n, female_prop = 0.48, age_mean = 70.39,
+  age_sd = 11.68, mutation_prob = 0.52)
 }
 \arguments{
 \item{n}{Number of patients to model.}

@@ -16,8 +16,8 @@ Unknown
 }
 \description{
 Add productivity costs to a 
-\href{https://innovationvalueinitiative.github.io/hesim/reference/ce.html}{cost-effectiveness object}
-from the \href{https://innovationvalueinitiative.github.io/hesim/index.html}{hesim} pacakge.
+\href{https://hesim-dev.github.io/hesim/reference/ce.html}{cost-effectiveness object}
+from the \href{https://hesim-dev.github.io/hesim/index.html}{hesim} pacakge.
 }
 \seealso{
 See the example in the \href{https://innovationvalueinitiative.github.io/IVI-NSCLC/articles/tutorial.html}{tutorial}.

@@ -4,8 +4,8 @@
 \alias{model_structure}
 \title{Model structure}
 \usage{
-model_structure(txseqs, n_states = c("four", "three"), dist = c("weibull",
-  "gompertz", "fracpoly1", "fracpoly2"))
+model_structure(txseqs, n_states = c("four", "three"),
+  dist = c("weibull", "gompertz", "fracpoly1", "fracpoly2"))
 }
 \arguments{
 \item{txseqs}{A \code{\link{txseq_list}} object.}

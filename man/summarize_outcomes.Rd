@@ -10,7 +10,7 @@ summarize_outcomes(econmod, prod_costs = NULL, dr_qalys, dr_costs,
 }
 \arguments{
 \item{econmod}{An economic model of class "IndivCtstm" from the
-\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package. 
+\href{https://hesim-dev.github.io/hesim/}{hesim} package. 
  QALYs and costs must have been previously simulated (i.e., $qalys_ and 
  $costs_ cannot be NULL).}
 
