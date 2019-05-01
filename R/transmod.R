@@ -206,7 +206,7 @@ sample_params_mstate_nma <- function(n, object){
 #' covariates for the selected survival distribution in \code{mstate_nma} 
 #' that are also contained in \code{data} are extracted.
 #' @return  A \code{\link[hesim]{params_surv}} objects from the 
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' \href{https://hesim-dev.github.io/hesim/}{hesim} package.
 #' @seealso \code{\link{create_transmod}}, \code{\link{create_transmod_data}}
 #' @export
 create_transmod_params <- function(n = 100,

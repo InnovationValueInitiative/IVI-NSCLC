@@ -27,7 +27,7 @@ that should be contained in \code{params}.}
 }
 \value{
 A \code{\link[hesim]{params_surv}} objects from the 
-\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+\href{https://hesim-dev.github.io/hesim/}{hesim} package.
 }
 \description{
 Extract parameters from a multi-state NMA for use with the data table returned by
