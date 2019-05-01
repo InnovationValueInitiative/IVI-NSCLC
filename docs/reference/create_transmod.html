@@ -150,7 +150,7 @@ continuous time state transition model (CTSTM).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "IndivCtstmTrans" from the 
-<a href='https://innovationvalueinitiative.github.io/hesim/'>hesim</a> package.</p>
+<a href='https://hesim-dev.github.io/hesim/'>hesim</a> package.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -173,12 +173,12 @@ continuous time state transition model (CTSTM).</p>
 <span class='co'># Data for state transition model</span>
 <span class='no'>transmod_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_transmod_data.html'>create_transmod_data</a></span>(<span class='no'>struct</span>, <span class='no'>tmat</span>, <span class='no'>pats</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>transmod_data</span>)</div><div class='output co'>#&gt;    strategy_id patient_id transition_id female      age mutation tx_abb tx_hist
-#&gt; 1:           1          1             1      0 53.73830        1    erl    &lt;NA&gt;
-#&gt; 2:           1          1             2      0 53.73830        1    erl    &lt;NA&gt;
-#&gt; 3:           1          1             3      0 53.73830        1    osi     erl
-#&gt; 4:           1          1             4      0 53.73830        1    osi     erl
-#&gt; 5:           1          1             5      0 53.73830        1    osi     erl
-#&gt; 6:           1          2             1      1 55.83448        0    erl    &lt;NA&gt;
+#&gt; 1:           1          1             1      0 54.03749        1    erl    &lt;NA&gt;
+#&gt; 2:           1          1             2      0 54.03749        1    erl    &lt;NA&gt;
+#&gt; 3:           1          1             3      0 54.03749        1    osi     erl
+#&gt; 4:           1          1             4      0 54.03749        1    osi     erl
+#&gt; 5:           1          1             5      0 54.03749        1    osi     erl
+#&gt; 6:           1          2             1      0 73.37210        1    erl    &lt;NA&gt;
 #&gt;    gef_s1p1_a0 gef_s1d_a0 d_erl_s1p1_a0 d_erl_s1d_a0 osi_s2p2_a0 osi_s2d_a0
 #&gt; 1:           1          0             1            0           0          0
 #&gt; 2:           0          1             0            1           0          0
@@ -212,19 +212,19 @@ continuous time state transition model (CTSTM).</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>transmod_params</span>)</div><div class='output co'>#&gt; $coefs
 #&gt; $coefs$a0
 #&gt;      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0 osi_s2p2_a0 osi_s2d_a0
-#&gt; [1,]    -0.4174444            0   -3.506156  -23.58168   -4.179846  -4.216219
-#&gt; [2,]    -0.1604840            0   -3.750901  -12.99218   -2.916719  -8.970628
+#&gt; [1,]    -0.1695568            0   -3.850149  -9.513523   -2.657322 -12.071691
+#&gt; [2,]    -0.3158846            0   -3.873477  -6.987298   -3.223167  -6.953787
 #&gt;      osi_p2d_a0 pbdc_s2p2_a0 pbdc_s2d_a0 pbdc_p2d_a0
-#&gt; [1,]  -6.335985    -2.332891   -14.06946   -2.554476
-#&gt; [2,]  -4.954039    -2.476979   -15.09970   -1.991868
+#&gt; [1,]  -4.661446    -2.357226   -9.544715   -2.363616
+#&gt; [2,]  -4.404432    -2.387992  -10.769347   -2.011830
 #&gt; 
 #&gt; $coefs$a1
 #&gt;      d_erl_s1p1_a1 d_erl_s1d_a1 gef_s1p1_a1 gef_s1d_a1 osi_s2p2_a1 osi_s2d_a1
-#&gt; [1,]     0.2128771            0   0.5055828          0   0.8448357          0
-#&gt; [2,]    -0.2663377            0   0.6061321          0   0.2478407          0
+#&gt; [1,]    -0.2123671            0   0.7227243          0   0.1572655          0
+#&gt; [2,]    -0.3730880            0   0.6407160          0   0.4505773          0
 #&gt;      osi_p2d_a1 pbdc_s2p2_a1 pbdc_s2d_a1 pbdc_p2d_a1
-#&gt; [1,]  0.8140351    0.3094747           0  -0.2171496
-#&gt; [2,]  0.5291579    0.5114220           0  -0.4133672
+#&gt; [1,]  0.4244667    0.4645846           0  -0.1588428
+#&gt; [2,]  0.3126212    0.3641004           0  -0.3788891
 #&gt; 
 #&gt; 
 #&gt; $dist

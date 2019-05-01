@@ -255,7 +255,7 @@ create_transmod_params <- function(n = 100,
 #' @param data A data table of class "expanded_hesim_data" returned from 
 #' \code{\link{create_transmod_data}}.
 #' @return An object of class "IndivCtstmTrans" from the 
-#' \href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+#' \href{https://hesim-dev.github.io/hesim/}{hesim} package.
 #' @examples
 #' # Treatment sequences
 #' txseq1 <- txseq(first = "erlotinib",

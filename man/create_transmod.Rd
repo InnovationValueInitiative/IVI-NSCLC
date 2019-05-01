@@ -15,7 +15,7 @@ create_transmod(params, data)
 }
 \value{
 An object of class "IndivCtstmTrans" from the 
-\href{https://innovationvalueinitiative.github.io/hesim/}{hesim} package.
+\href{https://hesim-dev.github.io/hesim/}{hesim} package.
 }
 \description{
 Create a model for simulating health state transitions with a 
