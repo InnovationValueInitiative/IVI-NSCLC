@@ -498,25 +498,25 @@ We overcome these limitations by introducing a multi-state NMA that explicitly e
 +
 \begin{pmatrix}
 \delta_{1,ik} \\
-d_{2, t_{ik}} - d_{2, t_{i1}}  \\
+d_{2,1t_{ik}} - d_{2,1t_{i1}}  \\
 0 \\
 0  \\
-d_{3, t_{ik}} - d_{3, t_{i1}} \\
+d_{3,1t_{ik}} - d_{3,1t_{i1}} \\
 0 \\
 \end{pmatrix} \\\\ 
 % Random effects
-\delta_{1,ik} &\sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma_{d_{1}}^{2}) 
+\delta_{1,ik} &\sim N(d_{1,1t_{ik}} - d_{1,1t_{i1}}, \sigma_{d_{1}}^{2}) 
 \end{aligned}
 \end{equation}
 
-where $u^0= \ln(u)$ and ${d_{1,1}}=0$, ${d_{2,1}}=0$, and ${d_{3,1}}=0$
+where $u^0= \ln(u)$ and ${d_{1,11}}=0$, ${d_{2,11}}=0$, and ${d_{3,11}}=0$
 \\
 
-$h_{ik}^{SD}(u)$, $h_{ik}^{PD}(u)$, and $h_{ik}^{SD}(u)$ are the hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ for treatment arm $k$ at time $u$. The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects regarding the scale of the log hazard function for the transition from stable to progression, which are described by a normal distribution with an average effect for treatment $t$ relative to reference treatment 1, ${d_{1,1t}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $.  ${d_{2,1t}}$ are the treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression relative to the reference treatment 1 (i.e. gefitinib). To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. ${d_{3,1t}}$ are the treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death relative to reference treatment 1 (i.e. gefitinib). 
+$h_{ik}^{SD}(u)$, $h_{ik}^{PD}(u)$, and $h_{ik}^{SD}(u)$ are the hazard rates for disease progression, dying post-progression, and dying pre-progression, respectively, in study $i$ for treatment arm $k$ at time $u$. The $\alpha_{\cdot ik}$ are regression coefficients that represent the scale and shape parameters of the log hazard function in study $i$ for treatment arm $k$. The $\mu_{\cdot i}$ reflect the study effects regarding the scale and shape parameters in each study $i$. The $\delta_{1,ik} $ are the study specific true underlying relative treatment effects for the treatment in arm $k$ relative to the treatment in arm 1 of that trial (with $\delta_{1,i1}=0 $) regarding the scale of the log hazard function for the transition from stable to progression, which are drawn from a normal distribution with the mean effect for treatment $t$ expressed in terms of the overall reference treatment 1 (i.e. gefitinib), $d_{1,1t_{ik}} - d_{1,1t_{i1}}$, and between study heterogeneity $\sigma_{d_{1}}^{2} $. The treatment specific relative effects regarding the first shape parameter of the log hazard function for the transition from stable to progression are assumed to be fixed for treatment $t$ and expressed in terms of the overall reference treatment 1, $d_{2,1t_{ik}} - d_{2,1t_{i1}}$. To facilitate parameter estimation, we assumed that treatment has no effect on the 2nd shape parameter. Transition rates between stable disease and death are likely to be relatively small and therefore assumed to be independent of time and the same for all treatments. The treatment specific relative effects regarding the scale parameter of the log-hazard function for the transition from progression to death are assumed to be fixed for treatment $t$ and expressed in terms of the overall reference treatment 1, $d_{3,1t_{ik}} - d_{3,1t_{i1}}$.
 
 When $p_{1}=0$ and $\alpha_{3ik}=0$, the log-hazard functions for the transitions between stable disease and progression, and progression and death follow a Weibull distribution. When $p_{1}=1$ and $\alpha_{3ik}=0$ these log-hazard functions follow a Gompertz distribution. When $\{(p_1, p_2) = (0, 0), (0,1)\}$ and $\alpha_{3ik}\neq0$, the log-hazard functions follow a second order fractional polynomial that are extensions of the Weibull and Gompertz model to allow for arc- and bathtub shaped log-hazard functions. 
 
-A fixed effects model is obtained by replacing $\delta_{1,ik} \sim N(d_{1, t_{ik}} - d_{1, t_{i1}}, \sigma^2)$ with $\delta_{1,ik} = d_{1, t_{ik}} - d_{1, t_{i1}}$. 
+A fixed effects model is obtained by replacing $\delta_{1,ik} \sim N(d_{1,1t_{ik}} - d_{1,1 t_{i1}}, \sigma^2)$ with $\delta_{1,ik} = d_{1,1t_{ik}} - d_{1,1t_{i1}}$. 
 
 If it is assumed that treatment has only a direct effect on the transitions from stable to progression, which can be reasonably defended when a particular treatment upon disease progression is discontinued, the model can be simplified by setting $d_{3, t_{i1}}=0$.
 
