@@ -85,7 +85,7 @@
     <div class="page-header toc-ignore">
       <h1>Tutorial</h1>
             
-            <h4 class="date">2019-04-30</h4>
+            <h4 class="date">2019-05-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/InnovationValueInitiative/IVI-NSCLC/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -248,12 +248,12 @@ tmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create
 transmod_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod_data.html">create_transmod_data</a></span>(struct, tmat, pats)
 ## Print first 5 rows and and 10 covariates from data
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(transmod_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) </code></pre></div>
-<pre><code>##    strategy_id patient_id transition_id female      age mutation tx_abb
-## 1:           1          1             1      1 80.33036        1    gef
-## 2:           1          1             2      1 80.33036        1    gef
-## 3:           1          1             3      1 80.33036        1    osi
-## 4:           1          1             4      1 80.33036        1    osi
-## 5:           1          1             5      1 80.33036        1    osi
+<pre><code>##    strategy_id patient_id transition_id female    age mutation tx_abb
+## 1:           1          1             1      1 74.987        0    gef
+## 2:           1          1             2      1 74.987        0    gef
+## 3:           1          1             3      1 74.987        0   pbdc
+## 4:           1          1             4      1 74.987        0   pbdc
+## 5:           1          1             5      1 74.987        0   pbdc
 ##    tx_hist gef_s1p1_a0 gef_s1d_a0
 ## 1:    &lt;NA&gt;           1          0
 ## 2:    &lt;NA&gt;           0          1
@@ -266,11 +266,11 @@ transmod_params &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## match those in 'transmod_data')
 transmod_params<span class="op">$</span>coefs<span class="op">$</span>a0[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##      d_erl_s1p1_a0 d_erl_s1d_a0 gef_s1p1_a0 gef_s1d_a0
-## [1,]    -0.6055681            0   -3.909536 -10.225978
-## [2,]    -0.7291942            0   -3.910138 -10.193353
-## [3,]    -0.9791936            0   -3.614814  -9.078016
-## [4,]    -1.3373895            0   -3.394681 -22.437886
-## [5,]     0.4695210            0   -3.481232  -9.135390</code></pre>
+## [1,]   -0.01890997            0   -3.612863  -7.549008
+## [2,]   -0.40710831            0   -3.646187  -9.165401
+## [3,]   -0.73620289            0   -3.859275  -7.625189
+## [4,]   -0.25602029            0   -3.913822 -14.488000
+## [5,]    0.42653006            0   -3.552865 -13.511021</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Health state transition model</span>
 transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_transmod.html">create_transmod</a></span>(<span class="dt">params =</span> transmod_params, <span class="dt">data =</span> transmod_data)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(transmod)</code></pre></div>
@@ -289,8 +289,7 @@ transmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cr
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utilmod &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_utilmod.html">create_utilmod</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats,
                           <span class="dt">ae_probs =</span> ae_probs)</code></pre></div>
 <p>We also construct models for each cost category.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats, <span class="dt">ae_probs =</span> ae_probs)
-tmp &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/data.table/topics/data.table">data.table</a></span>(<span class="dt">mu=</span> costmods<span class="op">$</span>tx_ac<span class="op">$</span>params<span class="op">$</span>mu[, <span class="dv">1</span>], <span class="dt">strategy_id =</span> costmods<span class="op">$</span>tx_ac<span class="op">$</span>input_mats<span class="op">$</span>strategy_id, <span class="dt">state_id =</span> costmods<span class="op">$</span>tx_ac<span class="op">$</span>input_mats<span class="op">$</span>state_id)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">costmods &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_costmods.html">create_costmods</a></span>(<span class="dt">n =</span> n_samples, <span class="dt">struct =</span> struct, <span class="dt">patients =</span> pats, <span class="dt">ae_probs =</span> ae_probs)</code></pre></div>
 </div>
 <div id="combining-the-models" class="section level3">
 <h3 class="hasAnchor">
@@ -532,58 +531,58 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 <tbody>
 <tr class="odd">
 <td align="left">Life-years</td>
-<td align="left">3.56 (3.23, 4.06)</td>
-<td align="left">4.38 (3.46, 6.99)</td>
+<td align="left">3.55 (3.24, 4.07)</td>
+<td align="left">4.37 (3.46, 6.90)</td>
 </tr>
 <tr class="even">
 <td align="left">QALYs</td>
-<td align="left">2.08 (1.87, 2.34)</td>
-<td align="left">2.72 (2.05, 4.67)</td>
+<td align="left">2.08 (1.88, 2.34)</td>
+<td align="left">2.71 (2.05, 4.68)</td>
 </tr>
 <tr class="odd">
 <td align="left">Drug acquisition costs</td>
-<td align="left">236,713 (214,452, 265,825)</td>
-<td align="left">308,346 (237,359, 504,909)</td>
+<td align="left">237,087 (214,427, 266,784)</td>
+<td align="left">307,991 (238,834, 509,227)</td>
 </tr>
 <tr class="even">
 <td align="left">Drug administration costs</td>
-<td align="left">11,541 (9,890, 14,414)</td>
-<td align="left">11,078 (8,815, 13,934)</td>
+<td align="left">11,488 (9,837, 14,380)</td>
+<td align="left">11,027 (8,473, 13,871)</td>
 </tr>
 <tr class="odd">
 <td align="left">Outpatient medical costs</td>
-<td align="left">42,932 (34,920, 52,666)</td>
-<td align="left">41,968 (33,682, 51,892)</td>
+<td align="left">42,901 (35,144, 53,478)</td>
+<td align="left">41,912 (33,632, 51,968)</td>
 </tr>
 <tr class="even">
 <td align="left">Inpatient medical costs</td>
-<td align="left">244,679 (197,369, 309,562)</td>
-<td align="left">256,639 (203,042, 331,300)</td>
+<td align="left">245,810 (200,136, 310,183)</td>
+<td align="left">257,532 (207,928, 321,675)</td>
 </tr>
 <tr class="odd">
 <td align="left">Adverse event costs</td>
-<td align="left">4,368 (2,079, 8,735)</td>
-<td align="left">4,055 (1,429, 9,318)</td>
+<td align="left">4,395 (2,048, 8,387)</td>
+<td align="left">4,086 (1,487, 9,210)</td>
 </tr>
 <tr class="even">
 <td align="left">Health care sector costs</td>
-<td align="left">540,233 (474,346, 637,155)</td>
-<td align="left">622,086 (506,371, 837,968)</td>
+<td align="left">541,681 (475,980, 644,177)</td>
+<td align="left">622,548 (516,494, 846,604)</td>
 </tr>
 <tr class="odd">
 <td align="left">Productivity costs</td>
-<td align="left">65,550 (60,655, 70,253)</td>
-<td align="left">59,699 (47,293, 67,555)</td>
+<td align="left">61,995 (57,107, 66,719)</td>
+<td align="left">56,259 (43,722, 64,120)</td>
 </tr>
 <tr class="even">
 <td align="left">Societal costs</td>
-<td align="left">605,783 (542,379, 700,141)</td>
-<td align="left">681,784 (573,085, 886,173)</td>
+<td align="left">603,676 (540,506, 701,460)</td>
+<td align="left">678,807 (577,991, 891,518)</td>
 </tr>
 <tr class="odd">
 <td align="left">Net monetary benefit</td>
-<td align="left">-293,596 (-365,940, -242,882)</td>
-<td align="left">-273,629 (-354,719, -186,565)</td>
+<td align="left">-291,455 (-360,398, -240,413)</td>
+<td align="left">-271,665 (-345,978, -179,196)</td>
 </tr>
 </tbody>
 </table>
@@ -609,22 +608,22 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 <tr class="odd">
 <td>Incremental QALYs</td>
 <td align="left">-</td>
-<td align="left">0.64 (0.03, 2.45)</td>
+<td align="left">0.63 (0.01, 2.53)</td>
 </tr>
 <tr class="even">
 <td>Incremental costs ($)</td>
 <td align="left">-</td>
-<td align="left">81,853 (2,701, 274,021)</td>
+<td align="left">80,867 (-346, 287,470)</td>
 </tr>
 <tr class="odd">
 <td>Incremental NMB ($)</td>
 <td align="left">-</td>
-<td align="left">14,116 (-16,474, 89,781)</td>
+<td align="left">14,055 (-17,629, 89,840)</td>
 </tr>
 <tr class="even">
 <td>ICER ($ per QALY)</td>
 <td align="left">-</td>
-<td align="left">127,936</td>
+<td align="left">127,790</td>
 </tr>
 <tr class="odd">
 <td>Conclusion</td>
@@ -716,43 +715,43 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">0.99 (0.90, 1.10)</td>
-<td align="left">1.91 (1.03, 4.63)</td>
+<td align="left">0.99 (0.90, 1.11)</td>
+<td align="left">1.90 (1.03, 4.71)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">0.66 (0.59, 0.76)</td>
+<td align="left">0.67 (0.59, 0.76)</td>
 <td align="left">0.64 (0.54, 0.74)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">1.90 (1.60, 2.41)</td>
-<td align="left">1.82 (1.44, 2.34)</td>
+<td align="left">1.90 (1.60, 2.42)</td>
+<td align="left">1.82 (1.40, 2.34)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">540,233 (474,345, 637,154)</td>
-<td align="left">622,085 (506,371, 837,967)</td>
+<td align="left">541,681 (475,980, 644,177)</td>
+<td align="left">622,548 (516,493, 846,604)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">65,550 (60,655, 70,252)</td>
-<td align="left">59,698 (47,293, 67,555)</td>
+<td align="left">61,994 (57,107, 66,719)</td>
+<td align="left">56,258 (43,722, 64,120)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">0.44 (0.41, 0.48)</td>
-<td align="left">0.53 (0.44, 0.65)</td>
+<td align="left">0.45 (0.41, 0.48)</td>
+<td align="left">0.53 (0.44, 0.67)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">14.38 (14.16, 14.60)</td>
-<td align="left">14.19 (13.95, 14.43)</td>
+<td align="left">14.34 (14.11, 14.54)</td>
+<td align="left">14.16 (13.91, 14.38)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
 <td align="left">0.02 (0.01, 0.03)</td>
-<td align="left">0.02 (0.00, 0.06)</td>
+<td align="left">0.02 (0.00, 0.07)</td>
 </tr>
 </tbody>
 </table>
@@ -784,43 +783,43 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 <tbody>
 <tr class="odd">
 <td>Life-years stable disease</td>
-<td align="left">2.29 (1.21, 3.60)</td>
-<td align="left">13.51 (2.78, 46.60)</td>
+<td align="left">2.30 (1.14, 3.74)</td>
+<td align="left">13.84 (2.78, 49.40)</td>
 </tr>
 <tr class="even">
 <td>Life-years progressed 1L</td>
-<td align="left">66.21 (51.06, 85.04)</td>
-<td align="left">61.39 (41.61, 81.17)</td>
+<td align="left">64.72 (50.97, 81.27)</td>
+<td align="left">60.21 (41.16, 78.47)</td>
 </tr>
 <tr class="odd">
 <td>Life-years progressed 2L</td>
-<td align="left">52.02 (38.11, 75.68)</td>
-<td align="left">48.46 (30.67, 72.62)</td>
+<td align="left">44.15 (31.25, 67.18)</td>
+<td align="left">40.81 (22.42, 63.60)</td>
 </tr>
 <tr class="even">
 <td>Health care sector costs</td>
-<td align="left">87.51 (74.39, 96.43)</td>
-<td align="left">76.43 (47.21, 92.09)</td>
+<td align="left">88.51 (74.95, 97.20)</td>
+<td align="left">77.81 (48.17, 91.84)</td>
 </tr>
 <tr class="odd">
 <td>Productivity costs</td>
-<td align="left">16.69 (3.99, 29.92)</td>
-<td align="left">32.50 (11.28, 66.02)</td>
+<td align="left">15.49 (3.61, 27.79)</td>
+<td align="left">29.92 (10.14, 61.46)</td>
 </tr>
 <tr class="even">
 <td>Route of administration</td>
-<td align="left">13.24 (5.04, 21.70)</td>
-<td align="left">32.73 (12.89, 62.50)</td>
+<td align="left">13.90 (5.69, 22.44)</td>
+<td align="left">33.55 (13.33, 66.41)</td>
 </tr>
 <tr class="odd">
 <td>Years since FDA approval</td>
-<td align="left">62.13 (35.92, 87.68)</td>
-<td align="left">40.06 (11.51, 68.14)</td>
+<td align="left">62.39 (36.22, 85.79)</td>
+<td align="left">41.64 (12.96, 67.52)</td>
 </tr>
 <tr class="even">
 <td>Diarrhea</td>
-<td align="left">92.36 (85.66, 97.58)</td>
-<td align="left">91.81 (68.91, 99.30)</td>
+<td align="left">89.45 (80.15, 96.98)</td>
+<td align="left">87.74 (52.36, 99.13)</td>
 </tr>
 </tbody>
 </table>
