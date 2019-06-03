@@ -1,0 +1,10 @@
+ast.csv filter=lfs diff=lfs merge=lfs -text
+paronychia.csv filter=lfs diff=lfs merge=lfs -text
+pruritus.csv filter=lfs diff=lfs merge=lfs -text
+stomatitis.csv filter=lfs diff=lfs merge=lfs -text
+alt.csv filter=lfs diff=lfs merge=lfs -text
+diarrhea.csv filter=lfs diff=lfs merge=lfs -text
+eye_problems.csv filter=lfs diff=lfs merge=lfs -text
+pneumonitis.csv filter=lfs diff=lfs merge=lfs -text
+rash.csv filter=lfs diff=lfs merge=lfs -text
+dry_skin.csv filter=lfs diff=lfs merge=lfs -text
