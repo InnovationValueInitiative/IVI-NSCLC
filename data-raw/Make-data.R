@@ -2,6 +2,7 @@
 # datasets in the data directory. It should be run from inside the data-raw
 # directory.
 
+library("iviNSCLC")
 rm(list = ls())
 unlink("../data/*") # deletes all files in data directory
 source("treatments.R")
