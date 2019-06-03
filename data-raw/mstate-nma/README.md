@@ -3,14 +3,13 @@ The following notation is used to denote model type:
 
 * fp-p0 (1st order fractional polynomial model with p1 = 0 (i.e., a Weibull model))
 * fp-p00 (2nd order fractional polynomial model with p1 = p2 = 0)
-* fp-p1 order fractional polynomial model with p1 = 1 (i.e., a Gompertz model))
+* fp-p1 (1st order fractional polynomial model with p1 = 1 (i.e., a Gompertz model))
 * fp-p01 (2nd order fractional polynomial model with p1 = 0 and p2 = 1)
 
 The directory must contain files for the meta-analyses (models for absolute effects) 
 and network meta-analyses (models for relative treatment effects).
 
 # Meta-analysis files
-
 First line fixed effects meta-analyses for gefitnib:
 
 * ma-1L-fe-gef-fp-p0 
@@ -33,6 +32,7 @@ Second line fixed effects meta-analysis for osimertinib among patients with a T7
 * ma-2L-fe-t790m-osi-fp-p01 
 
 # Network meta-analysis files
+First line fixed effects network meta-analyses of treatments relative to gefitnib:
 
 * nma-1L-fe-fp-p0
 * nma-1L-fe-fp-p00
