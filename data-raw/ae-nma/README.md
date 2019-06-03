@@ -1,5 +1,8 @@
 The posterior distributions of the parameters from the adverse event (AE) network meta-analyses
-go in this directory. The directory contains files for the followings AEs:
+go in this directory. The file `../params_ae_nma.R` uses this data to create the `params_ae_nma` 
+object that loads with the package.
+
+The directory contains files for the followings AEs:
 
 * `alt.csv` (Elevated alanine transaminase)
 * `ast.csv` (Elevated aspartate transaminase)
