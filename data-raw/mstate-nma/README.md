@@ -17,12 +17,12 @@ First line fixed effects meta-analyses for gefitnib:
 * ma-1L-fe-gef-fp-p1 
 * ma-1L-fe-gef-fp-p01 
 
-First line fixed effects meta-analyses for platinum-based doublet chemotherapy (PBDC):
+Second line fixed effects meta-analyses for platinum-based doublet chemotherapy (PBDC):
 
-* ma-1L-fe-pbdc-fp-p0 
-* ma-1L-fe-pbdc-fp-p00 
-* ma-1L-fe-pbdc-fp-p1 
-* ma-1L-fe-pbdc-fp-p01 
+* ma-2L-fe-pbdc-fp-p0 
+* ma-2L-fe-pbdc-fp-p00 
+* ma-2L-fe-pbdc-fp-p1 
+* ma-2L-fe-pbdc-fp-p01 
 
 Second line fixed effects meta-analysis for osimertinib among patients with a T790M mutation:
 
