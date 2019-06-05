@@ -216,9 +216,11 @@ create_costmod_tx <- function(n = 100,
   ## Create time intervals and rectangularize dataset
   ### Time Intervals
   annualized_costs_dist[, ("time_interval") := 1:.N, by = c("sample", "tx_name")]
-  annualized_costs_dist[, ("time_start") := ifelse(get("time_interval") == 1, 0, shift(get("duration_days"))),
+  annualized_costs_dist[, ("time_start") := ifelse(get("time_interval") == 1, 
+                                                   0, 
+                                                   shift(get("duration_days")/365.25)), # Time should be measured in years
                         by = "sample"]
-  max_time <- annualized_costs_dist[, list(max_time = max(get("duration_days"))),
+  max_time <- annualized_costs_dist[, list(max_time = max(get("duration_days")/365.25)), # Time should be measured in years
                                     by = "tx_name"]
   annualized_costs_dist[, c("time_interval", "duration_days") := NULL] 
   
@@ -268,14 +270,14 @@ create_costmod_tx <- function(n = 100,
   setnames(txseq_dt, "acquisition_costs", "value")
   stateval_tbl <- hesim::stateval_tbl(txseq_dt, dist = "custom",
                                       hesim_data = hesim_dat)
-  mods[[1]] <- hesim::create_StateVals(stateval_tbl, n = n)
+  mods[[1]] <- hesim::create_StateVals(stateval_tbl, n = n, time_reset = TRUE)
   setnames(txseq_dt, "value", "acquisition_costs")
   
   ## Administration costs
   setnames(txseq_dt, "administration_costs", "value")
   stateval_tbl <- hesim::stateval_tbl(txseq_dt, dist = "custom",
                                       hesim_data = hesim_dat)
-  mods[[2]] <- hesim::create_StateVals(stateval_tbl, n = n)  
+  mods[[2]] <- hesim::create_StateVals(stateval_tbl, n = n, time_reset = TRUE)  
   
   # Return
   return(mods)
