@@ -334,9 +334,9 @@ The specific treatments included in the model are:
 \subsection{Disease model}
 The IVI-NSCLC is an individual-level continuous-time state transition model (CTSTM) in which patients progress through multiple health states. Sequential treatment is modeled using the CTSTM by expanding the number of health states according to the number of treatment lines. In general, we define a health state for each treatment line, a health state after progression on the final line, and a death state, so a model with $n$ treatment lines will have $n+2$ health states. A patient with stable disease moves to the second treatment in a sequence after progression on the first treatment, to the third treatment after progression on the second treatment, and so on. A patient can die at any time. 
 
-Unfortunately, the evidence base is currently too limited to explicitly model the transition rates by line of treatment and a simplified model structure is needed. Two options are available with the IVI-NSCLC model: a 4-state model (\autoref{fig:model-structure-4-states}) and a three-state model (\autoref{fig:model-structure-3-states}). The 3-state model is consistent with common methods for health economic modeling in oncology. In contrast, the 4-state model incorporates sequential treatment by explicitly modeling the effect of 2L treatment.  
+Unfortunately, the evidence base is currently too limited to explicitly model the transition rates by line of treatment and a simplified model structure is needed. Two options are available with the IVI-NSCLC model: a 4-state model (\autoref{fig:model-structure-4-states}) and a 3-state model (\autoref{fig:model-structure-3-states}). The 3-state model is consistent with common methods for health economic modeling in oncology. In contrast, the 4-state model incorporates sequential treatment by explicitly modeling the effect of 2L treatment.  
 
-In the 4-state model, patients begin 1L treatment in stable disease (S1) and can either transition to the progression state (P1) or death (D). At progression, patients move to the progression-free (stable) state (S2) with 2L treatment and can again either have their disease progress (P3) or die. At P3, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states $r$ and $s$ and are denoted by $h^{rs}(u)$.
+In the 4-state model, patients begin 1L treatment in stable disease ($S_1$) and can either transition to the progression state ($P_1$) or death ($D$). At progression, patients move to the progression-free (stable) state ($S_2$) with 2L treatment and can again either have their disease progress ($P_2$) or die. At $P_2$, patients begin 2L+ treatment and remain in the progressed state until death. Time-varying hazard rates for transitions between states $r$ and $s$ and are denoted by $h^{rs}(u)$.
 
 \begin{figure}
 \centering
@@ -344,7 +344,7 @@ In the 4-state model, patients begin 1L treatment in stable disease (S1) and can
 \caption{Model structure with 4 states describing development of disease over time for a sequence starting with 1L, followed by 2L and 2L+ treatment; 2L+ treatment is captured with the L2 progression state}\label{fig:model-structure-4-states}
 \end{figure}
 
-In the three-state model, all hazard rates are based on 1L clinical trial evidence. Patients begin in stable disease (S1) and they can transition to the progression state (P1) or death (D).
+In the 3-state model, all hazard rates are based on 1L clinical trial evidence. Patients begin in stable disease ($S_1$) and they can transition to the progression state ($P_1$) or death ($D$).
 
 \begin{figure}
 \centering
