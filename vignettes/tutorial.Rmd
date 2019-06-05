@@ -95,6 +95,9 @@ txseq1 <- txseq(first = "gefitinib",
 txseq2 <- txseq(first = "erlotinib",
                 second = c("osimertinib", "PBDC"),
                 second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
+txseq2 <- txseq(first = "osimertinib",
+                second = c("PBDC", "PBDC"),
+                second_plus = c("PBDC + bevacizumab", "PBDC + bevacizumab"))
 txseqs <- txseq_list("Sequence 1" = txseq1, "Sequence 2" = txseq2,
                      start_line = "first",
                      mutation = "unknown")
