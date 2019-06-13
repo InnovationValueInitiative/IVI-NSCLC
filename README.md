@@ -13,7 +13,7 @@ devtools::install_github("InnovationValueInitiative/IVI-NSCLC")
 # File structure
 The componenst of the package `iviNSCLC` are distributed in eight directories:
 1. `R`: contains all R related code that calls `hesim` package for perform simulations and estimates of health and economic values.
-2. `data-raw`: Contains `R` code to generate tables used in the package which are saved into `data`.  Other input tables for adverse events, costs, productivity, and treatment information are included here too. 
+2. `data-raw`: Contains `R` code to generate tables used in the package which are saved into `data`.  Other input tables for adverse events, costs, productivity, and treatment information are included here too. The input used in the NMA are included in the subdrectory `mstate-nms-data`. The output of the NMA is stored in the subdirectory `mstate-nma`.
 3. `data`: Here are the tables created by the several `R` codes in `data-raw`. Posterior distributions derived from nma for various models, as well as costs, treatment, adverse evets parameter tables are also included here. 
 4. `docs`: Articles, references and author information is stored here.
 5. `man`: Manual and general documentation.
