@@ -12,12 +12,11 @@ devtools::install_github("InnovationValueInitiative/IVI-NSCLC")
 ```
 # File structure
 The componenst of the package `iviNSCLC` are distributed in eight directories:
-1. `R`: contains all R related code that calls `hesim` package for perform simulations and estimates of health and economic values.
-2. `data-raw`: Contains `R` code to generate tables used in the package which are saved into `data`.  Other input tables for adverse events, costs, productivity, and treatment information are included here too. The input used in the NMA are included in the subdrectory `mstate-nms-data`. The output of the NMA is stored in the subdirectory `mstate-nma`.
-3. `data`: Here are the tables created by the several `R` codes in `data-raw`. Posterior distributions derived from nma for various models, as well as costs, treatment, adverse evets parameter tables are also included here. 
-4. `docs`: Articles, references and author information is stored here.
+1. `R`: contains all R related code for simulating disease progression, costs, and QALYs. The code relies heavily on the `hesim` package.
+2. `data-raw`: Contains `R` scripts to generate tables used in the package which are saved into `data`. The input used in the NMA are included in the subdrectory `mstate-nma-data`. The output of the NMA is stored in the subdirectory `mstate-nma`.
+3. `data`: Contains tables created by the  `R` scripts in `data-raw`. These are the parameter estimates that load with the package and can be viewed with `data(package = "iviNSCLC")`. 
+4. `docs`: Articles, references, and author information is stored here.
 5. `man`: Manual and general documentation.
-6. `pkgdown`: Website updates.
-7. `tests`: R code to test of several components of the package.
-8. `vignettes`: Files for tutorial of the package.
-
+6. `pkgdown`: The package [website](https://innovationvalueinitiative.github.io/IVI-NSCLC/).
+7. `tests`: Unit tests for the package. 
+8. `vignettes`: Files for the package tutorial.
