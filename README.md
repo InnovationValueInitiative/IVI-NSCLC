@@ -11,11 +11,11 @@
 devtools::install_github("InnovationValueInitiative/IVI-NSCLC")
 ```
 # File structure
-The componenst of the package `iviNSCLC` are distributed in eight directories:
+The components of the package `iviNSCLC` are distributed in eight directories:
 1. `R`: contains all R related code for simulating disease progression, costs, and QALYs. The code relies heavily on the `hesim` package.
 2. `data-raw`: Contains `R` scripts to generate tables used in the package which are saved into `data`. The input used in the NMA are included in the subdrectory `mstate-nma-data`. The output of the NMA is stored in the subdirectory `mstate-nma`.
 3. `data`: Contains tables created by the  `R` scripts in `data-raw`. These are the parameter estimates that load with the package and can be viewed with `data(package = "iviNSCLC")`. 
-4. `docs`: Articles, references, and author information is stored here.
+4. `docs`: Articles, references, and author information are stored here.
 5. `man`: Manual and general documentation.
 6. `pkgdown`: The package [website](https://innovationvalueinitiative.github.io/IVI-NSCLC/).
 7. `tests`: Unit tests for the package. 
